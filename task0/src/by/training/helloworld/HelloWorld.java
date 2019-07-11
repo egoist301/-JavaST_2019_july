@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 public final class HelloWorld {
     /**
-     * @serial Logger.
+     * Logger.
      */
     private static final Logger LOGGER = Logger.getLogger(HelloWorld.class);
 
