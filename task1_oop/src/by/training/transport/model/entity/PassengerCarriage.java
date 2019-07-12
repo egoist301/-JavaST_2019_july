@@ -6,7 +6,7 @@ public abstract class PassengerCarriage {
     private int numberOfPassengers;
     private int numberOfLuggage;
     private static long tempId;
-    private final long id = ++tempId;
+    private final long passengerCarriageId = ++tempId;
 
     public PassengerCarriage(final int numberOfPassengersNew,
                              final int numberOfLuggageNew) {
@@ -14,8 +14,8 @@ public abstract class PassengerCarriage {
         this.numberOfLuggage = numberOfLuggageNew;
     }
 
-    public long getId() {
-        return id;
+    public long getPassengerCarriageId() {
+        return passengerCarriageId;
     }
 
     public int getNumberOfPassengers() {
@@ -54,7 +54,7 @@ public abstract class PassengerCarriage {
 
     @Override
     public String toString() {
-        return "id='" + id + '\'' + ", numberOfPassengers=" + numberOfPassengers
+        return "passengerCarriageId='" + passengerCarriageId + '\'' + ", numberOfPassengers=" + numberOfPassengers
                 + ", numberOfLuggage=" + numberOfLuggage;
     }
 }

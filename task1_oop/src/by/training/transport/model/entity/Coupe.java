@@ -3,7 +3,7 @@ package by.training.transport.model.entity;
 import java.util.Objects;
 
 public class Coupe extends PassengerCarriage {
-    public final static int DEFAULT_NUMBER_OF_PLACES = 36;
+    public static final int DEFAULT_NUMBER_OF_PLACES = 36;
     private int numberOfCoupe;
 
     public Coupe(final int numberOfPassengersNew, final int numberOfLuggageNew,

@@ -3,7 +3,7 @@ package by.training.transport.model.entity;
 import java.util.Objects;
 
 public class SeatCarriage extends PassengerCarriage {
-    public final static int DEFAULT_NUMBER_OF_PLACES = 62;
+    public static final int DEFAULT_NUMBER_OF_PLACES = 62;
     private int numberOfSeats;
 
     public SeatCarriage(final int numberOfPassengersNew,
