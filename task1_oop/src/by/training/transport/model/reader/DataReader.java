@@ -7,6 +7,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DataReader {
+    /**
+     * @param filePath the path of the file from which we read.
+     * @return list of strings.
+     */
     public List<String> readAll(final String filePath) {
         List<String> lines;
         try (FileReader reader = new FileReader(filePath);

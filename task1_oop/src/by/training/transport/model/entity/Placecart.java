@@ -3,9 +3,20 @@ package by.training.transport.model.entity;
 import java.util.Objects;
 
 public class Placecart extends PassengerCarriage {
+    /**
+     * Number of places in reserved seat.
+     */
     public static final int DEFAULT_NUMBER_OF_PLACES = 54;
+    /**
+     * Number of compartments.
+     */
     private int numberOfCompartments;
 
+    /**
+     * @param numberOfPassengersNew number of passengers.
+     * @param numberOfLuggageNew number of luggage.
+     * @param numberOfCompartmentsNew number of compartments.
+     */
     public Placecart(final int numberOfPassengersNew,
                      final int numberOfLuggageNew,
                      final int numberOfCompartmentsNew) {
@@ -13,14 +24,24 @@ public class Placecart extends PassengerCarriage {
         numberOfCompartments = numberOfCompartmentsNew;
     }
 
+    /**
+     * @return number of compartments.
+     */
     public int getNumberOfCompartments() {
         return numberOfCompartments;
     }
 
+    /**
+     * @param numberOfCompartmentsNew number of compartments.
+     */
     public void setNumberOfCompartments(final int numberOfCompartmentsNew) {
         numberOfCompartments = numberOfCompartmentsNew;
     }
 
+    /**
+     * @param oNew any object.
+     * @return equal or not equal.
+     */
     @Override
     public boolean equals(final Object oNew) {
         if (this == oNew) {
@@ -36,11 +57,17 @@ public class Placecart extends PassengerCarriage {
         return getNumberOfCompartments() == placecart.getNumberOfCompartments();
     }
 
+    /**
+     * @return hashCode.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getNumberOfCompartments());
     }
 
+    /**
+     * @return car description.
+     */
     @Override
     public String toString() {
         return "Placecart{" + super.toString()
