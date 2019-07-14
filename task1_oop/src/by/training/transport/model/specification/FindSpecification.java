@@ -1,5 +1,11 @@
 package by.training.transport.model.specification;
 
-public interface FindSpecification extends Specification {
+import by.training.transport.model.entity.PassengerCarriage;
 
+public interface FindSpecification extends Specification {
+    /**
+     * @param passengerCarriageNew carriage for comparison.
+     * @return equals or not equals.
+     */
+    boolean find(PassengerCarriage passengerCarriageNew);
 }
