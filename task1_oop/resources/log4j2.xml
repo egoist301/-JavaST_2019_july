@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} | [%t] | %-5level | %logger{36} | %msg%n"/>
+        </Console>
+
+        <RollingFile name="RollingFileAppender" fileName="resources\log.log"
+                     filePattern="resources\$${date:yyyy-MM-dd}\task1-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d | [%t] | %p | %c | %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <OnStartupTriggeringPolicy/>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="20"/>
+        </RollingFile>
+
+    </Appenders>
+
+    <loggers>
+        <Logger level="debug" name="by.training">
+        </Logger>
+        <root level="warn">
+            <appender-ref ref="Console" level="fatal"/>
+            <appender-ref ref="RollingFileAppender" level="debug"/>
+        </root>
+    </loggers>
+</configuration>
