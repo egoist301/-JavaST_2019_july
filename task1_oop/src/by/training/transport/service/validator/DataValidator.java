@@ -17,6 +17,10 @@ public final class DataValidator {
      * Third value in array.
      */
     private static final int THIRD_VALUE = 3;
+    /**
+     * Data length.
+     */
+    private static final int DATA_LENGTH = 4;
 
     private DataValidator() {
     }
@@ -49,7 +53,8 @@ public final class DataValidator {
      * @return correct values or not.
      */
     public static boolean isValidCoupe(final String[] line) {
-        return isNumberOfPassengers(line[FIRST_VALUE],
+        return line.length == DATA_LENGTH
+                && isNumberOfPassengers(line[FIRST_VALUE],
                 Coupe.DEFAULT_NUMBER_OF_PLACES)
                 && isNumberOfCoupe(line[SECOND_VALUE])
                 && isNumberOfLuggage(line[THIRD_VALUE]);
@@ -60,7 +65,8 @@ public final class DataValidator {
      * @return correct values or not.
      */
     public static boolean isValidPlacecart(final String[] line) {
-        return isNumberOfPassengers(line[FIRST_VALUE],
+        return line.length == DATA_LENGTH
+                && isNumberOfPassengers(line[FIRST_VALUE],
                 Placecart.DEFAULT_NUMBER_OF_PLACES)
                 && isNumberOfLuggage(line[SECOND_VALUE])
                 && isNumberOfCompartments(line[THIRD_VALUE]);
@@ -71,7 +77,8 @@ public final class DataValidator {
      * @return correct values or not.
      */
     public static boolean isValidSeatCarriage(final String[] line) {
-        return isNumberOfPassengers(line[FIRST_VALUE],
+        return line.length == DATA_LENGTH
+                && isNumberOfPassengers(line[FIRST_VALUE],
                 SeatCarriage.DEFAULT_NUMBER_OF_PLACES)
                 && isNumberOfLuggage(line[SECOND_VALUE])
                 && isNumberOfSeats(line[THIRD_VALUE]);

@@ -70,6 +70,6 @@ public class Coupe extends PassengerCarriage {
     @Override
     public String toString() {
         return "Coupe{" + super.toString()
-                + "numberOfCoupe=" + numberOfCoupe + '}';
+                + ", numberOfCoupe=" + numberOfCoupe + '}';
     }
 }

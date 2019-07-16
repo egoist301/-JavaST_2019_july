@@ -7,7 +7,7 @@ public class DataParser {
     /**
      * Separator.
      */
-    private static final String REGEX_SEPARATOR = " ";
+    private static final String REGEX_SEPARATOR = "\\s+";
 
     /**
      * @param stringListNew list of strings.

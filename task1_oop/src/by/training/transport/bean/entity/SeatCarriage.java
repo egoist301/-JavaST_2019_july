@@ -71,6 +71,6 @@ public class SeatCarriage extends PassengerCarriage {
     @Override
     public String toString() {
         return "SeatCarriage{" + super.toString()
-                + "numberOfSeats=" + numberOfSeats + '}';
+                + ", numberOfSeats=" + numberOfSeats + '}';
     }
 }

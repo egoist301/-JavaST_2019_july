@@ -71,7 +71,7 @@ public class Placecart extends PassengerCarriage {
     @Override
     public String toString() {
         return "Placecart{" + super.toString()
-                + "numberOfCompartments=" + numberOfCompartments + '}';
+                + ", numberOfCompartments=" + numberOfCompartments + '}';
     }
 }
 

@@ -1,4 +1,4 @@
-package by.training.transport.service.reader;
+package by.training.transport.dao.reader;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
