@@ -5,8 +5,8 @@
             <PatternLayout pattern="%d{HH:mm:ss.SSS} | [%t] | %-5level | %logger{36} | %msg%n"/>
         </Console>
 
-        <RollingFile name="RollingFileAppender" fileName="resources\log.log"
-                     filePattern="resources\$${date:yyyy-MM-dd}\task1-%d{MM-dd-yyyy}-%i.log.gz">
+        <RollingFile name="RollingFileAppender" fileName="log\log.log"
+                     filePattern="log\$${date:yyyy-MM-dd}\task1-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
                 <Pattern>%d | [%t] | %p | %c | %m%n</Pattern>
             </PatternLayout>

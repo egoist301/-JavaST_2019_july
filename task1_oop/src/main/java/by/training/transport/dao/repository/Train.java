@@ -139,10 +139,10 @@ public class Train implements TrainRepository {
      */
     @Override
     public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
+        String info = "";
         for (PassengerCarriage passengerCarriage : listTrain) {
-            stringBuilder.append(passengerCarriage + "\n");
+            info = info.concat(passengerCarriage + "\n");
         }
-        return stringBuilder.toString();
+        return info;
     }
 }

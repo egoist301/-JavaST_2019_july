@@ -25,27 +25,41 @@ public final class DataValidator {
     private DataValidator() {
     }
 
+    private static boolean isInteger(final String line) {
+        try {
+            Integer.parseInt(line);
+        } catch (IllegalArgumentException ex) {
+            return false;
+        }
+        return true;
+    }
+
     private static boolean isNumberOfPassengers(final String line,
                                                 final int maximumPlaces) {
         int valid = Integer.parseInt(line);
-        return valid >= 0
+        return isInteger(line)
+                && valid >= 0
                 && valid <= maximumPlaces;
     }
 
     private static boolean isNumberOfLuggage(final String line) {
-        return Integer.parseInt(line) >= 0;
+        return isInteger(line)
+                && Integer.parseInt(line) >= 0;
     }
 
     private static boolean isNumberOfCompartments(final String line) {
-        return Integer.parseInt(line) >= 0;
+        return isInteger(line)
+                && Integer.parseInt(line) >= 0;
     }
 
     private static boolean isNumberOfSeats(final String line) {
-        return Integer.parseInt(line) >= 0;
+        return isInteger(line)
+                && Integer.parseInt(line) >= 0;
     }
 
     private static boolean isNumberOfCoupe(final String line) {
-        return Integer.parseInt(line) >= 0;
+        return isInteger(line)
+                && Integer.parseInt(line) >= 0;
     }
 
     /**
