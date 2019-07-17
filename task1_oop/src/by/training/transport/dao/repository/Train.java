@@ -140,7 +140,7 @@ public class Train implements TrainRepository {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for (PassengerCarriage passengerCarriage : listTrain){
+        for (PassengerCarriage passengerCarriage : listTrain) {
             stringBuilder.append(passengerCarriage + "\n");
         }
         return stringBuilder.toString();

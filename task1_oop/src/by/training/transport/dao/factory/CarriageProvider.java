@@ -1,7 +1,7 @@
-package by.training.transport.bean.factory;
+package by.training.transport.dao.factory;
 
 import by.training.transport.bean.enums.CarriageType;
-import by.training.transport.bean.factory.exception.CarriageValidationException;
+import by.training.transport.dao.factory.exception.CarriageValidationException;
 
 import java.util.HashMap;
 import java.util.Map;

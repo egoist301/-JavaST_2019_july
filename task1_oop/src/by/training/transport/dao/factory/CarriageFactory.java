@@ -1,7 +1,7 @@
-package by.training.transport.bean.factory;
+package by.training.transport.dao.factory;
 
 import by.training.transport.bean.entity.PassengerCarriage;
-import by.training.transport.bean.factory.exception.CarriageValidationException;
+import by.training.transport.dao.factory.exception.CarriageValidationException;
 
 public interface CarriageFactory {
     /**
@@ -9,6 +9,6 @@ public interface CarriageFactory {
      * @return create passenger carriage.
      * @throws CarriageValidationException if incorrect data for carriage.
      */
-    PassengerCarriage createCarriage(final String... line)
+    PassengerCarriage createCarriage(String... line)
             throws CarriageValidationException;
 }

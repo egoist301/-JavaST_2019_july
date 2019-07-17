@@ -1,8 +1,8 @@
-package by.training.transport.bean.factory;
+package by.training.transport.dao.factory;
 
 import by.training.transport.bean.entity.PassengerCarriage;
 import by.training.transport.bean.entity.Placecart;
-import by.training.transport.bean.factory.exception.CarriageValidationException;
+import by.training.transport.dao.factory.exception.CarriageValidationException;
 import by.training.transport.service.validator.DataValidator;
 
 import java.util.Arrays;

@@ -1,13 +1,13 @@
-package by.training.transport.bean.factory;
+package by.training.transport.dao.factory;
 
-import by.training.transport.bean.entity.Coupe;
 import by.training.transport.bean.entity.PassengerCarriage;
-import by.training.transport.bean.factory.exception.CarriageValidationException;
+import by.training.transport.bean.entity.SeatCarriage;
+import by.training.transport.dao.factory.exception.CarriageValidationException;
 import by.training.transport.service.validator.DataValidator;
 
 import java.util.Arrays;
 
-public final class CoupeFactory implements CarriageFactory {
+public final class SeatCarriageFactory implements CarriageFactory {
     /**
      * First value in array.
      */
@@ -27,16 +27,17 @@ public final class CoupeFactory implements CarriageFactory {
     /**
      * Singleton.
      */
-    private static final CoupeFactory COUPE_FACTORY = new CoupeFactory();
+    private static final SeatCarriageFactory SEAT_CARRIAGE_FACTORY
+            = new SeatCarriageFactory();
 
-    private CoupeFactory() {
+    private SeatCarriageFactory() {
     }
 
     /**
-     * @return Coupe factory.
+     * @return Seat carriage factory.
      */
-    public static CoupeFactory getFactory() {
-        return COUPE_FACTORY;
+    public static SeatCarriageFactory getFactory() {
+        return SEAT_CARRIAGE_FACTORY;
     }
 
     /**
@@ -48,16 +49,18 @@ public final class CoupeFactory implements CarriageFactory {
     public PassengerCarriage createCarriage(final String... line)
             throws CarriageValidationException {
         int numberOfPassengers;
-        int numberOfCoupe;
+        int numberOfSeats;
         int numberOfLuggage;
-        if (DataValidator.isValidCoupe(line)) {
+        if (DataValidator.isValidSeatCarriage(line)) {
             numberOfPassengers = Integer.parseInt(line[FIRST_VALUE]);
             numberOfLuggage = Integer.parseInt(line[SECOND_VALUE]);
-            numberOfCoupe = Integer.parseInt(line[THIRD_VALUE]);
+            numberOfSeats = Integer.parseInt(line[THIRD_VALUE]);
         } else {
             throw new CarriageValidationException(MESSAGE
                     + Arrays.toString(line));
         }
-        return new Coupe(numberOfPassengers, numberOfLuggage, numberOfCoupe);
+        return new SeatCarriage(numberOfPassengers,
+                numberOfLuggage,
+                numberOfSeats);
     }
 }

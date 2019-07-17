@@ -1,4 +1,4 @@
-package by.training.transport.bean.factory.exception;
+package by.training.transport.dao.factory.exception;
 
 public class CarriageValidationException extends Exception {
     /**
@@ -18,7 +18,8 @@ public class CarriageValidationException extends Exception {
      * @param message error message.
      * @param cause error.
      */
-    public CarriageValidationException(final String message, final Throwable cause) {
+    public CarriageValidationException(final String message,
+                                       final Throwable cause) {
         super(message, cause);
     }
 
