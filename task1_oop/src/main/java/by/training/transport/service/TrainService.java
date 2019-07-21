@@ -11,8 +11,8 @@ public final class TrainService {
      * @param trainNew train.
      * @return number of passengers in train.
      */
-    public static double countingTheNumberOfPassengers(final Train trainNew) {
-        double result = 0;
+    public static int countingTheNumberOfPassengers(final Train trainNew) {
+        int result = 0;
         for (PassengerCarriage passengerCarriage : trainNew.getAll()) {
             result += passengerCarriage.getNumberOfPassengers();
         }
@@ -23,8 +23,8 @@ public final class TrainService {
      * @param trainNew train.
      * @return number of luggage in train.
      */
-    public static double countingTheNumberOfLuggage(final Train trainNew) {
-        double result = 0;
+    public static int countingTheNumberOfLuggage(final Train trainNew) {
+        int result = 0;
         for (PassengerCarriage passengerCarriage : trainNew.getAll()) {
             result += passengerCarriage.getNumberOfLuggage();
         }

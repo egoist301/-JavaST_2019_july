@@ -5,12 +5,19 @@ import by.training.transport.dao.repository.exception.IllegalSpecificationExcept
 import by.training.transport.dao.repository.specification.findspecification.FindSpecification;
 import by.training.transport.dao.repository.specification.sortspecification.SortSpecification;
 import by.training.transport.dao.repository.specification.Specification;
+import by.training.transport.service.TrainService;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class Train implements TrainRepository {
+public final class Train implements TrainRepository, Observer {
+    private int numberOfPassengers;
+    private int numberOLuggage;
+    /**
+     * Singleton.
+     */
+    private static final Train TRAIN = new Train();
     /**
      * List of carriages.
      */
@@ -19,17 +26,24 @@ public class Train implements TrainRepository {
     /**
      * Default constructor.
      */
-    public Train() {
+    private Train() {
         listTrain = new ArrayList<>();
     }
 
     /**
-     * @param listTrainNew constructor with parameter (list).
+     * @return TRAIN(Singleton).
      */
-    public Train(final List<PassengerCarriage> listTrainNew) {
-        listTrain = listTrainNew;
+    public static Train getTrain() {
+        return TRAIN;
     }
 
+    public int getNumberOfPassengers() {
+        return numberOfPassengers;
+    }
+
+    public int getNumberOLuggage() {
+        return numberOLuggage;
+    }
 
     /**
      * @param passengerCarriageNew adding carriage.
@@ -37,6 +51,8 @@ public class Train implements TrainRepository {
     @Override
     public void add(final PassengerCarriage passengerCarriageNew) {
         listTrain.add(passengerCarriageNew);
+        numberOfPassengers += passengerCarriageNew.getNumberOfPassengers();
+        numberOLuggage += passengerCarriageNew.getNumberOfLuggage();
     }
 
     /**
@@ -135,7 +151,7 @@ public class Train implements TrainRepository {
     }
 
     /**
-     * @return train description.
+     * @return TRAIN description.
      */
     @Override
     public String toString() {
@@ -144,5 +160,14 @@ public class Train implements TrainRepository {
             info = info.concat(passengerCarriage + "\n");
         }
         return info;
+    }
+
+    /**
+     * Update.
+     */
+    @Override
+    public void update() {
+        numberOLuggage = TrainService.countingTheNumberOfLuggage(this);
+        numberOfPassengers = TrainService.countingTheNumberOfPassengers(this);
     }
 }

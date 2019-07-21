@@ -1,5 +1,7 @@
 package by.training.transport.bean.entity;
 
+import by.training.transport.dao.repository.Train;
+
 import java.util.Objects;
 
 public abstract class PassengerCarriage {
@@ -20,9 +22,11 @@ public abstract class PassengerCarriage {
      */
     private long passengerCarriageId = ++tempId;
 
+    private Train train = Train.getTrain();
+
     /**
      * @param numberOfPassengersNew number of passengers.
-     * @param numberOfLuggageNew number of luggage.
+     * @param numberOfLuggageNew    number of luggage.
      */
     public PassengerCarriage(final int numberOfPassengersNew,
                              final int numberOfLuggageNew) {
@@ -49,6 +53,7 @@ public abstract class PassengerCarriage {
      */
     public void setNumberOfPassengers(final int numberOfPassengersNew) {
         this.numberOfPassengers = numberOfPassengersNew;
+        notifyObservers();
     }
 
     /**
@@ -63,6 +68,10 @@ public abstract class PassengerCarriage {
      */
     public void setNumberOfLuggage(final int numberOfLuggageNew) {
         this.numberOfLuggage = numberOfLuggageNew;
+    }
+
+    private void notifyObservers(){
+        train.update();
     }
 
     /**

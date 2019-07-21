@@ -3,8 +3,14 @@ package by.training.transport.service.validator;
 import by.training.transport.bean.entity.Coupe;
 import by.training.transport.bean.entity.Placecart;
 import by.training.transport.bean.entity.SeatCarriage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public final class DataValidator {
+    /**
+     * Logger.
+     */
+    private static final Logger LOGGER = LogManager.getLogger();
     /**
      * First value in array.
      */
@@ -29,6 +35,7 @@ public final class DataValidator {
         try {
             Integer.parseInt(line);
         } catch (IllegalArgumentException ex) {
+            LOGGER.error("Incorrect value.", ex);
             return false;
         }
         return true;
