@@ -68,6 +68,7 @@ public abstract class PassengerCarriage {
      */
     public void setNumberOfLuggage(final int numberOfLuggageNew) {
         this.numberOfLuggage = numberOfLuggageNew;
+        notifyObservers();
     }
 
     private void notifyObservers(){
