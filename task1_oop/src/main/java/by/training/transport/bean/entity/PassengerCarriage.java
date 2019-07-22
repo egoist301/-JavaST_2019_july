@@ -22,6 +22,9 @@ public abstract class PassengerCarriage {
      */
     private long passengerCarriageId = ++tempId;
 
+    /**
+     * Subscriber.
+     */
     private Train train = Train.getTrain();
 
     /**
@@ -71,7 +74,7 @@ public abstract class PassengerCarriage {
         notifyObservers();
     }
 
-    private void notifyObservers(){
+    private void notifyObservers() {
         train.update();
     }
 

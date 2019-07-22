@@ -12,7 +12,13 @@ import java.util.List;
 import java.util.Objects;
 
 public final class Train implements TrainRepository, Observer {
+    /**
+     * Number of passengers in train.
+     */
     private int numberOfPassengers;
+    /**
+     * Number of luggage in train.
+     */
     private int numberOLuggage;
     /**
      * Singleton.
@@ -37,10 +43,16 @@ public final class Train implements TrainRepository, Observer {
         return TRAIN;
     }
 
+    /**
+     * @return number of passengers in train.
+     */
     public int getNumberOfPassengers() {
         return numberOfPassengers;
     }
 
+    /**
+     * @return number of luggage in train.
+     */
     public int getNumberOLuggage() {
         return numberOLuggage;
     }
