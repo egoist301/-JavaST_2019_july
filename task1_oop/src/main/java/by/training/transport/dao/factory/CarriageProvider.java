@@ -3,7 +3,7 @@ package by.training.transport.dao.factory;
 import by.training.transport.bean.enums.CarriageType;
 import by.training.transport.dao.factory.exception.CarriageValidationException;
 
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public class CarriageProvider {
@@ -11,7 +11,7 @@ public class CarriageProvider {
      * Carriage factory map.
      */
     private Map<CarriageType, CarriageFactory> carriageFactoryMap
-            = new HashMap<>();
+            = new EnumMap<>(CarriageType.class);
 
     /**
      * Default constructor.
@@ -34,7 +34,7 @@ public class CarriageProvider {
         CarriageFactory carriageFactory;
         try {
             carriageFactory = carriageFactoryMap
-                    .get(CarriageType.valueOf(carriageType));
+                    .get(CarriageType.valueOf(carriageType.toUpperCase()));
         } catch (IllegalArgumentException ex) {
             throw new CarriageValidationException();
         }

@@ -86,21 +86,27 @@ public class TrainTest {
 
     @Test(groups = {"Train group"},
             dataProvider = "sort specification")
-    public void testQuerySort(List<PassengerCarriage> actualList, List<PassengerCarriage> expectedList) {
+    public void testQuerySort(List<PassengerCarriage> actualList,
+                              List<PassengerCarriage> expectedList) {
         assertEquals(actualList, expectedList);
     }
 
     @DataProvider(name = "sort specification")
-    public Object[][] testQuerySortProvider() throws IllegalSpecificationException {
+    public Object[][] testQuerySortProvider()
+            throws IllegalSpecificationException {
         Train train = Train.getTrain();
         train.add(new Coupe(3, 5, 3));
         train.add(new Placecart(2, 4, 3));
         train.add(new Coupe(4, 7, 3));
         train.add(new SeatCarriage(4, 6, 3));
-        List<PassengerCarriage> actualListSortByPassengers = train.query(new SortSpecificationByPassengers());
-        List<PassengerCarriage> actualListSortByLuggage = train.query(new SortSpecificationByLuggage());
-        List<PassengerCarriage> actualListSortByPassengersThenLuggage = train.query(new SortSpecificationByPassengersThenByLuggage());
-        List<PassengerCarriage> expectedListSortByPassengers = new ArrayList<>();
+        List<PassengerCarriage> actualListSortByPassengers =
+                train.query(new SortSpecificationByPassengers());
+        List<PassengerCarriage> actualListSortByLuggage =
+                train.query(new SortSpecificationByLuggage());
+        List<PassengerCarriage> actualListSortByPassengersThenLuggage =
+                train.query(new SortSpecificationByPassengersThenByLuggage());
+        List<PassengerCarriage> expectedListSortByPassengers =
+                new ArrayList<>();
         expectedListSortByPassengers.add(new Placecart(2, 4, 3));
         expectedListSortByPassengers.add(new Coupe(3, 5, 3));
         expectedListSortByPassengers.add(new SeatCarriage(4, 6, 3));
@@ -110,24 +116,29 @@ public class TrainTest {
         expectedListSortByLuggage.add(new Coupe(3, 5, 3));
         expectedListSortByLuggage.add(new SeatCarriage(4, 6, 3));
         expectedListSortByLuggage.add(new Coupe(4, 7, 3));
-        List<PassengerCarriage> expectedListSortByPassengersThenLuggage = new ArrayList<>();
+        List<PassengerCarriage> expectedListSortByPassengersThenLuggage =
+                new ArrayList<>();
         expectedListSortByPassengersThenLuggage.add(new Placecart(2, 4, 3));
         expectedListSortByPassengersThenLuggage.add(new Coupe(3, 5, 3));
         expectedListSortByPassengersThenLuggage.add(new SeatCarriage(4, 6, 3));
         expectedListSortByPassengersThenLuggage.add(new Coupe(4, 7, 3));
-        return new Object[][]{{actualListSortByLuggage, expectedListSortByLuggage},
+        return new Object[][]{
+                {actualListSortByLuggage, expectedListSortByLuggage},
                 {actualListSortByPassengers, expectedListSortByPassengers},
-                {actualListSortByPassengersThenLuggage, expectedListSortByPassengersThenLuggage}};
+                {actualListSortByPassengersThenLuggage,
+                        expectedListSortByPassengersThenLuggage}};
     }
 
     @Test(groups = {"Train group"},
             dataProvider = "find specification")
-    public void testQueryFind(List<PassengerCarriage> actualList, List<PassengerCarriage> expectedList) {
+    public void testQueryFind(List<PassengerCarriage> actualList,
+                              List<PassengerCarriage> expectedList) {
         assertEquals(actualList, expectedList);
     }
 
     @DataProvider(name = "find specification")
-    public Object[][] testQueryFindProvider() throws IllegalSpecificationException {
+    public Object[][] testQueryFindProvider()
+            throws IllegalSpecificationException {
         Train train = Train.getTrain();
         train.add(new Coupe(30, 21, 15));
         train.add(new Placecart(15, 40, 21));
@@ -138,30 +149,41 @@ public class TrainTest {
         train.add(new Coupe(31, 12, 18));
         train.add(new Placecart(17, 20, 19));
         train.add(new SeatCarriage(28, 34, 10));
-        List<PassengerCarriage> actualListFindById = train.query(new FindSpecificationById(3));
-        List<PassengerCarriage> actualListFindByPassengers = train.query(new FindSpecificationByPassengers(17));
-        List<PassengerCarriage> actualListFindByIdEmpty = train.query(new FindSpecificationById(100));
-        List<PassengerCarriage> actualListFindByLuggage = train.query(new FindSpecificationByLuggage(42));
-        List<PassengerCarriage> actualListFindByRangePassengers = train.query(new FindSpecificationByPassengersRange(13, 16));
-        List<PassengerCarriage> actualListFindByRangePassengersEmpty = train.query(new FindSpecificationByPassengersRange(0, 1));
+        List<PassengerCarriage> actualListFindById =
+                train.query(new FindSpecificationById(3));
+        List<PassengerCarriage> actualListFindByPassengers =
+                train.query(new FindSpecificationByPassengers(17));
+        List<PassengerCarriage> actualListFindByIdEmpty =
+                train.query(new FindSpecificationById(100));
+        List<PassengerCarriage> actualListFindByLuggage =
+                train.query(new FindSpecificationByLuggage(42));
+        List<PassengerCarriage> actualListFindByRangePassengers =
+                train.query(new FindSpecificationByPassengersRange(13, 16));
+        List<PassengerCarriage> actualListFindByRangePassengersEmpty =
+                train.query(new FindSpecificationByPassengersRange(0, 1));
         List<PassengerCarriage> expectedListFindById = new ArrayList<>();
         expectedListFindById.add(new SeatCarriage(14, 38, 46));
-        List<PassengerCarriage> expectedListFindByPassengers = new ArrayList<>();
+        List<PassengerCarriage> expectedListFindByPassengers =
+                new ArrayList<>();
         expectedListFindByPassengers.add(new SeatCarriage(17, 60, 59));
         expectedListFindByPassengers.add(new Placecart(17, 20, 19));
         List<PassengerCarriage> expectedListFindByIdEmpty = new ArrayList<>();
         List<PassengerCarriage> expectedListFindByLuggage = new ArrayList<>();
         expectedListFindByLuggage.add(new Placecart(39, 42, 55));
-        List<PassengerCarriage> expectedListFindByRangePassengers = new ArrayList<>();
+        List<PassengerCarriage> expectedListFindByRangePassengers =
+                new ArrayList<>();
         expectedListFindByRangePassengers.add(new Placecart(15, 40, 21));
         expectedListFindByRangePassengers.add(new SeatCarriage(14, 38, 46));
-        List<PassengerCarriage> expectedListFindByRangePassengersEmpty = new ArrayList<>();
+        List<PassengerCarriage> expectedListFindByRangePassengersEmpty =
+                new ArrayList<>();
         return new Object[][]{{actualListFindById, expectedListFindById},
                 {actualListFindByIdEmpty, expectedListFindByIdEmpty},
                 {actualListFindByLuggage, expectedListFindByLuggage},
                 {actualListFindByPassengers, expectedListFindByPassengers},
-                {actualListFindByRangePassengers, expectedListFindByRangePassengers},
-                {actualListFindByRangePassengersEmpty, expectedListFindByRangePassengersEmpty}};
+                {actualListFindByRangePassengers,
+                        expectedListFindByRangePassengers},
+                {actualListFindByRangePassengersEmpty,
+                        expectedListFindByRangePassengersEmpty}};
     }
 
     @Test(groups = {"Train group"})
@@ -199,7 +221,8 @@ public class TrainTest {
 
     @Test(groups = {"Train group"},
             dataProvider = "test get all")
-    public void testGetAll(List<PassengerCarriage> trainNew, List<PassengerCarriage> passengerCarriageList) {
+    public void testGetAll(List<PassengerCarriage> trainNew,
+                           List<PassengerCarriage> passengerCarriageList) {
         assertEquals(trainNew, passengerCarriageList);
     }
 
