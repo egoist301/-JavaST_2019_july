@@ -11,11 +11,7 @@ public class SortSpecificationByPassengersThenByLuggage
      */
     @Override
     public Comparator<PassengerCarriage> specifiedComparator() {
-        Comparator<PassengerCarriage> passengerCarriageComparator
-                = new SortSpecificationByPassengers().specifiedComparator();
-        Comparator<PassengerCarriage> luggageCarriageComparator
-                = new SortSpecificationByLuggage().specifiedComparator();
-        return passengerCarriageComparator
-                .thenComparing(luggageCarriageComparator);
+        return Comparator.comparingInt(PassengerCarriage::getNumberOfPassengers)
+                .thenComparing(PassengerCarriage::getNumberOfLuggage);
     }
 }

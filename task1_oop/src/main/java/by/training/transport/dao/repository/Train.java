@@ -53,7 +53,7 @@ public final class Train implements TrainRepository, Observer {
     /**
      * @return number of luggage in train.
      */
-    public int getNumberOLuggage() {
+    public int getNumberOfLuggage() {
         return numberOLuggage;
     }
 
