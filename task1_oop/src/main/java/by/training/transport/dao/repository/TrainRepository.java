@@ -26,6 +26,11 @@ public interface TrainRepository {
     int size();
 
     /**
+     * clear repository.
+     */
+    void clear();
+
+    /**
      * @return isEmpty.
      */
     boolean isEmpty();

@@ -68,6 +68,15 @@ public final class Train implements TrainRepository, Observer {
     }
 
     /**
+     * clear listTrain.
+     */
+    @Override
+    public void clear() {
+        listTrain.clear();
+        update();
+    }
+
+    /**
      * @param specificationNew specification for sorting or searching.
      * @return list of passengers.
      * @throws IllegalSpecificationException incorrect specification.

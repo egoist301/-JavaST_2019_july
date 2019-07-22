@@ -4,13 +4,20 @@ import by.training.transport.bean.entity.Coupe;
 import by.training.transport.bean.entity.Placecart;
 import by.training.transport.bean.entity.SeatCarriage;
 import by.training.transport.dao.repository.Train;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.*;
 
 public class TrainServiceTest {
-    @Test(groups = {"Train service group"},
+    @AfterMethod(groups = {"clear group"})
+    public void clearTrain() {
+        Train.getTrain().clear();
+    }
+
+    @Test(groups = {"Train service group", "clear group"},
             dataProvider = "test counting number of passengers.")
     public void testCountingTheNumberOfPassengers(int actualPassengers,
                                                   int expectedPassengers) {
@@ -34,7 +41,7 @@ public class TrainServiceTest {
         return objects;
     }
 
-    @Test(groups = {"Train service group"},
+    @Test(groups = {"Train service group", "clear group"},
             dataProvider = "test counting number of luggage.")
     public void testCountingTheNumberOfLuggage(int actualLuggage,
                                                int expectedLuggage) {
