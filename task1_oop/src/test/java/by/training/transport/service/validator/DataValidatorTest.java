@@ -71,7 +71,7 @@ public class DataValidatorTest {
     public Object[][] testIsValidSeatCarriagePositiveProvider() {
         return new Object[][]{{new String[]{"seatcarriage", "1", "2", "3"}},
                 {new String[]{"seatcarriage", "0", "0", "0"}},
-                {new String[]{"seatcarriage", "62", "100", "110"}}};
+                {new String[]{"seatcarriage", "62", "100", "62"}}};
     }
 
     @Test(groups = {"Data validator group"},
@@ -84,7 +84,8 @@ public class DataValidatorTest {
     public Object[][] testIsValidSeatCarriageNegativeProvider() {
         return new Object[][]{{new String[]{"seatcarriage", "-1", "2", "3"}},
                 {new String[]{"seatcarriage", "0", "-2", "100"}},
-                {new String[]{"seatcarriage", "63", "100", "110"}},
+                {new String[]{"seatcarriage", "63", "100", "13"}},
+                {new String[]{"seatcarriage", "62", "100", "110"}},
                 {new String[]{"seatcarriage", "1", "10", "-10"}}};
     }
 }

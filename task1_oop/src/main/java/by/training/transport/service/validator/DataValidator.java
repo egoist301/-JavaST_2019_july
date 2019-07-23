@@ -59,9 +59,11 @@ public final class DataValidator {
                 && Integer.parseInt(line) >= 0;
     }
 
-    private static boolean isNumberOfSeats(final String line) {
+    private static boolean isNumberOfSeats(final String line,
+                                           final int maximumPlaces) {
         return isInteger(line)
-                && Integer.parseInt(line) >= 0;
+                && Integer.parseInt(line) >= 0
+                && Integer.parseInt(line) <= maximumPlaces;
     }
 
     private static boolean isNumberOfCoupe(final String line) {
@@ -102,6 +104,7 @@ public final class DataValidator {
                 && isNumberOfPassengers(line[FIRST_VALUE],
                 SeatCarriage.DEFAULT_NUMBER_OF_PLACES)
                 && isNumberOfLuggage(line[SECOND_VALUE])
-                && isNumberOfSeats(line[THIRD_VALUE]);
+                && isNumberOfSeats(line[THIRD_VALUE],
+                SeatCarriage.DEFAULT_NUMBER_OF_PLACES);
     }
 }
