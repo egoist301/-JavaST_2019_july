@@ -12,6 +12,9 @@
                 <include name="Data reader group"/>
                 <include name="Data parser group"/>
                 <include name="Data validator group"/>
+                <include name="Coupe factory group"/>
+                <include name="Placecart factory group"/>
+                <include name="Seat carriage factory group"/>
             </run>
         </groups>
         <classes>
@@ -21,6 +24,9 @@
             <class name="by.training.transport.dao.reader.DataReaderTest"/>
             <class name="by.training.transport.dao.parser.DataParserTest"/>
             <class name="by.training.transport.service.validator.DataValidatorTest"/>
+            <class name="by.training.transport.dao.factory.CoupeFactoryTest"/>
+            <class name="by.training.transport.dao.factory.PlacecartFactoryTest"/>
+            <class name="by.training.transport.dao.factory.SeatCarriageFactoryTest"/>
         </classes>
     </test>
 
