@@ -25,7 +25,7 @@ public abstract class PassengerCarriage {
     /**
      * Subscriber.
      */
-    private Train train = Train.getTrain();
+    private Train train;
 
     /**
      * @param numberOfPassengersNew number of passengers.
@@ -74,6 +74,14 @@ public abstract class PassengerCarriage {
         notifyObservers();
     }
 
+    /**
+     * @param trainNew train - observer.
+     */
+    public void addObserver(Train trainNew) {
+        train = trainNew;
+        train.add(this);
+    }
+
     private void notifyObservers() {
         train.update();
     }
@@ -108,7 +116,7 @@ public abstract class PassengerCarriage {
      */
     @Override
     public String toString() {
-        return "passengerCarriageId='" + passengerCarriageId + '\''
+        return "Id='" + passengerCarriageId + '\''
                 + ", numberOfPassengers=" + numberOfPassengers
                 + ", numberOfLuggage=" + numberOfLuggage;
     }

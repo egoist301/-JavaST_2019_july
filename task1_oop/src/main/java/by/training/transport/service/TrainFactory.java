@@ -42,7 +42,7 @@ public final class TrainFactory {
             try {
                 CarriageFactory carriageFactory =
                         carriageProvider.selectCarriageFactory(strings[0]);
-                train.add(carriageFactory.createCarriage(strings));
+                carriageFactory.createCarriage(strings).addObserver(train);
             } catch (CarriageValidationException ex) {
                 LOGGER.warn(ex);
             }
