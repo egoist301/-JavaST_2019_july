@@ -15,7 +15,7 @@ public final class Printer {
     /**
      * @param message message to print.
      */
-    public static void execute(final Object message) {
+    public static void printInfo(final Object message) {
         LOGGER.info(message);
     }
 }

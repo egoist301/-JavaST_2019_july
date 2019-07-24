@@ -1,5 +1,6 @@
 package by.training.transport.view.menu.findmenuentry;
 
+import by.training.transport.bean.entity.PassengerCarriage;
 import by.training.transport.controller.findmenubutton.FindByLuggage;
 import by.training.transport.view.Printer;
 import by.training.transport.view.menu.MenuEntry;
@@ -33,7 +34,10 @@ public class FindMenuEntryByLuggage extends MenuEntry {
         try {
             int numberOfLuggage = Integer.parseInt(reader.readLine());
             FindByLuggage findByLuggage = new FindByLuggage();
-            Printer.execute(findByLuggage.execute(numberOfLuggage));
+            for (PassengerCarriage passengerCarriage
+                    : findByLuggage.find(numberOfLuggage)) {
+                Printer.printInfo(passengerCarriage);
+            }
         } catch (IOException ex) {
             LOGGER.warn(ex);
         }

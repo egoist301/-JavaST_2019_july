@@ -1,5 +1,6 @@
 package by.training.transport.view.menu.findmenuentry;
 
+import by.training.transport.bean.entity.PassengerCarriage;
 import by.training.transport.controller.findmenubutton.FindByPassengersRange;
 import by.training.transport.view.Printer;
 import by.training.transport.view.menu.MenuEntry;
@@ -35,8 +36,11 @@ public class FindMenuEntryByPassengersRange extends MenuEntry {
             int numberOfPassengersMAX = Integer.parseInt(reader.readLine());
             FindByPassengersRange findByPassengersRange =
                     new FindByPassengersRange();
-            Printer.execute(findByPassengersRange.execute(numberOfPassengersMIN,
-                    numberOfPassengersMAX));
+            for (PassengerCarriage passengerCarriage
+                    : findByPassengersRange.find(numberOfPassengersMIN,
+                    numberOfPassengersMAX)) {
+                Printer.printInfo(passengerCarriage);
+            }
         } catch (IOException ex) {
             LOGGER.warn(ex);
         }

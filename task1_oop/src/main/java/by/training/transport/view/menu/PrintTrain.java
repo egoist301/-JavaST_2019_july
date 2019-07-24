@@ -17,6 +17,6 @@ public class PrintTrain extends MenuEntry {
      */
     @Override
     public void run() {
-        Printer.execute(Train.getTrain());
+        Printer.printInfo(Train.getTrain());
     }
 }

@@ -19,7 +19,7 @@ public class FindByLuggage {
      * @param numberOfLuggage number of luggage.
      * @return list.
      */
-    public List<PassengerCarriage> execute(final int numberOfLuggage) {
+    public List<PassengerCarriage> find(final int numberOfLuggage) {
         List<PassengerCarriage> list;
         try {
             list = Train.getTrain().query(

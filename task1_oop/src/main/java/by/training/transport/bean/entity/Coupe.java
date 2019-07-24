@@ -8,14 +8,18 @@ public class Coupe extends PassengerCarriage {
      */
     public static final int DEFAULT_NUMBER_OF_PLACES = 36;
     /**
+     * Number of coupe fix.
+     */
+    public static final int DEFAULT_NUMBER_OF_COUPE = 9;
+    /**
      * Number of coupe.
      */
     private int numberOfCoupe;
 
     /**
      * @param numberOfPassengersNew number of passengers.
-     * @param numberOfLuggageNew number of luggage.
-     * @param numberOfCoupeNew number of coupe.
+     * @param numberOfLuggageNew    number of luggage.
+     * @param numberOfCoupeNew      number of coupe.
      */
     public Coupe(final int numberOfPassengersNew, final int numberOfLuggageNew,
                  final int numberOfCoupeNew) {

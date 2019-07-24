@@ -20,8 +20,8 @@ public class FindByPassengersRange {
      * @param numberOfPassengersMAX number of passengers max.
      * @return list.
      */
-    public List<PassengerCarriage> execute(final int numberOfPassengersMIN,
-                                           final int numberOfPassengersMAX) {
+    public List<PassengerCarriage> find(final int numberOfPassengersMIN,
+                                        final int numberOfPassengersMAX) {
         List<PassengerCarriage> list;
         try {
             list = Train.getTrain().query(

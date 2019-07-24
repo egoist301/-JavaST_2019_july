@@ -8,13 +8,17 @@ public class Placecart extends PassengerCarriage {
      */
     public static final int DEFAULT_NUMBER_OF_PLACES = 54;
     /**
+     * Number of compartments fix.
+     */
+    public static final int DEFAULR_NUMBER_OF_COMPARTMENTS = 18;
+    /**
      * Number of compartments.
      */
     private int numberOfCompartments;
 
     /**
-     * @param numberOfPassengersNew number of passengers.
-     * @param numberOfLuggageNew number of luggage.
+     * @param numberOfPassengersNew   number of passengers.
+     * @param numberOfLuggageNew      number of luggage.
      * @param numberOfCompartmentsNew number of compartments.
      */
     public Placecart(final int numberOfPassengersNew,

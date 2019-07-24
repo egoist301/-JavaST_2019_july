@@ -17,7 +17,7 @@ public class DataValidatorTest {
     public Object[][] testIsValidCoupePositiveProvider() {
         return new Object[][]{{new String[]{"coupe", "1", "2", "3"}},
                 {new String[]{"coupe", "0", "0", "0"}},
-                {new String[]{"coupe", "36", "100", "110"}}};
+                {new String[]{"coupe", "36", "100", "9"}}};
     }
 
     @Test(groups = {"Data validator group"},
@@ -31,6 +31,8 @@ public class DataValidatorTest {
         return new Object[][]{{new String[]{"coupe", "-1", "2", "3"}},
                 {new String[]{"coupe", "0", "-2", "100"}},
                 {new String[]{"coupe", "37", "100", "110"}},
+                {new String[]{"coupe", "33", "100", "10"}},
+                {new String[]{"coupe", "37", "100", "1"}},
                 {new String[]{"coupe", "1", "10", "-10"}}};
     }
 
@@ -44,7 +46,7 @@ public class DataValidatorTest {
     public Object[][] testIsValidPlacecartPositiveProvider() {
         return new Object[][]{{new String[]{"placecart", "1", "2", "3"}},
                 {new String[]{"placecart", "0", "0", "0"}},
-                {new String[]{"placecart", "54", "100", "110"}}};
+                {new String[]{"placecart", "54", "100", "18"}}};
     }
 
     @Test(groups = {"Data validator group"},
@@ -58,6 +60,8 @@ public class DataValidatorTest {
         return new Object[][]{{new String[]{"placecart", "-1", "2", "3"}},
                 {new String[]{"placecart", "0", "-2", "100"}},
                 {new String[]{"placecart", "55", "100", "110"}},
+                {new String[]{"placecart", "55", "100", "10"}},
+                {new String[]{"placecart", "5", "100", "110"}},
                 {new String[]{"placecart", "1", "10", "-10"}}};
     }
 

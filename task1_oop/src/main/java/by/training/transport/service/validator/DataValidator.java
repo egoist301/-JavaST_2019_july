@@ -56,19 +56,22 @@ public final class DataValidator {
 
     private static boolean isNumberOfCompartments(final String line) {
         return isInteger(line)
-                && Integer.parseInt(line) >= 0;
+                && Integer.parseInt(line) >= 0
+                && Integer.parseInt(line)
+                <= Placecart.DEFAULR_NUMBER_OF_COMPARTMENTS;
     }
 
-    private static boolean isNumberOfSeats(final String line,
-                                           final int maximumPlaces) {
+    private static boolean isNumberOfSeats(final String line) {
         return isInteger(line)
                 && Integer.parseInt(line) >= 0
-                && Integer.parseInt(line) <= maximumPlaces;
+                && Integer.parseInt(line)
+                <= SeatCarriage.DEFAULT_NUMBER_OF_PLACES;
     }
 
     private static boolean isNumberOfCoupe(final String line) {
         return isInteger(line)
-                && Integer.parseInt(line) >= 0;
+                && Integer.parseInt(line) >= 0
+                && Integer.parseInt(line) <= Coupe.DEFAULT_NUMBER_OF_COUPE;
     }
 
     /**
@@ -79,8 +82,8 @@ public final class DataValidator {
         return line.length == DATA_LENGTH
                 && isNumberOfPassengers(line[FIRST_VALUE],
                 Coupe.DEFAULT_NUMBER_OF_PLACES)
-                && isNumberOfCoupe(line[SECOND_VALUE])
-                && isNumberOfLuggage(line[THIRD_VALUE]);
+                && isNumberOfCoupe(line[THIRD_VALUE])
+                && isNumberOfLuggage(line[SECOND_VALUE]);
     }
 
     /**
@@ -104,7 +107,6 @@ public final class DataValidator {
                 && isNumberOfPassengers(line[FIRST_VALUE],
                 SeatCarriage.DEFAULT_NUMBER_OF_PLACES)
                 && isNumberOfLuggage(line[SECOND_VALUE])
-                && isNumberOfSeats(line[THIRD_VALUE],
-                SeatCarriage.DEFAULT_NUMBER_OF_PLACES);
+                && isNumberOfSeats(line[THIRD_VALUE]);
     }
 }

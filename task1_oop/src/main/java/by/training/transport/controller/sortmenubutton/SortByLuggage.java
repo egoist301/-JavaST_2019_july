@@ -18,7 +18,7 @@ public class SortByLuggage {
     /**
      * @return list.
      */
-    public List<PassengerCarriage> execute() {
+    public List<PassengerCarriage> sort() {
         List<PassengerCarriage> list;
         try {
             list = Train.getTrain().query(new SortSpecificationByLuggage());

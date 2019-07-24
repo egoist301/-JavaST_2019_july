@@ -1,5 +1,6 @@
 package by.training.transport.view.menu.sortmenuentry;
 
+import by.training.transport.bean.entity.PassengerCarriage;
 import by.training.transport.controller.sortmenubutton.SortByPassengersThenLuggage;
 import by.training.transport.view.Printer;
 import by.training.transport.view.menu.MenuEntry;
@@ -19,6 +20,9 @@ public class SortMenuEntryByPassengersThenLuggage extends MenuEntry {
     public void run() {
         SortByPassengersThenLuggage sortByPassengersThenLuggage =
                 new SortByPassengersThenLuggage();
-        Printer.execute(sortByPassengersThenLuggage.execute());
+        for (PassengerCarriage passengerCarriage
+                : sortByPassengersThenLuggage.sort()) {
+            Printer.printInfo(passengerCarriage);
+        }
     }
 }

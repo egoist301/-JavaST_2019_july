@@ -19,7 +19,7 @@ public class FindById {
      * @param id id.
      * @return list.
      */
-    public List<PassengerCarriage> execute(final long id) {
+    public List<PassengerCarriage> find(final long id) {
         List<PassengerCarriage> list;
         try {
             list = Train.getTrain().query(new FindSpecificationById(id));
