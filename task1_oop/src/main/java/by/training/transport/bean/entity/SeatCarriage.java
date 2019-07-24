@@ -14,8 +14,8 @@ public class SeatCarriage extends PassengerCarriage {
 
     /**
      * @param numberOfPassengersNew number of passengers.
-     * @param numberOfLuggageNew number of luggage.
-     * @param numberOfSeatsNew number of seats.
+     * @param numberOfLuggageNew    number of luggage.
+     * @param numberOfSeatsNew      number of seats.
      */
     public SeatCarriage(final int numberOfPassengersNew,
                         final int numberOfLuggageNew,

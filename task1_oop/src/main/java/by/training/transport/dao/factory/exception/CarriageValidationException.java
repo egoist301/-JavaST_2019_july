@@ -16,7 +16,7 @@ public class CarriageValidationException extends Exception {
 
     /**
      * @param message error message.
-     * @param cause error.
+     * @param cause   error.
      */
     public CarriageValidationException(final String message,
                                        final Throwable cause) {

@@ -17,6 +17,6 @@ public class NumberPassengersMenuEntry extends MenuEntry {
     @Override
     public void run() {
         NumberPassengers numberPassengers = new NumberPassengers();
-        Printer.printInfo(numberPassengers.execute());
+        Printer.printInfo(numberPassengers.passesTheNumberOfPassengers());
     }
 }

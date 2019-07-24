@@ -12,13 +12,14 @@ import by.training.transport.dao.repository.specification.findspecification.Find
 import by.training.transport.dao.repository.specification.sortspecification.SortSpecificationByLuggage;
 import by.training.transport.dao.repository.specification.sortspecification.SortSpecificationByPassengers;
 import by.training.transport.dao.repository.specification.sortspecification.SortSpecificationByPassengersThenByLuggage;
-import by.training.transport.service.TrainService;
-import org.testng.annotations.*;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class TrainTest {
     @AfterMethod(groups = {"clear group"})

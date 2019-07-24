@@ -2,9 +2,9 @@ package by.training.transport.dao.repository;
 
 import by.training.transport.bean.entity.PassengerCarriage;
 import by.training.transport.dao.repository.exception.IllegalSpecificationException;
+import by.training.transport.dao.repository.specification.Specification;
 import by.training.transport.dao.repository.specification.findspecification.FindSpecification;
 import by.training.transport.dao.repository.specification.sortspecification.SortSpecification;
-import by.training.transport.dao.repository.specification.Specification;
 import by.training.transport.service.TrainService;
 
 import java.util.ArrayList;

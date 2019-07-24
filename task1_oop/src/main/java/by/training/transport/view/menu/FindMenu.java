@@ -1,9 +1,9 @@
 package by.training.transport.view.menu;
 
+import by.training.transport.view.menu.findmenuentry.FindMenuEntryById;
 import by.training.transport.view.menu.findmenuentry.FindMenuEntryByLuggage;
 import by.training.transport.view.menu.findmenuentry.FindMenuEntryByPassengers;
 import by.training.transport.view.menu.findmenuentry.FindMenuEntryByPassengersRange;
-import by.training.transport.view.menu.findmenuentry.FindMenuEntryById;
 
 public class FindMenu extends MenuEntry {
     /**

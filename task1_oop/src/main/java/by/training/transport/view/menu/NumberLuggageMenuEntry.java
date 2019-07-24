@@ -17,6 +17,6 @@ public class NumberLuggageMenuEntry extends MenuEntry {
     @Override
     public void run() {
         NumberLuggage numberLuggage = new NumberLuggage();
-        Printer.printInfo(numberLuggage.execute());
+        Printer.printInfo(numberLuggage.passesTheNumberOfLuggage());
     }
 }

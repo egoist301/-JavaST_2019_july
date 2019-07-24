@@ -43,7 +43,7 @@ public interface TrainRepository {
 
     /**
      * @param passengerCarriageNew passenger carriage.
-     * @param index index of passenger carriage.
+     * @param index                index of passenger carriage.
      */
     void set(PassengerCarriage passengerCarriageNew, int index);
 

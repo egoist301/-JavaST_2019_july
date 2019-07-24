@@ -7,7 +7,7 @@ public class NumberLuggage {
     /**
      * @return number of luggage.
      */
-    public int execute() {
+    public int passesTheNumberOfLuggage() {
         return TrainService.countingTheNumberOfLuggage(Train.getTrain());
     }
 }
