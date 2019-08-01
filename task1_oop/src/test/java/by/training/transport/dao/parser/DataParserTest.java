@@ -10,7 +10,7 @@ import static org.testng.Assert.assertEquals;
 public class DataParserTest {
 
     @Test(groups = {"Data parser group"})
-    public void testGetLines() {
+    public void testGetLines() { //TODO больше тестов и разнообразия
         List<String> stringList = new ArrayList<>();
         stringList.add("coupe 1 2 3");
         stringList.add("placecart 3 2 1");

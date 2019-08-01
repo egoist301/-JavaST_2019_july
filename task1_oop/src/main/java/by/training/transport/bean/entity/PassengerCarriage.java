@@ -77,7 +77,7 @@ public abstract class PassengerCarriage {
     /**
      * @param trainNew train - observer.
      */
-    public void addObserver(Train trainNew) {
+    public void addObserver(final Train trainNew) {
         train = trainNew;
         train.add(this);
     }

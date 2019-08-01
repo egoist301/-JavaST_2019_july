@@ -1,6 +1,6 @@
 package by.training.transport.bean.enums;
 
-public enum CarriageType {
+public enum CarriageType { //TODO  лишний уровень пакета
     /**
      * Placecart.
      */

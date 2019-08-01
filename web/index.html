@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Playfair+Display|Ubuntu:300&display=swap">
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../web/css/bootstrap.min.css">
+    <link href="../web/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../web/css/style.css">
+
+    <title>Library</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+            <div class="container">
+                <a href="#" class="navbar-brand">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle Navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="basicExampleNav">
+                    <ul class="navbar-nav mr-auto smooth-scroll">
+                        <li class="nav-item">
+                            <a href=#intro class="nav-link waves-effect waves-light">Intro</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=#contact class="nav-link waves-effect waves-light">Contact us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=staff_list.html class="nav-link waves-effect waves-light">Staff</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=reader_list.html class="nav-link waves-effect waves-light">Readers</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> Profile </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                              <a class="dropdown-item" href="profile.html">My account</a>
+                              <a class="dropdown-item" href="login.html">Log out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="intro" class="view">
+            <div class="mask rgba-black-strong">
+                <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div class="col-md-10">
+                            <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Книжный червь</h2>
+                            <button class="btn btn-outline-white waves-effect waves-light">Read More <i class="fa fa-book"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <hr class="my-5">
+    <section id="contact">
+        <h2 class="mb-5 font-weight-bold text-center">Contact us</h2>
+        <div class="row">
+            <div class="col-lg-5 col-md-12">
+                <form class="p-5 needs-validation">
+                    <div class="md-form form-sm">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input id="form3" type="text" class="validate form-control form-control-sm" required maxlength="10">
+                        <label for="form3">Your name*</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <i class="fa fa-envelope prefix grey-text"></i>
+                        <input type="email" id="inputValidationEx67 form2" class="form-control form-control-sm" required>
+                        <label for="inputValidationEx67 form2" data-error="wrong" data-success="right">Your email*</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <i class="fa fa-tag prefix grey-text"></i>
+                        <input id="form23" class="form-control form-control-sm validate" type="text">
+                        <label for="form23">Your subject</label>
+                    </div>
+                    <div class="md-form form-sm">
+                        <i class="fa fa-pen prefix grey-text"></i>
+                        <textarea id="form32" type="text" class="md-textaria form-control validate form-control-sm" rows="3" required></textarea>
+                        <label for="form32">Your message*</label>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary waves-effect waves-light" id="validate">Send<i class="far fa-paper-plane ml-1"></i></button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-lg-7 col-md-12">
+                <div class="row text-center">
+                    <div class="col-lg-4 col-md-4 mb-3">
+                        <p><i class="fa fa-map fa-1x mr-2 grey-text"></i>Minsk</p>
+                    </div>
+                    <div class="col-lg-4 col-md-4 mb-3">
+                        <p><i class="fa fa-building fa-1x mr-2 grey-text"></i>Mon - Fri</p>
+                    </div>
+                    <div class="col-lg-4 col-md-4 mb-3">
+                        <p><i class="fa fa-phone fa-1x mr-2 grey-text"></i>+375333221114</p>
+                    </div>
+                </div>
+                <div id="map-container-google-1" class="z-depth-1-half map-container" style="height: 400px">
+                      <iframe src="https://maps.google.com/maps?q=minsk&t=&z=10&ie=UTF8&iwloc=&output=embed" frameborder="0"
+                        style="border:0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="my-5">
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="footer-left">
+                    <a href="#">Terms and conditions</a>
+                    <a href="#">Privacy</a>
+                    <p class="pull-left">Copyright © 2019</p>
+                </div>
+                <div class="footer-right">
+                    <span>Follow us:</span>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../web/js/jquery-3.4.1.min.js"></script>
+    <script src="../web/js/popper.min.js"></script>
+    <script src="../web/js/bootstrap.min.js"></script>
+    <script src="../web/js/bootstrap.js"></script>
+    <script src="../web/js/mdb.min.js"></script>
+    <script src="../web/js/mdb.js"></script>
+    <!--<script src="../web/js/bootstrap-validate.js"></script>
+    <script>
+        bootstrapValidate('#form3', 'max:10:Please do not enter more than 10 characters!')
+        bootstrapValidate('#form3', 'alpha:You can only enter alphabetic characters!')
+        bootstrapValidate('#form2', 'email:Enter a valid email address!')
+    </script>-->
+</body>
+</html>

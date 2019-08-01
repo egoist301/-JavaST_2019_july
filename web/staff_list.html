@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata|Playfair+Display|Ubuntu:300&display=swap">
+    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../web/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../web/css/style.css">
+    <link href="../web/css/mdb.min.css" rel="stylesheet">
+
+    <title>Staff list</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+            <div class="container">
+                <a href="index.html" class="navbar-brand">Navbar</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle Navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="basicExampleNav">
+                    <ul class="navbar-nav mr-auto smooth-scroll">
+                        <li class="nav-item">
+                            <a href=#intro class="nav-link waves-effect waves-light">Intro</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href=reader_list.html class="nav-link waves-effect waves-light">Readers</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> Profile </a>
+                            <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
+                              <a class="dropdown-item" href="#">My account</a>
+                              <a class="dropdown-item" href="login.html">Log out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="intro" class="view">
+            <div class="mask rgba-black-strong">
+                <div class="container-fluid d-flex align-items-center justify-content-center h-100">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div class="col-md-10">
+                            <h2 class="display-4 font-weight-bold white-text pt-5 mb-2">Книжный червь</h2>
+                            <button class="btn btn-outline-white waves-effect waves-light">Read More <i class="fa fa-book"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <hr class="my-5">
+    <div class="container">
+        <div>
+            <h2>List of staff</h2>
+        </div>
+        <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
+            <table class="table table-hover table-bordered">
+                <thead class="send-button-color">
+                <tr>
+                    <th scope="col">Username</th>
+                    <th scope="col">Role</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr onclick="submitFormById(&#39;form-1&#39;)">
+                    <td>
+                        admin
+                        <form id="form-1" action="http://localhost:8090/library/user/edit.html" method="post">
+                            <input type="hidden" name="identity" value="1">
+                        </form>
+                    </td>
+                    <td>администратор</td>
+                </tr>
+                <tr onclick="submitFormById(&#39;form-2&#39;)">
+                    <td>
+                        user1
+                        <form id="form-2" action="http://localhost:8090/library/user/edit.html" method="post">
+                            <input type="hidden" name="identity" value="2">
+                        </form>
+                    </td>
+                    <td>архивариус</td>
+                </tr>
+                <tr onclick="submitFormById(&#39;form-3&#39;)">
+                    <td>
+                        user2
+                        <form id="form-3" action="http://localhost:8090/library/user/edit.html" method="post">
+                            <input type="hidden" name="identity" value="3">
+                        </form>
+                    </td>
+                    <td>библиотекарь</td>
+                </tr>
+                </tbody>
+            </table>
+            <form action="http://localhost:8090/library/user/edit.html" method="post">
+                <button type="submit" class="btn btn-primary">Добавить</button>
+            </form>
+        </div>
+    </div>
+    <hr class="my-5">
+    <!-- Footer -->
+    <footer class="footer-fixed">
+        <div class="container">
+            <div class="d-flex justify-content-between">
+                <div class="footer-left">
+                    <a href="#">Terms and conditions</a>
+                    <a href="#">Privacy</a>
+                    <p class="pull-left">Copyright © 2019</p>
+                </div>
+                <div class="footer-right">
+                    <span>Follow us:</span>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="../web/js/jquery-3.4.1.min.js"></script>
+    <script src="../web/js/popper.min.js"></script>
+    <script src="../web/js/bootstrap.min.js"></script>
+    <script src="../web/js/mdb.min.js"></script>
+    <script src="../web/js/mdb.js"></script>
+
+</body>
+</html>

@@ -11,7 +11,7 @@ public final class CoupeFactory implements CarriageFactory {
     /**
      * First value in array.
      */
-    private static final int FIRST_VALUE = 1;
+    private static final int FIRST_VALUE = 1; //TODO внутри метода
     /**
      * Second value in array.
      */
@@ -23,7 +23,7 @@ public final class CoupeFactory implements CarriageFactory {
     /**
      * Message for exception.
      */
-    private static final String MESSAGE = "Incorrect data.";
+    private static final String MESSAGE = "Incorrect data."; //TODO конкретизации
     /**
      * Singleton.
      */

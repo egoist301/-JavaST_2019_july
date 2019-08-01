@@ -113,14 +113,6 @@ public final class Train implements TrainRepository, Observer {
     }
 
     /**
-     * @return isEmpty.
-     */
-    @Override
-    public boolean isEmpty() {
-        return listTrain.isEmpty();
-    }
-
-    /**
      * @param index collection index.
      * @return carriage.
      */

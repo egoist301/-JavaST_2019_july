@@ -31,11 +31,6 @@ public interface TrainRepository {
     void clear();
 
     /**
-     * @return isEmpty.
-     */
-    boolean isEmpty();
-
-    /**
      * @param index index of passenger carriage.
      * @return passenger carriage.
      */
