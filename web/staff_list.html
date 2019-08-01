@@ -34,7 +34,7 @@
                             <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
           aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i> Profile </a>
                             <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4">
-                              <a class="dropdown-item" href="#">My account</a>
+                              <a class="dropdown-item" href="profile.html">My account</a>
                               <a class="dropdown-item" href="login.html">Log out</a>
                             </div>
                         </li>
@@ -72,7 +72,7 @@
                 <tr onclick="submitFormById(&#39;form-1&#39;)">
                     <td>
                         admin
-                        <form id="form-1" action="http://localhost:8090/library/user/edit.html" method="post">
+                        <form id="form-1" action="../web/edit.html" method="post">
                             <input type="hidden" name="identity" value="1">
                         </form>
                     </td>
@@ -81,7 +81,7 @@
                 <tr onclick="submitFormById(&#39;form-2&#39;)">
                     <td>
                         user1
-                        <form id="form-2" action="http://localhost:8090/library/user/edit.html" method="post">
+                        <form id="form-2" action="../web/edit.html" method="post">
                             <input type="hidden" name="identity" value="2">
                         </form>
                     </td>
@@ -90,7 +90,7 @@
                 <tr onclick="submitFormById(&#39;form-3&#39;)">
                     <td>
                         user2
-                        <form id="form-3" action="http://localhost:8090/library/user/edit.html" method="post">
+                        <form id="form-3" action="../web/edit.html" method="post">
                             <input type="hidden" name="identity" value="3">
                         </form>
                     </td>
@@ -98,7 +98,7 @@
                 </tr>
                 </tbody>
             </table>
-            <form action="http://localhost:8090/library/user/edit.html" method="post">
+            <form action="../web/edit.html" method="post">
                 <button type="submit" class="btn btn-primary">Добавить</button>
             </form>
         </div>
