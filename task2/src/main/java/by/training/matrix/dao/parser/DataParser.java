@@ -1,10 +1,26 @@
 package by.training.matrix.dao.parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DataParser.
+ */
 public class DataParser {
-//    public List<String[]> getLines(final List<String> stringListNew) {
-//        return new by.training.transport.dao.parser.DataParser()
-//                .getLines(stringListNew);
-//    }
+    /**
+     * Separator.
+     */
+    private static final String REGEX_SEPARATOR = "\\s+";
+
+    /**
+     * @param stringListNew list of strings.
+     * @return list of separated lines.
+     */
+    public List<String[]> getLines(final List<String> stringListNew) {
+        List<String[]> result = new ArrayList<>();
+        for (String temp : stringListNew) {
+            result.add(temp.split(REGEX_SEPARATOR));
+        }
+        return result;
+    }
 }

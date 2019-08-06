@@ -3,16 +3,33 @@ package by.training.matrix.service;
 import by.training.matrix.bean.Matrix;
 import by.training.matrix.service.exception.MatrixValidationException;
 
+/**
+ * Single-threaded multiplication.
+ */
 public class SimpleMatrixMultiplication {
+    /**
+     * First matrix.
+     */
     private Matrix matrixFirst;
+    /**
+     * Second matrix.
+     */
     private Matrix matrixSecond;
 
+    /**
+     * @param matrixFirstNew first matrix.
+     * @param matrixSecondNew second matrix.
+     */
     public SimpleMatrixMultiplication(final Matrix matrixFirstNew,
                                       final Matrix matrixSecondNew) {
         matrixFirst = matrixFirstNew;
         matrixSecond = matrixSecondNew;
     }
 
+    /**
+     * @return result multiplication(matrix).
+     * @throws MatrixValidationException custom exception.
+     */
     public Matrix multiplication()
             throws MatrixValidationException {
         if (MatrixValidation.isMultiplicableMatrices(matrixFirst,

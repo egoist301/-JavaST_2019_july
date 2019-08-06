@@ -5,12 +5,32 @@ import by.training.matrix.service.exception.MatrixValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Multiplication matrix with thread.
+ */
 public class MatrixMultiplierWithThread {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * First matrix.
+     */
     private Matrix matrixFirst;
+    /**
+     * Second matrix.
+     */
     private Matrix matrixSecond;
+    /**
+     * Count of threads.
+     */
     private int countThreads;
 
+    /**
+     * @param matrixFirstNew  first matrix.
+     * @param matrixSecondNew second matrix.
+     * @param countThreadsNew count of threads.
+     */
     public MatrixMultiplierWithThread(final Matrix matrixFirstNew,
                                       final Matrix matrixSecondNew,
                                       final int countThreadsNew) {
@@ -19,6 +39,10 @@ public class MatrixMultiplierWithThread {
         countThreads = countThreadsNew;
     }
 
+    /**
+     * @return result matrix.
+     * @throws MatrixValidationException custom exception.
+     */
     public Matrix multiplication() throws MatrixValidationException {
         if (MatrixValidation.isMultiplicableMatrices(matrixFirst,
                 matrixSecond)) {
@@ -27,17 +51,18 @@ public class MatrixMultiplierWithThread {
             }
             Matrix matrix = new Matrix(matrixFirst.getCountRows(),
                     matrixSecond.getCountColumns());
-            int count = matrixFirst.getCountRows() / countThreads;
+            int countRows = matrixFirst.getCountRows() / countThreads;
             int additional = matrixFirst.getCountRows() % countThreads;
             Thread[] threads = new Thread[countThreads];
             int start = 0;
             for (int i = 0; i < countThreads; i++) {
-                int cnt = ((i == 0) ? count + additional : count);
-                threads[i] = new Thread(new MultiplierThread(matrixFirst,
-                        matrixSecond, matrix, start, start + cnt - 1));
-                start += cnt;
+                int count = ((i == 0) ? countRows + additional : countRows);
+                int end = start + count - 1;
+                threads[i] = new Thread(new MultiplierTask(matrixFirst,
+                        matrixSecond, matrix, start, end));
+                start += count;
             }
-            startTread(threads);
+            startThread(threads);
             joinThread(threads);
             return matrix;
         } else {
@@ -45,13 +70,23 @@ public class MatrixMultiplierWithThread {
         }
     }
 
-    private void startTread(Thread[] threadsNew){
-        for (Thread thread: threadsNew){
+    /**
+     * Start threads.
+     *
+     * @param threadsNew array of threads.
+     */
+    private void startThread(final Thread[] threadsNew) {
+        for (Thread thread : threadsNew) {
             thread.start();
         }
     }
 
-    private void joinThread(Thread[] threadsNew) {
+    /**
+     * Join threads.
+     *
+     * @param threadsNew array of threads.
+     */
+    private void joinThread(final Thread[] threadsNew) {
         try {
             for (Thread thread : threadsNew) {
                 thread.join();

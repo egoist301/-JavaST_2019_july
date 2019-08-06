@@ -6,12 +6,25 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * Matrix validation. Util class.
+ */
 public final class MatrixValidation {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * default constructor.
+     */
     private MatrixValidation() {
     }
 
+    /**
+     * @param element string element.
+     * @return true or not.
+     */
     private static boolean isInteger(final String element) {
         try {
             Integer.parseInt(element);
@@ -22,12 +35,21 @@ public final class MatrixValidation {
         return true;
     }
 
+    /**
+     * @param matrixNewFirst first matrix.
+     * @param matrixNewSecond second matrix.
+     * @return true or not.
+     */
     static boolean isMultiplicableMatrices(final Matrix matrixNewFirst,
                                            final Matrix matrixNewSecond) {
         return matrixNewFirst.getCountColumns()
                 == matrixNewSecond.getCountRows();
     }
 
+    /**
+     * @param listNew list of array string.
+     * @return true or not.
+     */
     private static boolean isMatrix(final List<String[]> listNew) {
         String[] strings = listNew.get(0);
         for (String[] stringsNew : listNew) {
@@ -38,6 +60,10 @@ public final class MatrixValidation {
         return true;
     }
 
+    /**
+     * @param listNew list of array string.
+     * @return true or not.
+     */
     public static boolean isIntegerMatrix(final List<String[]> listNew) {
         if (isMatrix(listNew)) {
             for (String[] strings : listNew) {
