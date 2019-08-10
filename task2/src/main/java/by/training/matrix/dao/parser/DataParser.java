@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DataParser.
+ * Data parser.
  */
 public class DataParser {
     /**

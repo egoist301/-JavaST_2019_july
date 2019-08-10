@@ -14,13 +14,23 @@ public final class MatrixInitializer {
 
     /**
      * Method to initialize.
+     *
      * @param matrix matrix.
      */
     public static void initialize(final Matrix matrix) {
-        for (int i = 0; i < matrix.getCountRows(); i++) {
-            for (int j = 0; j < matrix.getCountColumns(); j++) {
+        for (int i = 0; i < matrix.getCountRows(); ++i) {
+            for (int j = 0; j < matrix.getCountColumns(); ++j) {
                 matrix.setElement(i, j, i + 2);
             }
+        }
+    }
+
+    /**
+     * @param matrixNew matrix.
+     */
+    public static void initializeDiagonalZero(final Matrix matrixNew) {
+        for (int i = 0; i < matrixNew.getCountRows(); ++i) {
+            matrixNew.setElement(i, i, 0);
         }
     }
 }

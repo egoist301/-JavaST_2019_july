@@ -1,0 +1,24 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+
+<suite name="Suite1" verbose="1">
+
+    <test name="Train test">
+        <groups>
+            <run>
+                <include name="Data reader group"/>
+                <include name="Data parser group"/>
+                <include name="Matrix validation group"/>
+                <include name="Simple matrix multiplication group"/>
+                <include name="Factory matrix DAO"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="by.training.matrix.dao.reader.DataReaderTest"/>
+            <class name="by.training.matrix.dao.parser.DataParserTest"/>
+            <class name="by.training.matrix.service.MatrixValidationTest"/>
+            <class name="by.training.matrix.service.SimpleMatrixMultiplicationTest"/>
+            <class name="by.training.matrix.dao.factory.FactoryMatrixDAOTest"/>
+        </classes>
+    </test>
+
+</suite>

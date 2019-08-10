@@ -11,7 +11,10 @@ import org.apache.logging.log4j.Logger;
 /**
  * Factory of matrix.
  */
-public class FactoryMatrix {
+public final class FactoryMatrix {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger();
     /**
      * Singleton.
@@ -33,6 +36,7 @@ public class FactoryMatrix {
 
     /**
      * Create matrix.
+     *
      * @param filepath filepath.
      * @return matrix.
      */
@@ -44,7 +48,7 @@ public class FactoryMatrix {
         try {
             matrix = factoryMatrixDAO.createMatrix(dataParser
                     .getLines(dataReader.readAll(filepath)));
-        } catch (MatrixValidationException eNew){
+        } catch (MatrixValidationException eNew) {
             LOGGER.warn(eNew);
             throw new RuntimeException();
         }

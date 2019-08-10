@@ -36,7 +36,7 @@ public final class MatrixValidation {
     }
 
     /**
-     * @param matrixNewFirst first matrix.
+     * @param matrixNewFirst  first matrix.
      * @param matrixNewSecond second matrix.
      * @return true or not.
      */
@@ -44,6 +44,14 @@ public final class MatrixValidation {
                                            final Matrix matrixNewSecond) {
         return matrixNewFirst.getCountColumns()
                 == matrixNewSecond.getCountRows();
+    }
+
+    /**
+     * @param matrixNew matrix.
+     * @return true or not.
+     */
+    static boolean isSquareMatrix(final Matrix matrixNew) {
+        return matrixNew.getCountRows() == matrixNew.getCountColumns();
     }
 
     /**

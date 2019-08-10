@@ -106,7 +106,7 @@ public class Matrix {
             return false;
         }
         Matrix matrix = (Matrix) oNew;
-        return Arrays.equals(array, matrix.array);
+        return Arrays.deepEquals(array, matrix.array);
     }
 
     /**
