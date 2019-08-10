@@ -1,4 +1,4 @@
-package by.training.matrix.service;
+package by.training.matrix.service.multiplication;
 
 import by.training.matrix.bean.Matrix;
 

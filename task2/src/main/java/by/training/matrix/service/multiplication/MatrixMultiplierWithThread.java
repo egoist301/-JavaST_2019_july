@@ -1,6 +1,7 @@
-package by.training.matrix.service;
+package by.training.matrix.service.multiplication;
 
 import by.training.matrix.bean.Matrix;
+import by.training.matrix.service.MatrixValidation;
 import by.training.matrix.service.exception.MatrixValidationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

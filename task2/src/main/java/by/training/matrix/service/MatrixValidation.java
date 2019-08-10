@@ -40,8 +40,9 @@ public final class MatrixValidation {
      * @param matrixNewSecond second matrix.
      * @return true or not.
      */
-    static boolean isMultiplicableMatrices(final Matrix matrixNewFirst,
-                                           final Matrix matrixNewSecond) {
+    public static boolean isMultiplicableMatrices(final Matrix matrixNewFirst,
+                                                  final
+                                                  Matrix matrixNewSecond) {
         return matrixNewFirst.getCountColumns()
                 == matrixNewSecond.getCountRows();
     }
@@ -50,7 +51,7 @@ public final class MatrixValidation {
      * @param matrixNew matrix.
      * @return true or not.
      */
-    static boolean isSquareMatrix(final Matrix matrixNew) {
+    public static boolean isSquareMatrix(final Matrix matrixNew) {
         return matrixNew.getCountRows() == matrixNew.getCountColumns();
     }
 

@@ -2,6 +2,7 @@ package by.training.matrix.service;
 
 import by.training.matrix.bean.Matrix;
 import by.training.matrix.service.exception.MatrixValidationException;
+import by.training.matrix.service.multiplication.SimpleMatrixMultiplication;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
