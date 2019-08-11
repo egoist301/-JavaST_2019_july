@@ -9,7 +9,8 @@
                 <include name="Data parser group"/>
                 <include name="Matrix validation group"/>
                 <include name="Simple matrix multiplication group"/>
-                <include name="Factory matrix DAO"/>
+                <include name="Factory matrix DAO group"/>
+                <include name="Matrix initializer group"/>
             </run>
         </groups>
         <classes>
@@ -18,6 +19,7 @@
             <class name="by.training.matrix.service.MatrixValidationTest"/>
             <class name="by.training.matrix.service.SimpleMatrixMultiplicationTest"/>
             <class name="by.training.matrix.dao.factory.FactoryMatrixDAOTest"/>
+            <class name="by.training.matrix.service.MatrixInitializerTest"/>
         </classes>
     </test>
 

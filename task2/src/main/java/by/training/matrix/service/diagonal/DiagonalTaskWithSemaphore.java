@@ -20,6 +20,10 @@ public class DiagonalTaskWithSemaphore implements Runnable {
      */
     private int number;
     /**
+     * Count elements for thread.
+     */
+    private int countElements;
+    /**
      * Logger.
      */
     private static final Logger LOGGER = LogManager.getLogger();
@@ -31,13 +35,16 @@ public class DiagonalTaskWithSemaphore implements Runnable {
     /**
      * @param matrixNew    matrix.
      * @param numberNew    number-element.
+     * @param countElementsNew count elements.
      * @param semaphoreNew semaphore.
      */
     DiagonalTaskWithSemaphore(final Matrix matrixNew,
                               final int numberNew,
+                              final int countElementsNew,
                               final Semaphore semaphoreNew) {
         matrix = matrixNew;
         number = numberNew;
+        countElements = countElementsNew;
         semaphore = semaphoreNew;
     }
 
@@ -57,7 +64,7 @@ public class DiagonalTaskWithSemaphore implements Runnable {
                 }
                 semaphore.release();
                 TimeUnit.MILLISECONDS.sleep(time);
-                if (temp > 1) {
+                if (temp == countElements) {
                     break;
                 }
             }

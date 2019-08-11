@@ -56,8 +56,14 @@ public class MatrixMultiplierWithThread {
             int additional = matrixFirst.getCountRows() % countThreads;
             Thread[] threads = new Thread[countThreads];
             int start = 0;
+            int temp = 1;
             for (int i = 0; i < countThreads; i++) {
-                int count = ((i == 0) ? countRows + additional : countRows);
+                if (additional == 0) {
+                    temp = 0;
+                } else {
+                    --additional;
+                }
+                int count = countRows + temp;
                 int end = start + count - 1;
                 threads[i] = new Thread(new MultiplierTask(matrixFirst,
                         matrixSecond, matrix, start, end));

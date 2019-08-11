@@ -20,6 +20,10 @@ public class DiagonalTaskWithLock implements Runnable {
      */
     private int number;
     /**
+     * Count elements for thread.
+     */
+    private int countElements;
+    /**
      * Logger.
      */
     private static final Logger LOGGER = LogManager.getLogger();
@@ -29,14 +33,17 @@ public class DiagonalTaskWithLock implements Runnable {
     private Lock lock;
 
     /**
-     * @param matrixNew matrix.
-     * @param numberNew number-element.
-     * @param lockNew   lock.
+     * @param matrixNew        matrix.
+     * @param numberNew        number-element.
+     * @param countElementsNew count elements.
+     * @param lockNew          lock.
      */
     DiagonalTaskWithLock(final Matrix matrixNew,
-                                final int numberNew, final Lock lockNew) {
+                         final int numberNew, final int countElementsNew,
+                         final Lock lockNew) {
         matrix = matrixNew;
         number = numberNew;
+        countElements = countElementsNew;
         lock = lockNew;
     }
 
@@ -60,7 +67,7 @@ public class DiagonalTaskWithLock implements Runnable {
                 LOGGER.error(eNew);
                 Thread.currentThread().interrupt();
             }
-            if (temp > 1) {
+            if (temp == countElements) {
                 break;
             }
         }

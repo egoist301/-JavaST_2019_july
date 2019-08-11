@@ -26,7 +26,7 @@ public final class MatrixInitializer {
     }
 
     /**
-     * @param matrixNew matrix.
+     * @param matrixNew square matrix.
      */
     public static void initializeDiagonalZero(final Matrix matrixNew) {
         for (int i = 0; i < matrixNew.getCountRows(); ++i) {

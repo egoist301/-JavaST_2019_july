@@ -1,6 +1,7 @@
 package by.training.matrix.service.diagonal;
 
 import by.training.matrix.bean.Matrix;
+import by.training.matrix.service.MatrixInitializer;
 import by.training.matrix.service.MatrixValidation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -40,11 +41,21 @@ public class DiagonalInitializerWithLock {
      */
     public void initializeMatrix() {
         if (MatrixValidation.isSquareMatrix(matrix)) {
+            MatrixInitializer.initializeDiagonalZero(matrix);
             Lock lock = new ReentrantLock();
+            int countElements = matrix.getCountRows() / countThreads;
+            int additional = matrix.getCountRows() % countThreads;
             Thread[] threads = new Thread[countThreads];
+            int temp = 1;
             for (int i = 0; i < countThreads; ++i) {
+                if (additional == 0) {
+                    temp = 0;
+                } else {
+                    --additional;
+                }
+                int count = countElements + temp;
                 threads[i] = new Thread(new DiagonalTaskWithLock(matrix, i + 1,
-                        lock));
+                        count, lock));
             }
             for (int i = 0; i < countThreads; ++i) {
                 threads[i].start();

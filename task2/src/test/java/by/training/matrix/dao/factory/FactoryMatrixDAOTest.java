@@ -12,7 +12,7 @@ import static org.testng.Assert.assertEquals;
 
 public class FactoryMatrixDAOTest {
 
-    @Test(groups = {"Factory matrix DAO"},
+    @Test(groups = {"Factory matrix DAO group"},
             dataProvider = "create matrix positive")
     public void testCreateMatrixPositive(List<String[]> listNew,
                                          Matrix matrixNew)
@@ -52,7 +52,7 @@ public class FactoryMatrixDAOTest {
         };
     }
 
-    @Test(groups = {"Factory matrix DAO"},
+    @Test(groups = {"Factory matrix DAO group"},
             dataProvider = "create matrix negative",
             expectedExceptions = MatrixValidationException.class)
     public void testCreateMatrixNegative(List<String[]> listNew,
