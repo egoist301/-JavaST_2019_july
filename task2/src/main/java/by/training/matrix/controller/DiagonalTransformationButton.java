@@ -14,6 +14,6 @@ public class DiagonalTransformationButton {
         final int countOfThreads = 6;
         DiagonalInitializerWithLock initializer =
                 new DiagonalInitializerWithLock(matrixNew, countOfThreads);
-        initializer.initializeMatrix();
+        initializer.initializeDiagonal();
     }
 }

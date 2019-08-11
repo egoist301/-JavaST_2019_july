@@ -31,7 +31,7 @@ public class DiagonalInitializerWithLock {
     /**
      * Initialize matrix.
      */
-    public void initializeMatrix() {
+    public void initializeDiagonal() {
         Lock lock = new ReentrantLock();
         int countElements = matrix.getCountRows() / countThreads;
         int additional = matrix.getCountRows() % countThreads;

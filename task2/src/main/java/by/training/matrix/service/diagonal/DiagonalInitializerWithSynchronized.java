@@ -2,6 +2,9 @@ package by.training.matrix.service.diagonal;
 
 import by.training.matrix.bean.Matrix;
 
+/**
+ * Diagonal initializer with synchronized.
+ */
 public class DiagonalInitializerWithSynchronized {
     /**
      * Matrix.
@@ -25,7 +28,7 @@ public class DiagonalInitializerWithSynchronized {
     /**
      * Initialize matrix.
      */
-    public void initializeMatrix() {
+    public void initializeDiagonal() {
         int countElements = matrix.getCountRows() / countThreads;
         int additional = matrix.getCountRows() % countThreads;
         Thread[] threads = new Thread[countThreads];

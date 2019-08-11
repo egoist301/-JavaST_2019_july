@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * Diagonal task with synchronized.
+ */
 public class DiagonalTaskWithSynchronized implements Runnable {
     /**
      * Matrix.

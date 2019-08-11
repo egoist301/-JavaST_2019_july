@@ -30,7 +30,7 @@ public class DiagonalInitializerWithSemaphore {
     /**
      * Initialize matrix.
      */
-    public void initializeMatrix() {
+    public void initializeDiagonal() {
         Semaphore semaphore = new Semaphore(1);
         int countElements = matrix.getCountRows() / countThreads;
         int additional = matrix.getCountRows() % countThreads;
