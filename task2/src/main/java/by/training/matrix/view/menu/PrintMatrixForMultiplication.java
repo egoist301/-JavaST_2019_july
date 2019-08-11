@@ -1,4 +1,4 @@
-package by.training.matrix.view;
+package by.training.matrix.view.menu;
 
 import by.training.matrix.bean.Matrix;
 import by.training.matrix.controller.PrintMatrixButton;

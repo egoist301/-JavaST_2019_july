@@ -1,4 +1,4 @@
-package by.training.matrix.view;
+package by.training.matrix.view.menu;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

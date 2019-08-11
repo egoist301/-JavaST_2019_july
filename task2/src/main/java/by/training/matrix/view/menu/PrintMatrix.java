@@ -1,4 +1,4 @@
-package by.training.matrix.view;
+package by.training.matrix.view.menu;
 
 import by.training.matrix.bean.Matrix;
 import by.training.matrix.controller.PrintMatrixButton;
@@ -15,7 +15,7 @@ public class PrintMatrix extends MenuEntry {
      * @param titleNew  name menu entry.
      * @param matrixNew matrix.
      */
-    PrintMatrix(final String titleNew, final Matrix matrixNew) {
+    public PrintMatrix(final String titleNew, final Matrix matrixNew) {
         super(titleNew);
         matrix = matrixNew;
     }

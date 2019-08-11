@@ -1,11 +1,12 @@
-package by.training.matrix.view;
+package by.training.matrix.view.menu;
 
 import by.training.matrix.bean.Matrix;
+import by.training.matrix.controller.SimpleMultiplierButton;
 
 /**
- * Multiplier matrix.
+ * Simple multiplier.
  */
-public class MultiplierMatrix extends MenuEntry {
+public class SimpleMultiplier extends MenuEntry {
     /**
      * First matrix.
      */
@@ -20,7 +21,7 @@ public class MultiplierMatrix extends MenuEntry {
      * @param matrixFirstNew first matrix.
      * @param matrixSecondNew second matrix.
      */
-    MultiplierMatrix(final String titleNew,
+    SimpleMultiplier(final String titleNew,
                      final Matrix matrixFirstNew,
                      final Matrix matrixSecondNew) {
         super(titleNew);
@@ -33,13 +34,6 @@ public class MultiplierMatrix extends MenuEntry {
      */
     @Override
     public void run() {
-        Menu menu = new Menu();
-        menu.addEntry(new PrintMatrixForMultiplication("matrix's",
-                matrixFirst, matrixSecond));
-        menu.addEntry(new SimpleMultiplier("simple thread",
-                matrixFirst, matrixSecond));
-        menu.addEntry(new MultiMultiplier("multi thread", matrixFirst,
-                matrixSecond));
-        menu.run();
+        new SimpleMultiplierButton().multiply(matrixFirst, matrixSecond);
     }
 }

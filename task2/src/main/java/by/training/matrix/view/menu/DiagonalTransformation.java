@@ -1,4 +1,4 @@
-package by.training.matrix.view;
+package by.training.matrix.view.menu;
 
 import by.training.matrix.bean.Matrix;
 import by.training.matrix.controller.DiagonalTransformationButton;
@@ -16,7 +16,7 @@ public class DiagonalTransformation extends MenuEntry {
      * @param titleNew name menu entry.
      * @param matrixNew matrix.
      */
-    DiagonalTransformation(final String titleNew,
+    public DiagonalTransformation(final String titleNew,
                            final Matrix matrixNew) {
         super(titleNew);
         matrix = matrixNew;

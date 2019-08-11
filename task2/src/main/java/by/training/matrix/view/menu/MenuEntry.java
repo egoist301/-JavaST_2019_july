@@ -1,4 +1,4 @@
-package by.training.matrix.view;
+package by.training.matrix.view.menu;
 
 /**
  * MenuEntry.

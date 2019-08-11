@@ -15,6 +15,5 @@ public class DiagonalTransformationButton {
         DiagonalInitializerWithLock initializer =
                 new DiagonalInitializerWithLock(matrixNew, countOfThreads);
         initializer.initializeMatrix();
-        new PrintMatrixButton().printMatrix(matrixNew);
     }
 }

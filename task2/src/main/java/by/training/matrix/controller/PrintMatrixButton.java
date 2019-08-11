@@ -11,6 +11,6 @@ public class PrintMatrixButton {
      * @param matrixNew matrix.
      */
     public void printMatrix(final Matrix matrixNew) {
-        Printer.printInfo(matrixNew);
+        Printer.printInfo("Matrix:\n" + matrixNew);
     }
 }
