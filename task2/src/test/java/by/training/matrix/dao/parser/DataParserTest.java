@@ -5,10 +5,16 @@ import org.testng.annotations.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
+/**
+ * Data parser test.
+ */
 public class DataParserTest {
 
+    /**
+     * Testing parsing data.
+     */
     @Test(groups = {"Data parser group"})
     public void testGetLines() {
         List<String> stringList = new ArrayList<>();

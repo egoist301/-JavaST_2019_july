@@ -10,17 +10,33 @@ import java.util.List;
 
 import static org.testng.Assert.assertEquals;
 
+/**
+ * Factory matrix DAO test.
+ */
 public class FactoryMatrixDAOTest {
 
+    /**
+     * Testing create matrix from list of arrays of strings.
+     * Positive way.
+     *
+     * @param listNew   list of arrays of strings.
+     * @param matrixNew matrix.
+     * @throws MatrixValidationException custom exception.
+     */
     @Test(groups = {"Factory matrix DAO group"},
             dataProvider = "create matrix positive")
-    public void testCreateMatrixPositive(List<String[]> listNew,
-                                         Matrix matrixNew)
+    public void testCreateMatrixPositive(final List<String[]> listNew,
+                                         final Matrix matrixNew)
             throws MatrixValidationException {
         assertEquals(FactoryMatrixDAO.getFactory().createMatrix(listNew),
                 matrixNew);
     }
 
+    /**
+     * Provider.
+     *
+     * @return list of arrays of strings and matrix.
+     */
     @DataProvider(name = "create matrix positive")
     public Object[][] testCreateMatrixPositiveProvider() {
         List<String[]> list = new ArrayList<>();
@@ -52,16 +68,29 @@ public class FactoryMatrixDAOTest {
         };
     }
 
+    /**
+     * Testing create matrix from list of arrays of strings.
+     * Negative way.
+     *
+     * @param listNew   list of arrays of strings.
+     * @param matrixNew matrix.
+     * @throws MatrixValidationException custom exception.
+     */
     @Test(groups = {"Factory matrix DAO group"},
             dataProvider = "create matrix negative",
             expectedExceptions = MatrixValidationException.class)
-    public void testCreateMatrixNegative(List<String[]> listNew,
-                                         Matrix matrixNew)
+    public void testCreateMatrixNegative(final List<String[]> listNew,
+                                         final Matrix matrixNew)
             throws MatrixValidationException {
         assertEquals(FactoryMatrixDAO.getFactory().createMatrix(listNew),
                 matrixNew);
     }
 
+    /**
+     * Provider.
+     *
+     * @return list of arrays of strings and matrix.
+     */
     @DataProvider(name = "create matrix negative")
     public Object[][] testCreateMatrixNegativeProvider() {
         List<String[]> list = new ArrayList<>();

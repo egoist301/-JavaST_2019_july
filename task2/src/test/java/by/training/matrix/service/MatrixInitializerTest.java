@@ -6,15 +6,29 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
+/**
+ * Matrix initializer test.
+ */
 public class MatrixInitializerTest {
 
+    /**
+     * Testing initialize matrix some values.
+     *
+     * @param actual actual matrix.
+     * @param result result matrix.
+     */
     @Test(groups = {"Matrix initializer group"},
             dataProvider = "initialize")
-    public void testInitialize(Matrix actual, Matrix result) {
+    public void testInitialize(final Matrix actual, final Matrix result) {
         MatrixInitializer.initialize(actual);
         assertEquals(actual, result);
     }
 
+    /**
+     * Provider.
+     *
+     * @return actual matrix and result matrix.
+     */
     @DataProvider(name = "initialize")
     public Object[][] testInitializeProvider() {
         Matrix matrix = new Matrix(1);
@@ -68,13 +82,25 @@ public class MatrixInitializerTest {
         };
     }
 
+    /**
+     * Testing initialize diagonal zero.
+     *
+     * @param actual actual matrix.
+     * @param result result matrix.
+     */
     @Test(groups = {"Matrix initializer group"},
             dataProvider = "diagonal zero")
-    public void testInitializeDiagonalZero(Matrix actual, Matrix result) {
+    public void testInitializeDiagonalZero(final Matrix actual,
+                                           final Matrix result) {
         MatrixInitializer.initializeDiagonalZero(actual);
         assertEquals(actual, result);
     }
 
+    /**
+     * Provider.
+     *
+     * @return actual matrix and result matrix.
+     */
     @DataProvider(name = "diagonal zero")
     public Object[][] testInitializeDiagonalZeroProvider() {
         Matrix matrix = new Matrix(1);

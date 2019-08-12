@@ -8,19 +8,36 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertEquals;
 
+/**
+ * Simple matrix multiplication test.
+ */
 public class SimpleMatrixMultiplicationTest {
 
+    /**
+     * Testing multiplication two matrix.
+     * Positive way.
+     *
+     * @param matrixFirstNew  first matrix.
+     * @param matrixSecondNew second matrix.
+     * @param matrixResult    result matrix.
+     * @throws MatrixValidationException custom exception.
+     */
     @Test(groups = {"Simple matrix multiplication group"},
             dataProvider = "multiplication positive")
-    public void testMultiplicationPositive(Matrix matrixFirstNew,
-                                           Matrix matrixSecondNew,
-                                           Matrix matrixResult)
+    public void testMultiplicationPositive(final Matrix matrixFirstNew,
+                                           final Matrix matrixSecondNew,
+                                           final Matrix matrixResult)
             throws MatrixValidationException {
         SimpleMatrixMultiplication simpleMatrixMultiplication =
                 new SimpleMatrixMultiplication(matrixFirstNew, matrixSecondNew);
         assertEquals(simpleMatrixMultiplication.multiplication(), matrixResult);
     }
 
+    /**
+     * Provider.
+     *
+     * @return three matrices(first, second and result).
+     */
     @DataProvider(name = "multiplication positive")
     public Object[][] testMultiplicationPositiveProvider() {
         Matrix matrix = new Matrix(2, 2);
@@ -72,18 +89,32 @@ public class SimpleMatrixMultiplicationTest {
         };
     }
 
+    /**
+     * Testing multiplication two matrix.
+     * Negative way.
+     *
+     * @param matrixFirstNew  first matrix.
+     * @param matrixSecondNew second matrix.
+     * @param matrixResult    result matrix.
+     * @throws MatrixValidationException custom exception.
+     */
     @Test(groups = {"Simple matrix multiplication group"},
             dataProvider = "multiplication negative",
             expectedExceptions = MatrixValidationException.class)
-    public void testMultiplicationNegative(Matrix matrixFirstNew,
-                                           Matrix matrixSecondNew,
-                                           Matrix matrixResult)
-            throws MatrixValidationException{
+    public void testMultiplicationNegative(final Matrix matrixFirstNew,
+                                           final Matrix matrixSecondNew,
+                                           final Matrix matrixResult)
+            throws MatrixValidationException {
         SimpleMatrixMultiplication simpleMatrixMultiplication =
                 new SimpleMatrixMultiplication(matrixFirstNew, matrixSecondNew);
         assertEquals(simpleMatrixMultiplication.multiplication(), matrixResult);
     }
 
+    /**
+     * Provider.
+     *
+     * @return three matrices(first, second and result).
+     */
     @DataProvider(name = "multiplication negative")
     public Object[][] testMultiplicationNegativeProvider() {
         Matrix matrix = new Matrix(2, 3);
