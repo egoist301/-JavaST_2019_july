@@ -7,9 +7,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Diagonal task with synchronized block.
+ * Diagonal task with synchronized method.
  */
-public class DiagonalTaskWithSynchronized implements Runnable {
+public class DiagonalTaskWithSynMethod implements Runnable {
     /**
      * Matrix.
      */
@@ -30,8 +30,8 @@ public class DiagonalTaskWithSynchronized implements Runnable {
      * @param numberNew number-element.
      */
 
-    DiagonalTaskWithSynchronized(final Matrix matrixNew,
-                                 final int numberNew) {
+    DiagonalTaskWithSynMethod(final Matrix matrixNew,
+                              final int numberNew) {
         matrix = matrixNew;
         number = numberNew;
     }
@@ -44,11 +44,7 @@ public class DiagonalTaskWithSynchronized implements Runnable {
         final int time = 50;
         int size = matrix.getCountRows();
         for (int i = 0; i < size; ++i) {
-            synchronized (DiagonalTaskWithSynchronized.class) {
-                if (matrix.getElement(i, i) == 0) {
-                    matrix.setElement(i, i, number);
-                }
-            }
+            matrix.setElement(i, i, number);
             try {
                 TimeUnit.MILLISECONDS.sleep(time);
             } catch (InterruptedException eNew) {
