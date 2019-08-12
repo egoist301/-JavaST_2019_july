@@ -4,7 +4,6 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="%d{HH:mm:ss.SSS} | [%t] | %-5level | %logger{36} | %n%n%msg%n"/>
         </Console>
-
         <RollingFile name="RollingFileAppender" fileName="log\log.log"
                      filePattern="log\$${date:yyyy-MM-dd}\task1-%d{MM-dd-yyyy}-%i.log.gz">
             <PatternLayout>
@@ -17,9 +16,7 @@
             </Policies>
             <DefaultRolloverStrategy max="20"/>
         </RollingFile>
-
     </Appenders>
-
     <loggers>
         <Logger level="debug" name="by.training">
         </Logger>

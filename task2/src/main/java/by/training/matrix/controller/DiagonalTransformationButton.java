@@ -1,6 +1,7 @@
 package by.training.matrix.controller;
 
 import by.training.matrix.bean.Matrix;
+import by.training.matrix.service.diagonal.DiagonalInitializable;
 import by.training.matrix.service.diagonal.DiagonalInitializerWithLock;
 
 /**
@@ -15,7 +16,7 @@ public class DiagonalTransformationButton implements Executable {
     @Override
     public void execute(final Matrix matrixNew) {
         final int countOfThreads = 6;
-        DiagonalInitializerWithLock initializer =
+        DiagonalInitializable initializer =
                 new DiagonalInitializerWithLock(matrixNew, countOfThreads);
         initializer.initializeDiagonal();
     }
