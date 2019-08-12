@@ -28,7 +28,7 @@ public final class Runner {
     public static void main(final String[] args) {
         LoaderFromFile loader = new LoaderFromFile();
         LoaderThreadsFromFile fromFile = new LoaderThreadsFromFile();
-        int[] elemnetNumbers = fromFile.load("data//threads.txt");
+        int[] elementNumbers = fromFile.load("data//threads.txt");
         Matrix matrix = loader.load("data//matrix.txt");
         DiagonalInitializerZero initializer = new DiagonalInitializerZero();
         initializer.execute(matrix);
@@ -39,7 +39,7 @@ public final class Runner {
         menu.addEntry(new MultiplierMatrix("multiplier matrix",
                 matrix1, matrix2));
         menu.addEntry(new DiagonalTransformation("diagonal of matrix",
-                matrix));
+                matrix, elementNumbers));
         menu.run();
     }
 }

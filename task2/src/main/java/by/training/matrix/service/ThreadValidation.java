@@ -39,6 +39,7 @@ public final class ThreadValidation {
 
     /**
      * Check correct count of threads.
+     *
      * @param listNew list of arrays of strings.
      * @return equal or not equal.
      */
@@ -60,8 +61,8 @@ public final class ThreadValidation {
         for (int i = 0; i < listNew.size(); ++i) {
             if (isInteger(listNew.get(i)[0])) {
                 int temp = Integer.parseInt(listNew.get(i)[0]);
-                for (int j = 0; i < listNew.size(); ++j) {
-                    if (temp == Integer.parseInt(listNew.get(j)[0])) {
+                for (int j = 0; j < listNew.size(); ++j) {
+                    if (i != j && temp == Integer.parseInt(listNew.get(j)[0])) {
                         return false;
                     }
                 }

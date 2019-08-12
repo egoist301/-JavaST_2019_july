@@ -36,7 +36,8 @@ public class DiagonalInitializerWithExecutor implements DiagonalInitializable {
      * @param numberElementOfThreadNew Number element of thread.
      */
     public DiagonalInitializerWithExecutor(final Matrix matrixNew,
-                                           final int[] numberElementOfThreadNew) {
+                                           final
+                                           int[] numberElementOfThreadNew) {
         matrix = matrixNew;
         numberElementOfThread = numberElementOfThreadNew;
     }
