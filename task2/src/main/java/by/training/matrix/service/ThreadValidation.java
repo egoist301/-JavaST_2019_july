@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * Thread validation.
  */
-public final class ThreadValidation {
+final class ThreadValidation {
     /**
      * Logger.
      */
@@ -43,12 +43,12 @@ public final class ThreadValidation {
      * @param listNew list of arrays of strings.
      * @return equal or not equal.
      */
-    public static boolean isCorrectCountOfThreads(final
-                                                  List<String[]> listNew) {
+    static boolean isCorrectCountOfThreads(final
+                                           List<String[]> listNew) {
         final int max = 6;
         final int min = 4;
         int size = listNew.size();
-        return size <= min || size >= max;
+        return size > min || size < max;
     }
 
     /**
@@ -57,7 +57,7 @@ public final class ThreadValidation {
      * @param listNew list of arrays of strings.
      * @return equal or not equal.
      */
-    public static boolean isUniqueNumbers(final List<String[]> listNew) {
+    static boolean isUniqueNumbers(final List<String[]> listNew) {
         for (int i = 0; i < listNew.size(); ++i) {
             if (isInteger(listNew.get(i)[0])) {
                 int temp = Integer.parseInt(listNew.get(i)[0]);

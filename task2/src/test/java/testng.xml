@@ -11,6 +11,7 @@
                 <include name="Simple matrix multiplication group"/>
                 <include name="Factory matrix DAO group"/>
                 <include name="Matrix initializer group"/>
+                <include name="Thread validation group"/>
             </run>
         </groups>
         <classes>
@@ -20,6 +21,7 @@
             <class name="by.training.matrix.service.SimpleMatrixMultiplicationTest"/>
             <class name="by.training.matrix.dao.factory.FactoryMatrixDAOTest"/>
             <class name="by.training.matrix.service.MatrixInitializerTest"/>
+            <class name="by.training.matrix.service.ThreadValidationTest"/>
         </classes>
     </test>
 
