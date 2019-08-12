@@ -9,7 +9,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Multiplication matrix with thread.
  */
-public class MatrixMultiplierWithThread {
+public class MatrixMultiplierWithThread implements Multiplication {
     /**
      * Logger.
      */
@@ -28,6 +28,8 @@ public class MatrixMultiplierWithThread {
     private int countThreads;
 
     /**
+     * Constructor.
+     *
      * @param matrixFirstNew  first matrix.
      * @param matrixSecondNew second matrix.
      * @param countThreadsNew count of threads.
@@ -41,9 +43,12 @@ public class MatrixMultiplierWithThread {
     }
 
     /**
+     * Multiplication two matrix.
+     *
      * @return result matrix.
      * @throws MatrixValidationException custom exception.
      */
+    @Override
     public Matrix multiplication() throws MatrixValidationException {
         if (MatrixValidation.isMultiplicableMatrices(matrixFirst,
                 matrixSecond)) {
@@ -52,28 +57,39 @@ public class MatrixMultiplierWithThread {
             }
             Matrix matrix = new Matrix(matrixFirst.getCountRows(),
                     matrixSecond.getCountColumns());
-            int countRows = matrixFirst.getCountRows() / countThreads;
-            int additional = matrixFirst.getCountRows() % countThreads;
             Thread[] threads = new Thread[countThreads];
-            int start = 0;
-            int temp = 1;
-            for (int i = 0; i < countThreads; i++) {
-                if (additional == 0) {
-                    temp = 0;
-                } else {
-                    --additional;
-                }
-                int count = countRows + temp;
-                int end = start + count - 1;
-                threads[i] = new Thread(new MultiplierTask(matrixFirst,
-                        matrixSecond, matrix, start, end));
-                start += count;
-            }
+            initThreads(threads, matrix);
             startThread(threads);
             joinThread(threads);
             return matrix;
         } else {
             throw new MatrixValidationException();
+        }
+    }
+
+    /**
+     * Initialize array threads.
+     *
+     * @param threadsNew array threads.
+     * @param matrixNew  matrix.
+     */
+    private void initThreads(final Thread[] threadsNew,
+                             final Matrix matrixNew) {
+        int countRows = matrixFirst.getCountRows() / countThreads;
+        int additional = matrixFirst.getCountRows() % countThreads;
+        int start = 0;
+        int temp = 1;
+        for (int i = 0; i < countThreads; i++) {
+            if (additional == 0) {
+                temp = 0;
+            } else {
+                --additional;
+            }
+            int count = countRows + temp;
+            int end = start + count - 1;
+            threadsNew[i] = new Thread(new MultiplierTask(matrixFirst,
+                    matrixSecond, matrixNew, start, end));
+            start += count;
         }
     }
 

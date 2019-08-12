@@ -8,7 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Diagonal initializer with lock.
  */
-public class DiagonalInitializerWithLock {
+public class DiagonalInitializerWithLock implements DiagonalInitializable {
     /**
      * Matrix.
      */
@@ -19,6 +19,8 @@ public class DiagonalInitializerWithLock {
     private int countThreads;
 
     /**
+     * Constructor.
+     *
      * @param matrixNew       matrix.
      * @param countThreadsNew count of threads.
      */
@@ -29,23 +31,15 @@ public class DiagonalInitializerWithLock {
     }
 
     /**
-     * Initialize matrix.
+     * Initialize matrix diagonal.
      */
+    @Override
     public void initializeDiagonal() {
         Lock lock = new ReentrantLock();
-        int countElements = matrix.getCountRows() / countThreads;
-        int additional = matrix.getCountRows() % countThreads;
         Thread[] threads = new Thread[countThreads];
-        int temp = 1;
         for (int i = 0; i < countThreads; ++i) {
-            if (additional == 0) {
-                temp = 0;
-            } else {
-                --additional;
-            }
-            int count = countElements + temp;
-            threads[i] = new Thread(new DiagonalTaskWithLock(matrix, i + 1,
-                    count, lock));
+            threads[i] = new Thread(new DiagonalTaskWithLock(matrix,
+                    i + 1, lock));
         }
         for (int i = 0; i < countThreads; ++i) {
             threads[i].start();

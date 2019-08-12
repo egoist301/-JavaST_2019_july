@@ -13,20 +13,22 @@ public class DiagonalTransformation extends MenuEntry {
     private Matrix matrix;
 
     /**
-     * @param titleNew name menu entry.
+     * Constructor.
+     *
+     * @param titleNew  name menu entry.
      * @param matrixNew matrix.
      */
     public DiagonalTransformation(final String titleNew,
-                           final Matrix matrixNew) {
+                                  final Matrix matrixNew) {
         super(titleNew);
         matrix = matrixNew;
     }
 
     /**
-     * run.
+     * Diagonal initialize.
      */
     @Override
     public void run() {
-        new DiagonalTransformationButton().transformate(matrix);
+        new DiagonalTransformationButton().execute(matrix);
     }
 }

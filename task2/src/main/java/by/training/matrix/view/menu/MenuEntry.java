@@ -10,6 +10,8 @@ public abstract class MenuEntry {
     private String title;
 
     /**
+     * Constructor.
+     *
      * @param titleNew name menu entry.
      */
     MenuEntry(final String titleNew) {
@@ -17,6 +19,8 @@ public abstract class MenuEntry {
     }
 
     /**
+     * Getter.
+     *
      * @return name menu entry.
      */
     String getTitle() {

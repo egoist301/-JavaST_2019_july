@@ -19,40 +19,34 @@ public class DiagonalTaskWithSynchronized implements Runnable {
      */
     private int number;
     /**
-     * Count elements for thread.
-     */
-    private int countElements;
-    /**
      * Logger.
      */
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * @param matrixNew        matrix.
-     * @param numberNew        number-element.
-     * @param countElementsNew count elements.
+     * Constructor.
+     *
+     * @param matrixNew matrix.
+     * @param numberNew number-element.
      */
 
     DiagonalTaskWithSynchronized(final Matrix matrixNew,
-                                 final int numberNew,
-                                 final int countElementsNew) {
+                                 final int numberNew) {
         matrix = matrixNew;
         number = numberNew;
-        countElements = countElementsNew;
     }
 
     /**
-     * run.
+     * Method run.
      */
     @Override
     public void run() {
-        int temp = 0;
         final int time = 50;
-        for (int i = 0; i < matrix.getCountRows(); ++i) {
+        int size = matrix.getCountRows();
+        for (int i = 0; i < size; ++i) {
             synchronized (DiagonalTaskWithSynchronized.class) {
                 if (matrix.getElement(i, i) == 0) {
                     matrix.setElement(i, i, number);
-                    ++temp;
                 }
             }
             try {
@@ -60,9 +54,6 @@ public class DiagonalTaskWithSynchronized implements Runnable {
             } catch (InterruptedException eNew) {
                 LOGGER.error(eNew);
                 Thread.currentThread().interrupt();
-            }
-            if (temp == countElements) {
-                break;
             }
         }
     }

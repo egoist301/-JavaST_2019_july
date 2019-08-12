@@ -39,7 +39,7 @@ public class Menu {
     }
 
     /**
-     * Runner.
+     * Runner for menu.
      */
     public void run() {
         BufferedReader reader = new BufferedReader(
@@ -57,6 +57,8 @@ public class Menu {
     }
 
     /**
+     * Add menu entry.
+     *
      * @param entry menu entry.
      */
     public void addEntry(final MenuEntry entry) {
@@ -66,6 +68,8 @@ public class Menu {
     }
 
     /**
+     * String representation of an object.
+     *
      * @return menu.
      */
     @Override

@@ -4,6 +4,7 @@ import by.training.matrix.bean.Matrix;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +32,13 @@ public class DiagonalTaskWithExecutor implements Runnable {
      */
     private List<Lock> locks;
 
+    /**
+     * Constructor.
+     *
+     * @param numberNew number-element.
+     * @param newMatrix matrix.
+     * @param newLocks  locks.
+     */
     DiagonalTaskWithExecutor(final int numberNew, final Matrix newMatrix,
                              final List<Lock> newLocks) {
         number = numberNew;
@@ -39,10 +47,11 @@ public class DiagonalTaskWithExecutor implements Runnable {
     }
 
     /**
-     * run.
+     * Method run.
      */
     @Override
     public void run() {
+        Random random = new SecureRandom();
         final int time = 50;
         int i = 0;
         int matrixSize = matrix.getCountRows();
@@ -52,7 +61,7 @@ public class DiagonalTaskWithExecutor implements Runnable {
             i++;
         }
         try {
-            TimeUnit.MICROSECONDS.sleep(new Random().nextInt(time));
+            TimeUnit.MICROSECONDS.sleep(random.nextInt(time));
         } catch (InterruptedException e) {
             LOGGER.warn("error during sleeping", e);
             Thread.currentThread().interrupt();

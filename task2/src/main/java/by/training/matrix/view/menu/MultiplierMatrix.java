@@ -4,6 +4,7 @@ import by.training.matrix.bean.Matrix;
 
 /**
  * Multiplier matrix.
+ * Submenu.
  */
 public class MultiplierMatrix extends MenuEntry {
     /**
@@ -16,20 +17,22 @@ public class MultiplierMatrix extends MenuEntry {
     private Matrix matrixSecond;
 
     /**
-     * @param titleNew name menu entry.
-     * @param matrixFirstNew first matrix.
+     * Constructor.
+     *
+     * @param titleNew        name menu entry.
+     * @param matrixFirstNew  first matrix.
      * @param matrixSecondNew second matrix.
      */
     public MultiplierMatrix(final String titleNew,
-                     final Matrix matrixFirstNew,
-                     final Matrix matrixSecondNew) {
+                            final Matrix matrixFirstNew,
+                            final Matrix matrixSecondNew) {
         super(titleNew);
         matrixFirst = matrixFirstNew;
         matrixSecond = matrixSecondNew;
     }
 
     /**
-     * run.
+     * Run submenu.
      */
     @Override
     public void run() {

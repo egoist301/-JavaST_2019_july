@@ -12,6 +12,7 @@ public final class MatrixInitializer {
      * Logger.
      */
     private static final Logger LOGGER = LogManager.getLogger();
+
     /**
      * Default constructor.
      */
@@ -19,24 +20,29 @@ public final class MatrixInitializer {
     }
 
     /**
-     * Method to initialize.
+     * Method to initialize matrix.
      *
      * @param matrix matrix.
      */
     public static void initialize(final Matrix matrix) {
-        for (int i = 0; i < matrix.getCountRows(); ++i) {
-            for (int j = 0; j < matrix.getCountColumns(); ++j) {
+        int countRows = matrix.getCountRows();
+        int countColumns = matrix.getCountColumns();
+        for (int i = 0; i < countRows; ++i) {
+            for (int j = 0; j < countColumns; ++j) {
                 matrix.setElement(i, j, i + 2);
             }
         }
     }
 
     /**
+     * Initialize diagonal elements zero.
+     *
      * @param matrixNew square matrix.
      */
     public static void initializeDiagonalZero(final Matrix matrixNew) {
         if (MatrixValidation.isSquareMatrix(matrixNew)) {
-            for (int i = 0; i < matrixNew.getCountRows(); ++i) {
+            int countRows = matrixNew.getCountRows();
+            for (int i = 0; i < countRows; ++i) {
                 matrixNew.setElement(i, i, 0);
             }
         } else {

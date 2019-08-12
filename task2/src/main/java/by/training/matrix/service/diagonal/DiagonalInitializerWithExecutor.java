@@ -15,7 +15,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Diagonal initializer with executor.
  */
-public class DiagonalInitializerWithExecutor {
+public class DiagonalInitializerWithExecutor implements DiagonalInitializable {
     /**
      * Matrix.
      */
@@ -26,6 +26,8 @@ public class DiagonalInitializerWithExecutor {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
+     * Constructor.
+     *
      * @param matrixNew matrix.
      */
     public DiagonalInitializerWithExecutor(final Matrix matrixNew) {
@@ -35,6 +37,7 @@ public class DiagonalInitializerWithExecutor {
     /**
      * Initialize diagonal.
      */
+    @Override
     public void initializeDiagonal() {
         if (matrix == null) {
             throw new IllegalArgumentException(
@@ -43,7 +46,7 @@ public class DiagonalInitializerWithExecutor {
         ExecutorService executor = Executors.
                 newFixedThreadPool(matrix.getCountRows());
         List<Lock> locks = new ArrayList<>();
-        loadLock(locks);
+        initializeLocks(locks);
         for (int i = 0; i < matrix.getCountColumns(); i++) {
             executor.execute(new DiagonalTaskWithExecutor(i + 2,
                     matrix, locks));
@@ -58,9 +61,11 @@ public class DiagonalInitializerWithExecutor {
     }
 
     /**
+     * Initializes the list with locks.
+     *
      * @param locksNew locks.
      */
-    private void loadLock(final List<Lock> locksNew) {
+    private void initializeLocks(final List<Lock> locksNew) {
         for (int i = 0; i < matrix.getCountColumns(); i++) {
             locksNew.add(new ReentrantLock());
         }

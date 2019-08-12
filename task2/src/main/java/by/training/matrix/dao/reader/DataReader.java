@@ -19,6 +19,8 @@ public class DataReader {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
+     * Read from file and return list of strings.
+     *
      * @param filePath the path of the file from which we read.
      * @return list of strings.
      */

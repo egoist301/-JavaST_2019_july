@@ -17,6 +17,8 @@ public class PrintMatrixForMultiplication extends MenuEntry {
     private Matrix matrixSecond;
 
     /**
+     * Constructor.
+     *
      * @param titleNew        name menu entry.
      * @param matrixFirstNew  first matrix.
      * @param matrixSecondNew second matrix.
@@ -30,12 +32,12 @@ public class PrintMatrixForMultiplication extends MenuEntry {
     }
 
     /**
-     * run.
+     * Print two matrix.
      */
     @Override
     public void run() {
         PrintMatrixButton printMatrixButton = new PrintMatrixButton();
-        printMatrixButton.printMatrix(matrixFirst);
-        printMatrixButton.printMatrix(matrixSecond);
+        printMatrixButton.execute(matrixFirst);
+        printMatrixButton.execute(matrixSecond);
     }
 }

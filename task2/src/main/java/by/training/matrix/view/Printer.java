@@ -12,10 +12,15 @@ public final class Printer {
      */
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Default constructor.
+     */
     private Printer() {
     }
 
     /**
+     * Print info on console.
+     *
      * @param message message to print.
      */
     public static void printInfo(final Object message) {

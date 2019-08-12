@@ -16,12 +16,14 @@ public final class MatrixValidation {
     private static final Logger LOGGER = LogManager.getLogger();
 
     /**
-     * default constructor.
+     * Default constructor.
      */
     private MatrixValidation() {
     }
 
     /**
+     * Check for integer.
+     *
      * @param element string element.
      * @return true or not.
      */
@@ -36,6 +38,8 @@ public final class MatrixValidation {
     }
 
     /**
+     * Check for multiplication two matrices.
+     *
      * @param matrixNewFirst  first matrix.
      * @param matrixNewSecond second matrix.
      * @return true or not.
@@ -48,6 +52,8 @@ public final class MatrixValidation {
     }
 
     /**
+     * Check for square matrix.
+     *
      * @param matrixNew matrix.
      * @return true or not.
      */
@@ -56,6 +62,8 @@ public final class MatrixValidation {
     }
 
     /**
+     * Check for matrix.
+     *
      * @param listNew list of array string.
      * @return true or not.
      */
@@ -70,6 +78,8 @@ public final class MatrixValidation {
     }
 
     /**
+     * Check for integer matrix.
+     *
      * @param listNew list of array string.
      * @return true or not.
      */
@@ -78,7 +88,6 @@ public final class MatrixValidation {
             for (String[] strings : listNew) {
                 for (String string : strings) {
                     if (!isInteger(string)) {
-                        LOGGER.error("Incorrect element.");
                         return false;
                     }
                 }

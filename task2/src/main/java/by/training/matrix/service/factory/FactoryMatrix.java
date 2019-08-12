@@ -28,6 +28,8 @@ public final class FactoryMatrix {
     }
 
     /**
+     * Singleton.
+     *
      * @return factory matrix.
      */
     public static FactoryMatrix getFactoryMatrix() {

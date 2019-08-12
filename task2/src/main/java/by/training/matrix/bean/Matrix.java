@@ -23,18 +23,21 @@ public class Matrix {
     }
 
     /**
+     * Constructor.
+     *
      * @param arrayNew two-dimensional array.
      */
     public Matrix(final int[][] arrayNew) {
         array = new int[arrayNew.length][arrayNew[0].length];
-        for (int i = 0; i < array.length; ++i) {
-            for (int j = 0; j < array[0].length; ++j) {
-                array[i][j] = arrayNew[i][j];
-            }
+        int size = arrayNew.length;
+        for (int i = 0; i < size; ++i) {
+            System.arraycopy(array[i], 0, arrayNew[i], 0, size);
         }
     }
 
     /**
+     * Constructor.
+     *
      * @param rows    rows of matrix.
      * @param columns columns of matrix.
      */
@@ -43,6 +46,8 @@ public class Matrix {
     }
 
     /**
+     * Constructor.
+     *
      * @param size square matrix size.
      */
     public Matrix(final int size) {
@@ -50,18 +55,21 @@ public class Matrix {
     }
 
     /**
-     * @param matrix copy constructor.
+     * Copy constructor.
+     *
+     * @param matrix matrix.
      */
     public Matrix(final Matrix matrix) {
         this(matrix.array.length, matrix.array[0].length);
-        for (int i = 0; i < matrix.array.length; i++) {
-            for (int j = 0; j < matrix.array[i].length; j++) {
-                array[i][j] = matrix.array[i][j];
-            }
+        int size = matrix.array.length;
+        for (int i = 0; i < size; i++) {
+            System.arraycopy(array[i], 0, matrix.array[i], 0, size);
         }
     }
 
     /**
+     * Getter.
+     *
      * @return count rows of matrix.
      */
     public int getCountRows() {
@@ -69,6 +77,8 @@ public class Matrix {
     }
 
     /**
+     * Getter.
+     *
      * @return count columns of matrix.
      */
     public int getCountColumns() {
@@ -76,6 +86,8 @@ public class Matrix {
     }
 
     /**
+     * Get element by id.
+     *
      * @param row    index of row.
      * @param column index of column.
      * @return element of matrix.
@@ -85,6 +97,8 @@ public class Matrix {
     }
 
     /**
+     * Set element by id.
+     *
      * @param row     index of row.
      * @param column  index of column.
      * @param element element of matrix.
@@ -94,6 +108,8 @@ public class Matrix {
     }
 
     /**
+     * Equal objects.
+     *
      * @param oNew object.
      * @return equal or unequal.
      */
@@ -110,6 +126,8 @@ public class Matrix {
     }
 
     /**
+     * Hashcode.
+     *
      * @return hashcode.
      */
     @Override
@@ -118,14 +136,16 @@ public class Matrix {
     }
 
     /**
+     * String representation of an object.
+     *
      * @return matrix.
      */
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < array[i].length; j++) {
-                builder.append(array[i][j]).append(" ");
+        for (int[] mas : array) {
+            for (int elem : mas) {
+                builder.append(elem).append(" ");
             }
             builder.append("\n");
         }

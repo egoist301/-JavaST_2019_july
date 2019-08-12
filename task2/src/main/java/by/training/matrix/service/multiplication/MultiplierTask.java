@@ -28,11 +28,13 @@ public class MultiplierTask implements Runnable {
     private Matrix matrix;
 
     /**
+     * Constructor.
+     *
      * @param matrixFirstNew  first matrix.
      * @param matrixSecondNew second matrix.
-     * @param matrixNew result matrix.
-     * @param startRowNew initial boundary for each thread.
-     * @param endRowNew end boundary for each thread.
+     * @param matrixNew       result matrix.
+     * @param startRowNew     initial boundary for each thread.
+     * @param endRowNew       end boundary for each thread.
      */
     MultiplierTask(final Matrix matrixFirstNew,
                    final Matrix matrixSecondNew,
@@ -50,8 +52,9 @@ public class MultiplierTask implements Runnable {
      */
     @Override
     public void run() {
+        int countColumns = matrix.getCountColumns();
         for (int i = startRow; i <= endRow; ++i) {
-            for (int j = 0; j < matrix.getCountColumns(); ++j) {
+            for (int j = 0; j < countColumns; ++j) {
                 matrix.setElement(i, j, calcSingleValue(i, j));
             }
         }
@@ -59,13 +62,16 @@ public class MultiplierTask implements Runnable {
     }
 
     /**
+     * Calculate element of result matrix.
+     *
      * @param row initial boundary for each thread.
      * @param col end boundary for each thread.
      * @return element of result matrix.
      */
     private int calcSingleValue(final int row, final int col) {
         int result = 0;
-        for (int i = 0; i < matrixSecond.getCountRows(); ++i) {
+        int countRows = matrixSecond.getCountRows();
+        for (int i = 0; i < countRows; ++i) {
             result += matrixFirst.getElement(row, i)
                     * matrixSecond.getElement(i, col);
         }

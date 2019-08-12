@@ -5,7 +5,8 @@ import by.training.matrix.bean.Matrix;
 /**
  * Diagonal initializer with synchronized.
  */
-public class DiagonalInitializerWithSynchronized {
+public class DiagonalInitializerWithSynchronized
+        implements DiagonalInitializable {
     /**
      * Matrix.
      */
@@ -16,6 +17,8 @@ public class DiagonalInitializerWithSynchronized {
     private int countThreads;
 
     /**
+     * Constructor.
+     *
      * @param matrixNew       matrix.
      * @param countThreadsNew count of threads.
      */
@@ -26,22 +29,14 @@ public class DiagonalInitializerWithSynchronized {
     }
 
     /**
-     * Initialize matrix.
+     * Initialize diagonal matrix.
      */
+    @Override
     public void initializeDiagonal() {
-        int countElements = matrix.getCountRows() / countThreads;
-        int additional = matrix.getCountRows() % countThreads;
         Thread[] threads = new Thread[countThreads];
-        int temp = 1;
         for (int i = 0; i < countThreads; ++i) {
-            if (additional == 0) {
-                temp = 0;
-            } else {
-                --additional;
-            }
-            int count = countElements + temp;
             threads[i] = new Thread(new DiagonalTaskWithSynchronized(matrix,
-                    i + 1, count));
+                    i + 1));
         }
         for (int i = 0; i < countThreads; ++i) {
             threads[i].start();

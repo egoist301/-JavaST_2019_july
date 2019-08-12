@@ -8,10 +8,12 @@ import by.training.matrix.service.factory.FactoryMatrix;
  */
 public class LoaderFromFile {
     /**
-     * @param filepath filepath.
+     * Load data from file.
+     *
+     * @param filePath filepath.
      * @return matrix.
      */
-    public Matrix load(final String filepath) {
-        return FactoryMatrix.getFactoryMatrix().createMatrix(filepath);
+    public Matrix load(final String filePath) {
+        return FactoryMatrix.getFactoryMatrix().createMatrix(filePath);
     }
 }

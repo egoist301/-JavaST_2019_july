@@ -11,6 +11,8 @@ public class MatrixValidationException extends Exception {
     }
 
     /**
+     * Constructor.
+     *
      * @param message error message.
      */
     public MatrixValidationException(final String message) {
@@ -18,6 +20,8 @@ public class MatrixValidationException extends Exception {
     }
 
     /**
+     * Constructor.
+     *
      * @param message error message.
      * @param cause   error.
      */
@@ -27,6 +31,8 @@ public class MatrixValidationException extends Exception {
     }
 
     /**
+     * Constructor.
+     *
      * @param cause error.
      */
     public MatrixValidationException(final Throwable cause) {

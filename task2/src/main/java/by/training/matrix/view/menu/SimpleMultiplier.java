@@ -17,8 +17,10 @@ public class SimpleMultiplier extends MenuEntry {
     private Matrix matrixSecond;
 
     /**
-     * @param titleNew name menu entry.
-     * @param matrixFirstNew first matrix.
+     * Constructor.
+     *
+     * @param titleNew        name menu entry.
+     * @param matrixFirstNew  first matrix.
      * @param matrixSecondNew second matrix.
      */
     SimpleMultiplier(final String titleNew,
@@ -30,7 +32,7 @@ public class SimpleMultiplier extends MenuEntry {
     }
 
     /**
-     * run.
+     * Multiplication two matrices.
      */
     @Override
     public void run() {

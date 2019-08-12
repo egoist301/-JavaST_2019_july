@@ -11,7 +11,10 @@ public class PrintMatrix extends MenuEntry {
      * Matrix.
      */
     private Matrix matrix;
+
     /**
+     * Constructor.
+     *
      * @param titleNew  name menu entry.
      * @param matrixNew matrix.
      */
@@ -21,10 +24,10 @@ public class PrintMatrix extends MenuEntry {
     }
 
     /**
-     * run.
+     * Print matrix..
      */
     @Override
     public void run() {
-        new PrintMatrixButton().printMatrix(matrix);
+        new PrintMatrixButton().execute(matrix);
     }
 }

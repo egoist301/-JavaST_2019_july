@@ -6,11 +6,14 @@ import by.training.matrix.view.Printer;
 /**
  * Print matrix button.
  */
-public class PrintMatrixButton {
+public class PrintMatrixButton implements Executable {
     /**
+     * Print info.
+     *
      * @param matrixNew matrix.
      */
-    public void printMatrix(final Matrix matrixNew) {
+    @Override
+    public void execute(final Matrix matrixNew) {
         Printer.printInfo("Matrix:\n" + matrixNew);
     }
 }

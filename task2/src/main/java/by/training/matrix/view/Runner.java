@@ -20,6 +20,8 @@ public final class Runner {
     }
 
     /**
+     * Method for run app.
+     *
      * @param args command line.
      */
     public static void main(final String[] args) {

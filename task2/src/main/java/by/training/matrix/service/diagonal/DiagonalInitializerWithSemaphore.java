@@ -7,7 +7,7 @@ import java.util.concurrent.Semaphore;
 /**
  * Diagonal initializer with semaphore.
  */
-public class DiagonalInitializerWithSemaphore {
+public class DiagonalInitializerWithSemaphore implements DiagonalInitializable {
     /**
      * Matrix.
      */
@@ -18,6 +18,8 @@ public class DiagonalInitializerWithSemaphore {
     private int countThreads;
 
     /**
+     * Constructor.
+     *
      * @param matrixNew       matrix.
      * @param countThreadsNew count of threads.
      */
@@ -28,23 +30,15 @@ public class DiagonalInitializerWithSemaphore {
     }
 
     /**
-     * Initialize matrix.
+     * Initialize diagonal matrix.
      */
+    @Override
     public void initializeDiagonal() {
         Semaphore semaphore = new Semaphore(1);
-        int countElements = matrix.getCountRows() / countThreads;
-        int additional = matrix.getCountRows() % countThreads;
         Thread[] threads = new Thread[countThreads];
-        int temp = 1;
         for (int i = 0; i < countThreads; ++i) {
-            if (additional == 0) {
-                temp = 0;
-            } else {
-                --additional;
-            }
-            int count = countElements + temp;
             threads[i] = new Thread(new DiagonalTaskWithSemaphore(matrix,
-                    i + 1, count, semaphore));
+                    i + 1, semaphore));
         }
         for (int i = 0; i < countThreads; ++i) {
             threads[i].start();
