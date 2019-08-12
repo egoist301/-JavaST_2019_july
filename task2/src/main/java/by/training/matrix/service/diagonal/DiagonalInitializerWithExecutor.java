@@ -24,14 +24,21 @@ public class DiagonalInitializerWithExecutor implements DiagonalInitializable {
      * Logger.
      */
     private static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * Number element of thread.
+     */
+    private int[] numberElementOfThread;
 
     /**
      * Constructor.
      *
-     * @param matrixNew matrix.
+     * @param matrixNew                matrix.
+     * @param numberElementOfThreadNew Number element of thread.
      */
-    public DiagonalInitializerWithExecutor(final Matrix matrixNew) {
+    public DiagonalInitializerWithExecutor(final Matrix matrixNew,
+                                           final int[] numberElementOfThreadNew) {
         matrix = matrixNew;
+        numberElementOfThread = numberElementOfThreadNew;
     }
 
     /**
@@ -48,8 +55,8 @@ public class DiagonalInitializerWithExecutor implements DiagonalInitializable {
         List<Lock> locks = new ArrayList<>();
         initializeLocks(locks);
         for (int i = 0; i < matrix.getCountColumns(); i++) {
-            executor.execute(new DiagonalTaskWithExecutor(i + 2,
-                    matrix, locks));
+            executor.execute(new DiagonalTaskWithExecutor(
+                    numberElementOfThread[i], matrix, locks));
         }
         executor.shutdown();
         try {

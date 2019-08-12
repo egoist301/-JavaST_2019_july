@@ -3,6 +3,7 @@ package by.training.matrix.view;
 import by.training.matrix.bean.Matrix;
 import by.training.matrix.controller.DiagonalInitializerZero;
 import by.training.matrix.controller.LoaderFromFile;
+import by.training.matrix.controller.LoaderThreadsFromFile;
 import by.training.matrix.view.menu.DiagonalTransformation;
 import by.training.matrix.view.menu.Menu;
 import by.training.matrix.view.menu.MultiplierMatrix;
@@ -26,6 +27,8 @@ public final class Runner {
      */
     public static void main(final String[] args) {
         LoaderFromFile loader = new LoaderFromFile();
+        LoaderThreadsFromFile fromFile = new LoaderThreadsFromFile();
+        int[] elemnetNumbers = fromFile.load("data//threads.txt");
         Matrix matrix = loader.load("data//matrix.txt");
         DiagonalInitializerZero initializer = new DiagonalInitializerZero();
         initializer.execute(matrix);

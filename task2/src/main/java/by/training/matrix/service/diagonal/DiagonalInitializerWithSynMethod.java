@@ -14,17 +14,25 @@ public class DiagonalInitializerWithSynMethod implements DiagonalInitializable {
      * Count of threads.
      */
     private int countThreads;
+    /**
+     * Number element of thread.
+     */
+    private int[] numberElementOfThread;
 
     /**
      * Constructor.
      *
-     * @param matrixNew       matrix.
-     * @param countThreadsNew count of threads.
+     * @param matrixNew                matrix.
+     * @param countThreadsNew          count of threads.
+     * @param numberElementOfThreadNew number element of thread.
      */
-    public DiagonalInitializerWithSynMethod(
-            final Matrix matrixNew, final int countThreadsNew) {
+    public DiagonalInitializerWithSynMethod(final Matrix matrixNew,
+                                            final int countThreadsNew,
+                                            final
+                                            int[] numberElementOfThreadNew) {
         matrix = matrixNew;
         countThreads = countThreadsNew;
+        numberElementOfThread = numberElementOfThreadNew;
     }
 
     /**
@@ -35,7 +43,7 @@ public class DiagonalInitializerWithSynMethod implements DiagonalInitializable {
         Thread[] threads = new Thread[countThreads];
         for (int i = 0; i < countThreads; ++i) {
             threads[i] = new Thread(new DiagonalTaskWithSynchronized(matrix,
-                    i + 1));
+                    numberElementOfThread[i]));
         }
         for (int i = 0; i < countThreads; ++i) {
             threads[i].start();

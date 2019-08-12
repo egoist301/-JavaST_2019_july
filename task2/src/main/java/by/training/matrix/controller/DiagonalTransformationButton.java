@@ -7,17 +7,18 @@ import by.training.matrix.service.diagonal.DiagonalInitializerWithLock;
 /**
  * Diagonal transformation button.
  */
-public class DiagonalTransformationButton implements Executable {
+public class DiagonalTransformationButton {
     /**
      * Initialize diagonal elements.
      *
-     * @param matrixNew matrix.
+     * @param matrixNew      matrix.
+     * @param elementNumbers element numbers.
      */
-    @Override
-    public void execute(final Matrix matrixNew) {
-        final int countOfThreads = 6;
+    public void execute(final Matrix matrixNew, final int[] elementNumbers) {
+
         DiagonalInitializable initializer =
-                new DiagonalInitializerWithLock(matrixNew, countOfThreads);
+                new DiagonalInitializerWithLock(matrixNew,
+                        elementNumbers.length, elementNumbers);
         initializer.initializeDiagonal();
     }
 }
