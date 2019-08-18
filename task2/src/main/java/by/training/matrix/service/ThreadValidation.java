@@ -48,7 +48,7 @@ final class ThreadValidation {
         final int max = 6;
         final int min = 4;
         int size = listNew.size();
-        return size > min || size < max;
+        return size >= min && size <= max;
     }
 
     /**
