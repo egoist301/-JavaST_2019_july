@@ -60,13 +60,13 @@ public class DiagonalTaskWithExecutor implements Runnable {
                 || !locks.get(i).tryLock())) {
             i++;
         }
+        matrix.setElement(i, i, number);
+        locks.get(i).unlock();
         try {
             TimeUnit.MICROSECONDS.sleep(random.nextInt(time));
         } catch (InterruptedException e) {
             LOGGER.warn("error during sleeping", e);
             Thread.currentThread().interrupt();
         }
-        matrix.setElement(i, i, number);
-        locks.get(i).unlock();
     }
 }

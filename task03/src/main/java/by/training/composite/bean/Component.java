@@ -9,7 +9,7 @@ public interface Component {
      *
      * @return string.
      */
-    String collect();
+    String compose();
 
     /**
      * Getter.

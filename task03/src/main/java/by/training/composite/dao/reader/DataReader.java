@@ -6,8 +6,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Data reader.
@@ -25,14 +23,17 @@ public class DataReader {
      * @return string..
      */
     public String readAll(final String filePath) {
-        List<String> lines;
+        String lines;
+        StringBuilder stringBuilder = new StringBuilder();
         try (FileReader reader = new FileReader(filePath);
              BufferedReader bufferedReader = new BufferedReader(reader)) {
-            lines = bufferedReader.lines().collect(Collectors.toList());
+            while ((lines = bufferedReader.readLine()) != null) {
+                stringBuilder.append(lines + "\n");
+            }
         } catch (IOException ex) {
             LOGGER.fatal("Error while opening file", ex);
             throw new RuntimeException("Error while opening file", ex);
         }
-        return lines.toString();
+        return stringBuilder.toString();
     }
 }

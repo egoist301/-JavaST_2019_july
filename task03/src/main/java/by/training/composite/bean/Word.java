@@ -1,5 +1,6 @@
 package by.training.composite.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,15 +10,19 @@ public class Word implements Component {
     /**
      * List of symbols.
      */
-    private List<Component> symbols;
+    private List<Component> symbols = new ArrayList<>();
+    /**
+     * Type of component.
+     */
+    private TypeComponent typeComponent = TypeComponent.WORD;
 
     /**
-     * Constructor.
+     * Getter.
      *
-     * @param symbolsNew symbols.
+     * @return type of component.
      */
-    public Word(final List<Component> symbolsNew) {
-        symbols = symbolsNew;
+    public TypeComponent getTypeComponent() {
+        return typeComponent;
     }
 
     /**
@@ -26,10 +31,10 @@ public class Word implements Component {
      * @return string.
      */
     @Override
-    public String collect() {
+    public String compose() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Component component : symbols) {
-            stringBuilder.append(component.collect());
+            stringBuilder.append(component.compose());
         }
         return stringBuilder.toString();
     }
@@ -53,7 +58,7 @@ public class Word implements Component {
     @Override
     public void remove(final Component componentNew) {
         if (componentNew != null) {
-            componentNew.remove(componentNew);
+            symbols.remove(componentNew);
         }
     }
 
@@ -65,7 +70,7 @@ public class Word implements Component {
     @Override
     public void add(final Component componentNew) {
         if (componentNew != null) {
-            componentNew.add(componentNew);
+            symbols.add(componentNew);
         }
     }
 

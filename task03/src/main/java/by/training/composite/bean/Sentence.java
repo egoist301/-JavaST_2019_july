@@ -1,5 +1,6 @@
 package by.training.composite.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,15 +10,19 @@ public class Sentence implements Component {
     /**
      * Lexemes.
      */
-    private List<Component> lexemes;
+    private List<Component> lexemes = new ArrayList<>();
+    /**
+     * Type of component.
+     */
+    private TypeComponent typeComponent = TypeComponent.SENTENCE;
 
     /**
-     * Constructor.
+     * Getter.
      *
-     * @param lexemesNew lexemes.
+     * @return type of component.
      */
-    public Sentence(final List<Component> lexemesNew) {
-        lexemes = lexemesNew;
+    public TypeComponent getTypeComponent() {
+        return typeComponent;
     }
 
     /**
@@ -26,10 +31,10 @@ public class Sentence implements Component {
      * @return string.
      */
     @Override
-    public String collect() {
+    public String compose() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Component component : lexemes) {
-            stringBuilder.append(component.collect());
+            stringBuilder.append(component.compose() + " ");
         }
         return stringBuilder.toString();
     }

@@ -145,9 +145,9 @@ public class Matrix {
         StringBuilder builder = new StringBuilder();
         for (int[] mas : array) {
             for (int elem : mas) {
-                builder.append(elem).append(" ");
+                builder.append(elem).append('\t');
             }
-            builder.append("\n");
+            builder.append('\n');
         }
         return builder.toString();
     }

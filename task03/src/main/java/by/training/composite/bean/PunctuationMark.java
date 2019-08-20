@@ -1,5 +1,6 @@
 package by.training.composite.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,15 +10,19 @@ public class PunctuationMark implements Component {
     /**
      * Symbols.
      */
-    private List<Component> symbols;
+    private List<Component> symbols = new ArrayList<>();
+    /**
+     * Type of component.
+     */
+    private TypeComponent typeComponent = TypeComponent.PUNCTUATION_MARK;
 
     /**
-     * Constructor.
+     * Getter.
      *
-     * @param symbolsNew symbols.
+     * @return type of component.
      */
-    public PunctuationMark(final List<Component> symbolsNew) {
-        symbols = symbolsNew;
+    public TypeComponent getTypeComponent() {
+        return typeComponent;
     }
 
     /**
@@ -26,10 +31,10 @@ public class PunctuationMark implements Component {
      * @return string.
      */
     @Override
-    public String collect() {
+    public String compose() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Component component : symbols) {
-            stringBuilder.append(component.collect());
+            stringBuilder.append(component.compose());
         }
         return stringBuilder.toString();
     }

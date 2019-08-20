@@ -1,5 +1,6 @@
 package by.training.composite.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,15 +10,19 @@ public class Paragraph implements Component {
     /**
      * Sentences.
      */
-    private List<Component> sentences;
+    private List<Component> sentences = new ArrayList<>();
+    /**
+     * Type of component.
+     */
+    private TypeComponent typeComponent = TypeComponent.PARAGRAPH;
 
     /**
-     * Constructor.
+     * Getter.
      *
-     * @param sentencesNew sentences.
+     * @return type of component.
      */
-    public Paragraph(final List<Component> sentencesNew) {
-        sentences = sentencesNew;
+    public TypeComponent getTypeComponent() {
+        return typeComponent;
     }
 
     /**
@@ -26,10 +31,10 @@ public class Paragraph implements Component {
      * @return string.
      */
     @Override
-    public String collect() {
+    public String compose() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Component component : sentences) {
-            stringBuilder.append(component.collect());
+            stringBuilder.append(component.compose());
         }
         return stringBuilder.toString();
     }

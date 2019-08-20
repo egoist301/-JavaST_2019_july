@@ -8,6 +8,19 @@ public class Symbol implements Component {
      * Symbol.
      */
     private Character character;
+    /**
+     * Type of component.
+     */
+    private TypeComponent typeComponent = TypeComponent.SYMBOL;
+
+    /**
+     * Getter.
+     *
+     * @return type of component.
+     */
+    public TypeComponent getTypeComponent() {
+        return typeComponent;
+    }
 
     /**
      * Constructor.
@@ -25,7 +38,7 @@ public class Symbol implements Component {
      * @return string.
      */
     @Override
-    public String collect() {
+    public String compose() {
         return character.toString();
     }
 

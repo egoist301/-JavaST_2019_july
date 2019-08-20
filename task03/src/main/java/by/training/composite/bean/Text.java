@@ -1,5 +1,6 @@
 package by.training.composite.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,15 +10,19 @@ public class Text implements Component {
     /**
      * Paragraphs.
      */
-    private List<Component> paragraphs;
+    private List<Component> paragraphs = new ArrayList<>();
+    /**
+     * Type of component.
+     */
+    private TypeComponent typeComponent = TypeComponent.TEXT;
 
     /**
-     * Constructor.
+     * Getter.
      *
-     * @param paragraphsNew paragraphs.
+     * @return type of component.
      */
-    public Text(final List<Component> paragraphsNew) {
-        paragraphs = paragraphsNew;
+    public TypeComponent getTypeComponent() {
+        return typeComponent;
     }
 
     /**
@@ -26,10 +31,10 @@ public class Text implements Component {
      * @return string.
      */
     @Override
-    public String collect() {
+    public String compose() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Component component : paragraphs) {
-            stringBuilder.append(component.collect());
+            stringBuilder.append("\t" + component.compose() + "\n");
         }
         return stringBuilder.toString();
     }
