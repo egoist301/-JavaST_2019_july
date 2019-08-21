@@ -1,5 +1,6 @@
 package by.training.composite.view.menu;
 
+import by.training.composite.view.Printer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,7 +46,7 @@ public class Menu {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
         while (!isExit) {
-            LOG.info(toString());
+            Printer.printInfo(toString());
             try {
                 int choice = Integer.parseInt(reader.readLine());
                 MenuEntry entry = menuEntryList.get(choice);

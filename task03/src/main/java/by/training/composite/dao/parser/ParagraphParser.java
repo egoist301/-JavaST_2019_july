@@ -10,7 +10,7 @@ public class ParagraphParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "(?<=[.])|(?<=[?])|(?<=[!])|(?<=\\?!)";
+    private static final String REGEX = "(\\?!)|(?<=[.])|(?<=[?])|(?<=[!])";//TODO fix regex
     /**
      * Parser.
      */
@@ -38,7 +38,7 @@ public class ParagraphParser implements Parser {
             Component sentence = new Sentence();
             component.add(sentence);
             if (next != null) {
-                next.parse(elem, sentence);
+                next.parse(elem.trim(), sentence);
             }
         }
     }

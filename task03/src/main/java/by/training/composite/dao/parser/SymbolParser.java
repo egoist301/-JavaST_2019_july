@@ -3,21 +3,10 @@ package by.training.composite.dao.parser;
 import by.training.composite.bean.Component;
 import by.training.composite.bean.Symbol;
 
-import java.util.stream.Stream;
-
 /**
- * Punctuation mark parser.
+ * Word parser.
  */
-public class PunctuationMarkParser implements Parser {
-    /**
-     * Delimiter.
-     */
-    private static final String REGEX = "";
-    /**
-     * Parser.
-     */
-    private Parser next;
-
+public class SymbolParser implements Parser {
     /**
      * Setter.
      *
@@ -25,7 +14,6 @@ public class PunctuationMarkParser implements Parser {
      */
     @Override
     public void setNext(final Parser nextParser) {
-        next = nextParser;
     }
 
     /**
@@ -36,12 +24,10 @@ public class PunctuationMarkParser implements Parser {
      */
     @Override
     public void parse(final String text, final Component component) {
-        Stream.of(text.split(REGEX)).map(String::trim).forEach(elem -> {
-            Component symbol = new Symbol(text);
+        for (Character elem : text.toCharArray()) {
+            Component symbol = new Symbol(elem);
             component.add(symbol);
-            if (next != null) {
-                next.parse(elem, symbol);
-            }
-        });
+        }
     }
 }
+

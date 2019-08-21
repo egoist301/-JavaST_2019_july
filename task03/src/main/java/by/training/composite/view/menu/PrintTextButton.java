@@ -28,6 +28,6 @@ public class PrintTextButton extends MenuEntry {
      */
     @Override
     public void run() {
-        new PrintText().execute(component);
+        new PrintText(component).execute();
     }
 }

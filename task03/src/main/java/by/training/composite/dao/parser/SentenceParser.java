@@ -10,7 +10,7 @@ public class SentenceParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "\\s";
+    private static final String REGEX = "\\s{1,}";
     /**
      * Parser.
      */
@@ -38,7 +38,7 @@ public class SentenceParser implements Parser {
             Component lexeme = new Lexeme();
             component.add(lexeme);
             if (next != null) {
-                next.parse(elem, lexeme);
+                next.parse(elem.trim(), lexeme);
             }
         }
     }

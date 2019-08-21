@@ -2,7 +2,7 @@ package by.training.composite.service;
 
 import by.training.composite.bean.Component;
 import by.training.composite.bean.Text;
-import by.training.composite.dao.parser.WordParser;
+import by.training.composite.dao.parser.SymbolParser;
 import by.training.composite.dao.parser.TextParser;
 import by.training.composite.dao.parser.SentenceParser;
 import by.training.composite.dao.parser.ParagraphParser;
@@ -28,12 +28,12 @@ public class FactoryTree {
         ParagraphParser paragraphParser = new ParagraphParser();
         SentenceParser sentenceParser = new SentenceParser();
         LexemeParser lexemeParser = new LexemeParser();
-        WordParser wordParser = new WordParser();
+        SymbolParser symbolParser = new SymbolParser();
 
         textParser.setNext(paragraphParser);
         paragraphParser.setNext(sentenceParser);
         sentenceParser.setNext(lexemeParser);
-        lexemeParser.setNext(wordParser);
+        lexemeParser.setNext(symbolParser);
         textParser.parse(allText, text);
         return text;
     }

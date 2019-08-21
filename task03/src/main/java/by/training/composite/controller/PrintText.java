@@ -6,13 +6,26 @@ import by.training.composite.view.Printer;
 /**
  * Print text.
  */
-public class PrintText {
+public class PrintText implements Command {
     /**
-     * Print text.
+     * Component.
+     */
+    private Component component;
+
+    /**
+     * Constructor.
      *
      * @param componentNew component.
      */
-    public void execute(final Component componentNew) {
-        Printer.printInfo(componentNew.compose());
+    public PrintText(final Component componentNew) {
+        component = componentNew;
+    }
+
+    /**
+     * Print text.
+     */
+    @Override
+    public void execute() {
+        Printer.printInfo(component.compose());
     }
 }

@@ -1,6 +1,7 @@
 package by.training.composite.dao.parser;
 
 import by.training.composite.bean.Component;
+import by.training.composite.bean.PunctuationMark;
 import by.training.composite.bean.Word;
 
 /**
@@ -10,8 +11,7 @@ public class LexemeParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX =
-            "([\\\\.,!\\\\?:;@]{1})|([^\\\\.,!\\\\?:;@]*)";
+    private static final String REGEX = "\\b(?=\\W+\\z)";//TODO fix regex
     /**
      * Parser.
      */
@@ -35,14 +35,20 @@ public class LexemeParser implements Parser {
      */
     @Override
     public void parse(final String text, final Component component) {
-        System.out.println(text);
-        for (String elem : text.split(REGEX)) {
-            Component word = new Word();
-            component.add(word);
+        String[] strings = text.split(REGEX);
+        Component word = new Word();
+        component.add(word);
+        if (next != null) {
+            next.parse(strings[0].trim(), word);
+        }
+        if (strings.length == 2) {
+            Component punctuationMark = new PunctuationMark();
+            component.add(punctuationMark);
             if (next != null) {
-                next.parse(elem, word);
+                next.parse(strings[1].trim(), punctuationMark);
             }
         }
     }
 }
+
 

@@ -38,7 +38,7 @@ public class TextParser implements Parser {
             Component paragraph = new Paragraph();
             component.add(paragraph);
             if (next != null) {
-                next.parse(elem, paragraph);
+                next.parse(elem.trim(), paragraph);
             }
         }
     }

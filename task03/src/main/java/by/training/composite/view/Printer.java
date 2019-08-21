@@ -1,17 +1,9 @@
 package by.training.composite.view;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 /**
  * Printer.
  */
 public final class Printer {
-    /**
-     * Logger.
-     */
-    private static final Logger LOGGER = LogManager.getLogger();
-
     /**
      * Default constructor.
      */
@@ -24,6 +16,6 @@ public final class Printer {
      * @param message message to print.
      */
     public static void printInfo(final Object message) {
-        LOGGER.info(message);
+        System.out.println(message);
     }
 }
