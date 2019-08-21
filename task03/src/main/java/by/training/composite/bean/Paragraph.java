@@ -11,19 +11,6 @@ public class Paragraph implements Component {
      * Sentences.
      */
     private List<Component> sentences = new ArrayList<>();
-    /**
-     * Type of component.
-     */
-    private TypeComponent typeComponent = TypeComponent.PARAGRAPH;
-
-    /**
-     * Getter.
-     *
-     * @return type of component.
-     */
-    public TypeComponent getTypeComponent() {
-        return typeComponent;
-    }
 
     /**
      * Gathers text.

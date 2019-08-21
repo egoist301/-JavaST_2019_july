@@ -11,19 +11,6 @@ public class Lexeme implements Component {
      * Symbols.
      */
     private List<Component> symbols = new ArrayList<>();
-    /**
-     * Type of component.
-     */
-    private TypeComponent typeComponent = TypeComponent.LEXEME;
-
-    /**
-     * Getter.
-     *
-     * @return type of component.
-     */
-    public TypeComponent getTypeComponent() {
-        return typeComponent;
-    }
 
     /**
      * Gathers text.

@@ -11,19 +11,6 @@ public class Word implements Component {
      * List of symbols.
      */
     private List<Component> symbols = new ArrayList<>();
-    /**
-     * Type of component.
-     */
-    private TypeComponent typeComponent = TypeComponent.WORD;
-
-    /**
-     * Getter.
-     *
-     * @return type of component.
-     */
-    public TypeComponent getTypeComponent() {
-        return typeComponent;
-    }
 
     /**
      * Gathers text.

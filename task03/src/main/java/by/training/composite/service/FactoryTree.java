@@ -2,11 +2,11 @@ package by.training.composite.service;
 
 import by.training.composite.bean.Component;
 import by.training.composite.bean.Text;
-import by.training.composite.dao.parser.SymbolParser;
-import by.training.composite.dao.parser.TextParser;
-import by.training.composite.dao.parser.SentenceParser;
-import by.training.composite.dao.parser.ParagraphParser;
-import by.training.composite.dao.parser.LexemeParser;
+import by.training.composite.service.parser.SymbolParser;
+import by.training.composite.service.parser.TextParser;
+import by.training.composite.service.parser.SentenceParser;
+import by.training.composite.service.parser.ParagraphParser;
+import by.training.composite.service.parser.LexemeParser;
 
 import by.training.composite.dao.reader.DataReader;
 

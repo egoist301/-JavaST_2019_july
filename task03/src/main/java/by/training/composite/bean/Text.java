@@ -2,28 +2,19 @@ package by.training.composite.bean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Text.
  */
 public class Text implements Component {
+    private static final String TAB_REGEX = "\t";
+    private static final String NEW_LINE_REGEX = "\n";
+    private static final String DELIMITER_REGEX = "\n\t";
     /**
      * Paragraphs.
      */
     private List<Component> paragraphs = new ArrayList<>();
-    /**
-     * Type of component.
-     */
-    private TypeComponent typeComponent = TypeComponent.TEXT;
-
-    /**
-     * Getter.
-     *
-     * @return type of component.
-     */
-    public TypeComponent getTypeComponent() {
-        return typeComponent;
-    }
 
     /**
      * Gathers text.
@@ -32,11 +23,12 @@ public class Text implements Component {
      */
     @Override
     public String compose() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner(DELIMITER_REGEX,
+                TAB_REGEX, NEW_LINE_REGEX);
         for (Component component : paragraphs) {
-            stringBuilder.append("\t" + component.compose() + "\n");
+            stringJoiner.add(component.compose());
         }
-        return stringBuilder.toString();
+        return stringJoiner.toString();
     }
 
     /**

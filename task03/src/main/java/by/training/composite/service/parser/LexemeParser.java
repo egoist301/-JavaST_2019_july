@@ -1,4 +1,4 @@
-package by.training.composite.dao.parser;
+package by.training.composite.service.parser;
 
 import by.training.composite.bean.Component;
 import by.training.composite.bean.PunctuationMark;
@@ -11,7 +11,7 @@ public class LexemeParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "\\b(?=\\W+\\z)";//TODO fix regex
+    private static final String REGEX = "\\b(?=\\W+\\z)"; //TODO fix regex
     /**
      * Parser.
      */

@@ -17,21 +17,26 @@ public interface Component {
      * @param index index in composite.
      * @return child component.
      */
-    Component getChild(int index);
+    default Component getChild(int index) {
+        return null;
+    }
 
     /**
      * Remove component of composite.
      *
      * @param componentNew component.
      */
-    void remove(Component componentNew);
+    default void remove(Component componentNew) {
+    }
 
     /**
      * Add component in composite.
      *
      * @param componentNew component.
      */
-    void add(Component componentNew);
+    default void add(Component componentNew) {
+
+    }
 
     /**
      * Calculate amount of children.

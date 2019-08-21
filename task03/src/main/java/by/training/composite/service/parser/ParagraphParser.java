@@ -1,4 +1,4 @@
-package by.training.composite.dao.parser;
+package by.training.composite.service.parser;
 
 import by.training.composite.bean.Component;
 import by.training.composite.bean.Sentence;
@@ -10,7 +10,8 @@ public class ParagraphParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "(\\?!)|(?<=[.])|(?<=[?])|(?<=[!])";//TODO fix regex
+    private static final String REGEX = "(\\?!)|(?<=[.])|(?<=[?])|(?<=[!])";
+    //TODO fix regex
     /**
      * Parser.
      */

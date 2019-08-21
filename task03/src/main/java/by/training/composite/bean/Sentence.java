@@ -2,28 +2,17 @@ package by.training.composite.bean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Sentence.
  */
 public class Sentence implements Component {
+    private static final String REGEX_SEPARATOR = " ";
     /**
      * Lexemes.
      */
     private List<Component> lexemes = new ArrayList<>();
-    /**
-     * Type of component.
-     */
-    private TypeComponent typeComponent = TypeComponent.SENTENCE;
-
-    /**
-     * Getter.
-     *
-     * @return type of component.
-     */
-    public TypeComponent getTypeComponent() {
-        return typeComponent;
-    }
 
     /**
      * Gathers text.
@@ -32,11 +21,11 @@ public class Sentence implements Component {
      */
     @Override
     public String compose() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner(REGEX_SEPARATOR);
         for (Component component : lexemes) {
-            stringBuilder.append(component.compose() + " ");
+            stringJoiner.add(component.compose());
         }
-        return stringBuilder.toString();
+        return stringJoiner.toString();
     }
 
     /**

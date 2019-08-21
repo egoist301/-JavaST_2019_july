@@ -1,4 +1,4 @@
-package by.training.composite.dao.parser;
+package by.training.composite.service.parser;
 
 import by.training.composite.bean.Component;
 
