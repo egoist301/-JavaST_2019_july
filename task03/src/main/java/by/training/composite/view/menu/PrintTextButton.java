@@ -1,6 +1,7 @@
 package by.training.composite.view.menu;
 
 import by.training.composite.bean.Component;
+import by.training.composite.controller.Command;
 import by.training.composite.controller.PrintText;
 
 /**
@@ -11,10 +12,11 @@ public class PrintTextButton extends MenuEntry {
      * Component.
      */
     private Component component;
+
     /**
      * Constructor.
      *
-     * @param titleNew name menu entry.
+     * @param titleNew     name menu entry.
      * @param componentNew component.
      */
     public PrintTextButton(final String titleNew,
@@ -28,6 +30,7 @@ public class PrintTextButton extends MenuEntry {
      */
     @Override
     public void run() {
-        new PrintText(component).execute();
+        Command command = new PrintText(component);
+        command.execute();
     }
 }

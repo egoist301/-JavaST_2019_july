@@ -43,5 +43,7 @@ public interface Component {
      *
      * @return amount of children.
      */
-    int calculateAmountOfChildren();
+    default int calculateAmountOfChildren() {
+        return 0;
+    }
 }

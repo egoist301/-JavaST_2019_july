@@ -1,6 +1,8 @@
 package by.training.composite.view.menu;
 
 import by.training.composite.bean.Component;
+import by.training.composite.controller.Command;
+import by.training.composite.controller.SortSentencesInParagraphByCountOfWords;
 
 /**
  * Sort sentences in paragraph by count of words button.
@@ -28,6 +30,7 @@ public class SortSentencesInParagraphByCountOfWordsButton extends MenuEntry {
      */
     @Override
     public void run() {
-
+        Command command = new SortSentencesInParagraphByCountOfWords(component);
+        command.execute();
     }
 }

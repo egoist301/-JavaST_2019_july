@@ -14,6 +14,6 @@ public class LoadTextFromFile {
      * @return component.
      */
     public Component load(final String filePath) {
-        return new FactoryTree().createText(filePath);
+        return FactoryTree.getINSTANCE().createText(filePath);
     }
 }

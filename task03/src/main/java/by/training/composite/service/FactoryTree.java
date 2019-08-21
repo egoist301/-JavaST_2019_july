@@ -2,18 +2,38 @@ package by.training.composite.service;
 
 import by.training.composite.bean.Component;
 import by.training.composite.bean.Text;
-import by.training.composite.service.parser.SymbolParser;
-import by.training.composite.service.parser.TextParser;
-import by.training.composite.service.parser.SentenceParser;
+import by.training.composite.dao.reader.DataReader;
 import by.training.composite.service.parser.ParagraphParser;
 import by.training.composite.service.parser.LexemeParser;
-
-import by.training.composite.dao.reader.DataReader;
+import by.training.composite.service.parser.SentenceParser;
+import by.training.composite.service.parser.TextParser;
+import by.training.composite.service.parser.SymbolParser;
 
 /**
  * Factory tree.
  */
-public class FactoryTree {
+public final class FactoryTree {
+    /**
+     * Singleton.
+     */
+    private static final FactoryTree INSTANCE = new FactoryTree();
+
+    /**
+     * Default constructor.
+     */
+    private FactoryTree() {
+
+    }
+
+    /**
+     * Getter.
+     *
+     * @return factory.
+     */
+    public static FactoryTree getINSTANCE() {
+        return INSTANCE;
+    }
+
     /**
      * Create text.
      *

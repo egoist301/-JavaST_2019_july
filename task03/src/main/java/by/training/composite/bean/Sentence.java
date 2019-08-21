@@ -8,6 +8,9 @@ import java.util.StringJoiner;
  * Sentence.
  */
 public class Sentence implements Component {
+    /**
+     * Delimiter.
+     */
     private static final String REGEX_SEPARATOR = " ";
     /**
      * Lexemes.

@@ -28,14 +28,4 @@ public class Symbol implements Component {
     public String compose() {
         return character.toString();
     }
-
-    /**
-     * Calculate amount of children.
-     *
-     * @return amount of children.
-     */
-    @Override
-    public int calculateAmountOfChildren() {
-        return 0;
-    }
 }

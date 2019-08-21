@@ -8,8 +8,17 @@ import java.util.StringJoiner;
  * Text.
  */
 public class Text implements Component {
+    /**
+     * Tab regex.
+     */
     private static final String TAB_REGEX = "\t";
+    /**
+     * New line regex.
+     */
     private static final String NEW_LINE_REGEX = "\n";
+    /**
+     * Delimiter regex.
+     */
     private static final String DELIMITER_REGEX = "\n\t";
     /**
      * Paragraphs.

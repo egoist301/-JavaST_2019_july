@@ -1,6 +1,8 @@
 package by.training.composite.view.menu;
 
 import by.training.composite.bean.Component;
+import by.training.composite.controller.Command;
+import by.training.composite.controller.SortWordsInSentenceByLength;
 
 /**
  * Sort words in sentence by length.
@@ -27,6 +29,7 @@ public class SortWordsInSentenceByLengthButton extends MenuEntry {
      */
     @Override
     public void run() {
-
+        Command command = new SortWordsInSentenceByLength(component);
+        command.execute();
     }
 }

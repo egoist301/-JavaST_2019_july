@@ -10,7 +10,9 @@ public class ParagraphParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "(\\?!)|(?<=[.])|(?<=[?])|(?<=[!])";
+    private static final String REGEX = "(?<=\\?!)|(?<=[.])|(?<=[?])|(?<=[!])";
+    //private static final
+    // String REGEX = "(?=\\.{1,3}|\\?!|\\?|!)(\\s+|\\r\\n)(?=\\w)";
     //TODO fix regex
     /**
      * Parser.
