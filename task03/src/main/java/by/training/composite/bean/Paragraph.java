@@ -2,11 +2,16 @@ package by.training.composite.bean;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 
 /**
  * Paragraph.
  */
 public class Paragraph implements Component {
+    /**
+     * Delimiter.
+     */
+    private static final String REGEX_SEPARATOR = " ";
     /**
      * Sentences.
      */
@@ -19,11 +24,11 @@ public class Paragraph implements Component {
      */
     @Override
     public String compose() {
-        StringBuilder stringBuilder = new StringBuilder();
+        StringJoiner stringJoiner = new StringJoiner(REGEX_SEPARATOR);
         for (Component component : sentences) {
-            stringBuilder.append(component.compose());
+            stringJoiner.add(component.compose());
         }
-        return stringBuilder.toString();
+        return stringJoiner.toString();
     }
 
     /**

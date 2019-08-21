@@ -11,7 +11,7 @@ public class LexemeParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "\\b(?=\\W+\\z)"; //TODO fix regex
+    private static final String REGEX = "(?<=[^.,?!])(?=[.,?!])";
     /**
      * Parser.
      */
