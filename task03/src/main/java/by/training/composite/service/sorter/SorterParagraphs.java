@@ -3,6 +3,7 @@ package by.training.composite.service.sorter;
 import by.training.composite.bean.Component;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -16,14 +17,15 @@ public class SorterParagraphs implements Sorter {
      */
     @Override
     public void sort(final Component componentNew) {
+        Comparator<Component> componentComparator = (Component o1, Component o2)
+                -> (o1.calculateAmountOfChildren()
+                - o2.calculateAmountOfChildren());
         List<Component> components = new ArrayList<>();
         int countOfChildren = componentNew.calculateAmountOfChildren();
         for (int i = 0; i < countOfChildren; ++i) {
             components.add(componentNew.getChild(i));
         }
-        components.sort((Component o1, Component o2)
-                -> (o1.calculateAmountOfChildren()
-                - o2.calculateAmountOfChildren()));
+        components.sort(componentComparator);
         removeAll(components, componentNew);
         addAll(components, componentNew);
     }
