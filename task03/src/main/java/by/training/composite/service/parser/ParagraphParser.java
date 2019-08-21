@@ -10,7 +10,7 @@ public class ParagraphParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "(?<=([.!?\\t]+))\\s";
+    private static final String REGEX = "(?<=([.!?\\t]))\\s";
     /**
      * Parser.
      */
