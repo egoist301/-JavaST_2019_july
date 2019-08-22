@@ -28,6 +28,15 @@ public abstract class MenuEntry {
     }
 
     /**
+     * Setter.
+     *
+     * @param titleNew title.
+     */
+    void setTitle(final String titleNew) {
+        title = titleNew;
+    }
+
+    /**
      * Runner.
      */
     public abstract void run();

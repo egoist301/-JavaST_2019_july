@@ -10,7 +10,7 @@ public class LoadTextFromFile {
     /**
      * Load component.
      *
-     * @param filePath filePath.
+     * @param filePath FILE_PATH.
      * @return component.
      */
     public Component load(final String filePath) {

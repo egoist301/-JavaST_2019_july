@@ -1,6 +1,7 @@
 package by.training.composite.view.menu;
 
 import by.training.composite.bean.Component;
+import by.training.composite.bean.ResourceManager;
 
 /**
  * Sort text button.
@@ -28,13 +29,14 @@ public class SortTextButton extends MenuEntry {
      */
     @Override
     public void run() {
+        ResourceManager manager = ResourceManager.INSTANCE;
         Menu menu = new Menu();
-        menu.addEntry(new SortParagraphsByCountOfSentenceButton("paragraphs"
-                + " by count of sentence", component));
-        menu.addEntry(new SortWordsInSentenceByLengthButton("words in sentence"
-                + " by length", component));
+        menu.addEntry(new SortParagraphsByCountOfSentenceButton(
+                manager.getString("sort1"), component));
+        menu.addEntry(new SortWordsInSentenceByLengthButton(
+                manager.getString("sort2"), component));
         menu.addEntry(new SortSentencesInParagraphByCountOfWordsButton(
-                "sentences in paragraph by count of words", component));
+                manager.getString("sort3"), component));
         menu.run();
     }
 }
