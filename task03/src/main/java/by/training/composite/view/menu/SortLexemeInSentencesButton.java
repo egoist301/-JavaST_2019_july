@@ -1,8 +1,10 @@
 package by.training.composite.view.menu;
 
 import by.training.composite.bean.Component;
+import by.training.composite.bean.ResourceManager;
 import by.training.composite.controller.Command;
 import by.training.composite.controller.SortLexemeInSentence;
+import by.training.composite.view.Printer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -43,6 +45,8 @@ public class SortLexemeInSentencesButton extends MenuEntry {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(System.in));
         char choice;
+
+        Printer.printInfo(ResourceManager.INSTANCE.getString("input"));
         try {
             choice = reader.readLine().charAt(0);
             Command command = new SortLexemeInSentence(component, choice);
