@@ -1,7 +1,7 @@
 package by.training.composite.view;
 
 import by.training.composite.bean.Component;
-import by.training.composite.bean.Configuration;
+import by.training.composite.service.Configuration;
 import by.training.composite.bean.ResourceManager;
 import by.training.composite.controller.LoadTextFromFile;
 import by.training.composite.view.menu.LocaleEntryButton;

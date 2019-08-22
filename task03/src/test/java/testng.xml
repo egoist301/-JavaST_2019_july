@@ -7,6 +7,7 @@
             <run>
                 <include name="Data reader group"/>
                 <include name="Parser group"/>
+                <include name="Sorter group"/>
             </run>
         </groups>
         <classes>
@@ -16,6 +17,10 @@
             <class name="by.training.composite.service.parser.SentenceParserTest"/>
             <class name="by.training.composite.service.parser.ParagraphParserTest"/>
             <class name="by.training.composite.service.parser.TextParserTest"/>
+            <class name="by.training.composite.service.sorter.SorterLexemeTest"/>
+            <class name="by.training.composite.service.sorter.SorterSentencesTest"/>
+            <class name="by.training.composite.service.sorter.SorterParagraphsTest"/>
+            <class name="by.training.composite.service.sorter.SorterWordsTest"/>
         </classes>
     </test>
 

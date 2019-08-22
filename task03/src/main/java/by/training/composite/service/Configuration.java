@@ -1,4 +1,4 @@
-package by.training.composite.bean;
+package by.training.composite.service;
 
 /**
  * Configuration file. Utility class.
@@ -11,7 +11,7 @@ public final class Configuration {
     /**
      * Resource name.
      */
-    static final String RESOURCE_NAME = "property.text";
+    public static final String RESOURCE_NAME = "property.text";
 
     /**
      * Default constructor.

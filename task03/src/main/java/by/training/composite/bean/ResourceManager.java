@@ -1,5 +1,7 @@
 package by.training.composite.bean;
 
+import by.training.composite.service.Configuration;
+
 import java.util.Locale;
 import java.util.ResourceBundle;
 

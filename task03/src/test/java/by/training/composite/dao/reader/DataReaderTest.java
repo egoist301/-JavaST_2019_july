@@ -1,6 +1,6 @@
 package by.training.composite.dao.reader;
 
-import by.training.composite.bean.Configuration;
+import by.training.composite.service.Configuration;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertFalse;
