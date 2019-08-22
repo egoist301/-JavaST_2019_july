@@ -37,6 +37,8 @@ public class SortTextButton extends MenuEntry {
                 manager.getString("sort2"), component));
         menu.addEntry(new SortSentencesInParagraphByCountOfWordsButton(
                 manager.getString("sort3"), component));
+        menu.addEntry(new SortLexemeInSentencesButton(
+                manager.getString("sort4"), component));
         menu.run();
     }
 }
