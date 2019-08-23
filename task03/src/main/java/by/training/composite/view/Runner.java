@@ -5,6 +5,7 @@ import by.training.composite.service.Configuration;
 import by.training.composite.bean.ResourceManager;
 import by.training.composite.controller.LoadTextFromFile;
 import by.training.composite.view.menu.LocaleEntryButton;
+import by.training.composite.view.menu.LocaleMenu;
 import by.training.composite.view.menu.Menu;
 import by.training.composite.view.menu.PrintTextButton;
 import by.training.composite.view.menu.SortTextButton;
@@ -29,7 +30,7 @@ public final class Runner {
         ResourceManager manager = ResourceManager.INSTANCE;
         LoadTextFromFile loader = new LoadTextFromFile();
         Component text = loader.load(Configuration.FILE_PATH);
-        Menu firstMenu = new Menu();
+        Menu firstMenu = new LocaleMenu();
         firstMenu.addEntry(new LocaleEntryButton("english"));
         firstMenu.addEntry(new LocaleEntryButton("russian"));
         firstMenu.addEntry(new LocaleEntryButton("belorussian"));
