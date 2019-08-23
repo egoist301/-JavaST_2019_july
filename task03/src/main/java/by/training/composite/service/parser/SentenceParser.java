@@ -10,7 +10,7 @@ public class SentenceParser implements Parser {
     /**
      * Delimiter.
      */
-    private static final String REGEX = "\\s{1,}";
+    private static final String REGEX = "\\s+";
     /**
      * Parser.
      */

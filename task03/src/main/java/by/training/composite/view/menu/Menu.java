@@ -51,7 +51,8 @@ public class Menu {
                 int choice = Integer.parseInt(reader.readLine());
                 MenuEntry entry = menuEntryList.get(choice);
                 entry.run();
-            } catch (IOException e) {
+            } catch (IOException | NumberFormatException
+                    | IndexOutOfBoundsException e) {
                 LOG.warn("Menu: ", e);
             }
         }
