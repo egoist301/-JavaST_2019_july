@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<greenhouse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.epam.training.by/greenhouse"
+       xsi:schemaLocation="http://www.epam.training.by/greenhouse  greenhouse.xsd">
+    <flower id="1" is-photophilous="true">
+        <name>Роза</name>
+        <soil>GROUND</soil>
+        <origin>Беларусь</origin>
+        <multiplying>CUTTINGS</multiplying>
+        <stem-color>Зелёный</stem-color>
+        <height>80</height>
+        <temperature>16</temperature>
+        <date>31.12.12</date>
+    </flower>
+</greenhouse>

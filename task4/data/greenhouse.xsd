@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="http://www.epam.training.by/greenhouse"
+        xmlns:tns="http://www.epam.training.by/greenhouse">
+    <element name="greenhouse">
+        <complexType>
+            <sequence>
+                <element name="flower" type="tns:Flower" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <complexType name="Flower">
+        <all>
+            <element name="name" type="string"/>
+            <element name="soil" type="tns:Soil"/>
+            <element name="origin" type="string"/>
+            <element name="multiplying" type="tns:Multiplying"/>
+            <element name="stem-color" type="string"/>
+            <element name="height" type="int"/>
+            <element name="temperature" type="int"/>
+            <element name="date" type="date"/>
+        </all>
+        <attribute name="id" type="positiveInteger" use="required"/>
+        <attribute name="is-photophilous" type="boolean"/>
+    </complexType>
+    <simpleType name="Soil">
+        <restriction base="string">
+            <enumeration value="PODZOLIC"/>
+            <enumeration value="GROUND"/>
+            <enumeration value="SOD-PODZOLIC"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="Multiplying">
+        <restriction base="string">
+            <enumeration value="SEED"/>
+            <enumeration value="LEAVES"/>
+            <enumeration value="CUTTINGS"/>
+        </restriction>
+    </simpleType>
+</schema>
