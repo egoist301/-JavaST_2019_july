@@ -1,66 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<schema xmlns="http://www.w3.org/2001/XMLSchema"
-        targetNamespace="http://www.epam.training.by/greenhouse"
-        xmlns:tns="http://www.epam.training.by/greenhouse"
-        elementFormDefault = "qualified">
+<schema version="1.0"
+        xmlns="http://www.w3.org/2001/XMLSchema"
+        xmlns:tns="http://www.example.com/greenhouse"
+        targetNamespace="http://www.example.com/greenhouse"
+        elementFormDefault="qualified">
     <element name="greenhouse">
         <complexType>
             <sequence>
-                <element ref="tns:flower"/>
+                <element ref="tns:flower" maxOccurs="unbounded"/>
             </sequence>
         </complexType>
     </element>
     <element name="flower" type="tns:Flower" abstract="true"/>
-    <element name="artificial-flower" type="tns:ArtificialFlower" substitutionGroup="tns:flower"/>
-    <element name="living-flower" type="tns:LivingFlower" substitutionGroup="tns:flower"/>
 
-    <complexType name="Flower">
-        <all>
+    <complexType name="Flower" mixed="true">
+        <sequence>
             <element name="name" type="string"/>
             <element name="origin" type="string"/>
-            <element name="stem-color" type="string"/>
+            <element name="stem-color" type="tns:Color"/>
             <element name="height" type="positiveInteger"/>
-            <element name="temperature" type="int"/>
-            <element name="date" type="date"/>
-        </all>
+            <element name="temperature" type="tns:Temperature"/>
+            <element name="discovery-date" type="date"/>
+        </sequence>
         <attribute name="id" type="positiveInteger" use="required"/>
     </complexType>
 
-    <complexType name="ArtificialFlower">
-        <complexContent>
-            <extension base="tns:Flower">
-                <all>
-                    <element name="material" type="string"/>
-                </all>
-            </extension>
-        </complexContent>
-    </complexType>
+    <element name="living-flower" substitutionGroup="tns:flower">
+        <complexType mixed="true">
+            <complexContent>
+                <extension base="tns:Flower">
+                    <sequence>
+                        <element name="soil" type="tns:Soil"/>
+                        <element name="multiplying" type="tns:Multiplying"/>
+                        <element name="watering" type="positiveInteger"/>
+                    </sequence>
+                    <attribute name="is-photophilous" type="boolean" default="false"/>
+                    <attribute name="is-medicinal" type="boolean" default="false"/>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
 
-    <complexType name="LivingFlower">
-        <complexContent>
-            <extension base="tns:Flower">
-                <all>
-                    <element name="soil" type="tns:Soil"/>
-                    <element name="multiplying" type="tns:Multiplying"/>
-                </all>
-                <attribute name="is-photophilous" type="boolean" default="false"/>
-            </extension>
-        </complexContent>
-    </complexType>
+    <element name="artificial-flower" substitutionGroup="tns:flower">
+        <complexType mixed="true">
+            <complexContent>
+                <extension base="tns:Flower">
+                    <sequence>
+                        <element name="material" type="string"/>
+                    </sequence>
+                </extension>
+            </complexContent>
+        </complexType>
+    </element>
+
+    <simpleType name="Color">
+        <restriction base="string">
+            <enumeration value="green"/>
+            <enumeration value="red"/>
+            <enumeration value="yellow"/>
+        </restriction>
+    </simpleType>
+
+    <simpleType name="Temperature">
+        <restriction base="string" >
+            <!-- ID??? -->
+            <pattern value="(\d{1,3})-(\d{1,3})"/>
+        </restriction>
+    </simpleType>
 
     <simpleType name="Soil">
         <restriction base="string">
-            <enumeration value="PODZOLIC"/>
-            <enumeration value="GROUND"/>
-            <enumeration value="SOD-PODZOLIC"/>
+            <enumeration value="podzolic"/>
+            <enumeration value="ground"/>
+            <enumeration value="sod-podzolic"/>
         </restriction>
     </simpleType>
 
     <simpleType name="Multiplying">
         <restriction base="string">
-            <enumeration value="SEED"/>
-            <enumeration value="LEAVES"/>
-            <enumeration value="CUTTINGS"/>
+            <enumeration value="seed"/>
+            <enumeration value="leaves"/>
+            <enumeration value="cuttings"/>
         </restriction>
     </simpleType>
 </schema>
