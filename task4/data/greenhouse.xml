@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <greenhouse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns="http://www.example.com/greenhouse"
-            xsi:schemaLocation="http://www.example.com/greenhouse   greenhouse.xsd">
+            xmlns="http://www.training.by/greenhouse"
+            xsi:schemaLocation="http://www.training.by/greenhouse greenhouse.xsd">
 
-    <living-flower id="1" is-photophilous="true" is-medicinal="true">
+    <living-flower is-medicinal="true" id="1" is-photophilous="true">
         <name>Роза</name>
         <origin>Беларусь</origin>
         <stem-color>green</stem-color>
@@ -12,7 +12,7 @@
         <discovery-date>2000-08-27</discovery-date>
         <soil>ground</soil>
         <multiplying>cuttings</multiplying>
-        <watering>50</watering>
+        <watering>500</watering>
     </living-flower>
 
     <artificial-flower id="2">
