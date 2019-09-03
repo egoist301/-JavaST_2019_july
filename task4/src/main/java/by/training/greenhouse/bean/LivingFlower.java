@@ -7,6 +7,18 @@ import java.util.Objects;
  */
 public class LivingFlower extends Flower {
     /**
+     * Watering.
+     */
+    private int watering;
+    /**
+     * Soil.
+     */
+    private Soil soil;
+    /**
+     * Multiplying.
+     */
+    private Multiplying multiplying;
+    /**
      * Is medicinal.
      */
     private boolean medicinal;
@@ -52,6 +64,54 @@ public class LivingFlower extends Flower {
     }
 
     /**
+     * Getter.
+     * @return soil.
+     */
+    public Soil getSoil() {
+        return soil;
+    }
+
+    /**
+     * Setter.
+     * @param soilNew soil.
+     */
+    public void setSoil(final Soil soilNew) {
+        soil = soilNew;
+    }
+
+    /**
+     * Getter.
+     * @return multiplying.
+     */
+    public Multiplying getMultiplying() {
+        return multiplying;
+    }
+
+    /**
+     * Setter.
+     * @param multiplyingNew multiplying.
+     */
+    public void setMultiplying(final Multiplying multiplyingNew) {
+        multiplying = multiplyingNew;
+    }
+
+    /**
+     * Getter.
+     * @return watering.
+     */
+    public int getWatering() {
+        return watering;
+    }
+
+    /**
+     * Setter.
+     * @param wateringNew watering.
+     */
+    public void setWatering(final int wateringNew) {
+        watering = wateringNew;
+    }
+
+    /**
      * Equal this object with any object.
      *
      * @param oNew some object.
@@ -70,7 +130,10 @@ public class LivingFlower extends Flower {
         }
         LivingFlower that = (LivingFlower) oNew;
         return isMedicinal() == that.isMedicinal()
-                && isPhotophilous() == that.isPhotophilous();
+                && isPhotophilous() == that.isPhotophilous()
+                && getSoil().equals(that.soil)
+                && getMultiplying().equals(that.multiplying)
+                && getWatering() == that.watering;
     }
 
     /**
@@ -80,7 +143,8 @@ public class LivingFlower extends Flower {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), isMedicinal(), isPhotophilous());
+        return Objects.hash(super.hashCode(), isMedicinal(), isPhotophilous(),
+                getMultiplying(), getSoil(), getWatering());
     }
 
     /**
@@ -92,6 +156,7 @@ public class LivingFlower extends Flower {
     public String toString() {
         return "LivingFlower{" + super.toString()
                 + "medicinal=" + medicinal
-                + ", photophilous=" + photophilous + '}';
+                + ", photophilous=" + photophilous + ", watering=" + watering
+                + ", soil=" + soil + ", multiplying=" + multiplying + '}';
     }
 }
