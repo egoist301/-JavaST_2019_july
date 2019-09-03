@@ -2,26 +2,61 @@ package by.training.greenhouse.bean;
 
 import java.util.Objects;
 
+/**
+ * Living flower.
+ */
 public class LivingFlower extends Flower {
-    private boolean isMedicinal;
-    private boolean isPhotophilous;
+    /**
+     * Is medicinal.
+     */
+    private boolean medicinal;
+    /**
+     * Is photophilous.
+     */
+    private boolean photophilous;
 
+    /**
+     * Getter.
+     *
+     * @return medicinal.
+     */
     public boolean isMedicinal() {
-        return isMedicinal;
+        return medicinal;
     }
 
+    /**
+     * Setter.
+     *
+     * @param medicinalNew medicinal.
+     */
     public void setMedicinal(final boolean medicinalNew) {
-        isMedicinal = medicinalNew;
+        medicinal = medicinalNew;
     }
 
+    /**
+     * Getter.
+     *
+     * @return photophilous.
+     */
     public boolean isPhotophilous() {
-        return isPhotophilous;
+        return photophilous;
     }
 
+    /**
+     * Setter.
+     *
+     * @param photophilousNew photophilous.
+     */
     public void setPhotophilous(final boolean photophilousNew) {
-        isPhotophilous = photophilousNew;
+        photophilous = photophilousNew;
     }
 
+    /**
+     * Equal this object with any object.
+     *
+     * @param oNew some object.
+     * @return equal or not.
+     */
     @Override
     public boolean equals(final Object oNew) {
         if (this == oNew) {
@@ -34,20 +69,29 @@ public class LivingFlower extends Flower {
             return false;
         }
         LivingFlower that = (LivingFlower) oNew;
-        return isMedicinal() == that.isMedicinal() &&
-                isPhotophilous() == that.isPhotophilous();
+        return isMedicinal() == that.isMedicinal()
+                && isPhotophilous() == that.isPhotophilous();
     }
 
+    /**
+     * Hashcode.
+     *
+     * @return hashcode.
+     */
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), isMedicinal(), isPhotophilous());
     }
 
+    /**
+     * To string.
+     *
+     * @return string object.
+     */
     @Override
     public String toString() {
-        return "LivingFlower{" + super.toString() +
-                "isMedicinal=" + isMedicinal +
-                ", isPhotophilous=" + isPhotophilous +
-                '}';
+        return "LivingFlower{" + super.toString()
+                + "medicinal=" + medicinal
+                + ", photophilous=" + photophilous + '}';
     }
 }
