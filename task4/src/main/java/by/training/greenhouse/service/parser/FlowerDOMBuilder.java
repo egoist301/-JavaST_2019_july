@@ -5,6 +5,8 @@ import by.training.greenhouse.bean.Color;
 import by.training.greenhouse.bean.Flower;
 import by.training.greenhouse.bean.FlowerNameTag;
 import by.training.greenhouse.bean.LivingFlower;
+import by.training.greenhouse.bean.Multiplying;
+import by.training.greenhouse.bean.Soil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
@@ -138,6 +140,15 @@ public class FlowerDOMBuilder {
                         element.getAttribute(FlowerNameTag
                                 .PHOTOPHILOUS.getValue())));
             }
+            ((LivingFlower) flower).setSoil(Soil.fromValue(
+                    getElementTextContent(element,
+                            FlowerNameTag.SOIL.getValue())));
+            ((LivingFlower) flower).setWatering(Integer.parseInt(
+                    getElementTextContent(element,
+                            FlowerNameTag.WATERING.getValue())));
+            ((LivingFlower) flower).setMultiplying(Multiplying.fromValue(
+                    getElementTextContent(element,
+                            FlowerNameTag.MULTIPLYING.getValue())));
         } else {
             throw new ParserException();
         }
@@ -152,8 +163,6 @@ public class FlowerDOMBuilder {
                 FlowerNameTag.STEM_COLOR.getValue())));
         flower.setHeight(Integer.parseInt(getElementTextContent(element,
                 FlowerNameTag.HEIGHT.getValue())));
-        flower.setTemperature(getElementTextContent(element,
-                FlowerNameTag.TEMPERATURE.getValue()));
         flower.setTemperature(getElementTextContent(element,
                 FlowerNameTag.TEMPERATURE.getValue()));
         flower.setDiscoveryDate(DateParser.parseDate(

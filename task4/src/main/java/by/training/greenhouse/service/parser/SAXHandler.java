@@ -1,6 +1,12 @@
 package by.training.greenhouse.service.parser;
 
-import by.training.greenhouse.bean.*;
+import by.training.greenhouse.bean.ArtificialFlower;
+import by.training.greenhouse.bean.Color;
+import by.training.greenhouse.bean.Flower;
+import by.training.greenhouse.bean.FlowerNameTag;
+import by.training.greenhouse.bean.LivingFlower;
+import by.training.greenhouse.bean.Multiplying;
+import by.training.greenhouse.bean.Soil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
@@ -10,17 +16,38 @@ import org.xml.sax.helpers.DefaultHandler;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+/**
+ * SAX handler.
+ */
 public class SAXHandler extends DefaultHandler {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger();
-    private Set<Flower> flowers = new LinkedHashSet<>();
+    /**
+     * Set flowers.
+     */
+    private final Set<Flower> flowers = new LinkedHashSet<>();
+    /**
+     * Name element.
+     */
     private String thisElement;
+    /**
+     * Flower.
+     */
     private Flower flower;
 
+    /**
+     * Start parse document.
+     */
     @Override
     public void startDocument() {
         LOGGER.info("Start parse XML");
     }
 
+    /**
+     * End parse document.
+     */
     @Override
     public void endDocument() {
         LOGGER.info("End parse XML");
@@ -145,6 +172,15 @@ public class SAXHandler extends DefaultHandler {
             }
             if (thisElement.equals(FlowerNameTag.SOIL.getValue())) {
                 ((LivingFlower) flower).setSoil(Soil.fromValue(string));
+            }
+            if (thisElement.equals(FlowerNameTag.TEMPERATURE.getValue())) {
+                flower.setTemperature(string);
+            }
+            if (thisElement.equals(FlowerNameTag.WATERING.getValue())) {
+                ((LivingFlower) flower).setWatering(Integer.parseInt(string));
+            }
+            if (thisElement.equals(FlowerNameTag.DISCOVERY_DATE.getValue())) {
+                flower.setDiscoveryDate(DateParser.parseDate(string));
             }
         }
     }
