@@ -25,7 +25,7 @@ import java.util.Set;
 /**
  * Flower DOM builder.
  */
-public class FlowerDOMBuilder {
+public class FlowerDOMBuilder implements AbstractBuilder {
     /**
      * Logger.
      */
@@ -59,6 +59,7 @@ public class FlowerDOMBuilder {
      *
      * @return set flowers.
      */
+    @Override
     public Set<Flower> getFlowers() {
         return flowers;
     }
@@ -68,6 +69,7 @@ public class FlowerDOMBuilder {
      *
      * @param filePath filePath.
      */
+    @Override
     public void buildSetFlowers(final String filePath) {
         Document document;
         try {

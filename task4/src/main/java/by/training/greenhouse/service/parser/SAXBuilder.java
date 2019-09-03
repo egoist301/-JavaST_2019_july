@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * SAXBuilder.
  */
-public class SAXBuilder {
+public class SAXBuilder implements AbstractBuilder {
     /**
      * Set flowers.
      */
@@ -40,16 +40,20 @@ public class SAXBuilder {
 
     /**
      * Getter.
+     *
      * @return set flowers.
      */
+    @Override
     public Set<Flower> getFlowers() {
         return flowers;
     }
 
     /**
      * Build set flowers.
+     *
      * @param fileName fileName.
      */
+    @Override
     public void buildSetFlowers(final String fileName) {
         try {
             reader.parse(fileName);
