@@ -1,16 +1,9 @@
 package by.training.greenhouse.service.parser;
 
-import by.training.greenhouse.bean.ArtificialFlower;
-import by.training.greenhouse.bean.Color;
-import by.training.greenhouse.bean.Flower;
-import by.training.greenhouse.bean.FlowerNameTag;
-import by.training.greenhouse.bean.LivingFlower;
-import by.training.greenhouse.bean.Multiplying;
-import by.training.greenhouse.bean.Soil;
+import by.training.greenhouse.bean.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.LinkedHashSet;
@@ -19,7 +12,7 @@ import java.util.Set;
 /**
  * SAX handler.
  */
-public class SAXHandler extends DefaultHandler {
+public class FlowerSAXHandler extends DefaultHandler {
     /**
      * Logger.
      */
@@ -72,13 +65,11 @@ public class SAXHandler extends DefaultHandler {
      * @param attributes The attributes attached to the element.  If
      *                   there are no attributes, it shall be an empty
      *                   Attributes object.
-     * @throws SAXException Any SAX exception, possibly
-     *                      wrapping another exception.
      */
     @Override
     public void startElement(final String uri, final String localName,
                              final String qName,
-                             final Attributes attributes) throws SAXException {
+                             final Attributes attributes) {
         thisElement = qName;
         if (thisElement != null) {
             if (thisElement.equals(FlowerNameTag.LIVING_FLOWER.getValue())) {
@@ -118,12 +109,10 @@ public class SAXHandler extends DefaultHandler {
      *                  performed.
      * @param qName     The qualified name (with prefix), or the
      *                  empty string if qualified names are not available.
-     * @throws SAXException Any SAX exception, possibly
-     *                      wrapping another exception.
      */
     @Override
     public void endElement(final String uri, final String localName,
-                           final String qName) throws SAXException {
+                           final String qName) {
         thisElement = null;
         if (qName.equals(FlowerNameTag.ARTIFICIAL_FLOWER.getValue())
                 || qName.equals(FlowerNameTag.LIVING_FLOWER.getValue())) {
@@ -143,12 +132,10 @@ public class SAXHandler extends DefaultHandler {
      * @param start  The start position in the character array.
      * @param length The number of characters to use from the
      *               character array.
-     * @throws SAXException Any SAX exception, possibly
-     *                      wrapping another exception.
      */
     @Override
     public void characters(final char[] ch, final int start,
-                           final int length) throws SAXException {
+                           final int length) {
         if (thisElement != null) {
             String string = new String(ch, start, length);
             if (thisElement.equals(FlowerNameTag.NAME.getValue())) {

@@ -41,8 +41,8 @@ public final class FlowerFactory {
      */
     private FlowerFactory() {
         factory.put(BuilderType.DOM, new FlowerDOMBuilder());
-        factory.put(BuilderType.SAX, new SAXBuilder());
-        factory.put(BuilderType.STAX, new Object());
+        factory.put(BuilderType.SAX, new FlowerSAXBuilder());
+        factory.put(BuilderType.STAX, new FlowerSTaXBuilder());
     }
 
     /**
