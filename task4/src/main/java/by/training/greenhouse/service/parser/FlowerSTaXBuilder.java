@@ -156,7 +156,7 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     name = reader.getLocalName();
-                    if (FlowerNameTag.valueOf(name.toUpperCase())
+                    if (FlowerNameTag.fromValue(name)
                             == FlowerNameTag.LIVING_FLOWER) {
                         return livingFlower;
                     }
@@ -186,7 +186,7 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
             switch (type) {
                 case XMLStreamConstants.START_ELEMENT:
                     name = reader.getLocalName();
-                    switch (FlowerNameTag.valueOf(name.toUpperCase())) {
+                    switch (FlowerNameTag.fromValue(name)) {
                         case MATERIAL:
                             artificialFlower.setMaterial((getXMLText(reader)));
                             break;
@@ -217,8 +217,8 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
                     break;
                 case XMLStreamConstants.END_ELEMENT:
                     name = reader.getLocalName();
-                    if (FlowerNameTag.valueOf(name.toUpperCase())
-                            == FlowerNameTag.LIVING_FLOWER) {
+                    if (FlowerNameTag.fromValue(name)
+                            == FlowerNameTag.ARTIFICIAL_FLOWER) {
                         return artificialFlower;
                     }
                     break;
