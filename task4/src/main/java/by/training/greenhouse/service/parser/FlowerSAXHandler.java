@@ -1,6 +1,12 @@
 package by.training.greenhouse.service.parser;
 
-import by.training.greenhouse.bean.*;
+import by.training.greenhouse.bean.ArtificialFlower;
+import by.training.greenhouse.bean.Color;
+import by.training.greenhouse.bean.Flower;
+import by.training.greenhouse.bean.FlowerNameTag;
+import by.training.greenhouse.bean.LivingFlower;
+import by.training.greenhouse.bean.Multiplying;
+import by.training.greenhouse.bean.Soil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
