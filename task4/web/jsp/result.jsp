@@ -9,7 +9,7 @@
 <html>
 <head>
     <title>Flowers</title>
-    <h1>${flowers}</h1>
+    <p>${flowers}</p>
 </head>
 <body>
 

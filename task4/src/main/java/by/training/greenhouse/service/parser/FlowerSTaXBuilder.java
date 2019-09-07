@@ -1,6 +1,13 @@
 package by.training.greenhouse.service.parser;
 
-import by.training.greenhouse.bean.*;
+import by.training.greenhouse.bean.ArtificialFlower;
+import by.training.greenhouse.bean.Color;
+import by.training.greenhouse.bean.Flower;
+import by.training.greenhouse.bean.FlowerNameTag;
+import by.training.greenhouse.bean.LivingFlower;
+import by.training.greenhouse.bean.Multiplying;
+import by.training.greenhouse.bean.Soil;
+import by.training.greenhouse.bean.UnknownTypeException;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;

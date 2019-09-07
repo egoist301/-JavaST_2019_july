@@ -29,6 +29,9 @@ public class FlowerServlet extends HttpServlet {
      * XSD schema.
      */
     private static final String INPUT_XSD = "data//greenhouse.xsd";
+    /**
+     * Result.
+     */
     private static final String RESULT = "jsp/result.jsp";
 
     /**
