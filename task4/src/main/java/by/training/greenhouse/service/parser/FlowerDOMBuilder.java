@@ -72,6 +72,7 @@ public class FlowerDOMBuilder implements AbstractBuilder {
      */
     @Override
     public void buildSetFlowers(final String filePath) throws ParserException {
+        LOGGER.warn("DOM");
         Document document;
         try {
             document = builder.parse(filePath);

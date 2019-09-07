@@ -1,8 +1,6 @@
 package by.training.greenhouse.controller;
 
-import by.training.greenhouse.bean.ArtificialFlower;
 import by.training.greenhouse.bean.Flower;
-import by.training.greenhouse.bean.LivingFlower;
 import by.training.greenhouse.service.factory.FlowerFactory;
 import by.training.greenhouse.service.parser.AbstractBuilder;
 import by.training.greenhouse.service.parser.ParserException;
@@ -16,7 +14,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
@@ -32,6 +29,7 @@ public class FlowerServlet extends HttpServlet {
      * XSD schema.
      */
     private static final String INPUT_XSD = "data//greenhouse.xsd";
+    private static final String RESULT = "jsp/result.jsp";
 
     /**
      * Do get.
@@ -74,15 +72,12 @@ public class FlowerServlet extends HttpServlet {
     private void processRequest(final HttpServletRequest request,
                                 final HttpServletResponse response)
             throws ServletException, IOException {
-        String parserType = request.getParameter("parserType");
-        String xmlPath = request.getParameter("xmlText");
-        Set<Flower> livingFlowers = new LinkedHashSet<>();
-        Set<Flower> artificialFlower = new LinkedHashSet<>();
-
+        String parserType = request.getParameter("parser");
+        String xmlPath = request.getParameter("file");
         AbstractBuilder parser =
                 FlowerFactory.getINSTANCE().createFlowerBuilder(parserType);
         if (ValidatorXML.validate(xmlPath,
-                INPUT_XSD)) {
+                getServletContext().getResource(INPUT_XSD).getPath())) {
             try {
                 parser.buildSetFlowers(xmlPath);
             } catch (ParserException eNew) {
@@ -91,17 +86,8 @@ public class FlowerServlet extends HttpServlet {
             }
         }
         Set<Flower> flowers = parser.getFlowers();
-        for (Flower flower : flowers) {
-            if (flower instanceof LivingFlower) {
-                livingFlowers.add(flower);
-            }
-            if (flower instanceof ArtificialFlower) {
-                artificialFlower.add(flower);
-            }
-        }
-        request.setAttribute("living", livingFlowers);
-        request.setAttribute("artificial", artificialFlower);
-        request.getRequestDispatcher("/jsp/result.jsp")
+        request.setAttribute("flowers", flowers);
+        request.getRequestDispatcher(RESULT)
                 .forward(request, response);
     }
 

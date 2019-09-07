@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<greenhouse xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://www.training.by/greenhouse"
+            xsi:schemaLocation="http://www.training.by/greenhouse greenhouse.xsd">
+
+    <living-flower is-medicinal="true" id="1" is-photophilous="true">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>green</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2000-08-27</discovery-date>
+        <soil>ground</soil>
+        <multiplying>cuttings</multiplying>
+        <watering>500</watering>
+    </living-flower>
+
+    <artificial-flower id="2">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>yellow</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2019-08-27</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+    <living-flower id="3">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>red</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2000-08-27</discovery-date>
+        <soil>sod-podzolic</soil>
+        <multiplying>seed</multiplying>
+        <watering>160</watering>
+    </living-flower>
+
+    <artificial-flower id="4">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>green</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2019-08-27</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+    <living-flower id="5" is-photophilous="true">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>red</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2000-08-27</discovery-date>
+        <soil>sod-podzolic</soil>
+        <multiplying>leaves</multiplying>
+        <watering>50</watering>
+    </living-flower>
+
+    <artificial-flower id="6">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>yellow</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2019-08-27</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+    <living-flower id="7" is-medicinal="true">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>red</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2000-08-27</discovery-date>
+        <soil>ground</soil>
+        <multiplying>leaves</multiplying>
+        <watering>160</watering>
+    </living-flower>
+
+    <artificial-flower id="8">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>red</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2019-08-27</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+    <living-flower id="9" is-photophilous="true">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>yellow</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2000-08-27</discovery-date>
+        <soil>podzolic</soil>
+        <multiplying>cuttings</multiplying>
+        <watering>50</watering>
+    </living-flower>
+
+    <artificial-flower id="10">
+        <name>Роза</name>
+        <origin>Беларусь</origin>
+        <stem-color>green</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2019-08-27</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+    <living-flower id="11">
+        <name>Sovetus Socialistus</name>
+        <origin>Беларусь</origin>
+        <stem-color>yellow</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>1998-03-08</discovery-date>
+        <soil>ground</soil>
+        <multiplying>seed</multiplying>
+        <watering>160</watering>
+    </living-flower>
+
+    <artificial-flower id="12">
+        <name>Anturium</name>
+        <origin>Беларусь</origin>
+        <stem-color>green</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>1976-02-27</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+    <living-flower id="13" is-photophilous="true" is-medicinal="true">
+        <name>Alstromeria</name>
+        <origin>Беларусь</origin>
+        <stem-color>red</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>2003-12-10</discovery-date>
+        <soil>sod-podzolic</soil>
+        <multiplying>seed</multiplying>
+        <watering>50</watering>
+    </living-flower>
+
+    <artificial-flower id="14">
+        <name>Buvardia</name>
+        <origin>Беларусь</origin>
+        <stem-color>yellow</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>1999-07-07</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+    <living-flower id="15">
+        <name>Krassula</name>
+        <origin>Беларусь</origin>
+        <stem-color>red</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>1987-06-26</discovery-date>
+        <soil>podzolic</soil>
+        <multiplying>cuttings</multiplying>
+        <watering>160</watering>
+    </living-flower>
+
+    <artificial-flower id="16">
+        <name>Eucalypti Baby-Blue</name>
+        <origin>Беларусь</origin>
+        <stem-color>green</stem-color>
+        <height>80</height>
+        <temperature>6-16</temperature>
+        <discovery-date>1940-03-22</discovery-date>
+        <material>Metal</material>
+    </artificial-flower>
+
+</greenhouse>
