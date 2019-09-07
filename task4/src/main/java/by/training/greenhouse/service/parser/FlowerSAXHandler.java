@@ -7,6 +7,7 @@ import by.training.greenhouse.bean.FlowerNameTag;
 import by.training.greenhouse.bean.LivingFlower;
 import by.training.greenhouse.bean.Multiplying;
 import by.training.greenhouse.bean.Soil;
+import by.training.greenhouse.bean.UnknownTypeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.xml.sax.Attributes;
@@ -151,7 +152,12 @@ public class FlowerSAXHandler extends DefaultHandler {
                 flower.setOrigin(string);
             }
             if (thisElement.equals(FlowerNameTag.STEM_COLOR.getValue())) {
-                flower.setStemColor(Color.fromValue(string));
+                try {
+                    flower.setStemColor(Color.fromValue(string));
+                } catch (UnknownTypeException eNew) {
+                    LOGGER.warn(eNew);
+                    flower.setStemColor(Color.GREEN);
+                }
             }
             if (thisElement.equals(FlowerNameTag.HEIGHT.getValue())) {
                 flower.setHeight(Integer.parseInt(string));
@@ -160,11 +166,22 @@ public class FlowerSAXHandler extends DefaultHandler {
                 ((ArtificialFlower) flower).setMaterial(string);
             }
             if (thisElement.equals(FlowerNameTag.MULTIPLYING.getValue())) {
-                ((LivingFlower) flower).setMultiplying(Multiplying
-                        .fromValue(string));
+                try {
+                    ((LivingFlower) flower).setMultiplying(Multiplying
+                            .fromValue(string));
+                } catch (UnknownTypeException eNew) {
+                    LOGGER.warn(eNew);
+                    ((LivingFlower) flower)
+                            .setMultiplying(Multiplying.CUTTINGS);
+                }
             }
             if (thisElement.equals(FlowerNameTag.SOIL.getValue())) {
-                ((LivingFlower) flower).setSoil(Soil.fromValue(string));
+                try {
+                    ((LivingFlower) flower).setSoil(Soil.fromValue(string));
+                } catch (UnknownTypeException eNew) {
+                    LOGGER.warn(eNew);
+                    ((LivingFlower) flower).setSoil(Soil.GROUND);
+                }
             }
             if (thisElement.equals(FlowerNameTag.TEMPERATURE.getValue())) {
                 flower.setTemperature(string);
@@ -183,7 +200,7 @@ public class FlowerSAXHandler extends DefaultHandler {
      *
      * @return set flowers.
      */
-    public Set<Flower> getFlowers() {
+    Set<Flower> getFlowers() {
         return flowers;
     }
 }

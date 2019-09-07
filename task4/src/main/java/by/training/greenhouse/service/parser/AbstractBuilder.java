@@ -12,8 +12,9 @@ public interface AbstractBuilder {
      * Build set flowers.
      *
      * @param fileName fileName.
+     * @throws ParserException custom exception.
      */
-    void buildSetFlowers(String fileName);
+    void buildSetFlowers(String fileName) throws ParserException;
 
     /**
      * Getter.

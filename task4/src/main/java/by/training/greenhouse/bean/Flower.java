@@ -211,11 +211,12 @@ public abstract class Flower {
      */
     @Override
     public String toString() {
-        return  "id=" + id
+        return "id=" + id
                 + ", name='" + name + '\''
                 + ", origin='" + origin + '\''
                 + ", stemColor=" + stemColor
                 + ", height=" + height
-                + ", temperature='" + temperature + '\'';
+                + ", temperature='" + temperature + '\''
+                + ", discovery date='" + discoveryDate + '\'';
     }
 }

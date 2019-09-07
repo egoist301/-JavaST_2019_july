@@ -1,4 +1,4 @@
-package by.training.greenhouse.service.parser;
+package by.training.greenhouse.bean;
 
 /**
  * Unknown type exception class.
@@ -16,7 +16,7 @@ public class UnknownTypeException extends Exception {
      *
      * @param message message.
      */
-    public UnknownTypeException(final String message) {
+    UnknownTypeException(final String message) {
         super(message);
     }
 

@@ -34,16 +34,6 @@ public class FlowerSAXBuilder implements AbstractBuilder {
      */
     private FlowerSAXHandler flowerSaxHandler;
     /**
-     * Schema.
-     */
-    private Schema schema;
-    /***/
-    private String constant = XMLConstants.W3C_XML_SCHEMA_NS_URI;
-    /**
-     * Schema factory.
-     */
-    private SchemaFactory schemaFactory = SchemaFactory.newInstance(constant);
-    /**
      * XML reader.
      */
     private XMLReader reader;
@@ -55,7 +45,9 @@ public class FlowerSAXBuilder implements AbstractBuilder {
         flowerSaxHandler = new FlowerSAXHandler();
         try {
             SAXParserFactory parserFactory = SAXParserFactory.newInstance();
-            schema = schemaFactory.newSchema(
+            String constant = XMLConstants.W3C_XML_SCHEMA_NS_URI;
+            SchemaFactory schemaFactory = SchemaFactory.newInstance(constant);
+            Schema schema = schemaFactory.newSchema(
                     new File(ProjectProperties.getSchemaFile()));
             parserFactory.setNamespaceAware(true);
             parserFactory.setValidating(false);
@@ -85,12 +77,11 @@ public class FlowerSAXBuilder implements AbstractBuilder {
      * @param fileName fileName.
      */
     @Override
-    public void buildSetFlowers(final String fileName) {
+    public void buildSetFlowers(final String fileName) throws ParserException {
         try {
             reader.parse(fileName);
         } catch (IOException | SAXException eNew) {
-            LOGGER.error(eNew);
-            throw new RuntimeException();
+            throw new ParserException();
         }
         flowers = flowerSaxHandler.getFlowers();
     }

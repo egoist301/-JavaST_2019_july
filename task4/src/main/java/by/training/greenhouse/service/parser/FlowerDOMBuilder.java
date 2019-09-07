@@ -7,6 +7,7 @@ import by.training.greenhouse.bean.FlowerNameTag;
 import by.training.greenhouse.bean.LivingFlower;
 import by.training.greenhouse.bean.Multiplying;
 import by.training.greenhouse.bean.Soil;
+import by.training.greenhouse.bean.UnknownTypeException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.w3c.dom.Document;
@@ -70,7 +71,7 @@ public class FlowerDOMBuilder implements AbstractBuilder {
      * @param filePath filePath.
      */
     @Override
-    public void buildSetFlowers(final String filePath) {
+    public void buildSetFlowers(final String filePath) throws ParserException {
         Document document;
         try {
             document = builder.parse(filePath);
@@ -83,25 +84,17 @@ public class FlowerDOMBuilder implements AbstractBuilder {
             for (int i = 0; i < livingLen; ++i) {
                 Element element = (Element) livings.item(i);
                 LivingFlower flower = null;
-                try {
-                    flower = (LivingFlower) buildFlower(element,
-                            FlowerNameTag.LIVING_FLOWER);
-                } catch (ParserException eNew) {
-                    LOGGER.warn(eNew);
-                }
+                flower = (LivingFlower) buildFlower(element,
+                        FlowerNameTag.LIVING_FLOWER);
                 flowers.add(flower);
             }
             int artificialLen = artificial.getLength();
             for (int i = 0; i < artificialLen; ++i) {
                 Element element = (Element) artificial.item(i);
                 ArtificialFlower flower = null;
-                try {
-                    flower = (ArtificialFlower)
-                            buildFlower(element,
-                                    FlowerNameTag.ARTIFICIAL_FLOWER);
-                } catch (ParserException eNew) {
-                    LOGGER.warn(eNew);
-                }
+                flower = (ArtificialFlower)
+                        buildFlower(element,
+                                FlowerNameTag.ARTIFICIAL_FLOWER);
                 flowers.add(flower);
             }
         } catch (SAXException | IOException eNew) {
@@ -142,35 +135,44 @@ public class FlowerDOMBuilder implements AbstractBuilder {
                         element.getAttribute(FlowerNameTag
                                 .PHOTOPHILOUS.getValue())));
             }
-            ((LivingFlower) flower).setSoil(Soil.fromValue(
-                    getElementTextContent(element,
-                            FlowerNameTag.SOIL.getValue())));
+            try {
+                ((LivingFlower) flower).setSoil(Soil.fromValue(
+                        getElementTextContent(element,
+                                FlowerNameTag.SOIL.getValue())));
+            } catch (UnknownTypeException eNew) {
+                throw new ParserException(eNew);
+            }
             ((LivingFlower) flower).setWatering(Integer.parseInt(
                     getElementTextContent(element,
                             FlowerNameTag.WATERING.getValue())));
-            ((LivingFlower) flower).setMultiplying(Multiplying.fromValue(
-                    getElementTextContent(element,
-                            FlowerNameTag.MULTIPLYING.getValue())));
+            try {
+                ((LivingFlower) flower).setMultiplying(Multiplying.fromValue(
+                        getElementTextContent(element,
+                                FlowerNameTag.MULTIPLYING.getValue())));
+            } catch (UnknownTypeException eNew) {
+                throw new ParserException(eNew);
+            }
         } else {
             throw new ParserException();
         }
         try {
             flower.setId(Integer.parseInt(
                     element.getAttribute(FlowerNameTag.ID.getValue())));
-        flower.setName(getElementTextContent(element,
-                FlowerNameTag.NAME.getValue()));
-        flower.setOrigin(getElementTextContent(element,
-                FlowerNameTag.ORIGIN.getValue()));
-        flower.setStemColor(Color.fromValue(getElementTextContent(element,
-                FlowerNameTag.STEM_COLOR.getValue())));
-        flower.setHeight(Integer.parseInt(getElementTextContent(element,
-                FlowerNameTag.HEIGHT.getValue())));
-        flower.setTemperature(getElementTextContent(element,
-                FlowerNameTag.TEMPERATURE.getValue()));
-        flower.setDiscoveryDate(DateParser.parseDate(
-                getElementTextContent(element,
-                        FlowerNameTag.DISCOVERY_DATE.getValue())));
-        } catch (IllegalArgumentException eNew) {
+            flower.setName(getElementTextContent(element,
+                    FlowerNameTag.NAME.getValue()));
+            flower.setOrigin(getElementTextContent(element,
+                    FlowerNameTag.ORIGIN.getValue()));
+            flower.setStemColor(
+                    Color.fromValue(getElementTextContent(element,
+                            FlowerNameTag.STEM_COLOR.getValue())));
+            flower.setHeight(Integer.parseInt(getElementTextContent(element,
+                    FlowerNameTag.HEIGHT.getValue())));
+            flower.setTemperature(getElementTextContent(element,
+                    FlowerNameTag.TEMPERATURE.getValue()));
+            flower.setDiscoveryDate(DateParser.parseDate(
+                    getElementTextContent(element,
+                            FlowerNameTag.DISCOVERY_DATE.getValue())));
+        } catch (IllegalArgumentException | UnknownTypeException eNew) {
             throw new ParserException(eNew);
         }
         return flower;

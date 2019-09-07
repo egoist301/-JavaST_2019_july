@@ -7,6 +7,7 @@ import by.training.greenhouse.bean.FlowerNameTag;
 import by.training.greenhouse.bean.LivingFlower;
 import by.training.greenhouse.bean.Multiplying;
 import by.training.greenhouse.bean.Soil;
+import by.training.greenhouse.bean.UnknownTypeException;
 
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -45,7 +46,7 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
      * @param fileName fileName.
      */
     @Override
-    public void buildSetFlowers(final String fileName) {
+    public void buildSetFlowers(final String fileName) throws ParserException {
         FileInputStream inputStream;
         XMLStreamReader reader;
         try {
@@ -59,18 +60,10 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
 
                     String name = reader.getLocalName();
                     if (name.equals(FlowerNameTag.LIVING_FLOWER.getValue())) {
-                        try {
-                            flower = buildLivingFlower(reader);
-                        } catch (XMLStreamException eNew) {
-                            throw new RuntimeException();
-                        }
+                        flower = buildLivingFlower(reader);
                     } else if (name.equals(FlowerNameTag.ARTIFICIAL_FLOWER
                             .getValue())) {
-                        try {
-                            flower = buildArtificialFlower(reader);
-                        } catch (XMLStreamException eNew) {
-                            throw new RuntimeException();
-                        }
+                        flower = buildArtificialFlower(reader);
                     }
                     if (flower != null) {
                         flowers.add(flower);
@@ -78,17 +71,18 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
                 }
             }
         } catch (XMLStreamException | FileNotFoundException e) {
-            throw new RuntimeException();
+            throw new ParserException();
         }
     }
 
     /**
-     * @param reader -xml stream reader.
+     * @param reader xml stream reader.
      * @return abstract class object.
-     * @throws XMLStreamException -exception.
+     * @throws XMLStreamException exception.
+     * @throws ParserException    custom exception.
      */
     private LivingFlower buildLivingFlower(final XMLStreamReader reader)
-            throws XMLStreamException {
+            throws XMLStreamException, ParserException {
         LivingFlower livingFlower = new LivingFlower();
         /*attributes.*/
         livingFlower.setId(Integer.parseInt(reader.getAttributeValue(null,
@@ -118,15 +112,23 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
                     name = reader.getLocalName();
                     switch (FlowerNameTag.fromValue(name)) {
                         case SOIL:
-                            livingFlower.setSoil(Soil
-                                    .fromValue(getXMLText(reader)));
+                            try {
+                                livingFlower.setSoil(Soil
+                                        .fromValue(getXMLText(reader)));
+                            } catch (UnknownTypeException eNew) {
+                                throw new ParserException(eNew);
+                            }
                             break;
                         case NAME:
                             livingFlower.setName(getXMLText(reader));
                             break;
                         case STEM_COLOR:
-                            livingFlower.setStemColor(Color
-                                    .fromValue(getXMLText(reader)));
+                            try {
+                                livingFlower.setStemColor(Color
+                                        .fromValue(getXMLText(reader)));
+                            } catch (UnknownTypeException eNew) {
+                                throw new ParserException(eNew);
+                            }
                             break;
                         case HEIGHT:
                             livingFlower.setHeight(Integer
@@ -140,8 +142,13 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
                                     .parseInt(getXMLText(reader)));
                             break;
                         case MULTIPLYING:
-                            livingFlower.setMultiplying(Multiplying.fromValue(
-                                    getXMLText(reader)));
+                            try {
+                                livingFlower
+                                        .setMultiplying(Multiplying.fromValue(
+                                                getXMLText(reader)));
+                            } catch (UnknownTypeException eNew) {
+                                throw new ParserException(eNew);
+                            }
                             break;
                         case DISCOVERY_DATE:
                             livingFlower.setDiscoveryDate(DateParser.parseDate(
@@ -169,12 +176,13 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
     }
 
     /**
-     * @param reader -xml stream reader.
+     * @param reader xml stream reader.
      * @return abstract class object.
-     * @throws XMLStreamException -exception.
+     * @throws XMLStreamException exception.
+     * @throws ParserException    custom exception.
      */
     private ArtificialFlower buildArtificialFlower(final XMLStreamReader reader)
-            throws XMLStreamException {
+            throws XMLStreamException, ParserException {
         ArtificialFlower artificialFlower = new ArtificialFlower();
         /*attributes.*/
         artificialFlower.setId(Integer.parseInt(reader.getAttributeValue(null,
@@ -194,8 +202,12 @@ public class FlowerSTaXBuilder implements AbstractBuilder {
                             artificialFlower.setName(getXMLText(reader));
                             break;
                         case STEM_COLOR:
-                            artificialFlower.setStemColor(Color
-                                    .fromValue(getXMLText(reader)));
+                            try {
+                                artificialFlower.setStemColor(Color
+                                        .fromValue(getXMLText(reader)));
+                            } catch (UnknownTypeException eNew) {
+                                throw new ParserException(eNew);
+                            }
                             break;
                         case HEIGHT:
                             artificialFlower.setHeight(Integer

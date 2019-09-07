@@ -1,29 +1,20 @@
 package by.training.greenhouse.bean;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlType;
-
 /**
  * Multiplying.
  */
-@XmlType(name = "Multiplying")
-@XmlEnum
 public enum Multiplying {
     /**
      * Seed.
      */
-    @XmlEnumValue("seed")
     SEED("seed"),
     /**
      * Leaves.
      */
-    @XmlEnumValue("leaves")
     LEAVES("leaves"),
     /**
      * Cuttings.
      */
-    @XmlEnumValue("cuttings")
     CUTTINGS("cuttings");
     /**
      * Value.
@@ -53,13 +44,15 @@ public enum Multiplying {
      *
      * @param v value.
      * @return multiplying.
+     * @throws UnknownTypeException custom exception.
      */
-    public static Multiplying fromValue(final String v) {
+    public static Multiplying fromValue(final String v)
+            throws UnknownTypeException {
         for (Multiplying c : Multiplying.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
         }
-        throw new IllegalArgumentException(v);
+        throw new UnknownTypeException(v);
     }
 }

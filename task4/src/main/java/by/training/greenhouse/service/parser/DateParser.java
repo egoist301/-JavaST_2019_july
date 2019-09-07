@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 /**
  * Class for parsing data.
  */
-public final class DateParser {
+final class DateParser {
     /**
      * Default constructor.
      */
@@ -19,7 +19,7 @@ public final class DateParser {
      * @param date date.
      * @return LocalDate object.
      */
-    public static LocalDate parseDate(final String date) {
+    static LocalDate parseDate(final String date) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         return LocalDate.parse(date, formatter);
     }

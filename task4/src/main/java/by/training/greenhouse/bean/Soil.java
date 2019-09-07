@@ -1,29 +1,20 @@
 package by.training.greenhouse.bean;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlType;
-
 /**
  * Soil.
  */
-@XmlType(name = "Soil")
-@XmlEnum
 public enum Soil {
     /**
      * Podzolic.
      */
-    @XmlEnumValue("podzolic")
     PODZOLIC("podzolic"),
     /**
      * Ground.
      */
-    @XmlEnumValue("ground")
     GROUND("ground"),
     /**
      * Sod podzolic.
      */
-    @XmlEnumValue("sod-podzolic")
     SOD_PODZOLIC("sod-podzolic");
     /**
      * Value.
@@ -53,13 +44,14 @@ public enum Soil {
      *
      * @param v value.
      * @return soil.
+     * @throws UnknownTypeException custom exception.
      */
-    public static Soil fromValue(final String v) {
+    public static Soil fromValue(final String v) throws UnknownTypeException {
         for (Soil c : Soil.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
         }
-        throw new IllegalArgumentException(v);
+        throw new UnknownTypeException(v);
     }
 }

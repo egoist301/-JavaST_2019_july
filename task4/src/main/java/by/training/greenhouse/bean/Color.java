@@ -1,29 +1,20 @@
 package by.training.greenhouse.bean;
 
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
-import javax.xml.bind.annotation.XmlType;
-
 /**
  * Color enum.
  */
-@XmlType(name = "Color")
-@XmlEnum
 public enum Color {
     /**
      * Green color.
      */
-    @XmlEnumValue("green")
     GREEN("green"),
     /**
      * Red color.
      */
-    @XmlEnumValue("red")
     RED("red"),
     /**
      * Yellow color.
      */
-    @XmlEnumValue("yellow")
     YELLOW("yellow");
     /**
      * Value.
@@ -53,13 +44,14 @@ public enum Color {
      *
      * @param v value.
      * @return color.
+     * @throws UnknownTypeException custom exception.
      */
-    public static Color fromValue(final String v) {
+    public static Color fromValue(final String v) throws UnknownTypeException {
         for (Color c : Color.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
         }
-        throw new IllegalArgumentException(v);
+        throw new UnknownTypeException(v);
     }
 }
