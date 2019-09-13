@@ -1,12 +1,12 @@
 package by.training.catalog.bean;
 
-public enum PlasticColor {
-    COLOR("color"),
-    WHITE("white"),
-    BLACK("black");
+public enum Role {
+    ADMIN("admin"),
+    USER("user");
+    //GUEST
     private String value;
 
-    PlasticColor(final String valueNew) {
+    Role(final String valueNew) {
         value = valueNew;
     }
 
@@ -14,9 +14,9 @@ public enum PlasticColor {
         return value;
     }
 
-    public static PlasticColor fromValue(final String v)
+    public static Role fromValue(final String v)
             throws UnknownTypeException {
-        for (PlasticColor c : PlasticColor.values()) {
+        for (Role c : Role.values()) {
             if (c.value.equals(v)) {
                 return c;
             }

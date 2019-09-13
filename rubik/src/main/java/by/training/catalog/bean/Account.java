@@ -3,7 +3,7 @@ package by.training.catalog.bean;
 public class Account extends Entity {
     private String username;
     private String password;
-    private AccountType accountType;
+    private Role role;
     private String email;
     private int phone;
 
@@ -35,12 +35,12 @@ public class Account extends Entity {
         password = passwordNew;
     }
 
-    public AccountType getAccountType() {
-        return accountType;
+    public Role getRole() {
+        return role;
     }
 
-    public void setAccountType(final AccountType accountTypeNew) {
-        accountType = accountTypeNew;
+    public void setRole(final Role roleNew) {
+        role = roleNew;
     }
 
     public String getEmail() {

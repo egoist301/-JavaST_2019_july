@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class RubiksCube extends Entity {
-    private String name;
+    private String model;
     private double price;
     private String info;
     private Manufacturer manufacturer;
@@ -43,12 +43,12 @@ public class RubiksCube extends Entity {
         localDateTime = localDateTimeNew;
     }
 
-    public String getName() {
-        return name;
+    public String getModel() {
+        return model;
     }
 
-    public void setName(final String nameNew) {
-        name = nameNew;
+    public void setModel(final String modelNew) {
+        model = modelNew;
     }
 
     public double getPrice() {
@@ -114,7 +114,7 @@ public class RubiksCube extends Entity {
         return Double.compare(that.getPrice(), getPrice()) == 0
                 && Double.compare(that.getWeight(), getWeight()) == 0
                 && isPrimaryPlastic() == that.isPrimaryPlastic()
-                && Objects.equals(getName(), that.getName())
+                && Objects.equals(getModel(), that.getModel())
                 && Objects.equals(getInfo(), that.getInfo())
                 && getManufacturer() == that.getManufacturer()
                 && getPlasticColor() == that.getPlasticColor()
@@ -126,7 +126,7 @@ public class RubiksCube extends Entity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), getName(), getPrice(), getInfo(),
+        return Objects.hash(super.hashCode(), getModel(), getPrice(), getInfo(),
                 getManufacturer(), getWeight(), getPlasticColor(),
                 isPrimaryPlastic(), getSize(), getTypeCube(),
                 getLocalDateTime());
@@ -135,7 +135,7 @@ public class RubiksCube extends Entity {
     @Override
     public String toString() {
         return "RubiksCube{" + super.toString()
-                + ", name='" + name + '\''
+                + ", model='" + model + '\''
                 + ", price=" + price
                 + ", info='" + info + '\''
                 + ", manufacturer=" + manufacturer
