@@ -13,7 +13,7 @@ CREATE TABLE `users`
 CREATE TABLE `manufacturer`
 (
     `id`                TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `name_manufacturer` VARCHAR(255)     NOT NULL UNIQUE,
+    `name_manufacturer` VARCHAR(32)      NOT NULL UNIQUE,
     CONSTRAINT PK_manufacturer PRIMARY KEY (`id`)
 );
 CREATE TABLE `plastic_color`
@@ -25,14 +25,14 @@ CREATE TABLE `plastic_color`
 CREATE TABLE `type_cube`
 (
     `id`   TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `type` VARCHAR(255)     NOT NULL UNIQUE,
+    `type` VARCHAR(64)      NOT NULL UNIQUE,
     CONSTRAINT PK_type_cube PRIMARY KEY (`id`)
 );
 CREATE TABLE rubiks_cube
 (
     `id`               INT UNSIGNED     NOT NULL AUTO_INCREMENT,
     `model`            VARCHAR(255)     NOT NULL,
-    `price`            DOUBLE           NOT NULL,
+    `price`            BIGINT           NOT NULL,
     `weight`           DOUBLE           NOT NULL,
     `info`             VARCHAR(2000)    NOT NULL,
     `primary_plastic`  BOOLEAN          NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE rubiks_cube
     `plastic_color_id` TINYINT UNSIGNED NOT NULL,
     `manufacturer_id`  TINYINT UNSIGNED NOT NULL,
     `type_cube_id`     TINYINT UNSIGNED NOT NULL,
-    `date`             DATETIME         NOT NULL,
+    `date_added`       DATETIME         NOT NULL,
     CONSTRAINT PK_custom_rubiks_cube PRIMARY KEY (`id`),
     CONSTRAINT FK_Rubiks_Plastic FOREIGN KEY (`plastic_color_id`)
         REFERENCES plastic_color (`id`),
