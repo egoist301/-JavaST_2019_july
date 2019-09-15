@@ -1,2 +1,2 @@
 DROP DATABASE IF EXISTS `rubik`;
-DROP USER 'rubik_user'@'localhost';
+DROP USER IF EXISTS 'rubik_user'@'localhost';

@@ -3,37 +3,11 @@ INSERT INTO users(`username`, `email`, `role`, `phone`,
 VALUES ('Egoist', 'filippovich.z@mail.ru', 0, 3221114, 'filippovich'),
        ('user1', 'user@mail.ru', 1, 1234567, 'pass'),
        ('user2', 'user1@mail.ru', 1, 7654321, 'password'),
-       ('admin', 'admin@mail.ru', 0, 1111111, 'admin'),
        ('user3', 'user3@mail.ru', 1, 1023045, 'password');
-
-INSERT INTO plastic_color(`plastic_color`)
-VALUES ('color'),
-       ('black'),
-       ('white');
-
-INSERT INTO manufacturer(`name_manufacturer`)
-VALUES ('Dayan'),
-       ('Moyu'),
-       ('Gan'),
-       ('Rubiks'),
-       ('ShengShou'),
-       ('XIAOMI'),
-       ('V-cube'),
-       ('Yuxin'),
-       ('Moffange'),
-       ('YJ');
-
-INSERT INTO type_cube(`type`)
-VALUES ('Cuboid'),
-       ('Pyramid'),
-       ('Megaminx'),
-       ('Skewb'),
-       ('Square'),
-       ('Cube');
 
 INSERT INTO rubiks_cube(`model`, `price`, `weight`, `info`,
                         `primary_plastic`, `size`, `plastic_color_id`,
-                        `manufacturer_id`, `type_cube_id`, `date_added`)
+                        `manufacturer_id`, `form_id`, `date_added`)
 VALUES ('The Valk 3', 75, 85, 'В свое время модель Мофанг Валк 3 взорвала
 рынок скидкубинга. После выхода модели Валк 3 ПМ многие куберы решили
 замодить обычные Валки, сделав их магнитными, сохраняя при этом особенности

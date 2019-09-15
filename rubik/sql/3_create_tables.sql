@@ -22,33 +22,38 @@ CREATE TABLE `plastic_color`
     `plastic_color` VARCHAR(20)      NOT NULL UNIQUE,
     CONSTRAINT PK_plastic_color PRIMARY KEY (`id`)
 );
-CREATE TABLE `type_cube`
+CREATE TABLE `form`
 (
     `id`   TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `type` VARCHAR(64)      NOT NULL UNIQUE,
+    `name` VARCHAR(64)      NOT NULL UNIQUE,
     CONSTRAINT PK_type_cube PRIMARY KEY (`id`)
 );
 CREATE TABLE rubiks_cube
 (
     `id`               INT UNSIGNED     NOT NULL AUTO_INCREMENT,
-    `model`            VARCHAR(255)     NOT NULL,
-    `price`            BIGINT           NOT NULL,
+    `model`            VARCHAR(30)     NOT NULL,
+    `price`            DECIMAL          NOT NULL,
     `weight`           DOUBLE           NOT NULL,
     `info`             VARCHAR(2000)    NOT NULL,
     `primary_plastic`  BOOLEAN          NOT NULL,
     `size`             VARCHAR(8)       NOT NULL,
     `plastic_color_id` TINYINT UNSIGNED NOT NULL,
     `manufacturer_id`  TINYINT UNSIGNED NOT NULL,
-    `type_cube_id`     TINYINT UNSIGNED NOT NULL,
+    `form_id`          TINYINT UNSIGNED NOT NULL,
     `date_added`       DATETIME         NOT NULL,
     CONSTRAINT PK_custom_rubiks_cube PRIMARY KEY (`id`),
     CONSTRAINT FK_Rubiks_Plastic FOREIGN KEY (`plastic_color_id`)
         REFERENCES plastic_color (`id`),
     CONSTRAINT FK_Rubiks_Manufacturer FOREIGN KEY (`manufacturer_id`)
         REFERENCES manufacturer (`id`),
-    CONSTRAINT FK_Rubiks_Type FOREIGN KEY (`type_cube_id`)
-        REFERENCES type_cube (id)
+    CONSTRAINT FK_Rubiks_Form FOREIGN KEY (`form_id`)
+        REFERENCES form (`id`)
 );
+CREATE INDEX IDX_Rubiks_Size
+    ON rubiks_cube (size);
+CREATE INDEX IDX_Rubiks_Price
+    ON rubiks_cube (price);
+
 CREATE TABLE `basket_rubiks_cube`
 (
     `id`      INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -64,7 +69,7 @@ CREATE TABLE `store_image`
 (
     `id`         INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `cube_id`    INT UNSIGNED NOT NULL,
-    `image_path` VARCHAR(255) NOT NULL,
+    `image_path` VARCHAR(4096) NOT NULL,
     CONSTRAINT PK_store_image PRIMARY KEY (`id`),
     CONSTRAINT FK_Store_Rubiks FOREIGN KEY (`cube_id`)
         REFERENCES rubiks_cube (`id`)
