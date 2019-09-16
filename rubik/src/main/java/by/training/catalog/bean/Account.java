@@ -7,8 +7,16 @@ public class Account extends Entity {
     private String email;
     private int phone;
 
-    public Account() {
-
+    public Account(final long id, final String usernameNew,
+                   final String passwordNew,
+                   final Role roleNew, final String emailNew,
+                   final int phoneNew) {
+        super(id);
+        username = usernameNew;
+        password = passwordNew;
+        role = roleNew;
+        email = emailNew;
+        phone = phoneNew;
     }
 
     public int getPhone() {

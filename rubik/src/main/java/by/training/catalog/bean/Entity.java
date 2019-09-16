@@ -5,6 +5,10 @@ import java.util.Objects;
 public class Entity {
     private long id;
 
+    Entity(final long idNew) {
+        id = idNew;
+    }
+
     public long getId() {
         return id;
     }

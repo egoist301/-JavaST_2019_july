@@ -23,4 +23,8 @@ public enum Role {
         }
         throw new UnknownTypeException(v);
     }
+
+    public Integer getIdentity() {
+        return ordinal();
+    }
 }
