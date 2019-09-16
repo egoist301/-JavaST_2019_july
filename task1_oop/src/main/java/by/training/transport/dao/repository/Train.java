@@ -94,7 +94,7 @@ public final class Train implements TrainRepository, Observer {
                 }
             }
         } else if (specificationNew instanceof SortSpecification) {
-            result = listTrain;
+            result = new ArrayList<>(listTrain);
             result.sort(((SortSpecification) specificationNew)
                     .specifiedComparator());
         } else {
