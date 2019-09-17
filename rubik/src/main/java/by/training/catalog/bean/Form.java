@@ -1,6 +1,6 @@
 package by.training.catalog.bean;
 
-public enum TypeCube {
+public enum Form {
     PYRAMID("pyramid"),
     MEGAMINX("megaminx"),
     CUBOID("cuboid"),
@@ -9,7 +9,7 @@ public enum TypeCube {
     CUBE("cube");
     private String value;
 
-    TypeCube(final String valueNew) {
+    Form(final String valueNew) {
         value = valueNew;
     }
 
@@ -17,13 +17,17 @@ public enum TypeCube {
         return value;
     }
 
-    public static TypeCube fromValue(final String v)
+    public static Form fromValue(final String v)
             throws UnknownTypeException {
-        for (TypeCube c : TypeCube.values()) {
+        for (Form c : Form.values()) {
             if (c.value.equals(v)) {
                 return c;
             }
         }
         throw new UnknownTypeException(v);
+    }
+
+    public Integer getIdentity() {
+        return ordinal();
     }
 }

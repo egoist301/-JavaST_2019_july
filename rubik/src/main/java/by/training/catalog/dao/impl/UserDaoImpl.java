@@ -150,7 +150,7 @@ public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
             statement.setString(3, entityNew.getEmail());
             statement.setInt(4, entityNew.getRole().getIdentity());
             statement.setInt(5, entityNew.getPhone());
-            statement.setLong(9, entityNew.getId());
+            statement.setLong(6, entityNew.getId());
             return entityNew;
         } catch (SQLException e) {
             throw new PersistenceException("SQLException while updating", e);

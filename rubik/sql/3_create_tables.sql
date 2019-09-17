@@ -31,7 +31,7 @@ CREATE TABLE `form`
 CREATE TABLE rubiks_cube
 (
     `id`               INT UNSIGNED     NOT NULL AUTO_INCREMENT,
-    `model`            VARCHAR(30)     NOT NULL,
+    `model`            VARCHAR(30)      NOT NULL,
     `price`            DECIMAL          NOT NULL,
     `weight`           DOUBLE           NOT NULL,
     `info`             VARCHAR(2000)    NOT NULL,
@@ -40,7 +40,7 @@ CREATE TABLE rubiks_cube
     `plastic_color_id` TINYINT UNSIGNED NOT NULL,
     `manufacturer_id`  TINYINT UNSIGNED NOT NULL,
     `form_id`          TINYINT UNSIGNED NOT NULL,
-    `date_added`       DATETIME         NOT NULL,
+    `date_added`       DATE             NOT NULL,
     CONSTRAINT PK_custom_rubiks_cube PRIMARY KEY (`id`),
     CONSTRAINT FK_Rubiks_Plastic FOREIGN KEY (`plastic_color_id`)
         REFERENCES plastic_color (`id`),
@@ -67,8 +67,8 @@ CREATE TABLE `basket_rubiks_cube`
 );
 CREATE TABLE `store_image`
 (
-    `id`         INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `cube_id`    INT UNSIGNED NOT NULL,
+    `id`         INT UNSIGNED  NOT NULL AUTO_INCREMENT,
+    `cube_id`    INT UNSIGNED  NOT NULL,
     `image_path` VARCHAR(4096) NOT NULL,
     CONSTRAINT PK_store_image PRIMARY KEY (`id`),
     CONSTRAINT FK_Store_Rubiks FOREIGN KEY (`cube_id`)

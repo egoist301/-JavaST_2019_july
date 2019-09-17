@@ -1,22 +1,39 @@
 package by.training.catalog.bean;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Objects;
 
 public class RubiksCube extends Entity {
     private String model;
     private double price;
-    private String info;
-    private Manufacturer manufacturer;
     private double weight;
-    private PlasticColor plasticColor;
+    private String info;
     private boolean primaryPlastic;
     private String size;
-    private TypeCube typeCube;
-    private LocalDateTime localDateTime;
+    private PlasticColor plasticColor;
+    private Manufacturer manufacturer;
+    private Form form;
+    private Date date;
 
-
-    public RubiksCube() {
+    public RubiksCube(final long idNew, final String modelNew,
+                      final double priceNew,
+                      final double weightNew, final String infoNew,
+                      final boolean primaryPlasticNew,
+                      final String sizeNew,
+                      final PlasticColor plasticColorNew,
+                      final Manufacturer manufacturerNew,
+                      final Form formNew, final Date dateNew) {
+        super(idNew);
+        model = modelNew;
+        price = priceNew;
+        weight = weightNew;
+        info = infoNew;
+        primaryPlastic = primaryPlasticNew;
+        size = sizeNew;
+        plasticColor = plasticColorNew;
+        manufacturer = manufacturerNew;
+        form = formNew;
+        date = dateNew;
     }
 
     public String getSize() {
@@ -27,20 +44,20 @@ public class RubiksCube extends Entity {
         size = sizeNew;
     }
 
-    public TypeCube getTypeCube() {
-        return typeCube;
+    public Form getForm() {
+        return form;
     }
 
-    public void setTypeCube(final TypeCube typeCubeNew) {
-        typeCube = typeCubeNew;
+    public void setForm(final Form formNew) {
+        form = formNew;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public Date getDate() {
+        return date;
     }
 
-    public void setLocalDateTime(final LocalDateTime localDateTimeNew) {
-        localDateTime = localDateTimeNew;
+    public void setDate(final Date dateNew) {
+        date = dateNew;
     }
 
     public String getModel() {
@@ -119,17 +136,17 @@ public class RubiksCube extends Entity {
                 && getManufacturer() == that.getManufacturer()
                 && getPlasticColor() == that.getPlasticColor()
                 && Objects.equals(getSize(), that.getSize())
-                && getTypeCube() == that.getTypeCube() &&
+                && getForm() == that.getForm() &&
                 Objects
-                        .equals(getLocalDateTime(), that.getLocalDateTime());
+                        .equals(getDate(), that.getDate());
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getModel(), getPrice(), getInfo(),
                 getManufacturer(), getWeight(), getPlasticColor(),
-                isPrimaryPlastic(), getSize(), getTypeCube(),
-                getLocalDateTime());
+                isPrimaryPlastic(), getSize(), getForm(),
+                getDate());
     }
 
     @Override
@@ -143,7 +160,7 @@ public class RubiksCube extends Entity {
                 + ", plasticColor=" + plasticColor
                 + ", primaryPlastic=" + primaryPlastic
                 + ", size='" + size + '\''
-                + ", typeCube=" + typeCube
-                + ", localDateTime=" + localDateTime + '}';
+                + ", typeCube=" + form
+                + ", localDateTime=" + date + '}';
     }
 }

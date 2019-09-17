@@ -29,4 +29,8 @@ public enum Manufacturer {
         }
         throw new UnknownTypeException(v);
     }
+
+    public Integer getIdentity() {
+        return ordinal();
+    }
 }
