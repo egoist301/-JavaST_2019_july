@@ -13,7 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
-    UserDaoImpl(final Connection connectionNew) {
+    public UserDaoImpl(final Connection connectionNew) {
         super(connectionNew);
     }
 
@@ -23,7 +23,7 @@ public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
         if (username == null) {
             return null;
         }
-        final String FIND_ACCOUNT_BY_USERNAME = "SELECT `username`, "
+        final String FIND_ACCOUNT_BY_USERNAME = "SELECT `id`, `username`, "
                 + "`password`, `email`, `role`, `phone` FROM `users` WHERE "
                 + "`username` = ?";
         Account account = null;
@@ -48,8 +48,9 @@ public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
         if (email == null) {
             return null;
         }
-        final String FIND_ACCOUNT_BY_EMAIL = "SELECT `username`, `password`, "
-                + "`email`, `role`, `phone` FROM `users` WHERE `email` = ?";
+        final String FIND_ACCOUNT_BY_EMAIL = "SELECT `id`, `username`, "
+                + "`password`, `email`, `role`, `phone` FROM `users` WHERE "
+                + "`email` = ?";
         Account account = null;
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_ACCOUNT_BY_EMAIL)) {
@@ -69,8 +70,9 @@ public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
     @Override
     public Account findAccountByPhone(final int phone)
             throws PersistenceException {
-        final String FIND_ACCOUNT_BY_PHONE = "SELECT `username`, `password`, "
-                + "`email`, `role`, `phone` FROM `users` WHERE `phone` = ?";
+        final String FIND_ACCOUNT_BY_PHONE = "SELECT `id`, `username`, "
+                + "`password`, `email`, `role`, `phone` FROM `users` WHERE "
+                + "`phone` = ?";
         Account account = null;
         try (PreparedStatement statement =
                      getConnection().prepareStatement(FIND_ACCOUNT_BY_PHONE)) {
@@ -85,6 +87,24 @@ public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
                     "SQLException while finding by phone", e);
         }
         return account;
+    }
+
+    @Override
+    public int findAccountCount() throws PersistenceException {
+        final String FIND_ACCOUNT_COUNT = "SELECT COUNT(`id`) FROM `users`";
+        try (PreparedStatement statement = getConnection()
+                .prepareStatement(FIND_ACCOUNT_COUNT)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException(
+                    "SQLException while finding page accounts sorted by rating",
+                    e);
+        }
+        return 0;
     }
 
     @Override
@@ -109,8 +129,9 @@ public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
     @Override
     public Account findEntityById(final long id) throws PersistenceException {
         Account account = null;
-        final String FIND_ACCOUNT_BY_ID = "SELECT `username`, `password`, "
-                + "`email`, `role`, `phone` FROM `users` WHERE `id` = ?";
+        final String FIND_ACCOUNT_BY_ID = "SELECT `id`, `username`, "
+                + "`password`, `email`, `role`, `phone` FROM `users` WHERE "
+                + "`id` = ?";
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_ACCOUNT_BY_ID)) {
             statement.setLong(1, id);
@@ -182,6 +203,7 @@ public class UserDaoImpl extends AbstractDao<Account> implements UserDao {
 
     private Account createAccountFromResultSet(ResultSet resultSet)
             throws SQLException {
+        System.out.println(resultSet);
         long accountId = resultSet.getLong(1);
         String username = resultSet.getString(2);
         String passwordHash = resultSet.getString(3);

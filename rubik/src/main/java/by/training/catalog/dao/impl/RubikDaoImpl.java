@@ -46,7 +46,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
             throws PersistenceException {
         RubiksCube rubiksCube = null;
         final String FIND_RUBIK_BY_ID =
-                "SELECT `model`, `price`, `weight`, `info`, "
+                "SELECT `id`, `model`, `price`, `weight`, `info`, "
                         + "`primary_plastic`, `size`, `plastic_color_id`, "
                         + "`manufacturer_id`, `form_id`, `date_added` FROM "
                         + "`rubiks_cube` WHERE `id` = ?";
@@ -145,5 +145,68 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
         Date date = new Date(resultSet.getDate(11).getTime());
         return new RubiksCube(accountId, model, price, weight, info,
                 primaryPlastic, size, plasticColor, manufacturer, form, date);
+    }
+
+    @Override
+    public List<RubiksCube> findRubiksBySize(final String size)
+            throws PersistenceException {
+        return null;
+    }
+
+    @Override
+    public RubiksCube findRubikByModel(final String model)
+            throws PersistenceException {
+        if (model == null) {
+            return null;
+        }
+        final String FIND_RUBIK_BY_MODEL =
+                "SELECT `id`, `model`, `price`, `weight`, `info`, "
+                        + "`primary_plastic`, `size`, `plastic_color_id`, "
+                        + "`manufacturer_id`, `form_id`, `date_added` FROM "
+                        + "`rubiks_cube` WHERE `model` = ?";
+        RubiksCube rubiksCube = null;
+        try (PreparedStatement statement = getConnection()
+                .prepareStatement(FIND_RUBIK_BY_MODEL)) {
+            statement.setString(1, model);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    rubiksCube = createRubikFromResultSet(resultSet);
+                }
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException("SQLException while finding by "
+                    + "model", e);
+        }
+        return rubiksCube;
+    }
+
+    @Override
+    public List<RubiksCube> findRubiksByRangePrice(final int minPrice,
+                                                   final int maxPrice)
+            throws PersistenceException {
+        return null;
+    }
+
+    @Override
+    public List<RubiksCube> findRubiksByForm(final Form form)
+            throws PersistenceException {
+        return null;
+    }
+
+    @Override
+    public int findRubiksCount() throws PersistenceException {
+        final String FIND_RUBIK_COUNT = "SELECT COUNT(`id`) FROM`rubiks_cube`";
+        try (PreparedStatement statement = getConnection()
+                .prepareStatement(FIND_RUBIK_COUNT)) {
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            throw new PersistenceException(
+                    "SQLException while finding rubiks count", e);
+        }
+        return 0;
     }
 }

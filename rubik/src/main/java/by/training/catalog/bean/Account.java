@@ -1,5 +1,7 @@
 package by.training.catalog.bean;
 
+import java.util.Objects;
+
 public class Account extends Entity {
     private String username;
     private String password;
@@ -59,4 +61,40 @@ public class Account extends Entity {
         email = emailNew;
     }
 
+    @Override
+    public boolean equals(final Object oNew) {
+        if (this == oNew) {
+            return true;
+        }
+        if (!(oNew instanceof Account)) {
+            return false;
+        }
+        if (!super.equals(oNew)) {
+            return false;
+        }
+        Account account = (Account) oNew;
+        return getPhone() == account.getPhone() &&
+                Objects.equals(getUsername(), account.getUsername()) &&
+                Objects.equals(getPassword(), account.getPassword()) &&
+                getRole() == account.getRole() &&
+                Objects.equals(getEmail(), account.getEmail());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects
+                .hash(super.hashCode(), getUsername(), getPassword(), getRole(),
+                        getEmail(), getPhone());
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" + super.toString() +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", role=" + role +
+                ", email='" + email + '\'' +
+                ", phone=" + phone +
+                '}';
+    }
 }
