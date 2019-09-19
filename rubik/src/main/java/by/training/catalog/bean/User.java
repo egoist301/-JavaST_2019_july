@@ -2,23 +2,33 @@ package by.training.catalog.bean;
 
 import java.util.Objects;
 
-public class Account extends Entity {
+public class User extends Entity {
     private String username;
     private String password;
     private Role role;
     private String email;
     private int phone;
+    private boolean blocked;
 
-    public Account(final long id, final String usernameNew,
-                   final String passwordNew,
-                   final Role roleNew, final String emailNew,
-                   final int phoneNew) {
+    public User(final long id, final String usernameNew,
+                final String passwordNew,
+                final Role roleNew, final String emailNew,
+                final int phoneNew, final boolean blockedNew) {
         super(id);
         username = usernameNew;
         password = passwordNew;
         role = roleNew;
         email = emailNew;
         phone = phoneNew;
+        blocked = blockedNew;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(final boolean blockedNew) {
+        blocked = blockedNew;
     }
 
     public int getPhone() {
@@ -66,35 +76,36 @@ public class Account extends Entity {
         if (this == oNew) {
             return true;
         }
-        if (!(oNew instanceof Account)) {
+        if (!(oNew instanceof User)) {
             return false;
         }
         if (!super.equals(oNew)) {
             return false;
         }
-        Account account = (Account) oNew;
-        return getPhone() == account.getPhone() &&
-                Objects.equals(getUsername(), account.getUsername()) &&
-                Objects.equals(getPassword(), account.getPassword()) &&
-                getRole() == account.getRole() &&
-                Objects.equals(getEmail(), account.getEmail());
+        User user = (User) oNew;
+        return getPhone() == user.getPhone()
+                && Objects.equals(getUsername(), user.getUsername())
+                && Objects.equals(getPassword(), user.getPassword())
+                && getRole() == user.getRole()
+                && Objects.equals(getEmail(), user.getEmail())
+                && isBlocked() == user.isBlocked();
     }
 
     @Override
     public int hashCode() {
         return Objects
                 .hash(super.hashCode(), getUsername(), getPassword(), getRole(),
-                        getEmail(), getPhone());
+                        getEmail(), getPhone(), isBlocked());
     }
 
     @Override
     public String toString() {
-        return "Account{" + super.toString() +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", role=" + role +
-                ", email='" + email + '\'' +
-                ", phone=" + phone +
-                '}';
+        return "User{" + super.toString()
+                + ", username='" + username + '\''
+                + ", password='" + password + '\''
+                + ", role=" + role
+                + ", email='" + email + '\''
+                + ", phone=" + phone
+                + ", blocked" + blocked + '}';
     }
 }

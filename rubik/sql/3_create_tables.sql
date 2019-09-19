@@ -7,6 +7,7 @@ CREATE TABLE `users`
     `email`    VARCHAR(255) NOT NULL UNIQUE,
     `role`     TINYINT      NOT NULL,
     `phone`    INT UNSIGNED NOT NULL,
+    `blocked`  BOOLEAN      NOT NULL,
     CONSTRAINT PK_user PRIMARY KEY (`id`),
     CONSTRAINT type_check CHECK ( `role` IN (0, 1))
 );

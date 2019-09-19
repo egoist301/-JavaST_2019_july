@@ -12,13 +12,15 @@ import java.util.List;
 public interface Dao<T extends Entity> {
     Logger LOGGER = LogManager.getLogger();
 
-    List<T> findAll() throws PersistenceException;
+    List<T> findAll() throws PersistentException;
 
-    T findEntityById(long id) throws PersistenceException;
+    List<T> findAll(int offset, int limit) throws PersistentException;
 
-    T update(T entityNew) throws PersistenceException;
+    T findEntityById(long id) throws PersistentException;
 
-    boolean create(T entityNew) throws PersistenceException;
+    T update(T entityNew) throws PersistentException;
 
-    boolean delete(long id) throws PersistenceException;
+    boolean create(T entityNew) throws PersistentException;
+
+    boolean delete(long id) throws PersistentException;
 }

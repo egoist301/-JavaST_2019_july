@@ -1,9 +1,9 @@
 INSERT INTO users(`username`, `email`, `role`, `phone`,
-                  `password`)
-VALUES ('Egoist', 'filippovich.z@mail.ru', 0, 3221114, 'filippovich'),
-       ('user1', 'user@mail.ru', 1, 1234567, 'pass'),
-       ('user2', 'user1@mail.ru', 1, 7654321, 'password'),
-       ('user3', 'user3@mail.ru', 1, 1023045, 'password');
+                  `password`, `blocked`)
+VALUES ('Egoist', 'filippovich.z@mail.ru', 0, 3221114, 'filippovich', false),
+       ('user1', 'user@mail.ru', 1, 1234567, 'pass', false),
+       ('user2', 'user1@mail.ru', 1, 7654321, 'password', false),
+       ('user3', 'user3@mail.ru', 1, 1023045, 'password', false);
 
 INSERT INTO rubiks_cube(`model`, `price`, `weight`, `info`,
                         `primary_plastic`, `size`, `plastic_color_id`,
