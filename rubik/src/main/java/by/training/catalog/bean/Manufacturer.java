@@ -1,15 +1,16 @@
 package by.training.catalog.bean;
 
 public enum Manufacturer {
-    XIAOMI("xiaomi"),
+    DAYAN("dayan"),
     MOYU("moyu"),
     GAN("gan"),
-    SHENGSHOU("shengshou"),
-    YUXIN("yuxin"),
     RUBIKS("rubiks"),
-    MOFFANGE("moffange"),
+    SHENGSHOU("shengshou"),
+    XIAOMI("xiaomi"),
     V_CUBE("v-cube"),
-    DAYAN("dayan");
+    YUXIN("yuxin"),
+    MOFFANGE("moffange"),
+    YJ("yj");
     private String value;
 
     Manufacturer(final String valueNew) {

@@ -2,8 +2,8 @@ package by.training.catalog.bean;
 
 public enum PlasticColor {
     COLOR("color"),
-    WHITE("white"),
-    BLACK("black");
+    BLACK("black"),
+    WHITE("white");
     private String value;
 
     PlasticColor(final String valueNew) {

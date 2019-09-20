@@ -1,9 +1,9 @@
 package by.training.catalog.bean;
 
 public enum Form {
+    CUBOID("cuboid"),
     PYRAMID("pyramid"),
     MEGAMINX("megaminx"),
-    CUBOID("cuboid"),
     SKEWB("skewb"),
     SQUARE("square"),
     CUBE("cube");
