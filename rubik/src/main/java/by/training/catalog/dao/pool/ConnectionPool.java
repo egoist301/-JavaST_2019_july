@@ -29,29 +29,12 @@ public class ConnectionPool {
     private PropertyHolder propertyHolder;
 
     /**
-     * Construct a connection pool. Registers database driver.
+     * Construct a connection pool.
      * Initialize a pool.
      */
     private ConnectionPool() {
         propertyHolder = new PropertyHolder();
-        registerDriver();
-        LOGGER.debug("Driver was register");
         init();
-    }
-
-    /**
-     * Registers database driver
-     * Can throw ConnectionPoolException
-     *
-     * @see ConnectionPoolException
-     */
-    private void registerDriver() {
-        try {
-            Class.forName(propertyHolder.getDriverName());
-        } catch (ClassNotFoundException e) {
-            LOGGER.error("Error in register driver: ");
-            throw new ConnectionPoolException("Error in register driver: ", e);
-        }
     }
 
     /**
@@ -64,7 +47,7 @@ public class ConnectionPool {
         availableConnections =
                 new LinkedBlockingQueue<>(propertyHolder.getPoolSize());
         usingConnections = new LinkedList<>();
-        for (int i = 0; i < propertyHolder.getInitCount(); i++) {
+        for (int i = 0; i < propertyHolder.getPoolSize(); i++) {
             createConnection();
         }
         LOGGER.debug("ProxyConnectionPool was created");
@@ -103,10 +86,10 @@ public class ConnectionPool {
      * @see ConnectionPoolException
      */
     private void createConnection() {
-        Connection connection;
         try {
-            connection = DriverManager.getConnection(propertyHolder.getUrl(),
-                    propertyHolder.getUserName(), propertyHolder.getPassword());
+            Connection connection = DriverManager
+                    .getConnection(propertyHolder.getUrl(),
+                            propertyHolder.getProp());
             availableConnections.offer(new ProxyConnection(connection));
             LOGGER.debug("New connection was offered to available");
         } catch (SQLException e) {
