@@ -55,8 +55,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     private static final String FIND_ALL_RUBIKS_BY_FORM = FIND_RUBIK_BY
             + "`form_id` = ? LIMIT ? OFFSET ?";
 
-    public RubikDaoImpl(final Connection connectionNew) {
-        super(connectionNew);
+    public RubikDaoImpl(final AbstractConnectionManager managerNew) {
+        super(managerNew);
     }
 
     @Override

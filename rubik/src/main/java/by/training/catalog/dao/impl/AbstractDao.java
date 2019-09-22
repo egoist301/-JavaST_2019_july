@@ -8,8 +8,8 @@ import java.sql.Connection;
 public abstract class AbstractDao<T extends Entity> implements Dao<T> {
     private Connection connection;
 
-    AbstractDao(final Connection connectionNew) {
-        connection = connectionNew;
+    AbstractDao(final AbstractConnectionManager managerNew) {
+        connection = managerNew.getConnection();
     }
 
     public Connection getConnection() {

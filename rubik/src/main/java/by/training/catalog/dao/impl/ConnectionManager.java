@@ -10,7 +10,7 @@ import java.sql.SQLException;
 /**
  * Class that instances are used to provide connection to DAOs.
  */
-class ConnectionManager implements AbstractConnectionManager {
+public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Connection that is being provided.
      */

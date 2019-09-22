@@ -45,8 +45,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD =
             FIND_ACCOUNT_BY + "`username` = ? AND `password` = ?";
 
-    public UserDaoImpl(final Connection connectionNew) {
-        super(connectionNew);
+    public UserDaoImpl(final AbstractConnectionManager managerNew) {
+        super(managerNew);
     }
 
     @Override
