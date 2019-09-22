@@ -12,8 +12,6 @@ public interface UserDao extends Dao<User> {
 
     User findAccountByPhone(int phone) throws PersistentException;
 
-    int findAccountCount() throws PersistentException;
-
     User findAccountByLoginAndPassword(String login, String password)
             throws PersistentException;
 

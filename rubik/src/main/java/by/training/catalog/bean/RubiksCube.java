@@ -22,8 +22,9 @@ public class RubiksCube extends Entity {
                       final String sizeNew,
                       final int plasticColorIdNew,
                       final int manufacturerNew,
-                      final int formIdNew, final Date dateNew) {
-        super(idNew);
+                      final int formIdNew, final Date dateNew,
+                      final boolean blockedNew) {
+        super(idNew, blockedNew);
         model = modelNew;
         price = priceNew;
         weight = weightNew;
@@ -136,9 +137,8 @@ public class RubiksCube extends Entity {
                 && getManufacturerId() == that.getManufacturerId()
                 && getPlasticColorId() == that.getPlasticColorId()
                 && Objects.equals(getSize(), that.getSize())
-                && getFormId() == that.getFormId() &&
-                Objects
-                        .equals(getDate(), that.getDate());
+                && getFormId() == that.getFormId()
+                && Objects.equals(getDate(), that.getDate());
     }
 
     @Override

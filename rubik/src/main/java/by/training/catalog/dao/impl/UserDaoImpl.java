@@ -14,10 +14,10 @@ import java.util.List;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_ACCOUNT_BY = "SELECT `id`, "
-            + "`username`, `password`, `email`, `role`, `phone` FROM `users`"
-            + " WHERE ";
-    private static final String FIND_ACCOUNT_BY_USERNAME = FIND_ACCOUNT_BY +
-            "`username` = ?";
+            + "`username`, `password`, `email`, `role`, `phone`, `blocked` "
+            + "FROM `users` WHERE ";
+    private static final String FIND_ACCOUNT_BY_USERNAME = FIND_ACCOUNT_BY
+            + "`username` = ?";
     private static final String FIND_ACCOUNT_BY_EMAIL =
             FIND_ACCOUNT_BY + "`email` = ?";
     private static final String FIND_ACCOUNT_BY_PHONE =
@@ -25,24 +25,23 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_ACCOUNT_COUNT =
             "SELECT COUNT(`id`) FROM `users`";
     private static final String FIND_ALL_ACCOUNTS = "SELECT `id`, `username`, "
-            + "`password`, `email`, `role`, `phone` FROM `users` ORDER BY "
-            + "`username`";
+            + "`password`, `email`, `role`, `phone`, `blocked` FROM `users` "
+            + "ORDER BY `username`";
     private static final String FIND_ACCOUNT_BY_ID =
             FIND_ACCOUNT_BY + "`id` = ?";
-    private static String DELETE_ACCOUNT_BY_ID =
-            "DELETE FROM `users` WHERE `id` = ?";
     private static final String UPDATE_ACCOUNT_BY_ID =
             "UPDATE `users` SET `username` = ?, `password` = ?, `email` ="
-                    + " ?, `role` = ?, `phone` = ? WHERE `id` = ?";
+                    + " ?, `role` = ?, `phone` = ?, `blocked` = ? WHERE `id` ="
+                    + " ?";
     private static final String FIND_ALL_ACCOUNTS_PAGE = "SELECT `id`, "
-            + "`username`, `password`, `email`, `role`, `phone` FROM `users` "
-            + "ORDER BY id LIMIT ? OFFSET ?";
+            + "`username`, `password`, `email`, `role`, `phone`, `blocked` "
+            + "FROM `users` ORDER BY id LIMIT ? OFFSET ?";
     private static final String INSERT_ACCOUNT =
             "INSERT INTO `users` (`username`, "
-                    + "`password`, `email`, `role`, `phone`) "
-                    + "VALUES (?, ?, ?, ?, ?)";
-    private static final String FIND_ACCOUNTS_BY_ROLE = FIND_ACCOUNT_BY +
-            "`role` = ? LIMIT ? OFFSET ?";
+                    + "`password`, `email`, `role`, `phone`, `blocked`) "
+                    + "VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String FIND_ACCOUNTS_BY_ROLE = FIND_ACCOUNT_BY
+            + "`role` = ? LIMIT ? OFFSET ?";
     private static final String FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD =
             FIND_ACCOUNT_BY + "`username` = ? AND `password` = ?";
 
@@ -114,7 +113,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public int findAccountCount() throws PersistentException {
+    public int findElementCount() throws PersistentException {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_ACCOUNT_COUNT)) {
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -229,27 +228,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean delete(final long id) throws PersistentException {
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(DELETE_ACCOUNT_BY_ID)) {
-            statement.setLong(1, id);
-            return statement.executeUpdate() == 1;
-        } catch (SQLException e) {
-            throw new PersistentException(e);
-        }
-    }
-
-    @Override
-    public User update(final User entityNew) throws PersistentException {
+    public void update(final User entityNew) throws PersistentException {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(UPDATE_ACCOUNT_BY_ID)) {
-            statement.setString(1, entityNew.getUsername());
-            statement.setString(2, entityNew.getPassword());
-            statement.setString(3, entityNew.getEmail());
-            statement.setInt(4, entityNew.getRole().getIdentity());
-            statement.setInt(5, entityNew.getPhone());
-            statement.setLong(6, entityNew.getId());
-            return entityNew;
+            execute(statement, entityNew);
+            statement.setLong(7, entityNew.getId());
         } catch (SQLException e) {
             throw new PersistentException("SQLException while updating", e);
         }
@@ -262,11 +245,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(INSERT_ACCOUNT)) {
-            statement.setString(1, entityNew.getUsername());
-            statement.setString(2, entityNew.getPassword());
-            statement.setString(3, entityNew.getEmail());
-            statement.setInt(4, entityNew.getRole().getIdentity());
-            statement.setInt(5, entityNew.getPhone());
+            execute(statement, entityNew);
             int result = statement.executeUpdate();
             return result == 1;
         } catch (SQLException e) {
@@ -275,15 +254,26 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
-    private User createAccountFromResultSet(ResultSet resultSet)
+    private void execute(final PreparedStatement statement,
+                         final User entityNew)
             throws SQLException {
-        long accountId = resultSet.getLong(1);
-        String username = resultSet.getString(2);
-        String passwordHash = resultSet.getString(3);
-        String email = resultSet.getString(4);
-        Role role = Role.values()[resultSet.getInt(5)];
-        int phone = resultSet.getInt(6);
-        boolean blocked = resultSet.getBoolean(7);
+        statement.setString(1, entityNew.getUsername());
+        statement.setString(2, entityNew.getPassword());
+        statement.setString(3, entityNew.getEmail());
+        statement.setInt(4, entityNew.getRole().getIdentity());
+        statement.setInt(5, entityNew.getPhone());
+        statement.setBoolean(6, entityNew.isBlocked());
+    }
+
+    private User createAccountFromResultSet(final ResultSet resultSet)
+            throws SQLException {
+        long accountId = resultSet.getLong("id");
+        String username = resultSet.getString("username");
+        String passwordHash = resultSet.getString("password");
+        String email = resultSet.getString("email");
+        Role role = Role.values()[resultSet.getInt("role")];
+        int phone = resultSet.getInt("phone");
+        boolean blocked = resultSet.getBoolean("blocked");
         return new User(accountId, username, passwordHash, role, email,
                 phone, blocked);
     }

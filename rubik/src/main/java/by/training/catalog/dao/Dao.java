@@ -18,9 +18,9 @@ public interface Dao<T extends Entity> {
 
     T findEntityById(long id) throws PersistentException;
 
-    T update(T entityNew) throws PersistentException;
+    void update(T entityNew) throws PersistentException;
 
     boolean create(T entityNew) throws PersistentException;
 
-    boolean delete(long id) throws PersistentException;
+    int findElementCount() throws PersistentException;
 }

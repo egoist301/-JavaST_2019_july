@@ -17,6 +17,4 @@ public interface RubikDao extends Dao<RubiksCube> {
 
     List<RubiksCube> findRubiksByForm(Form form, int offset, int limit)
             throws PersistentException;
-
-    int findRubiksCount() throws PersistentException;
 }

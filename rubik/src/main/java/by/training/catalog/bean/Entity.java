@@ -4,9 +4,11 @@ import java.util.Objects;
 
 public class Entity {
     private long id;
+    private boolean blocked;
 
-    Entity(final long idNew) {
+    Entity(final long idNew, final boolean blockedNew) {
         id = idNew;
+        blocked = blockedNew;
     }
 
     public long getId() {
@@ -15,6 +17,14 @@ public class Entity {
 
     public void setId(final long idNew) {
         id = idNew;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(final boolean blockedNew) {
+        blocked = blockedNew;
     }
 
     @Override
@@ -26,16 +36,17 @@ public class Entity {
             return false;
         }
         Entity entity = (Entity) oNew;
-        return getId() == entity.getId();
+        return getId() == entity.getId()
+                && isBlocked() == entity.isBlocked();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId());
+        return Objects.hash(getId(), isBlocked());
     }
 
     @Override
     public String toString() {
-        return "id=" + id;
+        return "id=" + id + ", blocked=" + blocked;
     }
 }
