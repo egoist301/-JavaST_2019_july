@@ -27,8 +27,9 @@ public class PlasticColorDaoImpl implements PlasticColorDao {
 
     private Connection connection;
 
-    public PlasticColorDaoImpl(final Connection connectionNew) {
-        connection = connectionNew;
+    public PlasticColorDaoImpl(
+            final AbstractConnectionManager connectionManagerNew) {
+        connection = connectionManagerNew.getConnection();
     }
 
     @Override

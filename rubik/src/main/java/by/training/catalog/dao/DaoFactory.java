@@ -8,6 +8,13 @@ import by.training.catalog.dao.impl.AbstractConnectionManager;
 public interface DaoFactory {
     UserDao createAccountDao(AbstractConnectionManager connectionManager);
 
-    RubikDao createRubikDao(
+    RubikDao createRubikDao(AbstractConnectionManager connectionManagerNew);
+
+    FormDao createFormDao(AbstractConnectionManager connectionManagerNew);
+
+    PlasticColorDao createPlasticColorDao(
+            AbstractConnectionManager connectionManagerNew);
+
+    ManufacturerDao createManufacturerDao(
             AbstractConnectionManager connectionManagerNew);
 }

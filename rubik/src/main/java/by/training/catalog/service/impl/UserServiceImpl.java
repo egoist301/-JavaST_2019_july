@@ -106,7 +106,15 @@ public class UserServiceImpl extends AbstractService implements UserService {
     public User findAccountByLoginAndPassword(final String login,
                                               final String password)
             throws ServiceException {
-        return null;
+        try (AbstractConnectionManager connectionManager =
+                     new ConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            return userDao.findAccountByLoginAndPassword(login,
+                    argonTwoHashAlgorithm(password));
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
     }
 
     @Override

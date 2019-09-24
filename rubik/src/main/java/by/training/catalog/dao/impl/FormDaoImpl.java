@@ -25,8 +25,8 @@ public class FormDaoImpl implements FormDao {
             + "`form` ORDER BY `id` LIMIT ? OFFSET ?";
     private Connection connection;
 
-    public FormDaoImpl(final Connection connectionNew) {
-        connection = connectionNew;
+    public FormDaoImpl(final AbstractConnectionManager connectionManagerNew) {
+        connection = connectionManagerNew.getConnection();
     }
 
     @Override

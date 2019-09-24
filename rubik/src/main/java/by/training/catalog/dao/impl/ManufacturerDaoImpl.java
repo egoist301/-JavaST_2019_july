@@ -27,8 +27,8 @@ public class ManufacturerDaoImpl implements ManufacturerDao {
 
     private Connection connection;
 
-    public ManufacturerDaoImpl(final Connection connectionNew) {
-        connection = connectionNew;
+    public ManufacturerDaoImpl(final AbstractConnectionManager connectionManagerNew) {
+        connection = connectionManagerNew.getConnection();
     }
 
     @Override

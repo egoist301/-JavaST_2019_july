@@ -43,10 +43,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     + "VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_ACCOUNTS_BY_ROLE = FIND_ACCOUNT_BY
             + "`role` = ? LIMIT ? OFFSET ?";
-    private static final String FIND_ACCOUNT_BY_LOGIN =
-            FIND_ACCOUNT_BY + "`username` = ?";
+    private static final String FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD =
+            FIND_ACCOUNT_BY + "`username` = ? AND `password` = ?";
 
-    public UserDaoImpl(final AbstractConnectionManager managerNew) {
+    UserDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
     }
 
@@ -131,13 +131,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findAccountByLogin(final String login)
+    public User findAccountByLoginAndPassword(final String login,
+                                              final String password)
             throws PersistentException {
         User user = null;
         try (PreparedStatement statement =
                      getConnection().prepareStatement(
-                             FIND_ACCOUNT_BY_LOGIN)) {
+                             FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD)) {
             statement.setString(1, login);
+            statement.setString(2, password);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     user = createAccountFromResultSet(resultSet);
