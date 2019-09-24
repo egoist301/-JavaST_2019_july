@@ -1,16 +1,17 @@
 package by.training.catalog.dao.impl;
 
-import by.training.catalog.bean.User;
 import by.training.catalog.bean.Role;
+import by.training.catalog.bean.User;
 import by.training.catalog.dao.PersistentException;
 import by.training.catalog.dao.UserDao;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
+
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_ACCOUNT_BY = "SELECT `id`, "
@@ -42,8 +43,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     + "VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_ACCOUNTS_BY_ROLE = FIND_ACCOUNT_BY
             + "`role` = ? LIMIT ? OFFSET ?";
-    private static final String FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD =
-            FIND_ACCOUNT_BY + "`username` = ? AND `password` = ?";
+    private static final String FIND_ACCOUNT_BY_LOGIN =
+            FIND_ACCOUNT_BY + "`username` = ?";
 
     public UserDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
@@ -130,15 +131,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findAccountByLoginAndPassword(final String login,
-                                              final String password)
+    public User findAccountByLogin(final String login)
             throws PersistentException {
         User user = null;
         try (PreparedStatement statement =
                      getConnection().prepareStatement(
-                             FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD)) {
+                             FIND_ACCOUNT_BY_LOGIN)) {
             statement.setString(1, login);
-            statement.setString(2, password);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     user = createAccountFromResultSet(resultSet);
@@ -239,19 +238,24 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public boolean create(final User entityNew) throws PersistentException {
+    public int create(final User entityNew) throws PersistentException {
         if (entityNew == null) {
-            return false;
+            return 0;
         }
         try (PreparedStatement statement = getConnection()
-                .prepareStatement(INSERT_ACCOUNT)) {
+                .prepareStatement(INSERT_ACCOUNT, RETURN_GENERATED_KEYS)) {
             execute(statement, entityNew);
-            int result = statement.executeUpdate();
-            return result == 1;
+            statement.executeUpdate();
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
         } catch (SQLException e) {
             throw new PersistentException(
                     "SQLException while inserting account", e);
         }
+        return 0;
     }
 
     private void execute(final PreparedStatement statement,

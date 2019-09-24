@@ -5,7 +5,8 @@ import by.training.catalog.dao.PersistentException;
 import java.sql.Connection;
 
 /**
- * Abstract class that subclasses are intended to provide connection manipulation methods.
+ * Abstract class that subclasses are intended to provide
+ * connection manipulation methods.
  * Used by service layer to provide connection to DAOs.
  */
 public interface AbstractConnectionManager extends AutoCloseable {

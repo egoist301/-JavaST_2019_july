@@ -13,20 +13,20 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.List;
 
 
-public class ConnectionPool {
+public final class ConnectionPool {
     private static final Logger LOGGER = LogManager.getLogger();
     private BlockingQueue<ProxyConnection> availableConnections;
     /**
-     * Contains connections, which are used and aren't available to take
+     * Contains connections, which are used and aren't available to take.
      */
     private List<ProxyConnection> usingConnections;
     /**
-     * PropertyHolder instance. Used to get properties to connect
+     * PropertyHolder instance. Used to get properties to connect.
      * with database
      *
      * @see PropertyHolder
      */
-    private PropertyHolder propertyHolder;
+    private PropertyHolder propertyHolder; //TODO read from property file.
 
     /**
      * Construct a connection pool.
@@ -53,35 +53,36 @@ public class ConnectionPool {
         LOGGER.debug("ProxyConnectionPool was created");
         if (availableConnections.isEmpty()) {
             LOGGER.fatal(
-                    "Fatal error in initializer: connection pool hasn't any connections");
+                    "Fatal error in initializer: connection pool hasn't any "
+                            + "connections");
             throw new ConnectionPoolException(
                     "Connection pool hasn't any connections");
         }
     }
 
     /**
-     * Inner instance-holder class
+     * Inner instance-holder class.
      */
     private static class ConnectionPoolHolder {
         /**
-         * Hold the instance of connection pool
+         * Hold the instance of connection pool.
          */
         private static final ConnectionPool POOL = new ConnectionPool();
     }
 
     /**
-     * Get-method to get pool instance
+     * Get-method to get pool instance.
      *
-     * @return connection pool instance
+     * @return connection pool instance.
      */
     public static ConnectionPool getInstance() {
         return ConnectionPoolHolder.POOL;
     }
 
     /**
-     * Creates connection and put it into available
-     * connections container
-     * Can throw ConnectionPoolException
+     * Creates connection and put it into available.
+     * connections container.
+     * Can throw ConnectionPoolException.
      *
      * @see ConnectionPoolException
      */

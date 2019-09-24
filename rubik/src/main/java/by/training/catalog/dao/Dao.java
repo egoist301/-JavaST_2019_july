@@ -20,7 +20,7 @@ public interface Dao<T extends Entity> {
 
     void update(T entityNew) throws PersistentException;
 
-    boolean create(T entityNew) throws PersistentException;
+    int create(T entityNew) throws PersistentException;
 
     int findElementCount() throws PersistentException;
 }

@@ -2,20 +2,31 @@ package by.training.catalog.service;
 
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.User;
-import by.training.catalog.dao.PersistentException;
 
 import java.util.List;
 
-public interface UserService extends Service<User> {
-    User findAccountByUsername(String username) throws PersistentException;
+public interface UserService extends Service {
+    void update(final User entityNew) throws ServiceException;
 
-    User findAccountByEmail(String email) throws PersistentException;
+    void create(final User entityNew) throws ServiceException;
 
-    User findAccountByPhone(int phone) throws PersistentException;
+    User findAccountByUsername(String username) throws ServiceException;
+
+    User findAccountByEmail(String email) throws ServiceException;
+
+    User findAccountByPhone(int phone) throws ServiceException;
 
     User findAccountByLoginAndPassword(String login, String password)
-            throws PersistentException;
+            throws ServiceException;
 
     List<User> findAccountByRole(Role role, int limit, int offset)
-            throws PersistentException;
+            throws ServiceException;
+
+    User findById(long id) throws ServiceException;
+
+    List<User> findAll() throws ServiceException;
+
+    List<User> findAll(int offset, int limit) throws ServiceException;
+
+    int findElementCount() throws ServiceException;
 }

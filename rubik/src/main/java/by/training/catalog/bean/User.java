@@ -8,17 +8,27 @@ public class User extends Entity {
     private Role role;
     private String email;
     private int phone;
+    private boolean blocked;
 
     public User(final long id, final String usernameNew,
                 final String passwordNew,
                 final Role roleNew, final String emailNew,
                 final int phoneNew, final boolean blockedNew) {
-        super(id, blockedNew);
+        super(id);
         username = usernameNew;
         password = passwordNew;
         role = roleNew;
         email = emailNew;
         phone = phoneNew;
+        blocked = blockedNew;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(final boolean blockedNew) {
+        blocked = blockedNew;
     }
 
     public int getPhone() {
@@ -77,14 +87,15 @@ public class User extends Entity {
                 && Objects.equals(getUsername(), user.getUsername())
                 && Objects.equals(getPassword(), user.getPassword())
                 && getRole() == user.getRole()
-                && Objects.equals(getEmail(), user.getEmail());
+                && Objects.equals(getEmail(), user.getEmail())
+                && isBlocked() == user.isBlocked();
     }
 
     @Override
     public int hashCode() {
         return Objects
                 .hash(super.hashCode(), getUsername(), getPassword(), getRole(),
-                        getEmail(), getPhone());
+                        getEmail(), getPhone(), isBlocked());
     }
 
     @Override
@@ -94,6 +105,7 @@ public class User extends Entity {
                 + ", password='" + password + '\''
                 + ", role=" + role
                 + ", email='" + email + '\''
-                + ", phone=" + phone + '}';
+                + ", phone=" + phone
+                + ", blocked=" + blocked + '}';
     }
 }

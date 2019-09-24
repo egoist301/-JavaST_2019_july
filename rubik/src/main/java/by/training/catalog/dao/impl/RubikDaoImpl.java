@@ -5,18 +5,16 @@ import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.dao.PersistentException;
 import by.training.catalog.dao.RubikDao;
 
-import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
-    //    private static final String FIND_PLASTIC_COLOR = "SELECT `plastic_color` "
-//            + "FROM `plastic_color` JOIN `rubiks_cube` ON "
-//            + "`id`=`plastic_color_id` WHERE `rubiks_cube.id` = ?";
     private static final String FIND_RUBIK_BY =
             "SELECT `id`, `model`, `price`, `weight`, `info`, "
                     + "`primary_plastic`, `size`, `plastic_color_id`, "
@@ -55,7 +53,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     private static final String FIND_ALL_RUBIKS_BY_FORM = FIND_RUBIK_BY
             + "`form_id` = ? LIMIT ? OFFSET ?";
 
-    public RubikDaoImpl(final AbstractConnectionManager managerNew) {
+    RubikDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
     }
 
@@ -127,20 +125,26 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     }
 
     @Override
-    public boolean create(final RubiksCube entityNew)
+    public int create(final RubiksCube entityNew)
             throws PersistentException {
         if (entityNew == null) {
-            return false;
+            return 0;
         }
         try (PreparedStatement statement = getConnection()
-                .prepareStatement(INSERT_RUBIK)) {
+                .prepareStatement(INSERT_RUBIK,
+                        RETURN_GENERATED_KEYS)) {
             execute(statement, entityNew);
-            int result = statement.executeUpdate();
-            return result == 1;
+            statement.executeUpdate();
+            try (ResultSet resultSet = statement.getGeneratedKeys()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
         } catch (SQLException e) {
             throw new PersistentException(
                     "SQLException while inserting rubik", e);
         }
+        return 0;
     }
 
     private void execute(PreparedStatement statement, RubiksCube entityNew)

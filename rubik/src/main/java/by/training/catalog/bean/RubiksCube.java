@@ -14,6 +14,7 @@ public class RubiksCube extends Entity {
     private int manufacturerId;
     private int formId;
     private Date date;
+    private boolean blocked;
 
     public RubiksCube(final long idNew, final String modelNew,
                       final double priceNew,
@@ -24,7 +25,7 @@ public class RubiksCube extends Entity {
                       final int manufacturerNew,
                       final int formIdNew, final Date dateNew,
                       final boolean blockedNew) {
-        super(idNew, blockedNew);
+        super(idNew);
         model = modelNew;
         price = priceNew;
         weight = weightNew;
@@ -35,6 +36,15 @@ public class RubiksCube extends Entity {
         manufacturerId = manufacturerNew;
         formId = formIdNew;
         date = dateNew;
+        blocked = blockedNew;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(final boolean blockedNew) {
+        blocked = blockedNew;
     }
 
     public String getSize() {
@@ -138,7 +148,8 @@ public class RubiksCube extends Entity {
                 && getPlasticColorId() == that.getPlasticColorId()
                 && Objects.equals(getSize(), that.getSize())
                 && getFormId() == that.getFormId()
-                && Objects.equals(getDate(), that.getDate());
+                && Objects.equals(getDate(), that.getDate())
+                && isBlocked() == that.isBlocked();
     }
 
     @Override
@@ -146,7 +157,7 @@ public class RubiksCube extends Entity {
         return Objects.hash(super.hashCode(), getModel(), getPrice(), getInfo(),
                 getManufacturerId(), getWeight(), getPlasticColorId(),
                 isPrimaryPlastic(), getSize(), getFormId(),
-                getDate());
+                getDate(), isBlocked());
     }
 
     @Override
@@ -161,6 +172,7 @@ public class RubiksCube extends Entity {
                 + ", primaryPlastic=" + primaryPlastic
                 + ", size='" + size + '\''
                 + ", typeCube=" + formId
-                + ", localDateTime=" + date + '}';
+                + ", localDateTime=" + date
+                + ", blocked=" + blocked + '}';
     }
 }
