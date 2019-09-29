@@ -1,13 +1,11 @@
 package by.training.catalog.service.impl;
 
-import by.training.catalog.bean.Form;
 import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.dao.ConnectionManagerFactory;
 import by.training.catalog.dao.DaoFactory;
 import by.training.catalog.dao.PersistentException;
 import by.training.catalog.dao.RubikDao;
-import by.training.catalog.dao.impl.AbstractConnectionManager;
-import by.training.catalog.dao.impl.ConnectionManager;
-import by.training.catalog.dao.impl.DaoFactoryImpl;
+import by.training.catalog.dao.AbstractConnectionManager;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
@@ -16,12 +14,13 @@ import java.util.List;
 
 public class RubikServiceImpl extends AbstractService implements RubikService {
     public RubikServiceImpl() {
-        super(new DaoFactoryImpl());
+        super();
     }
 
-    public RubikServiceImpl(
-            final DaoFactory daoFactoryNew) {
-        super(daoFactoryNew);
+    public RubikServiceImpl(final DaoFactory daoFactoryNew,
+                            final ConnectionManagerFactory
+                                    connectionManagerFactoryNew) {
+        super(daoFactoryNew, connectionManagerFactoryNew);
     }
 
     @Override
@@ -29,7 +28,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                                              final int offset, final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubiksBySize(size, offset, limit);
@@ -42,7 +41,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     public RubiksCube findRubikByModel(final String model)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubikByModel(model);
@@ -58,7 +57,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                                                    final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao
@@ -69,11 +68,11 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public List<RubiksCube> findRubiksByForm(final Form form, final int offset,
+    public List<RubiksCube> findRubiksByForm(final String form, final int offset,
                                              final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubiksByForm(form, offset, limit);
@@ -85,7 +84,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     @Override
     public RubiksCube findById(final long id) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findEntityById(id);
@@ -97,7 +96,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     @Override
     public List<RubiksCube> findAll() throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findAll();
@@ -110,7 +109,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     public List<RubiksCube> findAll(final int offset, final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findAll(offset, limit);
@@ -122,7 +121,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     @Override
     public void update(final RubiksCube entityNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             try {
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
@@ -140,7 +139,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     @Override
     public void create(final RubiksCube entityNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             try {
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
@@ -158,7 +157,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     @Override
     public int findElementCount() throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findElementCount();

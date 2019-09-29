@@ -1,5 +1,6 @@
 package by.training.catalog.dao;
 
+import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
 import by.training.catalog.bean.Role;
 
@@ -16,5 +17,8 @@ public interface UserDao extends Dao<User> {
             throws PersistentException;
 
     List<User> findAccountByRole(Role role, int limit, int offset)
+            throws PersistentException;
+
+    List<RubiksCube> findLikedCubesByUser(User userNew, int limit, int offset)
             throws PersistentException;
 }

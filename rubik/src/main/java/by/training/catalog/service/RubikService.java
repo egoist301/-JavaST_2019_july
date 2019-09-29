@@ -1,6 +1,5 @@
 package by.training.catalog.service;
 
-import by.training.catalog.bean.Form;
 import by.training.catalog.bean.RubiksCube;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface RubikService extends Service {
                                             int offset, int limit)
             throws ServiceException;
 
-    List<RubiksCube> findRubiksByForm(Form form, int offset, int limit)
+    List<RubiksCube> findRubiksByForm(String form, int offset, int limit)
             throws ServiceException;
 
     RubiksCube findById(long id) throws ServiceException;

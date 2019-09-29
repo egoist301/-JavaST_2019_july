@@ -10,20 +10,24 @@ public class RubiksCube extends Entity {
     private String info;
     private boolean primaryPlastic;
     private String size;
-    private int plasticColorId;
-    private int manufacturerId;
-    private int formId;
+    private String plasticColor;
+    private String manufacturer;
+    private String form;
     private Date date;
     private boolean blocked;
+
+    public RubiksCube(final long idNew) {
+        super(idNew);
+    }
 
     public RubiksCube(final long idNew, final String modelNew,
                       final double priceNew,
                       final double weightNew, final String infoNew,
                       final boolean primaryPlasticNew,
                       final String sizeNew,
-                      final int plasticColorIdNew,
-                      final int manufacturerNew,
-                      final int formIdNew, final Date dateNew,
+                      final String plasticColorNew,
+                      final String manufacturerNew,
+                      final String formNew, final Date dateNew,
                       final boolean blockedNew) {
         super(idNew);
         model = modelNew;
@@ -32,9 +36,9 @@ public class RubiksCube extends Entity {
         info = infoNew;
         primaryPlastic = primaryPlasticNew;
         size = sizeNew;
-        plasticColorId = plasticColorIdNew;
-        manufacturerId = manufacturerNew;
-        formId = formIdNew;
+        plasticColor = plasticColorNew;
+        manufacturer = manufacturerNew;
+        form = formNew;
         date = dateNew;
         blocked = blockedNew;
     }
@@ -55,12 +59,12 @@ public class RubiksCube extends Entity {
         size = sizeNew;
     }
 
-    public int getFormId() {
-        return formId;
+    public String getForm() {
+        return form;
     }
 
-    public void setFormId(final int formIdNew) {
-        formId = formIdNew;
+    public void setForm(final String formNew) {
+        form = formNew;
     }
 
     public Date getDate() {
@@ -95,12 +99,12 @@ public class RubiksCube extends Entity {
         info = infoNew;
     }
 
-    public int getManufacturerId() {
-        return manufacturerId;
+    public String getManufacturer() {
+        return manufacturer;
     }
 
-    public void setManufacturerId(final int manufacturerIdNew) {
-        manufacturerId = manufacturerIdNew;
+    public void setManufacturer(final String manufacturerNew) {
+        manufacturer = manufacturerNew;
     }
 
     public double getWeight() {
@@ -111,12 +115,12 @@ public class RubiksCube extends Entity {
         weight = weightNew;
     }
 
-    public int getPlasticColorId() {
-        return plasticColorId;
+    public String getPlasticColor() {
+        return plasticColor;
     }
 
-    public void setPlasticColorId(final int plasticColorIdNew) {
-        plasticColorId = plasticColorIdNew;
+    public void setPlasticColor(final String plasticColorNew) {
+        plasticColor = plasticColorNew;
     }
 
     public boolean isPrimaryPlastic() {
@@ -144,10 +148,10 @@ public class RubiksCube extends Entity {
                 && isPrimaryPlastic() == that.isPrimaryPlastic()
                 && Objects.equals(getModel(), that.getModel())
                 && Objects.equals(getInfo(), that.getInfo())
-                && getManufacturerId() == that.getManufacturerId()
-                && getPlasticColorId() == that.getPlasticColorId()
+                && getManufacturer().equals(that.getManufacturer())
+                && getPlasticColor().equals(that.getPlasticColor())
                 && Objects.equals(getSize(), that.getSize())
-                && getFormId() == that.getFormId()
+                && getForm().equals(that.getForm())
                 && Objects.equals(getDate(), that.getDate())
                 && isBlocked() == that.isBlocked();
     }
@@ -155,8 +159,8 @@ public class RubiksCube extends Entity {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), getModel(), getPrice(), getInfo(),
-                getManufacturerId(), getWeight(), getPlasticColorId(),
-                isPrimaryPlastic(), getSize(), getFormId(),
+                getManufacturer(), getWeight(), getPlasticColor(),
+                isPrimaryPlastic(), getSize(), getForm(),
                 getDate(), isBlocked());
     }
 
@@ -166,12 +170,12 @@ public class RubiksCube extends Entity {
                 + ", model='" + model + '\''
                 + ", price=" + price
                 + ", info='" + info + '\''
-                + ", manufacturer=" + manufacturerId
+                + ", manufacturer=" + manufacturer
                 + ", weight=" + weight
-                + ", plasticColor=" + plasticColorId
+                + ", plasticColor=" + plasticColor
                 + ", primaryPlastic=" + primaryPlastic
                 + ", size='" + size + '\''
-                + ", typeCube=" + formId
+                + ", typeCube=" + form
                 + ", localDateTime=" + date
                 + ", blocked=" + blocked + '}';
     }

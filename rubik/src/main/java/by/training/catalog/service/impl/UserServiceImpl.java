@@ -1,12 +1,9 @@
 package by.training.catalog.service.impl;
 
 import by.training.catalog.bean.Role;
+import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
-import by.training.catalog.dao.DaoFactory;
-import by.training.catalog.dao.PersistentException;
-import by.training.catalog.dao.UserDao;
-import by.training.catalog.dao.impl.AbstractConnectionManager;
-import by.training.catalog.dao.impl.ConnectionManager;
+import by.training.catalog.dao.*;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
@@ -17,8 +14,10 @@ import java.util.List;
 
 public class UserServiceImpl extends AbstractService implements UserService {
 
-    public UserServiceImpl(final DaoFactory daoFactoryNew) {
-        super(daoFactoryNew);
+    public UserServiceImpl(final DaoFactory daoFactoryNew,
+                           final ConnectionManagerFactory
+                                   connectionManagerFactoryNew) {
+        super(daoFactoryNew, connectionManagerFactoryNew);
     }
 
     public UserServiceImpl() {
@@ -28,7 +27,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public void update(final User entityNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             try {
                 UserDao userDao =
                         getDaoFactory().createAccountDao(connectionManager);
@@ -48,7 +47,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public void create(final User entityNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             try {
                 UserDao userDao =
                         getDaoFactory().createAccountDao(connectionManager);
@@ -69,7 +68,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     public User findAccountByUsername(final String username)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAccountByUsername(username);
@@ -81,7 +80,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public User findAccountByEmail(final String email) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAccountByEmail(email);
@@ -93,7 +92,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public User findAccountByPhone(final int phone) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAccountByPhone(phone);
@@ -107,7 +106,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                                               final String password)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAccountByLoginAndPassword(login,
@@ -122,7 +121,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                                         final int offset)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAccountByRole(role, limit, offset);
@@ -134,7 +133,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public User findById(final long id) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findEntityById(id);
@@ -146,7 +145,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public List<User> findAll() throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAll();
@@ -155,11 +154,29 @@ public class UserServiceImpl extends AbstractService implements UserService {
         }
     }
 
+    public void findLikedCubes(User userNew, int limit, int offset)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            userNew.setCubes(userDao.findLikedCubesByUser(userNew, limit,
+                    offset));
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            for (RubiksCube rubiksCube : userNew.getCubes()) {
+                rubikDao.read(rubiksCube);
+            }
+        } catch (PersistentException eNew) {
+            throw new ServiceException();
+        }
+    }
+
     @Override
     public List<User> findAll(final int offset, final int limit)
             throws ServiceException {
-        try (AbstractConnectionManager connectionManager
-                     = new ConnectionManager()) {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAll(offset, limit);
@@ -171,7 +188,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public int findElementCount() throws ServiceException {
         try (AbstractConnectionManager connectionManager =
-                     new ConnectionManager()) {
+                     getConnectionManagerFactory().createConnectionManager()) {
             UserDao accountDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return accountDao.findElementCount();

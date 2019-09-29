@@ -1,5 +1,6 @@
 package by.training.catalog.dao.impl;
 
+import by.training.catalog.dao.AbstractConnectionManager;
 import by.training.catalog.dao.PersistentException;
 import by.training.catalog.dao.pool.ConnectionPool;
 import by.training.catalog.dao.pool.ConnectionPoolException;

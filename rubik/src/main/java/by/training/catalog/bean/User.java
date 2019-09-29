@@ -1,5 +1,7 @@
 package by.training.catalog.bean;
 
+import java.util.List;
+
 import java.util.Objects;
 
 public class User extends Entity {
@@ -9,6 +11,25 @@ public class User extends Entity {
     private String email;
     private int phone;
     private boolean blocked;
+    private List<RubiksCube> cubes;
+
+    public User(final long idNew) {
+        super(idNew);
+    }
+
+    public User(final long idNew, final String usernameNew,
+                final String passwordNew) {
+        super(idNew);
+        username = usernameNew;
+        password = passwordNew;
+    }
+
+    public User(final long idNew, final String usernameNew,
+                final Role roleNew) {
+        super(idNew);
+        username = usernameNew;
+        role = roleNew;
+    }
 
     public User(final long id, final String usernameNew,
                 final String passwordNew,
@@ -21,6 +42,14 @@ public class User extends Entity {
         email = emailNew;
         phone = phoneNew;
         blocked = blockedNew;
+    }
+
+    public List<RubiksCube> getCubes() {
+        return cubes;
+    }
+
+    public void setCubes(final List<RubiksCube> cubesNew) {
+        cubes = cubesNew;
     }
 
     public boolean isBlocked() {
@@ -88,14 +117,15 @@ public class User extends Entity {
                 && Objects.equals(getPassword(), user.getPassword())
                 && getRole() == user.getRole()
                 && Objects.equals(getEmail(), user.getEmail())
-                && isBlocked() == user.isBlocked();
+                && isBlocked() == user.isBlocked()
+                && getCubes().equals(user.getCubes());
     }
 
     @Override
     public int hashCode() {
         return Objects
                 .hash(super.hashCode(), getUsername(), getPassword(), getRole(),
-                        getEmail(), getPhone(), isBlocked());
+                        getEmail(), getPhone(), isBlocked(), getCubes());
     }
 
     @Override
@@ -106,6 +136,7 @@ public class User extends Entity {
                 + ", role=" + role
                 + ", email='" + email + '\''
                 + ", phone=" + phone
-                + ", blocked=" + blocked + '}';
+                + ", blocked=" + blocked
+                + ", cubes=" + cubes + '}';
     }
 }

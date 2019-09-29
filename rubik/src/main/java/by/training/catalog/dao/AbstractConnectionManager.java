@@ -1,4 +1,4 @@
-package by.training.catalog.dao.impl;
+package by.training.catalog.dao;
 
 import by.training.catalog.dao.PersistentException;
 
