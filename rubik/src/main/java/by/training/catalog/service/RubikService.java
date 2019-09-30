@@ -28,4 +28,10 @@ public interface RubikService extends Service {
     void create(final RubiksCube entityNew) throws ServiceException;
 
     int findElementCount() throws ServiceException;
+
+    List<String> readAllManufacturer() throws ServiceException;
+
+    List<String> readAllForm() throws ServiceException;
+
+    List<String> readAllPlasticColor() throws ServiceException;
 }

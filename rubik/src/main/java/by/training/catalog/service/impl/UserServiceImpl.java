@@ -3,7 +3,12 @@ package by.training.catalog.service.impl;
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
-import by.training.catalog.dao.*;
+import by.training.catalog.dao.AbstractConnectionManager;
+import by.training.catalog.dao.ConnectionManagerFactory;
+import by.training.catalog.dao.DaoFactory;
+import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.RubikDao;
+import by.training.catalog.dao.UserDao;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
@@ -154,7 +159,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
         }
     }
 
-    public void findLikedCubes(User userNew, int limit, int offset)
+    @Override
+    public void findLikedCubes(final User userNew, final int limit,
+                               final int offset)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
@@ -168,7 +175,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 rubikDao.read(rubiksCube);
             }
         } catch (PersistentException eNew) {
-            throw new ServiceException();
+            throw new ServiceException(eNew);
         }
     }
 
@@ -180,6 +187,32 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAll(offset, limit);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public void addCubeToBasket(final User userNew, final RubiksCube cubeNew)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            userDao.addCubeToBasket(userNew, cubeNew);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public void removeFromBasket(final User userNew, final RubiksCube cubeNew)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            userDao.removeCubeFromBasket(userNew, cubeNew);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -200,6 +233,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
     private String argonTwoHashAlgorithm(final String newPassword) {
         Argon2 argon2 =
                 Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
-        return argon2.hash(4, 1024 * 1024, 4, newPassword);
+        final int iNew = 4;
+        final int iNew1 = 1024;
+        return argon2.hash(iNew, iNew1 * iNew1, iNew, newPassword);
     }
 }

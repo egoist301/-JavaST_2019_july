@@ -32,8 +32,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
                     + "`name_manufacturer`, `name`, `date_added`, `blocked`"
                     + " FROM `rubiks_cube` " + JOIN_RUBIK_WITH_TABLES + " ORDER"
                     + " BY `model`";
-    private static final String FIND_RUBIK_BY_ID = FIND_RUBIK_BY +
-            "WHERE `rubiks_cube`.`id` = ?";
+    private static final String FIND_RUBIK_BY_ID = FIND_RUBIK_BY
+            + "WHERE `rubiks_cube`.`id` = ?";
     private static final String UPDATE_RUBIK_BY_ID =
             "UPDATE `rubiks_cube`" + JOIN_RUBIK_WITH_TABLES + " SET `model` = "
                     + "?, `price` = ?, `weight` ="
@@ -109,7 +109,6 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
             }
             return rubiksCubes;
         } catch (SQLException newE) {
-            LOGGER.warn(newE.getMessage(), newE);
             throw new PersistentException(newE.getMessage(), newE);
         }
     }
@@ -204,20 +203,22 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
                      getConnection().prepareStatement(FILL_RUBIK)) {
             preparedStatement.setLong(1, rubiksCubeNew.getId());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                rubiksCubeNew.setModel(resultSet.getString("model"));
-                rubiksCubeNew.setPrice(resultSet.getDouble("price"));
-                rubiksCubeNew.setWeight(resultSet.getDouble("weight"));
-                rubiksCubeNew.setInfo(resultSet.getString("info"));
-                rubiksCubeNew.setPrimaryPlastic(resultSet.getBoolean(
-                        "primary_plastic"));
-                rubiksCubeNew.setSize(resultSet.getString("size"));
-                rubiksCubeNew.setPlasticColor(resultSet.getString(
-                        "plastic_color_id"));
-                rubiksCubeNew.setManufacturer(resultSet.getString(
-                        "manufacturer_id"));
-                rubiksCubeNew.setForm(resultSet.getString("form_id"));
-                rubiksCubeNew.setDate(resultSet.getDate("date_added"));
-                rubiksCubeNew.setBlocked(resultSet.getBoolean("blocked"));
+                if (resultSet.next()) {
+                    rubiksCubeNew.setModel(resultSet.getString("model"));
+                    rubiksCubeNew.setPrice(resultSet.getDouble("price"));
+                    rubiksCubeNew.setWeight(resultSet.getDouble("weight"));
+                    rubiksCubeNew.setInfo(resultSet.getString("info"));
+                    rubiksCubeNew.setPrimaryPlastic(resultSet.getBoolean(
+                            "primary_plastic"));
+                    rubiksCubeNew.setSize(resultSet.getString("size"));
+                    rubiksCubeNew.setPlasticColor(resultSet.getString(
+                            "plastic_color"));
+                    rubiksCubeNew.setManufacturer(resultSet.getString(
+                            "name_manufacturer"));
+                    rubiksCubeNew.setForm(resultSet.getString("name"));
+                    rubiksCubeNew.setDate(resultSet.getDate("date_added"));
+                    rubiksCubeNew.setBlocked(resultSet.getBoolean("blocked"));
+                }
             }
         } catch (SQLException eNew) {
             throw new PersistentException(eNew);
@@ -244,7 +245,6 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
             }
             return rubiksCubes;
         } catch (SQLException newE) {
-            LOGGER.warn(newE.getMessage(), newE);
             throw new PersistentException(newE.getMessage(), newE);
         }
     }
@@ -274,7 +274,6 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
             }
             return rubiksCubes;
         } catch (SQLException newE) {
-            LOGGER.warn(newE.getMessage(), newE);
             throw new PersistentException(newE.getMessage(), newE);
         }
     }
@@ -340,7 +339,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
         return 0;
     }
 
-    private void execute(PreparedStatement statement, RubiksCube entityNew)
+    private void execute(final PreparedStatement statement,
+                         final RubiksCube entityNew)
             throws SQLException {
         statement.setString(1, entityNew.getModel());
         statement.setDouble(2, entityNew.getPrice());
@@ -355,7 +355,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
         statement.setBoolean(11, entityNew.isBlocked());
     }
 
-    private RubiksCube createRubikFromResultSet(ResultSet resultSet)
+    private RubiksCube createRubikFromResultSet(final ResultSet resultSet)
             throws SQLException {
         long accountId = resultSet.getLong("id");
         String model = resultSet.getString("model");

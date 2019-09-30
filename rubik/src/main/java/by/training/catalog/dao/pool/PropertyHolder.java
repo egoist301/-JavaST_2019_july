@@ -11,18 +11,19 @@ class PropertyHolder {
     private static final String POOL_SIZE = "size";
 
     /**
-     * Contains a url
+     * Contains a url.
      */
     private final String url;
     /**
-     * Contains a size of connection pool
+     * Contains a size of connection pool.
      */
     private final int poolSize;
     private Properties prop;
 
     PropertyHolder() {
         prop = new Properties();
-        prop.put(URL_FIELD, "jdbc:mysql://localhost:3306/rubik?serverTimezone=UTC");
+        prop.put(URL_FIELD,
+                "jdbc:mysql://localhost:3306/rubik?serverTimezone=UTC");
         prop.put("user", "root");
         prop.put("password", "root");
         prop.put("autoReconnect", "true");

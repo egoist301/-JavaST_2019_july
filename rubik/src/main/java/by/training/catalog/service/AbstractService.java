@@ -5,7 +5,7 @@ import by.training.catalog.dao.DaoFactory;
 import by.training.catalog.dao.impl.ConnectionManagerFactoryImpl;
 import by.training.catalog.dao.impl.DaoFactoryImpl;
 
-public class AbstractService {
+public abstract class AbstractService {
     private DaoFactory daoFactory;
     private ConnectionManagerFactory connectionManagerFactory;
 
@@ -21,7 +21,7 @@ public class AbstractService {
         connectionManagerFactory = connectionManagerFactoryNew;
     }
 
-    public DaoFactory getDaoFactory() {
+    protected DaoFactory getDaoFactory() {
         return daoFactory;
     }
 
@@ -29,7 +29,7 @@ public class AbstractService {
         daoFactory = daoFactoryNew;
     }
 
-    public ConnectionManagerFactory getConnectionManagerFactory() {
+    protected ConnectionManagerFactory getConnectionManagerFactory() {
         return connectionManagerFactory;
     }
 

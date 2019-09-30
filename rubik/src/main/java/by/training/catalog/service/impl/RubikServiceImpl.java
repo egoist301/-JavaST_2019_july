@@ -68,7 +68,8 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public List<RubiksCube> findRubiksByForm(final String form, final int offset,
+    public List<RubiksCube> findRubiksByForm(final String form,
+                                             final int offset,
                                              final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
@@ -149,6 +150,42 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public List<String> readAllManufacturer() throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.readAllManufacturer();
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public List<String> readAllForm() throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.readAllForm();
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public List<String> readAllPlasticColor() throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.readAllPlasticColor();
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }

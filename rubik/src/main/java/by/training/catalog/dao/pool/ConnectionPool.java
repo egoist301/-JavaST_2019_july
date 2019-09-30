@@ -106,7 +106,7 @@ public final class ConnectionPool {
      * connections container hasn't any connection, tries to create new
      * connection. Then returns this connection.
      *
-     * @return a connection
+     * @return a connection.
      */
     public Connection getConnection() {
         ProxyConnection connection = null;
@@ -127,13 +127,14 @@ public final class ConnectionPool {
     }
 
     /**
-     * Receive a connection, check it and put into available
-     * connections container
+     * Receive a connection, check it and put into available connections
+     * container.
      *
-     * @param connection received connection
-     * @return result of returning. True if completes successfully, false - if not
+     * @param connection received connection.
+     * @return result of returning. True if completes successfully, false -
+     * if not.
      */
-    public boolean returnConnection(Connection connection) {
+    public boolean returnConnection(final Connection connection) {
         boolean flag = false;
         if (connection instanceof ProxyConnection) {
             usingConnections.remove(connection);
@@ -144,7 +145,7 @@ public final class ConnectionPool {
     }
 
     /**
-     * Deregisters database drivers
+     * Deregisters database drivers.
      */
     private void deregisterDriver() {
         Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
@@ -162,10 +163,10 @@ public final class ConnectionPool {
     }
 
     /**
-     * Closes connections and deregisters drivers
+     * Closes connections and deregisters drivers.
      */
     public void closePool() {
-        for (int i = 0; i < availableConnections.size(); ) {
+        for (int i = 0; i < availableConnections.size(); ++i) {
             try {
                 availableConnections.take().close();
                 LOGGER.debug("Connection was closed");

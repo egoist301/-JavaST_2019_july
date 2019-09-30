@@ -1,7 +1,5 @@
 package by.training.catalog.dao;
 
-import by.training.catalog.dao.PersistentException;
-
 import java.sql.Connection;
 
 /**

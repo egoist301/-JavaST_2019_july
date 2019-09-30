@@ -1,6 +1,10 @@
 package by.training.catalog.dao.impl;
 
-import by.training.catalog.dao.*;
+import by.training.catalog.dao.AbstractConnectionManager;
+import by.training.catalog.dao.DaoFactory;
+import by.training.catalog.dao.RubikDao;
+import by.training.catalog.dao.StoreImageDao;
+import by.training.catalog.dao.UserDao;
 
 /**
  * Factory for DAO creation.

@@ -33,7 +33,7 @@ public class User extends Entity {
 
     public User(final long id, final String usernameNew,
                 final String passwordNew,
-                final Role roleNew, final String emailNew,
+                final String emailNew, final Role roleNew,
                 final int phoneNew, final boolean blockedNew) {
         super(id);
         username = usernameNew;

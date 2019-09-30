@@ -45,8 +45,8 @@ public class StoreImage extends Entity {
             return false;
         }
         StoreImage that = (StoreImage) oNew;
-        return Objects.equals(getRubiksCube(), that.getRubiksCube()) &&
-                Objects.equals(getImgPath(), that.getImgPath());
+        return Objects.equals(getRubiksCube(), that.getRubiksCube())
+                && Objects.equals(getImgPath(), that.getImgPath());
     }
 
     @Override

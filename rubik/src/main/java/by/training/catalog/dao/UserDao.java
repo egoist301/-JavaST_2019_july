@@ -21,4 +21,10 @@ public interface UserDao extends Dao<User> {
 
     List<RubiksCube> findLikedCubesByUser(User userNew, int limit, int offset)
             throws PersistentException;
+
+    void addCubeToBasket(User userNew, RubiksCube cubeNew)
+            throws PersistentException;
+
+    void removeCubeFromBasket(User userNew, RubiksCube cubeNew)
+            throws PersistentException;
 }
