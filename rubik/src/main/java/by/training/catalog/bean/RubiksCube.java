@@ -43,6 +43,8 @@ public class RubiksCube extends Entity {
         blocked = blockedNew;
     }
 
+
+
     public boolean isBlocked() {
         return blocked;
     }

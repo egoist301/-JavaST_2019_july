@@ -2,8 +2,8 @@ package by.training.catalog.bean;
 
 public enum Role {
     ADMIN("admin"),
-    USER("user");
-    //GUEST
+    USER("user"),
+    GUEST("guest");
     private String value;
 
     Role(final String valueNew) {
