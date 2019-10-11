@@ -12,12 +12,16 @@ import by.training.catalog.dao.UserDao;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
+import by.training.catalog.service.parser.UserParser;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 
 import java.util.List;
 
 public class UserServiceImpl extends AbstractService implements UserService {
+
+    private final Argon2 argon2 =
+            Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 
     public UserServiceImpl(final DaoFactory daoFactoryNew,
                            final ConnectionManagerFactory
@@ -39,6 +43,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 entityNew.setPassword(
                         argonTwoHashAlgorithm(entityNew.getPassword()));
                 userDao.update(entityNew);
+                entityNew.setPassword(null);
                 connectionManager.commit();
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
@@ -50,12 +55,16 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public void create(final User entityNew) throws ServiceException {
+    public void create(final String username, String email, String phone,
+                       String password) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
                 UserDao userDao =
                         getDaoFactory().createAccountDao(connectionManager);
+                UserParser parser = new UserParser();
+                User entityNew =
+                        parser.getUser(username, email, phone, password);
                 entityNew.setPassword(
                         argonTwoHashAlgorithm(entityNew.getPassword()));
                 entityNew.setId(userDao.create(entityNew));
@@ -114,11 +123,16 @@ public class UserServiceImpl extends AbstractService implements UserService {
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findAccountByLoginAndPassword(login,
+            User user = userDao.findAccountByLogin(login,
                     argonTwoHashAlgorithm(password));
+            if (user != null && argon2.verify(user.getPassword(), password)) {
+                user.setPassword(null);
+                return user;
+            }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
+        return null;
     }
 
     @Override
@@ -231,8 +245,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     private String argonTwoHashAlgorithm(final String newPassword) {
-        Argon2 argon2 =
-                Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
         final int iNew = 4;
         final int iNew1 = 1024;
         return argon2.hash(iNew, iNew1 * iNew1, iNew, newPassword);

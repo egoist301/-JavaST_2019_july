@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@include file="header.jsp" %>
+<%@ taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
 <html lang="en">
 <head>
     <title><fmt:message key="registration"/></title>
@@ -19,7 +20,7 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="registration"/>
         </h2>
-        <form>
+        <form action="registr.html" method="post">
             <div class="form-group">
                 <label for="exampleName"><fmt:message
                         key="registration.username"/></label>
@@ -27,8 +28,7 @@
                        placeholder=
                        <fmt:message
                                key="registration.placeholder.username"/>
-                               required
-                       disabled>
+                               required name="username">
             </div>
             <div class="form-group">
                 <label for="exampleMail"><fmt:message
@@ -37,7 +37,7 @@
                        placeholder=
                        <fmt:message
                                key="registration.placeholder.email"/> required
-                       disabled>
+                       name="email">
             </div>
             <div class="form-group">
                 <label for="examplePhone"><fmt:message
@@ -45,9 +45,9 @@
                 <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
                        class="form-control" id="examplePhone"
                        placeholder=
-                           <fmt:message
-                                   key="registration.placeholder.phone"/> required
-                       disabled>
+                       <fmt:message
+                               key="registration.placeholder.phone"/> required
+                       name="phone">
             </div>
             <div class="form-group">
                 <label
@@ -55,12 +55,12 @@
                         key="registration.password"/> </label>
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1" placeholder=
-                           <fmt:message
-                                   key="registration.placeholder.password"/>
-                               required>
+                       <fmt:message
+                               key="registration.placeholder.password"/>
+                               required name="password">
             </div>
-            <button type="submit" class="btn btn-primary" id="submit"
-                    disabled=""><fmt:message key="registration"/>
+            <button type="submit" class="btn btn-primary" id="submit">
+                <fmt:message key="registration"/>
             </button>
         </form>
     </div>
@@ -68,23 +68,7 @@
 <hr class="my-5">
 
 <!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="d-flex justify-content-between">
-            <div class="footer-left">
-                <a href="#">Terms and conditions</a>
-                <a href="#">Privacy</a>
-                <p class="pull-left">Copyright © 2019</p>
-            </div>
-            <div class="footer-right">
-                <span>Follow us:</span>
-                <a href="#"><em class="fab fa-facebook-f"></em></a>
-                <a href="#"><em class="fab fa-twitter"></em></a>
-                <a href="#"><em class="fab fa-instagram"></em></a>
-            </div>
-        </div>
-    </div>
-</footer>
+<ctgg:footer/>
 <script src="js/main.js"></script>
 </body>
 </html>

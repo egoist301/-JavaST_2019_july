@@ -6,18 +6,24 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.get('locale').value}"/>
+<fmt:setBundle basename="property/localization"/>
+<%@ taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
 <head>
+
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Inconsolata|Playfair+Display|Ubuntu:300&display=swap">
     <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
           rel="stylesheet"
           integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
           crossorigin="anonymous">
-    <script src="js/mdb.js"></script>
+    <%--<script src="js/mdb.js"></script>--%>
     <title><fmt:message key="contact"/></title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <hr class="my-5">
 <div class="container" id="contact">
     <h2 class="mb-5 font-weight-bold text-center"><fmt:message
@@ -90,26 +96,6 @@
     </div>
 </div>
 <hr class="my-5">
-<footer>
-    <ctg:info-time/>
-    <div class="container">
-        <div class="d-flex justify-content-between">
-            <div class="footer-left">
-                <a href="#">Terms and conditions</a>
-                <a href="#">Privacy</a>
-                <p class="pull-left">Copyright © 2019</p>
-            </div>
-            <div class="footer-right">
-                <span>Follow us:</span>
-                <a href="http://facebook.com"><em
-                        class="fab fa-facebook-f"></em></a>
-                <a href="http://twitter.com"><em
-                        class="fab fa-twitter"></em></a>
-                <a href="http://instagram.com"><em
-                        class="fab fa-instagram"></em></a>
-            </div>
-        </div>
-    </div>
-</footer>
+<ctgg:footer/>
 </body>
 </html>

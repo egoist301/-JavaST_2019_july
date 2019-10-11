@@ -13,7 +13,7 @@ public interface UserDao extends Dao<User> {
 
     User findAccountByPhone(int phone) throws PersistentException;
 
-    User findAccountByLoginAndPassword(String login, String password)
+    User findAccountByLogin(String login, String password)
             throws PersistentException;
 
     List<User> findAccountByRole(Role role, int limit, int offset)

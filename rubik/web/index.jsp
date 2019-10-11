@@ -8,7 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <%@taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
-<%@include file="header.jsp"%>
+<%@include file="header.jsp" %>
 <%--<c:choose>
     <c:when test="${empty locale}">
         <fmt:setLocale value="en_US"/>
@@ -24,26 +24,6 @@
 </head>
 <body>
 <hr class="my-5">
-<footer>
-    <ctg:info-time/>
-    <div class="container">
-        <div class="d-flex justify-content-between">
-            <div class="footer-left">
-                <a href="#">Terms and conditions</a>
-                <a href="#">Privacy</a>
-                <p class="pull-left">Copyright © 2019</p>
-            </div>
-            <div class="footer-right">
-                <span>Follow us:</span>
-                <a href="http://facebook.com"><em
-                        class="fab fa-facebook-f"></em></a>
-                <a href="http://twitter.com"><em
-                        class="fab fa-twitter"></em></a>
-                <a href="http://instagram.com"><em
-                        class="fab fa-instagram"></em></a>
-            </div>
-        </div>
-    </div>
-</footer>
+<ctgg:footer/>
 </body>
 </html>

@@ -45,9 +45,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     + "VALUES (?, ?, ?, ?, ?, ?)";
     private static final String FIND_ACCOUNTS_BY_ROLE = FIND_ACCOUNT_BY
             + "`role` = ? LIMIT ? OFFSET ?";
-    private static final String FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD = "SELECT "
-            + " `id`, `username`, `password` FROM `users` WHERE `username` = "
-            + "? AND `password` = ?";
+    private static final String FIND_ACCOUNT_BY_LOGIN =
+            FIND_ACCOUNT_BY + " `username` = ?";
     private static final String FIND_ALL_RUBIKS_PAGE =
             "SELECT `cube_id` FROM `basket_rubiks_cube` WHERE `user_id` = ? "
                     + "LIMIT ? OFFSET ?";
@@ -142,21 +141,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findAccountByLoginAndPassword(final String login,
-                                              final String password)
+    public User findAccountByLogin(final String login,
+                                   final String password)
             throws PersistentException {
         User user = null;
         try (PreparedStatement statement =
                      getConnection().prepareStatement(
-                             FIND_ACCOUNT_BY_LOGIN_AND_PASSWORD)) {
+                             FIND_ACCOUNT_BY_LOGIN)) {
             statement.setString(1, login);
-            statement.setString(2, password);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    long id = resultSet.getLong(1);
-                    String loginNew = resultSet.getString(2);
-                    String passwordNew = resultSet.getString(3);
-                    user = new User(id, loginNew, passwordNew);
+                    user = createAccountFromResultSet(resultSet);
                 }
             }
         } catch (SQLException e) {

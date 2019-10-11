@@ -12,4 +12,12 @@
             <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
         </taglib>
     </jsp-config>
+    <filter>
+        <filter-name>URLFilter</filter-name>
+        <filter-class>by.training.catalog.filter.URLActionFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>URLFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
 </web-app>

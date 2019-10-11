@@ -1,179 +1,151 @@
 package by.training.catalog.dao.pool;
 
+import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.util.*;
 import java.sql.SQLException;
-import java.util.Enumeration;
-import java.util.LinkedList;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingQueue;
-import java.util.List;
-
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.ReentrantLock;
 
 public final class ConnectionPool {
-    private static final Logger LOGGER = LogManager.getLogger();
-    private BlockingQueue<ProxyConnection> availableConnections;
-    /**
-     * Contains connections, which are used and aren't available to take.
-     */
-    private List<ProxyConnection> usingConnections;
-    /**
-     * PropertyHolder instance. Used to get properties to connect.
-     * with database
-     *
-     * @see PropertyHolder
-     */
-    private PropertyHolder propertyHolder; //TODO read from property file.
+    private static final ConnectionPool INSTANCE = new ConnectionPool();
+    private Logger logger = LogManager.getLogger(getClass());
+    private BlockingQueue<ProxyConnection> pool
+            = new LinkedBlockingQueue<>();
+    private List<ProxyConnection> used
+            = new LinkedList<>();
+    private ReentrantLock locker = new ReentrantLock();
+    private MysqlDataSource source;
+    private int maxPoolSize;
+    private AtomicInteger connectionNumber;
+    private int checkConnectionTimeout;
 
-    /**
-     * Construct a connection pool.
-     * Initialize a pool.
-     */
     private ConnectionPool() {
-        propertyHolder = new PropertyHolder();
-        init();
     }
 
-    /**
-     * Initialize a connection pool
-     * Can throw ConnectionPoolException
-     *
-     * @see ConnectionPoolException
-     */
-    private void init() {
-        availableConnections =
-                new LinkedBlockingQueue<>(propertyHolder.getPoolSize());
-        usingConnections = new LinkedList<>();
-        for (int i = 0; i < propertyHolder.getPoolSize(); i++) {
-            createConnection();
-        }
-        LOGGER.debug("ProxyConnectionPool was created");
-        if (availableConnections.isEmpty()) {
-            LOGGER.fatal(
-                    "Fatal error in initializer: connection pool hasn't any "
-                            + "connections");
-            throw new ConnectionPoolException(
-                    "Connection pool hasn't any connections");
-        }
-    }
-
-    /**
-     * Inner instance-holder class.
-     */
-    private static class ConnectionPoolHolder {
-        /**
-         * Hold the instance of connection pool.
-         */
-        private static final ConnectionPool POOL = new ConnectionPool();
-    }
-
-    /**
-     * Get-method to get pool instance.
-     *
-     * @return connection pool instance.
-     */
     public static ConnectionPool getInstance() {
-        return ConnectionPoolHolder.POOL;
+        return INSTANCE;
     }
 
-    /**
-     * Creates connection and put it into available.
-     * connections container.
-     * Can throw ConnectionPoolException.
-     *
-     * @see ConnectionPoolException
-     */
-    private void createConnection() {
+    public void init() {
         try {
-            Connection connection = DriverManager
-                    .getConnection(propertyHolder.getUrl(),
-                            propertyHolder.getProp());
-            availableConnections.offer(new ProxyConnection(connection));
-            LOGGER.debug("New connection was offered to available");
+            logger.info("Initializing connection pool.");
+            ResourceBundle bundle = ResourceBundle.getBundle("database");
+            String driver = bundle.getString("db.driver");
+            String url = bundle.getString("db.url");
+            String user = bundle.getString("db.user");
+            String pass = bundle.getString("db.pass");
+            Class.forName(driver);
+            int initPoolSize = Integer
+                    .parseInt(bundle.getString("db.init-pool-size"));
+            maxPoolSize = Integer
+                    .parseInt(bundle.getString("db.max-pool-size"));
+            checkConnectionTimeout = Integer
+                    .parseInt(bundle.getString("db.connection-timeout"));
+            if (maxPoolSize < 1
+                || initPoolSize < 1
+                || initPoolSize > maxPoolSize) {
+                throw new ConnectionPoolException("Invalid parameters"
+                                       + " for pool initialization");
+            }
+            source = new MysqlDataSource();
+            source.setURL(url);
+            source.setUser(user);
+            source.setPassword(pass);
+            for (int i = 0; i < initPoolSize; i++) {
+                pool.add(new ProxyConnection(source.getConnection()));
+            }
+            connectionNumber = new AtomicInteger(initPoolSize);
+            logger.info("Connection pool is successfully initialized."
+                        + " Idle connections: {}", pool.size());
+        } catch (SQLException | MissingResourceException
+                | ClassNotFoundException | NumberFormatException e) {
+            logger.error("Connection pool initialization error. {}",
+                    e.getMessage());
+            throw new ConnectionPoolException("Cannot initialize connection pool.");
+        }
+    }
+
+    public ProxyConnection getConnection() {
+        try {
+            locker.lock();
+            if (!pool.isEmpty()) {
+                ProxyConnection connection;
+                connection = pool.poll();
+                used.add(connection);
+                logger.debug("Got a connection from pool. "
+                             + "Idle connections: {}, used connections: {}",
+                        pool.size(), used.size());
+                return connection;
+            } else {
+                if (connectionNumber.get() < maxPoolSize) {
+                    return createConnection();
+                }
+                throw new ConnectionPoolException("No available connections.");
+            }
         } catch (SQLException e) {
-            LOGGER.error("Error in initializing connection: ", e);
-            throw new ConnectionPoolException(e);
+            logger.error("Cannot create new connection. "
+                         + "SQL state: {}, SQL message: {}.",
+                    e.getSQLState(), e.getMessage());
+            throw new ConnectionPoolException("Cannot create new connection.");
+        } finally {
+            locker.unlock();
         }
     }
 
-    /**
-     * Get-method to get connection. Takes available connection
-     * from container, if it has available connection, put this connection
-     * to using connection container. If available
-     * connections container hasn't any connection, tries to create new
-     * connection. Then returns this connection.
-     *
-     * @return a connection.
-     */
-    public Connection getConnection() {
-        ProxyConnection connection = null;
+    public void releaseConnection(final ProxyConnection connection) {
         try {
-            if (availableConnections.isEmpty()
-                    && usingConnections.size() < propertyHolder.getPoolSize()) {
-                LOGGER.debug("A lack of connections");
-                new Thread(this::createConnection).start();
+            if (connection.isValid(checkConnectionTimeout)) {
+                connection.clearWarnings();
+                used.remove(connection);
+                pool.add(connection);
+                logger.debug("Connection released. "
+                            + "Idle connections: {}, used connections: {}",
+                               pool.size(), used.size());
             }
-            connection = availableConnections.take();
-            usingConnections.add(connection);
-        } catch (InterruptedException e) {
-            LOGGER.error("Error in taking connection from pool: ", e);
-            Thread.currentThread().interrupt();
+        } catch (SQLException e) {
+            logger.error("Cannot release connection. Connection is invalid. "
+                         + "SQL state: {}, SQL message: {}",
+                         e.getSQLState(), e.getMessage());
+            try {
+                connection.getConnection().close();
+            } catch (SQLException e1) {
+                logger.error("Cannot close connection. "
+                             + "SQL state: {}, SQL message: {}.",
+                             e.getSQLState(), e.getMessage());
+            }
         }
-        LOGGER.debug("User get a connection");
+    }
+
+    public void close() {
+        pool.addAll(used);
+        used.clear();
+        for (ProxyConnection con : pool) {
+            try {
+                con.getConnection().close();
+            } catch (SQLException e) {
+                logger.error("Cannot close connection. "
+                             + "SQL state: {}, SQL message: {}.",
+                             e.getSQLState(), e.getMessage());
+            }
+        }
+    }
+
+    private ProxyConnection createConnection() throws SQLException {
+        logger.debug("Creating a connection.");
+        ProxyConnection connection
+                = new ProxyConnection(source.getConnection());
+        used.add(connection);
+        logger.info("New connection is created. "
+                    + "Idle connections: {}, used connections: {}",
+                    pool.size(), used.size());
+        connectionNumber.incrementAndGet();
         return connection;
-    }
-
-    /**
-     * Receive a connection, check it and put into available connections
-     * container.
-     *
-     * @param connection received connection.
-     * @return result of returning. True if completes successfully, false -
-     * if not.
-     */
-    public boolean returnConnection(final Connection connection) {
-        boolean flag = false;
-        if (connection instanceof ProxyConnection) {
-            usingConnections.remove(connection);
-            flag = availableConnections.offer((ProxyConnection) connection);
-            LOGGER.debug("User returned connection to available");
-        }
-        return flag;
-    }
-
-    /**
-     * Deregisters database drivers.
-     */
-    private void deregisterDriver() {
-        Enumeration<java.sql.Driver> drivers = DriverManager.getDrivers();
-        java.sql.Driver d = null;
-        while (drivers.hasMoreElements()) {
-            try {
-                d = drivers.nextElement();
-                DriverManager.deregisterDriver(d);
-                LOGGER.debug(String.format("Driver %s deregistered", d));
-            } catch (SQLException ex) {
-                LOGGER.error(String.format("Error deregister driver %s", d),
-                        ex);
-            }
-        }
-    }
-
-    /**
-     * Closes connections and deregisters drivers.
-     */
-    public void closePool() {
-        for (int i = 0; i < availableConnections.size(); ++i) {
-            try {
-                availableConnections.take().close();
-                LOGGER.debug("Connection was closed");
-            } catch (InterruptedException | SQLException e) {
-                LOGGER.error("Error in closing connection: ", e);
-            }
-        }
-        deregisterDriver();
     }
 }

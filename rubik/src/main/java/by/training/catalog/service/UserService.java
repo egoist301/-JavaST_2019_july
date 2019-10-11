@@ -9,7 +9,8 @@ import java.util.List;
 public interface UserService extends Service {
     void update(User entityNew) throws ServiceException;
 
-    void create(User entityNew) throws ServiceException;
+    void create(String username, String email, String phone,
+                String password) throws ServiceException;
 
     User findAccountByUsername(String username) throws ServiceException;
 

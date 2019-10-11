@@ -73,7 +73,7 @@ public class ProxyConnection implements Connection {
 
     @Override
     public void close() throws SQLException {
-        connection.close();
+        ConnectionPool.getInstance().releaseConnection(this);
     }
 
     @Override
