@@ -7,13 +7,16 @@
 --%>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
 <%@ taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.get('locale').value}"/>
+<fmt:setBundle basename="property/localization"/>
 <html lang="en">
 <head>
     <title><fmt:message key="registration"/></title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <hr class="my-5">
 <!-- Form to log in-->
 <div class="grid-posts">

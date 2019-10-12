@@ -4,11 +4,12 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.*;
 import java.sql.SQLException;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.MissingResourceException;
+import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -25,6 +26,11 @@ public final class ConnectionPool {
     private int maxPoolSize;
     private AtomicInteger connectionNumber;
     private int checkConnectionTimeout;
+    private static final String IDLE_AND_USED = "Idle connections: {}, used "
+            + "connections: {}";
+    private static final String STATE_AND_MESSAGE = "SQL state: {}, SQL "
+            + "message: {}.";
+
 
     private ConnectionPool() {
     }
@@ -49,10 +55,10 @@ public final class ConnectionPool {
             checkConnectionTimeout = Integer
                     .parseInt(bundle.getString("db.connection-timeout"));
             if (maxPoolSize < 1
-                || initPoolSize < 1
-                || initPoolSize > maxPoolSize) {
+                    || initPoolSize < 1
+                    || initPoolSize > maxPoolSize) {
                 throw new ConnectionPoolException("Invalid parameters"
-                                       + " for pool initialization");
+                        + " for pool initialization");
             }
             source = new MysqlDataSource();
             source.setURL(url);
@@ -63,12 +69,13 @@ public final class ConnectionPool {
             }
             connectionNumber = new AtomicInteger(initPoolSize);
             logger.info("Connection pool is successfully initialized."
-                        + " Idle connections: {}", pool.size());
+                    + " Idle connections: {}", pool.size());
         } catch (SQLException | MissingResourceException
                 | ClassNotFoundException | NumberFormatException e) {
             logger.error("Connection pool initialization error. {}",
                     e.getMessage());
-            throw new ConnectionPoolException("Cannot initialize connection pool.");
+            throw new ConnectionPoolException(
+                    "Cannot initialize connection pool.");
         }
     }
 
@@ -80,7 +87,7 @@ public final class ConnectionPool {
                 connection = pool.poll();
                 used.add(connection);
                 logger.debug("Got a connection from pool. "
-                             + "Idle connections: {}, used connections: {}",
+                                + IDLE_AND_USED,
                         pool.size(), used.size());
                 return connection;
             } else {
@@ -91,7 +98,7 @@ public final class ConnectionPool {
             }
         } catch (SQLException e) {
             logger.error("Cannot create new connection. "
-                         + "SQL state: {}, SQL message: {}.",
+                            + STATE_AND_MESSAGE,
                     e.getSQLState(), e.getMessage());
             throw new ConnectionPoolException("Cannot create new connection.");
         } finally {
@@ -99,26 +106,26 @@ public final class ConnectionPool {
         }
     }
 
-    public void releaseConnection(final ProxyConnection connection) {
+    void releaseConnection(final ProxyConnection connection) {
         try {
             if (connection.isValid(checkConnectionTimeout)) {
                 connection.clearWarnings();
                 used.remove(connection);
                 pool.add(connection);
                 logger.debug("Connection released. "
-                            + "Idle connections: {}, used connections: {}",
-                               pool.size(), used.size());
+                                + IDLE_AND_USED,
+                        pool.size(), used.size());
             }
         } catch (SQLException e) {
             logger.error("Cannot release connection. Connection is invalid. "
-                         + "SQL state: {}, SQL message: {}",
-                         e.getSQLState(), e.getMessage());
+                            + STATE_AND_MESSAGE,
+                    e.getSQLState(), e.getMessage());
             try {
                 connection.getConnection().close();
             } catch (SQLException e1) {
                 logger.error("Cannot close connection. "
-                             + "SQL state: {}, SQL message: {}.",
-                             e.getSQLState(), e.getMessage());
+                                + STATE_AND_MESSAGE,
+                        e.getSQLState(), e.getMessage());
             }
         }
     }
@@ -131,8 +138,8 @@ public final class ConnectionPool {
                 con.getConnection().close();
             } catch (SQLException e) {
                 logger.error("Cannot close connection. "
-                             + "SQL state: {}, SQL message: {}.",
-                             e.getSQLState(), e.getMessage());
+                                + STATE_AND_MESSAGE,
+                        e.getSQLState(), e.getMessage());
             }
         }
     }
@@ -143,8 +150,8 @@ public final class ConnectionPool {
                 = new ProxyConnection(source.getConnection());
         used.add(connection);
         logger.info("New connection is created. "
-                    + "Idle connections: {}, used connections: {}",
-                    pool.size(), used.size());
+                        + IDLE_AND_USED,
+                pool.size(), used.size());
         connectionNumber.incrementAndGet();
         return connection;
     }

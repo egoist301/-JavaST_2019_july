@@ -20,9 +20,9 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Creates ConnectionManager that takes connection from the connection pool.
      *
-     * @throws PersistentException if ConnectionPoolException is thrown
+     * @throws PersistentException if ConnectionPoolException is thrown.
      */
-    public ConnectionManager() throws PersistentException {
+    ConnectionManager() throws PersistentException {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             disableAutoCommit();
@@ -35,7 +35,7 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Disables auto commit.
      *
-     * @throws PersistentException if SQLException is thrown
+     * @throws PersistentException if SQLException is thrown.
      */
     @Override
     public void disableAutoCommit() throws PersistentException {
@@ -52,7 +52,7 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Enables auto commit.
      *
-     * @throws PersistentException If SQLException is thrown
+     * @throws PersistentException If SQLException is thrown.
      */
     @Override
     public void enableAutoCommit() throws PersistentException {
@@ -69,7 +69,7 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Delegates commit call to the connection.
      *
-     * @throws PersistentException If SQLException is thrown
+     * @throws PersistentException If SQLException is thrown.
      */
     @Override
     public void commit() throws PersistentException {
@@ -83,7 +83,7 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Delegates rollback call to the connection.
      *
-     * @throws PersistentException If SQLException is thrown
+     * @throws PersistentException If SQLException is thrown.
      */
     @Override
     public void rollback() throws PersistentException {
@@ -97,7 +97,7 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Delegates close call to the connection.
      *
-     * @throws PersistentException If SQLException is thrown
+     * @throws PersistentException If SQLException is thrown.
      */
     @Override
     public void close() throws PersistentException {

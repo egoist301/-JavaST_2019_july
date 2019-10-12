@@ -55,8 +55,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public void create(final String username, String email, String phone,
-                       String password) throws ServiceException {
+    public void create(final String username, final String email,
+                       final String phone,
+                       final String password) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
@@ -73,19 +74,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
-            throw new ServiceException(eNew);
-        }
-    }
-
-    @Override
-    public User findAccountByUsername(final String username)
-            throws ServiceException {
-        try (AbstractConnectionManager connectionManager =
-                     getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findAccountByUsername(username);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -116,6 +104,18 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public User findAccountByLogin(final String login) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            return userDao.findAccountByLogin(login);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
     public User findAccountByLoginAndPassword(final String login,
                                               final String password)
             throws ServiceException {
@@ -123,8 +123,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            User user = userDao.findAccountByLogin(login,
-                    argonTwoHashAlgorithm(password));
+            User user = userDao.findAccountByLogin(login);
             if (user != null && argon2.verify(user.getPassword(), password)) {
                 user.setPassword(null);
                 return user;

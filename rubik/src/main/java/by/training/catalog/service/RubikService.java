@@ -23,9 +23,9 @@ public interface RubikService extends Service {
 
     List<RubiksCube> findAll(int offset, int limit) throws ServiceException;
 
-    void update(final RubiksCube entityNew) throws ServiceException;
+    void update(RubiksCube entityNew) throws ServiceException;
 
-    void create(final RubiksCube entityNew) throws ServiceException;
+    void create(RubiksCube entityNew) throws ServiceException;
 
     int findElementCount() throws ServiceException;
 

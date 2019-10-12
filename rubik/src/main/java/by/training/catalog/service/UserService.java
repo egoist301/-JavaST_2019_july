@@ -12,11 +12,11 @@ public interface UserService extends Service {
     void create(String username, String email, String phone,
                 String password) throws ServiceException;
 
-    User findAccountByUsername(String username) throws ServiceException;
-
     User findAccountByEmail(String email) throws ServiceException;
 
     User findAccountByPhone(int phone) throws ServiceException;
+
+    User findAccountByLogin(String login) throws ServiceException;
 
     User findAccountByLoginAndPassword(String login, String password)
             throws ServiceException;

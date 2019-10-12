@@ -9,10 +9,45 @@ import java.sql.Connection;
  */
 public interface AbstractConnectionManager extends AutoCloseable {
 
+    /**
+     * Disables auto commit.
+     *
+     * @throws PersistentException if SQL exception is throw.
+     */
     void disableAutoCommit() throws PersistentException;
+
+    /**
+     * Enables auto commit.
+     *
+     * @throws PersistentException if SQL exception is throw.
+     */
     void enableAutoCommit() throws PersistentException;
+
+    /**
+     * Delegates commit call to the connection.
+     *
+     * @throws PersistentException if SQL exception is throw.
+     */
     void commit() throws PersistentException;
+
+    /**
+     * Delegates rollback call to the connection.
+     *
+     * @throws PersistentException if SQL exception is throw.
+     */
     void rollback() throws PersistentException;
+
+    /**
+     * Close.
+     *
+     * @throws PersistentException if SQL exception is throw.
+     */
     void close() throws PersistentException;
+
+    /**
+     * Getter.
+     *
+     * @return connection.
+     */
     Connection getConnection();
 }

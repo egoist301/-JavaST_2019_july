@@ -19,8 +19,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_ACCOUNT_BY = "SELECT `id`, "
             + "`username`, `password`, `email`, `role`, `phone`, `blocked` "
             + "FROM `users` WHERE ";
-    private static final String FIND_ACCOUNT_BY_USERNAME = FIND_ACCOUNT_BY
-            + "`username` = ?";
     private static final String FIND_ACCOUNT_BY_EMAIL =
             FIND_ACCOUNT_BY + "`email` = ?";
     private static final String FIND_ACCOUNT_BY_PHONE =
@@ -59,28 +57,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     public UserDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
-    }
-
-    @Override
-    public User findAccountByUsername(final String username)
-            throws PersistentException {
-        if (username == null) {
-            return null;
-        }
-        User user = null;
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(FIND_ACCOUNT_BY_USERNAME)) {
-            statement.setString(1, username);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    user = createAccountFromResultSet(resultSet);
-                }
-            }
-        } catch (SQLException e) {
-            throw new PersistentException("SQLException while finding by "
-                    + "username", e);
-        }
-        return user;
     }
 
     @Override
@@ -141,8 +117,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public User findAccountByLogin(final String login,
-                                   final String password)
+    public User findAccountByLogin(final String login)
             throws PersistentException {
         User user = null;
         try (PreparedStatement statement =
@@ -324,7 +299,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         statement.setString(1, entityNew.getUsername());
         statement.setString(2, entityNew.getPassword());
         statement.setString(3, entityNew.getEmail());
-        statement.setInt(4, entityNew.getRole().getIdentity());
+        statement.setInt(4, entityNew.getRole().ordinal());
         statement.setInt(5, entityNew.getPhone());
         statement.setBoolean(6, entityNew.isBlocked());
     }

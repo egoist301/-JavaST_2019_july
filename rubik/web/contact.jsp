@@ -36,7 +36,8 @@
                     <input id="form3" type="text"
                            class="validate form-control form-control-sm"
                            required maxlength="10">
-                    <label for="form3">Your name*</label>
+                    <label for="form3"><fmt:message
+                            key="contact.name"/> </label>
                 </div>
                 <div class="md-form form-sm">
                     <em class="fa fa-envelope prefix grey-text"></em>
@@ -45,25 +46,28 @@
                            required=""
                            data-msg-containerid="emailError">
                     <label for="inputValidationEx67 form2" data-error="wrong"
-                           data-success="right">Your email*</label>
+                           data-success="right"><fmt:message
+                            key="contact.email"/> </label>
                 </div>
                 <div class="md-form form-sm">
                     <em class="fa fa-tag prefix grey-text"></em>
                     <input id="form23"
                            class="form-control form-control-sm validate"
                            type="text">
-                    <label for="form23">Your subject</label>
+                    <label for="form23"><fmt:message key="contact.subject"/>
+                    </label>
                 </div>
                 <div class="md-form form-sm">
                     <em class="fa fa-pen prefix grey-text"></em>
                     <textarea id="form32" type="text"
                               class="md-textaria form-control validate form-control-sm"
                               rows="3" required></textarea>
-                    <label for="form32">Your message*</label>
+                    <label for="form32"><fmt:message
+                            key="contact.email"/></label>
                 </div>
                 <div class="text-center mt-4">
                     <button class="btn btn-primary waves-effect waves-light"
-                            id="validate">Send<em
+                            id="validate"><fmt:message key="contact.send"/> <em
                             class="far fa-paper-plane ml-1"></em></button>
                 </div>
             </form>
@@ -71,12 +75,12 @@
         <div class="col-lg-7 col-md-12">
             <div class="row text-center">
                 <div class="col-lg-4 col-md-4 mb-3">
-                    <p><em class="fa fa-map fa-1x mr-2 grey-text"></em>Minsk</p>
+                    <p><em class="fa fa-map fa-1x mr-2
+                    grey-text"></em><fmt:message key="contact.city"/></p>
                 </div>
                 <div class="col-lg-4 col-md-4 mb-3">
-                    <p><em class="fa fa-building fa-1x mr-2 grey-text"></em>Mon
-                        -
-                        Fri</p>
+                    <p><em class="fa fa-building fa-1x mr-2
+                    grey-text"></em><fmt:message key="contact.date"/></p>
                 </div>
                 <div class="col-lg-4 col-md-4 mb-3">
                     <p><em

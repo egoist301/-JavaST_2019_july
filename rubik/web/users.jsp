@@ -16,6 +16,7 @@
     <title><fmt:message key="header.users"/></title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <hr class="my-5">
 
 <hr class="my-5">

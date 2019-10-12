@@ -4,11 +4,11 @@ import by.training.catalog.dao.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ServiceInitializer {
-    private static Logger logger =
-            LogManager.getLogger(ServiceInitializer.class);
+public final class ServiceInitializer {
+    private ServiceInitializer() {
+    }
 
-    public static void init() throws ServiceException {
+    public static void init() {
 
         ConnectionPool.getInstance().init();
 

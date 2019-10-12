@@ -6,25 +6,78 @@ import by.training.catalog.bean.Role;
 
 import java.util.List;
 
+/**
+ * User dao interface.
+ */
 public interface UserDao extends Dao<User> {
-    User findAccountByUsername(String username) throws PersistentException;
-
+    /**
+     * Find account by email.
+     *
+     * @param email email.
+     * @return user.
+     * @throws PersistentException dao exception.
+     */
     User findAccountByEmail(String email) throws PersistentException;
 
+    /**
+     * Find account by phone.
+     *
+     * @param phone phone.
+     * @return user.
+     * @throws PersistentException dao exception.
+     */
     User findAccountByPhone(int phone) throws PersistentException;
 
-    User findAccountByLogin(String login, String password)
-            throws PersistentException;
+    /**
+     * Find account by login.
+     *
+     * @param login login or username.
+     * @return user.
+     * @throws PersistentException dao exception.
+     */
+    User findAccountByLogin(String login) throws PersistentException;
 
+    /**
+     * Find accounts by role in range.
+     *
+     * @param role   role.
+     * @param limit  limit.
+     * @param offset offset.
+     * @return list of users.
+     * @throws PersistentException dao exception.
+     */
     List<User> findAccountByRole(Role role, int limit, int offset)
             throws PersistentException;
 
+    /**
+     * Find liked cubes by user.
+     *
+     * @param userNew user.
+     * @param limit   limit.
+     * @param offset  offset.
+     * @return list of cubes.
+     * @throws PersistentException dao exception.
+     */
     List<RubiksCube> findLikedCubesByUser(User userNew, int limit, int offset)
             throws PersistentException;
 
+    /**
+     * Add cube to basket.
+     *
+     * @param userNew user.
+     * @param cubeNew cube.
+     * @throws PersistentException dao exception.
+     */
     void addCubeToBasket(User userNew, RubiksCube cubeNew)
             throws PersistentException;
 
+    /**
+     * Remove cube from basket.
+     *
+     * @param userNew user.
+     * @param cubeNew cube.
+     * @throws PersistentException dao exception.
+     */
     void removeCubeFromBasket(User userNew, RubiksCube cubeNew)
             throws PersistentException;
 }

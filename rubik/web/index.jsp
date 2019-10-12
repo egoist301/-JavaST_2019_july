@@ -6,23 +6,16 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
-<%@include file="header.jsp" %>
-<%--<c:choose>
-    <c:when test="${empty locale}">
-        <fmt:setLocale value="en_US"/>
-    </c:when>
-    <c:otherwise>
-        <fmt:setLocale value="${locale}"/>
-    </c:otherwise>
-</c:choose>
-<fmt:bundle basename="property/localization">--%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.get('locale').value}"/>
+<fmt:setBundle basename="property/localization"/>
 <html>
 <head>
     <title>Rubik</title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <hr class="my-5">
 <ctgg:footer/>
 </body>

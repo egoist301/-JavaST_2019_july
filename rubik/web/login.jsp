@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@include file="header.jsp" %>
 <%@taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${cookie.get('locale').value}"/>
+<fmt:setBundle basename="property/localization"/>
 <html lang="en">
 <head>
     <title>Login</title>
 </head>
 <body>
+<jsp:include page="header.jsp"/>
 <hr class="my-5">
 <!-- Form to log in-->
 <div class="grid-posts">
@@ -34,9 +37,6 @@
                                key="login.placeholder.password"/>
                                required maxlength="16" name="password">
             </div>
-            <!--<div class="g-recaptcha"
-                 data-sitekey="6KepjAsTFFFFFFMqccY0ZiGqc3TEd3YVxo8cHsGX
-                 "></div>-->
             <button type="submit"
                     class="btn btn-primary"><fmt:message
                     key="login"/></button>
