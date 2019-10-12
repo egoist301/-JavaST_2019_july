@@ -18,6 +18,7 @@ public class CommandProvider {
         commandMap.put("/registration", new RegistrationPageCommand());
         commandMap.put("/registr", new RegistrationCommand());
         commandMap.put("/edit", new ProfileCommand());
+        commandMap.put("/users", new UsersPageCommand());
     }
 
     public Command getCommand(final String actionNew) {

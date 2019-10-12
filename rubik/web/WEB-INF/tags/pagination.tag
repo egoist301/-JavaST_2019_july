@@ -7,7 +7,8 @@
               required="true" %>
 <%@ attribute name="pageURL" rtexprvalue="true" type="java.lang.String"
               required="true" %>
-
+<fmt:setLocale value="${cookie.get('locale').value}"/>
+<fmt:setBundle basename="property/localization"/>
 <c:choose>
     <c:when test="${page == 1}">
         <c:set var="prevPage" value="1"/>
