@@ -1,7 +1,6 @@
 package by.training.catalog.controller;
 
 import by.training.catalog.controller.command.Command;
-import by.training.catalog.controller.command.RubiksCommandImpl;
 import by.training.catalog.dao.pool.ConnectionPool;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.ServiceInitializer;
@@ -10,12 +9,10 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Locale;
 
 @WebServlet("*.html")
 public class ApplicationServlet extends HttpServlet {
@@ -23,12 +20,7 @@ public class ApplicationServlet extends HttpServlet {
 
     @Override
     public void init() {
-        try {
-            ServiceInitializer.init();
-        } catch (ServiceException eNew) {
-            LOGGER.fatal("don't init connection pool");
-            throw new RuntimeException();
-        }
+        ServiceInitializer.init();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package by.training.catalog.controller.command;
 
-import by.training.catalog.bean.Role;
-
 import java.util.HashMap;
 import java.util.Map;
 
