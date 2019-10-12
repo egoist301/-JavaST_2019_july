@@ -9,6 +9,6 @@ public class RegistrationPageCommand extends Command {
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
             throws IOException {
-        return new Forward("registration.jsp");
+        return new Forward("WEB-INF/jsp/registration.jsp");
     }
 }

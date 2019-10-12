@@ -7,7 +7,7 @@ public class LoginPageCommand extends Command {
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
-        return new Forward("login.jsp");
+        return new Forward("WEB-INF/jsp/login.jsp");
 
     }
 }

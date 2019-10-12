@@ -9,6 +9,6 @@ public class MainCommand extends Command {
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
             throws IOException {
-        return new Forward("index.jsp");
+        return new Forward("WEB-INF/jsp/index.jsp");
     }
 }

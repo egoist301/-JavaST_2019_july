@@ -11,9 +11,5 @@ public enum Role {
     /**
      * User.
      */
-    USER,
-    /**
-     * Guest.
-     */
-    GUEST
+    USER
 }

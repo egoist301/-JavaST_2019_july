@@ -7,11 +7,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public abstract class Command {
-    private Set<Role> roles;
+    private Set<Role> roles = new HashSet<>();
 
     public Set<Role> getRoles() {
         return roles;

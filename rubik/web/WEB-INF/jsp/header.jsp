@@ -19,15 +19,15 @@
       rel="stylesheet"
       integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
       crossorigin="anonymous">
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<link href="css/mdb.min.css" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-<script src="js/jquery-3.4.1.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/mdb.min.js"></script>
-<script src="js/mdb.js"></script>
+<link rel="stylesheet" href="<c:url value="/css/bootstrap.min.css"/>">
+<link href="<c:url value="/css/mdb.min.css"/>" rel="stylesheet">
+<link rel="stylesheet" href="<c:url value="/css/style.css"/>">
+<script src="<c:url value="/js/jquery-3.4.1.min.js"/>"></script>
+<script src="<c:url value="/js/popper.min.js"/>"></script>
+<script src="<c:url value="/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/js/bootstrap.js"/>"></script>
+<script src="<c:url value="/js/mdb.min.js"/>"></script>
+<script src="<c:url value="/js/mdb.js"/>"></script>
 <html>
 <body>
 <header>

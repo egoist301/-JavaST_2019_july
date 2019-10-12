@@ -12,14 +12,6 @@
 <fmt:setBundle basename="property/localization"/>
 <%@ taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
 <head>
-
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Inconsolata|Playfair+Display|Ubuntu:300&display=swap">
-    <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
-          rel="stylesheet"
-          integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
-          crossorigin="anonymous">
-    <%--<script src="js/mdb.js"></script>--%>
     <title><fmt:message key="contact"/></title>
 </head>
 <body>

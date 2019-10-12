@@ -6,7 +6,7 @@
 <fmt:setBundle basename="property/localization"/>
 <html lang="en">
 <head>
-    <title>Login</title>
+    <title><fmt:message key="login"/></title>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
