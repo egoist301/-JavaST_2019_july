@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersPageCommand extends Command {
+public class UsersPageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
     public Forward execute(final HttpServletRequest requestNew,

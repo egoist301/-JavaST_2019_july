@@ -18,7 +18,6 @@
 <body>
 <jsp:include page="header.jsp"/>
 <hr class="my-5">
-<!-- Form to log in-->
 <div class="grid-posts">
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="registration"/>
