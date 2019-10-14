@@ -29,10 +29,17 @@ public class ApplicationServlet extends HttpServlet {
             throws ServletException, IOException {
         Command command = (Command) req.getAttribute("command");
         Command.Forward forward = command.execute(req, resp);
-        if (forward.isRedirect()) {
-            resp.sendRedirect(forward.getUrl());
-        } else {
-            req.getRequestDispatcher(forward.getUrl()).forward(req, resp);
+        try {
+            if (!checkError(forward, resp)) {
+                if (forward.isRedirect()) {
+                    resp.sendRedirect(forward.getUrl());
+                } else {
+                    req.getRequestDispatcher(forward.getUrl())
+                            .forward(req, resp);
+                }
+            }
+        } catch (ServletException | IOException e) {
+            LOGGER.error("Cannot forward user. {}", e.getMessage());
         }
     }
 
@@ -42,7 +49,29 @@ public class ApplicationServlet extends HttpServlet {
             throws ServletException, IOException {
         Command command = (Command) req.getAttribute("command");
         Command.Forward forward = command.execute(req, resp);
-        resp.sendRedirect(forward.getUrl());
+        try {
+            if (!checkError(forward, resp)) {
+                resp.sendRedirect(forward.getUrl());
+            }
+        } catch (IOException e) {
+            LOGGER.error("Cannot redirect user. {}", e.getMessage());
+        }
+    }
+
+    private boolean checkError(final Command.Forward forward,
+                               final HttpServletResponse response) {
+        if (forward.isError()) {
+            try {
+                int error = (Integer) forward.getAttributes().get("error");
+                response.sendError(error);
+                return true;
+            } catch (IOException e) {
+                LOGGER.error("Cannot redirect user.");
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     @Override

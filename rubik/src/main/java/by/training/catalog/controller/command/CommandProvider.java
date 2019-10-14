@@ -3,10 +3,13 @@ package by.training.catalog.controller.command;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandProvider {
-    private Map<String, Command> commandMap;
+public final class CommandProvider {
+    private static Map<String, Command> commandMap;
 
-    public CommandProvider() {
+    private CommandProvider() {
+    }
+
+    static {
         commandMap = new HashMap<>();
         commandMap.put("/login", new LoginPageCommand());
         commandMap.put("/signin", new SignInCommand());
@@ -19,9 +22,12 @@ public class CommandProvider {
         commandMap.put("/registr", new RegistrationCommand());
         commandMap.put("/edit", new ProfileCommand());
         commandMap.put("/users", new UsersPageCommand());
+        commandMap.put("/addcube", new CreateCubePageCommand());
+        commandMap.put("/catalog", new RubiksCommand());
+        commandMap.put("/blocked", new BlockedUserCommand());
     }
 
-    public Command getCommand(final String actionNew) {
+    public static Command getCommand(final String actionNew) {
         return commandMap.get(actionNew);
     }
 }

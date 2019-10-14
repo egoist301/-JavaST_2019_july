@@ -24,52 +24,61 @@
     </div>
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
         <table class="table table-hover table-bordered">
-            <%--<div class="row after-header">
-                <div class="col-12">
-                    <h2></h2>
-                    <table class="table table-hover">--%>
-            <thead class="send-button-color">
-            <tr>
-                <td><fmt:message key="label.id"/></td>
-                <td><fmt:message key="label.username"/></td>
-                <td><fmt:message key="label.role"/></td>
-                <td><fmt:message key="label.phone"/></td>
-                <td><fmt:message key="label.email"/></td>
-                <td><fmt:message key="label.blocked"/></td>
-            </tr>
-            </thead>
-            <tbody>
-            <c:forEach items="${users}" var="user">
-                <jsp:useBean id="user"
-                             type="by.training.catalog.bean.User"/>
+            <div class="row after-header">
+                <thead class="send-button-color">
                 <tr>
-                    <td>
-                        <label>${user.id}</label>
-                    </td>
-                    <td>
-                        <label>${user.username}</label>
-                    </td>
-                    <td>
-                        <label>${user.role}</label>
-                    </td>
-                    <td>
-                        <label><a href="tel:${user.phone}">${user.phone}</a>
-                        </label>
-                    </td>
-                    <td>
-                        <label><a href="mailto:${user.email}">${user.email}</a>
-                        </label>
-                    </td>
-                    <td>
-                        <label>${user.blocked}</label>
-                    </td>
+                    <td><fmt:message key="label.id"/></td>
+                    <td><fmt:message key="label.username"/></td>
+                    <td><fmt:message key="label.role"/></td>
+                    <td><fmt:message key="label.phone"/></td>
+                    <td><fmt:message key="label.email"/></td>
+                    <td><fmt:message key="label.blocked"/></td>
+                    <td><fmt:message key="users.change"/></td>
                 </tr>
-            </c:forEach>
-            </tbody>
+                </thead>
+                <tbody>
+                <c:forEach items="${users}" var="user">
+                    <jsp:useBean id="user"
+                                 type="by.training.catalog.bean.User"/>
+                    <tr>
+                        <td>
+                            <label>${user.id}</label>
+                        </td>
+                        <td>
+                            <label>${user.username}</label>
+                        </td>
+                        <td>
+                            <label>${user.role}</label>
+                        </td>
+                        <td>
+                            <label><a href="tel:${user.phone}">${user.phone}</a>
+                            </label>
+                        </td>
+                        <td>
+                            <label><a
+                                    href="mailto:${user.email}">${user.email}</a>
+                            </label>
+                        </td>
+                        <td>
+                            <label>
+                                    ${user.blocked}
+                            </label>
+                        </td>
+                        <td>
+                            <form action="blocked.html?id=${user.id}"
+                                  method="post">
+                                <input type="submit"
+                                       class="btn btn-primary">
+                            </form>
+                        </td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </div>
         </table>
     </div>
+    <ctgg:pagination page="${page}" lastPage="${lastPage}" pageURL="users"/>
 </div>
-<ctgg:pagination page="${page}" lastPage="${lastPage}" pageURL="users"/>
 <hr class="my-5">
 <ctgg:footer/>
 </body>

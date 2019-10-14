@@ -13,11 +13,11 @@ public class UserParser {
         user.setPassword(passwordNew);
         user.setEmail(emailNew);
         String[] numbers = phoneNew.split("-");
-        String phone = "";
+        StringBuilder phone = new StringBuilder();
         for (String elem : numbers) {
-            phone += elem;
+            phone.append(elem);
         }
-        user.setPhone(Integer.parseInt(phone));
+        user.setPhone(Integer.parseInt(phone.toString()));
         user.setRole(Role.USER);
         return user;
     }

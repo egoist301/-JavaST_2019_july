@@ -31,8 +31,7 @@
 <html>
 <body>
 <header>
-    <nav
-            class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
         <div class="container">
             <a href="index.html" class="navbar-brand">Rubiks</a>
             <button class="navbar-toggler" type="button"
@@ -58,11 +57,15 @@
                            class="nav-link waves-effect waves-light"><fmt:message
                                 key="header.catalog"/></a>
                     </li>
-                    <li class="nav-item">
-                        <a href="users.html"
-                           class="nav-link waves-effect
+                    <c:choose>
+                        <c:when test="${user!=null}">
+                            <li class="nav-item">
+                                <a href="users.html"
+                                   class="nav-link waves-effect
                            waves-light"><fmt:message key="header.users"/></a>
-                    </li>
+                            </li>
+                        </c:when>
+                    </c:choose>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#"
                            id="languageDropdown"

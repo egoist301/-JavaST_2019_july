@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-public class ProfileCommand extends Command {
+public class ProfileCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override

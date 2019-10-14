@@ -23,7 +23,7 @@
                 <input type="text" class="form-control form-control-sm"
                        id="exampleName" aria-describedby="nameHelp"
                        placeholder=
-                       <fmt:message key="login.placeholder.username"/> required
+                       "<fmt:message key="login.placeholder.username"/>" required
                        maxlength="16" name="login">
             </div>
             <div class="form-group">
@@ -33,8 +33,8 @@
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1"
                        placeholder=
-                       <fmt:message
-                               key="login.placeholder.password"/>
+                       "<fmt:message
+                               key="login.placeholder.password"/>"
                                required maxlength="16" name="password">
             </div>
             <button type="submit"

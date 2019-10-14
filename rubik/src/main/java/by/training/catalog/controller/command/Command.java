@@ -18,22 +18,39 @@ public abstract class Command {
         return roles;
     }
 
-    public void setRoles(final Set<Role> rolesNew) {
-        roles = rolesNew;
+    protected Forward sendError(final int error) {
+        Forward forward = new Forward();
+        forward.setError(true);
+        forward.getAttributes().put("error", error);
+        return forward;
     }
 
     public abstract Forward execute(HttpServletRequest requestNew,
-                          HttpServletResponse responseNew)
+                                    HttpServletResponse responseNew)
             throws IOException;
 
     public static class Forward {
         private String url;
         private Map<String, Object> attributes;
         private boolean redirect;
+        private boolean error;
+
+        public boolean isError() {
+            return error;
+        }
+
+        public void setError(final boolean errorNew) {
+            error = errorNew;
+        }
+
+        public Forward() {
+        }
+
         public Forward(final String urlNew) {
             url = urlNew;
             attributes = new HashMap<>();
         }
+
         public Forward(final String urlNew, final boolean redirectNew) {
             url = urlNew;
             attributes = new HashMap<>();

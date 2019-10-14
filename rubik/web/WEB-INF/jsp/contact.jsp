@@ -35,8 +35,7 @@
                     <em class="fa fa-envelope prefix grey-text"></em>
                     <input type="email" id="inputValidationEx67 form2"
                            class="form-control form-control-sm validate"
-                           required=""
-                           data-msg-containerid="emailError">
+                           required data-msg-containerid="emailError">
                     <label for="inputValidationEx67 form2" data-error="wrong"
                            data-success="right"><fmt:message
                             key="contact.email"/> </label>
@@ -55,7 +54,7 @@
                               class="md-textaria form-control validate form-control-sm"
                               rows="3" required></textarea>
                     <label for="form32"><fmt:message
-                            key="contact.email"/></label>
+                            key="contact.message"/></label>
                 </div>
                 <div class="text-center mt-4">
                     <button class="btn btn-primary waves-effect waves-light"

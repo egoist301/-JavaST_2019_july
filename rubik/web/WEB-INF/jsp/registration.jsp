@@ -27,18 +27,16 @@
                 <label for="exampleName"><fmt:message
                         key="registration.username"/></label>
                 <input type="text" class="form-control" id="exampleName"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
+                       placeholder="<fmt:message
+                               key="registration.placeholder.username"/>"
                                required name="username">
             </div>
             <div class="form-group">
                 <label for="exampleMail"><fmt:message
                         key="registration.email"/></label>
                 <input type="email" class="form-control" id="exampleMail"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.email"/> required
+                       placeholder="<fmt:message
+                               key="registration.placeholder.email"/>" required
                        name="email">
             </div>
             <div class="form-group">
@@ -46,9 +44,8 @@
                         key="registration.phone"/></label>
                 <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
                        class="form-control" id="examplePhone"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.phone"/> required
+                       placeholder="<fmt:message
+                               key="registration.placeholder.phone"/>" required
                        name="phone">
             </div>
             <div class="form-group">
@@ -57,8 +54,8 @@
                         key="registration.password"/> </label>
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1" placeholder=
-                       <fmt:message
-                               key="registration.placeholder.password"/>
+                       "<fmt:message
+                               key="registration.placeholder.password"/>"
                                required name="password">
             </div>
             <button type="submit" class="btn btn-primary" id="submit">

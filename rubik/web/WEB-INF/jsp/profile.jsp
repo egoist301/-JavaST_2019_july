@@ -29,7 +29,7 @@
                 <label for="exampleName"><fmt:message
                         key="profile.username"/></label>
                 <input type="text" class="form-control" id="exampleName"
-                       placeholder=${user.username} name="username"
+                       placeholder="${user.username}" name="username"
                        required
                        disabled>
             </div>
@@ -65,8 +65,8 @@
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1" name="passwordOld"
                        placeholder=
-                       <fmt:message
-                               key="profile.placeholder.oldpassword"/>
+                       "<fmt:message
+                               key="profile.placeholder.oldpassword"/>"
                                required>
             </div>
             <div class="form-group">
@@ -77,8 +77,8 @@
                        class="form-control form-control-sm"
                        id="exampleInputPassword2" name="password"
                        placeholder=
-                       <fmt:message key="profile.placeholder.newpassword"/>
-                               required>
+                       "<fmt:message key="profile.placeholder.newpassword"/>"
+                               required onkeyup='check();'>
             </div>
             <div class="form-group">
                 <label
@@ -87,8 +87,8 @@
                 <input type="password" id="confirm_password"
                        class="form-control form-control-sm"
                        id="exampleInputPassword3" placeholder=
-                           <fmt:message
-                                   key="profile.placeholder.newpassword2"/>
+                           "<fmt:message
+                                   key="profile.placeholder.newpassword2"/>"
                                required onkeyup='check();'>
                 <span id="message"></span>
             </div>
