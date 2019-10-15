@@ -19,14 +19,14 @@ public class ChangeLocaleCommand extends Command {
                            final HttpServletResponse response) {
         String langParam = request.getParameter("id");
         String locale = lang.get(langParam);
+        //String url = request.getParameter("from");
+
         Forward forward;
-        if (locale == null) {
-            forward = new Forward("index.html", true);
-        } else {
+        if (locale != null) {
             Cookie cookie = new Cookie("locale", locale);
             response.addCookie(cookie);
-            forward = new Forward("index.html", true);
         }
+        forward = new Forward("index.html", true);
         return forward;
     }
 }

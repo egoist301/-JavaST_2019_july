@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
-  Date: 13.10.2019
-  Time: 1:31
+  Date: 15.10.2019
+  Time: 2:38
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -22,7 +22,7 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="cube"/>
         </h2>
-        <form action="createcube.html" method="post">
+        <form action="editcube.html" method="post">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
                         key="cube.model"/></label>
@@ -96,7 +96,7 @@
                         id="exampleManufacturer">
                     <c:forEach items="${requestScope.get('manufacturers')}"
                                var="manufact">
-                    <option value="${manufact}">${manufact}</option>
+                        <option value="${manufact}">${manufact}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -106,7 +106,7 @@
                 <select class="custom-select mb-1" name="forma"
                         id="exampleForm">
                     <c:forEach items="${requestScope.get('forms')}" var="form">
-                    <option value="${form}">${form}</option>
+                        <option value="${form}">${form}</option>
                     </c:forEach>
                 </select>
             </div>

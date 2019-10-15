@@ -22,7 +22,10 @@ public class CreateCubePageCommand extends AdminCommand {
             requestNew.setAttribute("manufacturers", manufacturers);
             requestNew.setAttribute("colors", colors);
         } catch (ServiceException eNew) {
-            return sendError(500);
+            Forward forward = new Forward();
+            forward.setError(true);
+            forward.getAttributes().put("error", 500);
+            return forward;
         }
         return new Forward("WEB-INF/jsp/createcube.jsp");
     }

@@ -25,6 +25,9 @@ public final class CommandProvider {
         commandMap.put("/addcube", new CreateCubePageCommand());
         commandMap.put("/catalog", new RubiksCommand());
         commandMap.put("/blocked", new BlockedUserCommand());
+        commandMap.put("/rubik", new RubikCommand());
+        commandMap.put("/likecube", new LikeCubeCommand());
+        commandMap.put("/find", new FindCubeByFormCommand());
     }
 
     public static Command getCommand(final String actionNew) {

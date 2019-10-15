@@ -36,6 +36,10 @@ public interface UserService extends Service {
     void addCubeToBasket(User userNew, RubiksCube cubeNew)
             throws ServiceException;
 
+    RubiksCube findCubeFromBasket(User userNew,
+                                  RubiksCube rubiksCubeNew)
+            throws ServiceException;
+
     void removeFromBasket(User userNew, RubiksCube cubeNew)
             throws ServiceException;
 

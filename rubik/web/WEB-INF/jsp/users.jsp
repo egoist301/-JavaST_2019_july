@@ -67,8 +67,9 @@
                         <td>
                             <form action="blocked.html?id=${user.id}"
                                   method="post">
-                                <input type="submit"
-                                       class="btn btn-primary">
+                                <button type="submit"
+                                        class="btn btn-primary"><fmt:message
+                                        key="users.change"/></button>
                             </form>
                         </td>
                     </tr>

@@ -59,11 +59,13 @@
                     </li>
                     <c:choose>
                         <c:when test="${user!=null}">
-                            <li class="nav-item">
-                                <a href="users.html"
-                                   class="nav-link waves-effect
+                            <c:if test="${user.role == 'ADMIN'}">
+                                <li class="nav-item">
+                                    <a href="users.html"
+                                       class="nav-link waves-effect
                            waves-light"><fmt:message key="header.users"/></a>
-                            </li>
+                                </li>
+                            </c:if>
                         </c:when>
                     </c:choose>
                     <li class="nav-item dropdown">

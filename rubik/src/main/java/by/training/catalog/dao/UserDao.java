@@ -80,4 +80,8 @@ public interface UserDao extends Dao<User> {
      */
     void removeCubeFromBasket(User userNew, RubiksCube cubeNew)
             throws PersistentException;
+
+    RubiksCube findCubeFromBasketById(User userNew,
+                                      RubiksCube cubeNew)
+            throws PersistentException;
 }

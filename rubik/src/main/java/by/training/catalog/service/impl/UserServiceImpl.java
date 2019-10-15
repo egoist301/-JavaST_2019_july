@@ -219,6 +219,20 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public RubiksCube findCubeFromBasket(final User userNew,
+                                         final RubiksCube rubiksCubeNew)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            return userDao.findCubeFromBasketById(userNew, rubiksCubeNew);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
     public void removeFromBasket(final User userNew, final RubiksCube cubeNew)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
