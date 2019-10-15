@@ -3,13 +3,11 @@ package by.training.catalog.controller.command;
 import by.training.catalog.bean.User;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
-import by.training.catalog.service.impl.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
 import java.util.List;
 
 public class UsersPageCommand extends AdminCommand {
@@ -18,18 +16,10 @@ public class UsersPageCommand extends AdminCommand {
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
-        ServiceFactory factory = new ServiceFactory();
-        int page = 1;
-        if (requestNew.getParameter("page") != null) {
-            try {
-                page = Integer.parseInt(requestNew.getParameter("page"));
-            } catch (NumberFormatException e) {
-                LOGGER.warn(e);
-            }
-        }
-        UserService teamService = factory.createUserService();
-        int records = 0;
-        List<User> users = new ArrayList<>();
+        int page = Pagination.calcPage(requestNew);
+        UserService teamService = getFactory().createUserService();
+        int records;
+        List<User> users;
         try {
             int offset;
             if (page == 1) {
@@ -41,6 +31,10 @@ public class UsersPageCommand extends AdminCommand {
             users = teamService.findAll(offset, LIMIT);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
+            Forward forward = new Forward();
+            forward.setError(true);
+            forward.getAttributes().put("error", 500);
+            return forward;
         }
         requestNew.setAttribute("users", users);
         requestNew.setAttribute("page", page);

@@ -2,6 +2,7 @@ package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.Role;
 import by.training.catalog.controller.ControllerException;
+import by.training.catalog.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,10 +13,15 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Command {
+    private ServiceFactory factory = new ServiceFactory();
     private Set<Role> roles = new HashSet<>();
 
     public Set<Role> getRoles() {
         return roles;
+    }
+
+    public ServiceFactory getFactory() {
+        return factory;
     }
 
     protected Forward sendError(final int error) {

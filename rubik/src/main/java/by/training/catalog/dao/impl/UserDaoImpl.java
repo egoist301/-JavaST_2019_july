@@ -59,6 +59,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String FIND_CUBE_FROM_BASKET = "SELECT `cube_id` "
             + "FROM `basket_rubiks_cube` WHERE `user_id` = ? AND `cube_id` = ?";
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String UPDATE_STATE = "UPDATE `users` SET `blocked` = "
+            + "? WHERE `id` = ?";
 
     public UserDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
@@ -276,9 +278,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void addCubeToBasket(final User userNew, final RubiksCube cubeNew)
             throws PersistentException {
         try (PreparedStatement statement =
-                     getConnection().prepareStatement(ADD_CUBE, RETURN_GENERATED_KEYS)) {
-            statement.setLong(1, cubeNew.getId());
-            statement.setLong(2, userNew.getId());
+                     getConnection().prepareStatement(ADD_CUBE,
+                             RETURN_GENERATED_KEYS)) {
+            long cubeId = cubeNew.getId();
+            long userId = userNew.getId();
+            statement.setLong(1, cubeId);
+            statement.setLong(2, userId);
+            LOGGER.debug("User {}", userId);
+            LOGGER.debug("Cube {}", cubeId);
             statement.executeUpdate();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -286,6 +293,18 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                     LOGGER.debug("ID {}", x);
                 }
             }
+        } catch (SQLException eNew) {
+            throw new PersistentException(eNew);
+        }
+    }
+
+    @Override
+    public void updateState(final User userNew) throws PersistentException {
+        try (PreparedStatement statement =
+                     getConnection().prepareStatement(UPDATE_STATE)) {
+            statement.setBoolean(1, userNew.isBlocked());
+            statement.setLong(2, userNew.getId());
+            statement.executeUpdate();
         } catch (SQLException eNew) {
             throw new PersistentException(eNew);
         }

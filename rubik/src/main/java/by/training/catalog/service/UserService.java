@@ -30,6 +30,8 @@ public interface UserService extends Service {
 
     List<User> findAll(int offset, int limit) throws ServiceException;
 
+    void updateState(User userNew) throws ServiceException;
+
     void findLikedCubes(User userNew, int limit, int offset)
             throws ServiceException;
 

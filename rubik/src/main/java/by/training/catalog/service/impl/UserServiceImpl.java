@@ -173,6 +173,18 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
+    public void updateState(final User userNew) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            userDao.updateState(userNew);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
     public void findLikedCubes(final User userNew, final int limit,
                                final int offset)
             throws ServiceException {

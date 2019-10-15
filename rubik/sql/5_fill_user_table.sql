@@ -50,5 +50,18 @@ VALUES (1, 1),
        (5, 4),
        (5, 1);
 
-# INSERT INTO store_image(`cube_id`, `image_path`)
-# VALUES(1, 'img/')
+INSERT INTO store_image(`cube_id`, `image_path`)
+VALUES (1, 'img/valk3_1.jpg'),
+       (1, 'img/valk3_2.jpg'),
+       (1, 'img/valk3_3.jpg'),
+       (2, 'img/qiming_1.jpg'),
+       (2, 'img/qiming_2.jpg'),
+       (3, 'img/quiheng_1.jpg'),
+       (3, 'img/quiheng_2.jpg'),
+       (3, 'img/quiheng_3.jpg'),
+       (4, 'img/fisher_1.jpg'),
+       (4, 'img/fisher_2.jpg'),
+       (4, 'img/fisher_3.jpg'),
+       (5, 'img/wingy_1.jpg'),
+       (5, 'img/wingy_2.jpg'),
+       (5, 'img/wingy_3.jpg');

@@ -71,6 +71,8 @@ public interface UserDao extends Dao<User> {
     void addCubeToBasket(User userNew, RubiksCube cubeNew)
             throws PersistentException;
 
+    void updateState(User userNew) throws PersistentException;
+
     /**
      * Remove cube from basket.
      *

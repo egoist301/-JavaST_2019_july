@@ -17,10 +17,13 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="row after-header">
+<hr class="my-5">
+<div class="after-header">
     <div class="col-5 mx-auto">
         <h3>Page not found</h3>
     </div>
 </div>
+<hr class="my-5">
+<ctgg:footer/>
 </body>
 </html>

@@ -23,10 +23,19 @@
         <h2><fmt:message key="header.catalog"/></h2>
     </div>
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
-        <form action="find.html" method="get">
+        <form action="find1.html" method="get">
             <div class="md-form mt-0">
+                Find by form
                 <input class="form-control" type="text" name="form"
                        placeholder="Search" aria-label="Search">
+            </div>
+        </form>
+        <form action="find2.html" method="get">
+            <div class="md-form mt-0">
+                Find by size
+                <input class="form-control" type="text"
+                       pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
+                       name="size" placeholder="Search" aria-label="Search">
             </div>
         </form>
         <table class="table table-hover table-bordered">
@@ -54,7 +63,9 @@
                         <td>
                             <a href="rubik.html?id=${cube.id}">
                                 <img class="small-icon"
-                                     src="<c:url value="/img/cube.jpg" />"
+                                     src="<c:url
+                                     value="${paths.get(cube).get(0)}"
+                                      />"
                                      style="width: 100px; height: 100px;"
                                      alt="${cube.model}"/>
                             </a>
@@ -76,7 +87,7 @@
                                     <td>${cube.blocked}</td>
                                     <td>
                                         <form
-                                                action="blockedcube.html?id${cube.id}"
+                                                action="blockedcube.html?id=${cube.id}"
                                                 method="post">
                                             <button type="submit"
                                                     class="btn btn-primary">

@@ -19,8 +19,7 @@ public class RegistrationCommand extends Command {
         String email = requestNew.getParameter("email");
         String phone = requestNew.getParameter("phone");
         String password = requestNew.getParameter("password");
-        ServiceFactory serviceFactory = new ServiceFactory();
-        UserService service = serviceFactory.createUserService();
+        UserService service = getFactory().createUserService();
         Forward forward;
         try {
             if (service.findAccountByLogin(username) != null
@@ -33,7 +32,7 @@ public class RegistrationCommand extends Command {
                 forward = new Forward("registration.html");
             }
         } catch (ServiceException eNew) {
-
+            LOGGER.warn(eNew);
             forward = new Forward("registration.html");
         }
         return forward;

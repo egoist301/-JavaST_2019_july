@@ -58,11 +58,11 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
             + ", `blocked` FROM `rubiks_cube` " + JOIN_RUBIK_WITH_TABLES
             + " ORDER BY id LIMIT ? OFFSET ?";
     private static final String FIND_ALL_RUBIKS_BY_SIZE = FIND_RUBIK_BY
-            + " WHERE `size` = ? LIMIT ? OFFSET ? ";
+            + " WHERE `size` LIKE ? LIMIT ? OFFSET ? ";
     private static final String FIND_ALL_RUBIKS_BY_PRICE = FIND_RUBIK_BY
             + " WHERE `price` BETWEEN ? AND ? LIMIT ? OFFSET ?";
     private static final String FIND_ALL_RUBIKS_BY_FORM = FIND_RUBIK_BY
-            + " WHERE `name` = ? LIMIT ? OFFSET ?";
+            + " WHERE `name` LIKE ? LIMIT ? OFFSET ?";
     private static final String FILL_RUBIK =
             "SELECT `model`, `price`, `weight`, `info`, `primary_plastic`, "
                     + "`size`, `plastic_color`, `name_manufacturer`, "
@@ -138,7 +138,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(UPDATE_RUBIK_BY_ID)) {
             execute(statement, entityNew);
-            statement.setLong(11, entityNew.getId());
+            statement.setLong(12, entityNew.getId());
+            statement.executeUpdate();
         } catch (SQLException e) {
             throw new PersistentException("SQLException while updating", e);
         }
@@ -264,7 +265,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
         List<RubiksCube> rubiksCubes = new LinkedList<>();
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement(findAllRubiksBy)) {
-            preparedStatement.setString(1, form);
+            preparedStatement.setString(1, form + '%');
             preparedStatement.setInt(2, limit);
             preparedStatement.setInt(3, offset);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {

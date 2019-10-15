@@ -17,10 +17,13 @@
 </head>
 <body>
 <jsp:include page="header.jsp"/>
-<div class="row mh-100">
+<hr class="my-5">
+<div class="mh-100">
     <div class="col-5 mx-auto">
         <h3 class="text-center">Что-то сломалось.</h3>
     </div>
 </div>
+<hr class="my-5">
+<ctgg:footer/>
 </body>
 </html>

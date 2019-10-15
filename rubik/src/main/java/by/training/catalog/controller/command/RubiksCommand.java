@@ -1,7 +1,6 @@
 package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.RubiksCube;
-import by.training.catalog.bean.StoreImage;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
@@ -13,7 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
 public class RubiksCommand extends Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -23,20 +26,12 @@ public class RubiksCommand extends Command {
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
             throws IOException {
-        ServiceFactory factory = new ServiceFactory();
-        int page = 1;
-        if (requestNew.getParameter("page") != null) {
-            try {
-                page = Integer.parseInt(requestNew.getParameter("page"));
-            } catch (NumberFormatException e) {
-                LOGGER.warn(e);
-            }
-        }
-        RubikService rubikService = factory.createRubikService();
-        StoreImageService imageService = factory.createStoreImageService();
+        int page = Pagination.calcPage(requestNew);
+        RubikService rubikService = getFactory().createRubikService();
+        StoreImageService imageService = getFactory().createStoreImageService();
         int records = 0;
         List<RubiksCube> rubiksCubes = new ArrayList<>();
-        List<StoreImage> strings = new ArrayList<>();
+        Map<RubiksCube, List<String>> map = new HashMap<>();
         try {
             int offset;
             if (page == 1) {
@@ -46,15 +41,16 @@ public class RubiksCommand extends Command {
             }
             records = rubikService.findElementCount();
             rubiksCubes = rubikService.findAll(offset, LIMIT);
-            strings = imageService.findAll();//TODO write read img paths!!!
+            for (RubiksCube cube : rubiksCubes) {
+                map.put(cube, imageService.findImagesByRubik(cube));
+            }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
+            Forward forward = new Forward();
+            forward.setError(true);
+            forward.getAttributes().put("error", 500);
+            return forward;
         }
-        requestNew.setAttribute("paths", strings);
-        requestNew.setAttribute("rubiks", rubiksCubes);
-        requestNew.setAttribute("page", page);
-        requestNew.setAttribute("lastPage",
-                records % LIMIT == 0 ? records / LIMIT : records / LIMIT + 1);
-        return new Forward("WEB-INF/jsp/catalog.jsp");
+        return getForward(requestNew, page, records, rubiksCubes, map);
     }
 }

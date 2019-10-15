@@ -27,8 +27,7 @@
                 <label for="exampleModel"><fmt:message
                         key="cube.model"/></label>
                 <input type="text" class="form-control" id="exampleModel"
-                       placeholder=
-                               "<fmt:message
+                       placeholder="<fmt:message
                                key="registration.placeholder.username"/>"
                        required name="model">
             </div>
@@ -36,19 +35,17 @@
                 <label for="examplePrice"><fmt:message
                         key="cube.price"/></label>
                 <input type="number" class="form-control" id="examplePrice"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required name="price">
+                       min="1" max="2000" placeholder="<fmt:message
+                               key="registration.placeholder.username"/>"
+                       required name="price">
             </div>
             <div class="form-group">
                 <label for="exampleWeight"><fmt:message
                         key="cube.weight"/></label>
                 <input type="number" class="form-control" id="exampleWeight"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required name="weight">
+                       min="1" max="2000" placeholder="<fmt:message
+                               key="registration.placeholder.username"/>"
+                       required name="weight">
             </div>
             <div class="form-group">
                 <label for="exampleInfo"><fmt:message
@@ -62,21 +59,19 @@
                         key="cube.primaryplastic"/></label>
                 <input type="checkbox" class="form-control"
                        id="examplePrimaryPlastic"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required name="primaryPlastic">
+                       placeholder="<fmt:message
+                               key="registration.placeholder.username"/>"
+                       required name="primaryPlastic">
             </div>
             <div class="form-group">
                 <label for="exampleSize"><fmt:message
                         key="cube.size"/></label>
                 <input type="text" class="form-control" id="exampleSize"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required
-                       pattern="(%d{1,2}x%d{1,2})|(%d{1,2}x%d{1,2}x%d{1,2})"
-                       name="size"> <!--REGEX-->
+                       placeholder="<fmt:message
+                               key="registration.placeholder.username"/>"
+                       required
+                       pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
+                       name="size">
             </div>
             <div class="form-group">
                 <label for="examplePlasticColor"><fmt:message
@@ -96,7 +91,7 @@
                         id="exampleManufacturer">
                     <c:forEach items="${requestScope.get('manufacturers')}"
                                var="manufact">
-                    <option value="${manufact}">${manufact}</option>
+                        <option value="${manufact}">${manufact}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -106,7 +101,7 @@
                 <select class="custom-select mb-1" name="forma"
                         id="exampleForm">
                     <c:forEach items="${requestScope.get('forms')}" var="form">
-                    <option value="${form}">${form}</option>
+                        <option value="${form}">${form}</option>
                     </c:forEach>
                 </select>
             </div>

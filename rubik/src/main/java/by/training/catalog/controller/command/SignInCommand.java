@@ -20,8 +20,7 @@ public class SignInCommand extends Command {
             throws IOException {
         String login = requestNew.getParameter("login");
         String password = requestNew.getParameter("password");
-        ServiceFactory serviceFactory = new ServiceFactory();
-        UserService userService = serviceFactory.createUserService();
+        UserService userService = getFactory().createUserService();
         Forward forward = null;
         try {
             User user =
@@ -34,13 +33,14 @@ public class SignInCommand extends Command {
 
             } else {
                 forward = new Forward("login.html");
-                forward.getAttributes().put("error", "error.message"
-                        + ".invalidlogin");
                 LOGGER.debug("не авторизован");
             }
         } catch (ServiceException eNew) {
-            responseNew.sendError(500, "упс, что-то сломалось");//TODO log
-
+            LOGGER.error(eNew);
+            forward = new Forward();
+            forward.setError(true);
+            forward.getAttributes().put("error", 500);
+            return forward;
         }
         return forward;
     }

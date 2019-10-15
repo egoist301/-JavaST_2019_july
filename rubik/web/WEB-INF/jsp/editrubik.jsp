@@ -22,33 +22,26 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="cube"/>
         </h2>
-        <form action="editcube.html" method="post">
+        <form action="editc.html" method="post">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
                         key="cube.model"/></label>
                 <input type="text" class="form-control" id="exampleModel"
-                       placeholder=
-                               "<fmt:message
-                               key="registration.placeholder.username"/>"
-                       required name="model">
+                       required name="model" value="${cube.model}">
             </div>
             <div class="form-group">
                 <label for="examplePrice"><fmt:message
                         key="cube.price"/></label>
                 <input type="number" class="form-control" id="examplePrice"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required name="price">
+                       min="1" max="2000" value="${cube.price}"
+                       required name="price">
             </div>
             <div class="form-group">
                 <label for="exampleWeight"><fmt:message
                         key="cube.weight"/></label>
                 <input type="number" class="form-control" id="exampleWeight"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required name="weight">
+                       min="1" max="2000" value="${cube.weight}"
+                       required name="weight">
             </div>
             <div class="form-group">
                 <label for="exampleInfo"><fmt:message
@@ -57,36 +50,32 @@
                           class="md-textaria form-control validate form-control-sm"
                           rows="3" required name="info"></textarea>
             </div>
-            <div class="form-group left">
+            <div class="form-group">
                 <label for="examplePrimaryPlastic"><fmt:message
                         key="cube.primaryplastic"/></label>
                 <input type="checkbox" class="form-control"
                        id="examplePrimaryPlastic"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required name="primaryPlastic">
+                       value="${cube.primaryPlastic}" name="primaryPlastic">
             </div>
             <div class="form-group">
                 <label for="exampleSize"><fmt:message
                         key="cube.size"/></label>
                 <input type="text" class="form-control" id="exampleSize"
-                       placeholder=
-                       <fmt:message
-                               key="registration.placeholder.username"/>
-                               required
-                       pattern="(%d{1,2}x%d{1,2})|(%d{1,2}x%d{1,2}x%d{1,2})"
-                       name="size"> <!--REGEX-->
+                       required value="${cube.size}"
+                       pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
+                       name="size">
             </div>
             <div class="form-group">
                 <label for="examplePlasticColor"><fmt:message
                         key="cube.plasticcolor"/></label>
-                <select class="custom-select mb-1" name="plsticcolor"
+                <select class="custom-select mb-1" name="plasticcolor"
                         id="examplePlasticColor">
                     <c:forEach items="${requestScope.get('colors')}"
                                var="color">
                         <option value="${color}">${color}</option>
                     </c:forEach>
+                    <option value="${cube.plasticColor}"
+                            selected>${cube.plasticColor}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -98,6 +87,8 @@
                                var="manufact">
                         <option value="${manufact}">${manufact}</option>
                     </c:forEach>
+                    <option value="${cube.manufacturer}"
+                            selected>${cube.manufacturer}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -108,6 +99,7 @@
                     <c:forEach items="${requestScope.get('forms')}" var="form">
                         <option value="${form}">${form}</option>
                     </c:forEach>
+                    <option value="${cube.form}" selected>${cube.form}</option>
                 </select>
             </div>
             <button type="submit" class="btn btn-primary" id="submit">

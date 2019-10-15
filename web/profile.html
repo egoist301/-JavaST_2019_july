@@ -57,6 +57,14 @@
                     <input type="password" id="password" class="form-control form-control-sm" id="exampleInputPassword2" placeholder="New password" required onkeyup='check();'>
                 </div>
                 <div class="form-group">
+                <label for="exampleSize">Phone</label>
+                <input type="text" class="form-control" id="exampleSize"
+                       placeholder="Phone"
+                       required
+                       pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
+                       name="size"> <!--REGEX-->
+            </div>
+                <div class="form-group">
                     <label for="exampleInputPassword3">New password again</label>
                     <input type="password" id="confirm_password" class="form-control form-control-sm" id="exampleInputPassword3" placeholder="New password" required onkeyup='check();' >
                     <span id="message"></span>

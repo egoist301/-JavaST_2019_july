@@ -21,7 +21,7 @@
 <hr class="my-5">
 <div class="container">
     <div>
-        <h2 style="text-align: center"><fmt:message key="cube"/> </h2>
+        <h2 style="text-align: center">${requestScope.get('cube').model}</h2>
     </div>
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
         <table class="table table-hover table-bordered">
@@ -35,10 +35,12 @@
                 <tbody>
                 <tr>
                     <td>
-                        <img class="small-icon"
-                             src="<c:url value="/img/cube.jpg" />"
-                             style="width: 100px; height: 100px;"
-                             alt="${cube.model}"/>
+                        <div class="view overlay zoom">
+                            <img class="d-block img-fluid"
+                                 src="${paths.get(0)}"
+                                 style="width: 300px; height: 300px;"
+                                 alt="${cube.model}"/>
+                        </div>
                     </td>
                     <td>
                         <ul class="navbar-nav">
@@ -68,6 +70,17 @@
         </table>
         <label>${cube.info}</label>
         <hr class="my-5">
+        <div class="row">
+            <c:forEach items="${paths}" var="path">
+                <div class="col-md-4 view overlay zoom">
+                    <img src="${path}"
+                         style="width: 200px; height: 200px;"
+                         alt="placeholder"
+                         class="img-fluid">
+                </div>
+            </c:forEach>
+        </div>
+        <hr class="my-5">
         <c:choose>
             <c:when test="${sessionScope.get('user')!=null}">
                 <form action="likecube.html?id=${cube.id}" method="post">
@@ -75,7 +88,7 @@
                     btn-primary"><fmt:message key="cube.like"/></button>
                 </form>
                 <c:if test="${sessionScope.get('user').role =='ADMIN'}">
-                    <form action="editcube.html?id${cube.id}" method="post">
+                    <form action="editcube.html?id=${cube.id}" method="get">
                         <button type="submit"
                                 class="btn-primary btn"><fmt:message
                                 key="cube.edit"/>

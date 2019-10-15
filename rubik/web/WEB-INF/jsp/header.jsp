@@ -103,7 +103,7 @@
                                        href="profile.html"><fmt:message
                                             key="header.account"/></a>
                                     <a class="dropdown-item"
-                                       href=""><fmt:message
+                                       href="bookmarks.html"><fmt:message
                                             key="header.bookmarks"/></a>
                                     <a class="dropdown-item"
                                        href="signout.html"><fmt:message

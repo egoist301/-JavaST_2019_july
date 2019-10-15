@@ -1,6 +1,7 @@
 package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.bean.StoreImage;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
@@ -16,9 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
-
-public class FindCubeByFormCommand extends Command {
+public class FindCubeBySizeCommand extends Command {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -34,8 +33,8 @@ public class FindCubeByFormCommand extends Command {
         Map<RubiksCube, List<String>> map = new HashMap<>();
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String form = requestNew.getParameter("form");
-            rubiksCubes = rubikService.findRubiksByForm(form, offset, LIMIT);
+            String size = requestNew.getParameter("size");
+            rubiksCubes = rubikService.findRubiksBySize(size, offset, LIMIT);
             records = rubiksCubes.size();
             for (RubiksCube cube : rubiksCubes) {
                 map.put(cube, imageService.findImagesByRubik(cube));
@@ -50,4 +49,16 @@ public class FindCubeByFormCommand extends Command {
         return getForward(requestNew, page, records, rubiksCubes, map);
     }
 
+    static Forward getForward(final HttpServletRequest requestNew,
+                              final int pageNew, final int recordsNew,
+                              final List<RubiksCube> rubiksCubesNew,
+                              final Map<RubiksCube, List<String>> mapNew) {
+        requestNew.setAttribute("paths", mapNew);
+        requestNew.setAttribute("rubiks", rubiksCubesNew);
+        requestNew.setAttribute("page", pageNew);
+        requestNew.setAttribute("lastPage",
+                recordsNew % LIMIT == 0 ? recordsNew / LIMIT : recordsNew
+                        / LIMIT + 1);
+        return new Forward("WEB-INF/jsp/catalog.jsp");
+    }
 }
