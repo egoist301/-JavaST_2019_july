@@ -1,45 +1,44 @@
 package by.training.catalog.controller.command;
 
+import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
-import by.training.catalog.service.impl.ServiceFactory;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 
 public class EditCubeCommand extends AdminCommand {
-    private static final Logger LOGGER = LogManager.getLogger();
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
             throws IOException {
-        Forward forward;
-        int id;
+        long id = Long.parseLong(requestNew.getParameter("id"));
+
         try {
-            id = Integer.parseInt(requestNew.getParameter("id"));
-        } catch (NumberFormatException eNew) {
-            LOGGER.error(eNew);
-            forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 404);
-            return forward;
+            List<RawData> rawData = new ArrayList<>();
+            List<Part> parts = new ArrayList<>(requestNew.getParts());
+            for (Part part : parts) {
+                if (part.getSize() != 0) {
+                    RawData rd = new RawData();
+                    rd.setStream(part.getInputStream());
+                    rd.setContentType(part.getContentType());
+                    rawData.add(rd);
+                }
+            }
+            RubikService service = getFactory().createRubikService();
+            RubiksCube rubiksCube = new RubiksCube(id);
+            service.update(rubiksCube, rawData);
+
+        } catch (ServletException | ServiceException eNew) {
+            eNew.printStackTrace();
         }
-        RubikService service = getFactory().createRubikService();
-        try {
-            RubiksCube cube = service.findById(id);
-            requestNew.setAttribute("cube", cube);
-            forward = new Forward("WEB-INF/jsp/editrubik.jsp");
-            return forward;
-        } catch (ServiceException eNew) {
-            LOGGER.error(eNew);
-            forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 500);
-            return forward;
-        }
+        return null;
     }
 }

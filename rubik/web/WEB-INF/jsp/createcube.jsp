@@ -61,7 +61,7 @@
                        id="examplePrimaryPlastic"
                        placeholder="<fmt:message
                                key="registration.placeholder.username"/>"
-                       required name="primaryPlastic">
+                       name="primaryPlastic">
             </div>
             <div class="form-group">
                 <label for="exampleSize"><fmt:message
@@ -76,7 +76,7 @@
             <div class="form-group">
                 <label for="examplePlasticColor"><fmt:message
                         key="cube.plasticcolor"/></label>
-                <select class="custom-select mb-1" name="plsticcolor"
+                <select class="custom-select mb-1" name="plasticColor"
                         id="examplePlasticColor">
                     <c:forEach items="${requestScope.get('colors')}"
                                var="color">
@@ -98,12 +98,15 @@
             <div class="form-group">
                 <label for="exampleForm"><fmt:message
                         key="cube.form"/></label>
-                <select class="custom-select mb-1" name="forma"
+                <select class="custom-select mb-1" name="form"
                         id="exampleForm">
                     <c:forEach items="${requestScope.get('forms')}" var="form">
                         <option value="${form}">${form}</option>
                     </c:forEach>
                 </select>
+            </div>
+            <div class="form-group">
+                <input type="file" multiple name="img" class="custom-file">
             </div>
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>

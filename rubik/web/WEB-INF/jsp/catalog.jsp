@@ -23,31 +23,37 @@
         <h2><fmt:message key="header.catalog"/></h2>
     </div>
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
-        <form action="findform.html" method="get">
-            <div class="md-form mt-0">
-                Find by form
-                <input class="form-control" type="text" name="form"
-                       placeholder="<fmt:message key="search.form"/>"
-                       aria-label="Search" maxlength="20">
-            </div>
-        </form>
-        <form action="findsize.html" method="get">
-            <div class="md-form mt-0">
-                Find by size
-                <input class="form-control" type="text"
-                       pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
-                       name="size" placeholder="<fmt:message
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <form action="findform.html" method="get">
+                        <fmt:message key="search.form"/>
+                        <input class="form-control" type="text" name="form"
+                               placeholder="<fmt:message key="search.form"/>"
+                               aria-label="Search" maxlength="20">
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form action="findsize.html" method="get">
+                        <fmt:message key="search.size"/>
+                        <input class="form-control" type="text"
+                               pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
+                               name="size" placeholder="<fmt:message
                        key="search.size"/>" maxlength="8" aria-label="Search">
-            </div>
-        </form>
-        <form action="findmodel.html" method="get">
-            <div class="md-form mt-0">
-                Find by model
-                <input class="form-control" type="text"
-                       name="model" placeholder="<fmt:message
+
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form action="findmodel.html" method="get">
+                        <fmt:message key="search.model"/>
+                        <input class="form-control" type="text"
+                               name="model" placeholder="<fmt:message
                        key="search.model"/>" aria-label="Search" maxlength="30">
+
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
         <table class="table table-hover table-bordered">
             <div class="row after-header">
                 <thead class="send-button-color">

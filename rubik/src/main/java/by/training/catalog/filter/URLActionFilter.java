@@ -10,9 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * URL action filter.
+ */
 public class URLActionFilter implements Filter {
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Do filter.
+     *
+     * @param servletRequestNew  request.
+     * @param servletResponseNew response.
+     * @param filterChainNew     chain.
+     * @throws IOException      i/o exception.
+     * @throws ServletException servlet exception.
+     */
     @Override
     public void doFilter(final ServletRequest servletRequestNew,
                          final ServletResponse servletResponseNew,
@@ -22,7 +37,7 @@ public class URLActionFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponseNew;
         String action = getActionFromURI(req);
         Command command = CommandProvider.getCommand(action);
-        pageToReturn(req, action);
+        getPageToReturn(req, action);
         if (command == null) {
             resp.sendError(404);
         } else {
@@ -31,16 +46,30 @@ public class URLActionFilter implements Filter {
         }
     }
 
+    /**
+     * Initialize.
+     *
+     * @param filterConfig filter config.
+     */
     @Override
     public void init(final FilterConfig filterConfig) {
 
     }
 
+    /**
+     * Destroy.
+     */
     @Override
     public void destroy() {
 
     }
 
+    /**
+     * Getter action from uri.
+     *
+     * @param request request.
+     * @return action.
+     */
     private String getActionFromURI(final HttpServletRequest request) {
         LOGGER.debug("Request method: {}", request.getMethod());
         String context = request.getContextPath();
@@ -58,8 +87,14 @@ public class URLActionFilter implements Filter {
         return action;
     }
 
-    private void pageToReturn(final HttpServletRequest request,
-                              final String action) {
+    /**
+     * Getter for page to return.
+     *
+     * @param request request.
+     * @param action  action.
+     */
+    private void getPageToReturn(final HttpServletRequest request,
+                                 final String action) {
         if (request.getMethod().equals("GET")) {
             if (request.getQueryString() != null) {
                 String redirect = action.substring(1) + ".html?"

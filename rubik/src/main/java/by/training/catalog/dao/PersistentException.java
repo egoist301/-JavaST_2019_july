@@ -1,7 +1,7 @@
 package by.training.catalog.dao;
 
 /**
- * Dao exception.
+ * Dao exception. Catch SQL exception.
  */
 public class PersistentException extends Exception {
     /**

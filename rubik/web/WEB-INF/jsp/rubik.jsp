@@ -70,15 +70,17 @@
         </table>
         <label>${cube.info}</label>
         <hr class="my-5">
-        <div class="row">
-            <c:forEach items="${cube.paths}" var="path">
-                <div class="col-md-4 view overlay zoom">
-                    <img src="${path}"
-                         style="width: 200px; height: 200px;"
-                         alt="placeholder"
-                         class="img-fluid">
-                </div>
-            </c:forEach>
+        <div class="container">
+            <div class="row">
+                <c:forEach items="${cube.paths}" var="path">
+                    <div class="col-md-4 view overlay zoom">
+                        <img src="${path}"
+                             style="width: 200px; height: 200px;"
+                             alt="placeholder"
+                             class="img-fluid">
+                    </div>
+                </c:forEach>
+            </div>
         </div>
         <hr class="my-5">
         <c:choose>

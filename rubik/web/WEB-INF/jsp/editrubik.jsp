@@ -48,7 +48,7 @@
                         key="cube.info"/></label>
                 <textarea id="exampleInfo" type="text"
                           class="md-textaria form-control validate form-control-sm"
-                          rows="3" required name="info"></textarea>
+                          rows="3" required name="info">${cube.info}</textarea>
             </div>
             <div class="form-group">
                 <label for="examplePrimaryPlastic"><fmt:message

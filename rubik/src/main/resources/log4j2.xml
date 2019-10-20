@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration status="WARN">
+<Configuration status="WARN" monitorInterval="3600">
+    <Properties>
+        <property name="LOG_DIR">logs</property>
+        <property name="ARCHIVE_LOG_DIR">${LOG_DIR}/archive</property>
+        <property name="pattern_console">%d{HH:mm:ss.SSS} [%t] %-5level
+            %logger{2} %msg%n
+        </property>
+        <property name="pattern_file">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level
+            %logger{5} %msg%n
+        </property>
+    </Properties>
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} | [%t] | %-5level | %logger{36} | %n%msg%n"/>
+            <PatternLayout pattern="${pattern_console}"/>
         </Console>
-
-        <RollingFile name="RollingFileAppender" fileName="log\log.log"
-                     filePattern="log\$${date:yyyy-MM-dd}\task1-%d{MM-dd-yyyy}-%i.log.gz">
-            <PatternLayout>
-                <Pattern>%d | [%t] | %p | %c | %m%n</Pattern>
-            </PatternLayout>
+        <RollingFile name="RollingFile" fileName="${LOG_DIR}/app.log"
+                     append="true"
+                     filePattern="${ARCHIVE_LOG_DIR}/$${date:yyyy-MM-dd}/app-%d{HH-mm}-%i.log.zip">
+            <PatternLayout pattern="${pattern_file}"/>
             <Policies>
-                <OnStartupTriggeringPolicy/>
-                <TimeBasedTriggeringPolicy/>
-                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy interval="60"/>
+                <SizeBasedTriggeringPolicy size="10 MB"/>
             </Policies>
-            <DefaultRolloverStrategy max="20"/>
+            <DefaultRollOverStrategy max="10"/>
         </RollingFile>
-
     </Appenders>
-
-    <loggers>
-        <Logger level="debug" name="by.training">
-        </Logger>
-        <root level="warn">
-            <appender-ref ref="Console" level="all"/>
-            <appender-ref ref="RollingFileAppender" level="all"/>
-        </root>
-    </loggers>
-</configuration>
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+    </Loggers>
+</Configuration>

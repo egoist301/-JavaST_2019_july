@@ -5,7 +5,10 @@ import by.training.catalog.bean.StoreImage;
 
 import java.util.List;
 
-public interface StoreImageService extends Service {
+/**
+ * Store image service interface.
+ */
+public interface StoreImageService {
     void findImagesByRubik(RubiksCube cubeNew) throws ServiceException;
 
     List<StoreImage> findAll(int offset, int limit) throws ServiceException;

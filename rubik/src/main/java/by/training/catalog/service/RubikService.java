@@ -5,7 +5,7 @@ import by.training.catalog.bean.RubiksCube;
 
 import java.util.List;
 
-public interface RubikService extends Service {
+public interface RubikService {
     List<RubiksCube> findRubiksBySize(String size, int offset, int limit)
             throws ServiceException;
 

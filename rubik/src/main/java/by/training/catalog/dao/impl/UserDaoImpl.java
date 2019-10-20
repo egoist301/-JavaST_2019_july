@@ -18,52 +18,115 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+/**
+ * User dao implementation. Connect to database.
+ */
 public class UserDaoImpl extends AbstractDao<User> implements UserDao {
+    /**
+     * Find user by... SQL query.
+     */
     private static final String FIND_USER_BY = "SELECT `id`, "
             + "`username`, `password`, `email`, `role`, `phone`, `blocked` "
             + "FROM `users` WHERE ";
+    /**
+     * Find user by email. SQL query.
+     */
     private static final String FIND_USER_BY_EMAIL =
             FIND_USER_BY + "`email` = ?";
+    /**
+     * Find count of users. SQL query.
+     */
     private static final String FIND_USER_COUNT =
             "SELECT COUNT(`id`) FROM `users`";
+    /**
+     * Find user by id. SQL query.
+     */
     private static final String FIND_USER_BY_ID =
             FIND_USER_BY + "`id` = ?";
+    /**
+     * Find users by username. SQL query.
+     */
     private static final String FIND_USERS_BY_USERNAME =
             FIND_USER_BY + "`username` LIKE ? LIMIT ? OFFSET ?";
+    /**
+     * Update user by id. SQL query.
+     */
     private static final String UPDATE_USER_BY_ID =
             "UPDATE `users` SET `username` = ?, `password` = ?, `email` ="
                     + " ?, `role` = ?, `phone` = ?, `blocked` = ? WHERE `id` ="
                     + " ?";
+    /**
+     * Find all users page. SQL query.
+     */
     private static final String FIND_ALL_USERS_PAGE = "SELECT `id`, "
             + "`username`, `password`, `email`, `role`, `phone`, `blocked` "
             + "FROM `users` ORDER BY id LIMIT ? OFFSET ?";
+    /**
+     * Insert user. SQL query.
+     */
     private static final String INSERT_USER =
             "INSERT INTO `users` (`username`, "
                     + "`password`, `email`, `role`, `phone`, `blocked`) "
                     + "VALUES (?, ?, ?, ?, ?, ?)";
+    /**
+     * Find users by role. SQL query.
+     */
     private static final String FIND_USERS_BY_ROLE = FIND_USER_BY
             + "`role` = ? LIMIT ? OFFSET ?";
+    /**
+     * Find user by username. SQL query.
+     */
     private static final String FIND_USER_BY_USERNAME =
             FIND_USER_BY + " `username` = ?";
+    /**
+     * Find all rubiks page. SQL query.
+     */
     private static final String FIND_ALL_RUBIKS_PAGE =
             "SELECT `cube_id` FROM bookmarks WHERE `user_id` = ? "
                     + "LIMIT ? OFFSET ?";
+    /**
+     * Add rubik to bookmarks. SQL query.
+     */
     private static final String ADD_RUBIK =
             "INSERT INTO bookmarks(`cube_id`, `user_id`) VALUES "
                     + "(?, ?)";
+    /**
+     * Delete rubik(dislike). SQL query.
+     */
     private static final String DELETE_RUBIK =
             "DELETE FROM bookmarks WHERE `cube_id` = ? AND "
                     + "`user_id` = ?";
-    private static final String FIND_RUBIK_FROM_BASKET = "SELECT `cube_id` "
+    /**
+     * Find rubik from bookmarks. SQL query.
+     */
+    private static final String FIND_RUBIK_FROM_BOOKMARKS = "SELECT `cube_id` "
             + "FROM bookmarks WHERE `user_id` = ? AND `cube_id` = ?";
+    /**
+     * Logger.
+     */
     private static final Logger LOGGER = LogManager.getLogger();
+    /**
+     * Update state of user. Ban. SQL query.
+     */
     private static final String UPDATE_STATE = "UPDATE `users` SET `blocked` = "
             + "true WHERE `id` = ?";
 
+    /**
+     * Constructor.
+     *
+     * @param managerNew connection manager.
+     */
     public UserDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
     }
 
+    /**
+     * Find user by email.
+     *
+     * @param email email.
+     * @return user.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public User findUserByEmail(final String email)
             throws PersistentException {
@@ -83,6 +146,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return user;
     }
 
+    /**
+     * Find count of users.
+     *
+     * @return count of users.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public int findElementCount() throws PersistentException {
         try (PreparedStatement statement = getConnection()
@@ -99,6 +168,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return 0;
     }
 
+    /**
+     * Find user by username.
+     *
+     * @param username username.
+     * @return user.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public User findUserByUsername(final String username)
             throws PersistentException {
@@ -119,6 +195,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return user;
     }
 
+    /**
+     * Find users by role.
+     *
+     * @param role   role.
+     * @param limit  limit.
+     * @param offset offset.
+     * @return list of users.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public List<User> findUsersByRole(final Role role, final int limit,
                                       final int offset)
@@ -126,9 +211,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         List<User> users = new LinkedList<>();
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement(FIND_USERS_BY_ROLE)) {
-            preparedStatement.setInt(1, role.ordinal() + 1);
-            preparedStatement.setInt(2, limit);
-            preparedStatement.setInt(3, offset);
+            int temp = 0;
+            preparedStatement.setInt(++temp, role.ordinal() + 1);
+            preparedStatement.setInt(++temp, limit);
+            preparedStatement.setInt(++temp, offset);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     users.add(createUserFromResultSet(resultSet));
@@ -140,6 +226,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Find liked cubes by user.
+     *
+     * @param userNew user.
+     * @param limit   limit.
+     * @param offset  offset.
+     * @return list of liked cubes.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public List<RubiksCube> findLikedCubesByUser(final User userNew,
                                                  final int limit,
@@ -148,9 +243,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         List<RubiksCube> rubiksCubes = new LinkedList<>();
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement(FIND_ALL_RUBIKS_PAGE)) {
-            preparedStatement.setLong(1, userNew.getId());
-            preparedStatement.setInt(2, limit);
-            preparedStatement.setInt(3, offset);
+            int temp = 0;
+            preparedStatement.setLong(++temp, userNew.getId());
+            preparedStatement.setInt(++temp, limit);
+            preparedStatement.setInt(++temp, offset);
             LOGGER.debug(preparedStatement);
             LOGGER.debug("Id {}, limit {}, offset {}", userNew.getId(), limit,
                     offset);
@@ -167,6 +263,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Find all users in range.
+     *
+     * @param offset offset.
+     * @param limit  limit.
+     * @return list of users.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public List<User> findAll(final int offset, final int limit)
             throws PersistentException {
@@ -186,6 +290,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Find user by id.
+     *
+     * @param id id of object.
+     * @return user.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public User findEntityById(final long id) throws PersistentException {
         User user = null;
@@ -204,6 +315,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return user;
     }
 
+    /**
+     * Update user.
+     *
+     * @param entityNew object.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public void update(final User entityNew) throws PersistentException {
         try (PreparedStatement statement = getConnection()
@@ -216,6 +333,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Add user in DB.
+     *
+     * @param entityNew object.
+     * @return id of user.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public int create(final User entityNew) throws PersistentException {
         if (entityNew == null) {
@@ -237,17 +361,28 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return 0;
     }
 
+    /**
+     * Find users by username.
+     *
+     * @param username username.
+     * @param limit    limit.
+     * @param offset   offset.
+     * @return list of users.
+     * @throws PersistentException sql exception.
+     */
     @Override
-    public List<User> findUsersByUsername(final String username, final int limit,
+    public List<User> findUsersByUsername(final String username,
+                                          final int limit,
                                           final int offset)
             throws PersistentException {
         List<User> users = new ArrayList<>();
         try (PreparedStatement statement =
                      getConnection()
                              .prepareStatement(FIND_USERS_BY_USERNAME)) {
-            statement.setString(1, username + '%');
-            statement.setInt(2, limit);
-            statement.setInt(3, offset);
+            int temp = 0;
+            statement.setString(++temp, username + '%');
+            statement.setInt(++temp, limit);
+            statement.setInt(++temp, offset);
             try (ResultSet resultSet = statement.executeQuery()) {
                 while (resultSet.next()) {
                     users.add(createUserFromResultSet(resultSet));
@@ -259,6 +394,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return users;
     }
 
+    /**
+     * Add cube to bookmarks. Like.
+     *
+     * @param userNew user.
+     * @param cubeId  cube id.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public void addCubeToBookmarks(final User userNew, final long cubeId)
             throws PersistentException {
@@ -273,6 +415,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Update state of user. Ban.
+     *
+     * @param userNew user.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public void updateState(final User userNew) throws PersistentException {
         try (PreparedStatement statement =
@@ -284,6 +432,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Remove cube from bookmarks. Dislike.
+     *
+     * @param userNew user.
+     * @param cubeId  cube id.
+     * @throws PersistentException sql exception.
+     */
     @Override
     public void removeCubeFromBookmarks(final User userNew,
                                         final long cubeId)
@@ -298,12 +453,21 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         }
     }
 
+    /**
+     * Find cube from bookmarks by id.
+     *
+     * @param userNew user.
+     * @param cubeId  cube id.
+     * @return cube.
+     * @throws PersistentException dao exception.
+     */
     @Override
     public RubiksCube findCubeFromBookmarksById(final User userNew,
                                                 final long cubeId)
             throws PersistentException {
         try (PreparedStatement statement =
-                     getConnection().prepareStatement(FIND_RUBIK_FROM_BASKET)) {
+                     getConnection()
+                             .prepareStatement(FIND_RUBIK_FROM_BOOKMARKS)) {
             statement.setLong(1, userNew.getId());
             statement.setLong(2, cubeId);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -317,17 +481,32 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         return null;
     }
 
+    /**
+     * Execute statement.
+     *
+     * @param statement statement.
+     * @param user      user.
+     * @throws SQLException sql exception.
+     */
     private void execute(final PreparedStatement statement,
-                         final User entityNew)
+                         final User user)
             throws SQLException {
-        statement.setString(1, entityNew.getUsername());
-        statement.setString(2, entityNew.getPassword());
-        statement.setString(3, entityNew.getEmail());
-        statement.setInt(4, entityNew.getRole().ordinal());
-        statement.setInt(5, entityNew.getPhone());
-        statement.setBoolean(6, entityNew.isBlocked());
+        int temp = 0;
+        statement.setString(++temp, user.getUsername());
+        statement.setString(++temp, user.getPassword());
+        statement.setString(++temp, user.getEmail());
+        statement.setInt(++temp, user.getRole().ordinal());
+        statement.setInt(++temp, user.getPhone());
+        statement.setBoolean(++temp, user.isBlocked());
     }
 
+    /**
+     * Create user from result set.
+     *
+     * @param resultSet result set.
+     * @return user.
+     * @throws SQLException sql exception.
+     */
     private User createUserFromResultSet(final ResultSet resultSet)
             throws SQLException {
         long accountId = resultSet.getLong("id");

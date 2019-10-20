@@ -11,11 +11,26 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * Security filter. Restricts users access.
+ */
 public class SecurityFilter implements Filter {
+    /**
+     * Destroy.
+     */
     @Override
     public void destroy() {
     }
 
+    /**
+     * Do filter.
+     *
+     * @param request  request.
+     * @param response response.
+     * @param chain    chain.
+     * @throws ServletException servlet exception.
+     * @throws IOException      i/o exception.
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
                          FilterChain chain)
@@ -39,6 +54,11 @@ public class SecurityFilter implements Filter {
         }
     }
 
+    /**
+     * Initialize.
+     *
+     * @param config filter config.
+     */
     @Override
     public void init(FilterConfig config) {
 

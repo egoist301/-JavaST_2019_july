@@ -1,7 +1,6 @@
 package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.Role;
-import by.training.catalog.controller.ControllerException;
 import by.training.catalog.service.impl.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;

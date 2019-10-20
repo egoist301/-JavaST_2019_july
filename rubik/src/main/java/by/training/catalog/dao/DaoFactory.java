@@ -10,7 +10,7 @@ public interface DaoFactory {
      * @param connectionManager connection manager.
      * @return user dao.
      */
-    UserDao createAccountDao(AbstractConnectionManager connectionManager);
+    UserDao createUserDao(AbstractConnectionManager connectionManager);
 
     /**
      * Create rubik dao.

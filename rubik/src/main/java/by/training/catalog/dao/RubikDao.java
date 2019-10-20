@@ -24,6 +24,8 @@ public interface RubikDao extends Dao<RubiksCube> {
      * Find rubik by model.
      *
      * @param model model.
+     * @param limit limit.
+     * @param offset offset.
      * @return cube.
      * @throws PersistentException dao exception.
      */
@@ -88,6 +90,11 @@ public interface RubikDao extends Dao<RubiksCube> {
      */
     List<String> readAllPlasticColor() throws PersistentException;
 
+    /**
+     * Update state of cube. Ban.
+     * @param rubiksCubeNew cube.
+     * @throws PersistentException dao exception.
+     */
     void updateState(RubiksCube rubiksCubeNew)
             throws PersistentException;
 }

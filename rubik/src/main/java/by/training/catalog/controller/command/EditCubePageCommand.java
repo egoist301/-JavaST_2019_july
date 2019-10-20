@@ -1,42 +1,45 @@
 package by.training.catalog.controller.command;
 
-import by.training.catalog.bean.User;
+import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
-import by.training.catalog.service.UserService;
+import by.training.catalog.service.impl.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
-public class LikeCubeCommand extends UserCommand {
+//TODO fix
+public class EditCubePageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
             throws IOException {
-        UserService service = getFactory().createUserService();
         Forward forward;
         long id;
         try {
             id = Long.parseLong(requestNew.getParameter("id"));
         } catch (NumberFormatException eNew) {
+            LOGGER.error(eNew);
             return sendError(404);
         }
+        RubikService service = getFactory().createRubikService();
         try {
-            HttpSession session = requestNew.getSession(false);
-            User user = (User) session.getAttribute("user");
-            if (service.addCubeToBookmarks(user, id)) {
-                LOGGER.debug("added cube");
-                forward = new Forward("rubik.html?id=" + id);
-                return forward;
-            } else {
-                forward = new Forward("rubik.html?id=" + id);
-                return forward;
-            }
+            List<String> forms = service.readAllForm();
+            RubiksCube cube = service.findById(id);
+            List<String> manufacturers = service.readAllManufacturer();
+            List<String> colors = service.readAllPlasticColor();
+            requestNew.setAttribute("forms", forms);
+            requestNew.setAttribute("manufacturers", manufacturers);
+            requestNew.setAttribute("colors", colors);
+            requestNew.setAttribute("cube", cube);
+            forward = new Forward("WEB-INF/jsp/editrubik.jsp");
+            return forward;
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(500);

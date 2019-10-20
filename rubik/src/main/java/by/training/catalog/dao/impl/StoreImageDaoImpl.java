@@ -14,29 +14,62 @@ import java.util.List;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
+/**
+ * Store image dao implementation.
+ */
 public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         StoreImageDao {
+    /**
+     * Insert store image. SQL query.
+     */
     private static final String INSERT_STORE_IMAGE = "INSERT INTO "
             + "`store_image`(`cube_id`, `image_path`) VALUES (?, ?)";
+    /**
+     * Find store image by id. SQL query.
+     */
     private static final String FIND_STORE_IMAGE_BY_ID =
             "SELECT `id`, `cube_id`, `image_path` FROM `store_image` WHERE "
                     + "`id` = ?";
+    /**
+     * Update store image by id. SQL query.
+     */
     private static final String UPDATE_STORE_IMAGE_BY_ID = "UPDATE "
             + "`store_image` SET `cube_id` = ?, `image_path` = ? WHERE `id` ="
             + " ?";
+    /**
+     * Find store image count. SQL query.
+     */
     private static final String FIND_STORE_IMAGE_COUNT =
             "SELECT COUNT(`id`) FROM `store_image`";
+    /**
+     * Find all store images limit. SQL query.
+     */
     private static final String FIND_ALL_STORE_IMAGES_LIMIT =
             "SELECT `id`, `cube_id`, `image_path` FROM `store_image` ORDER BY"
                     + " `id` LIMIT ? OFFSET ?";
+    /**
+     * Find all images by rubik. SQL query.
+     */
     private static final String FIND_ALL_IMAGES_BY_RUBIK = "SELECT "
             + "`image_path` FROM `store_image` WHERE `cube_id` = ?";
 
+    /**
+     * Default constructor.
+     *
+     * @param managerNew connection manager.
+     */
     StoreImageDaoImpl(
             final AbstractConnectionManager managerNew) {
         super(managerNew);
     }
 
+    /**
+     * Find images by rubik.
+     *
+     * @param cubeNew cube.
+     * @return list of paths.
+     * @throws PersistentException dao exception.
+     */
     @Override
     public List<String> findImagesByRubik(final RubiksCube cubeNew)
             throws PersistentException {
@@ -56,6 +89,14 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         return list;
     }
 
+    /**
+     * Find all store images in range.
+     *
+     * @param offset offset.
+     * @param limit  limit.
+     * @return list of store images.
+     * @throws PersistentException dao exception.
+     */
     @Override
     public List<StoreImage> findAll(final int offset, final int limit)
             throws PersistentException {
@@ -76,6 +117,13 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         return list;
     }
 
+    /**
+     * Find store image by id.
+     *
+     * @param id id of object.
+     * @return store image.
+     * @throws PersistentException dao exception.
+     */
     @Override
     public StoreImage findEntityById(final long id) throws PersistentException {
         StoreImage storeImage = null;
@@ -94,6 +142,13 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         return storeImage;
     }
 
+    /**
+     * Store image.
+     *
+     * @param resultSetNew result set.
+     * @return store image.
+     * @throws SQLException sql exception.
+     */
     private StoreImage createStoreImage(final ResultSet resultSetNew)
             throws SQLException {
         long id = resultSetNew.getLong(1);
@@ -102,6 +157,12 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         return new StoreImage(id, new RubiksCube(cubeId), img);
     }
 
+    /**
+     * Update store image.
+     *
+     * @param entityNew object.
+     * @throws PersistentException dao exception.
+     */
     @Override
     public void update(final StoreImage entityNew) throws PersistentException {
         try (PreparedStatement statement = getConnection()
@@ -114,6 +175,13 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         }
     }
 
+    /**
+     * Create.
+     *
+     * @param entityNew object.
+     * @return id of store image.
+     * @throws PersistentException dao exception.
+     */
     @Override
     public int create(final StoreImage entityNew) throws PersistentException {
         if (entityNew == null) {
@@ -136,6 +204,12 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         return 0;
     }
 
+    /**
+     * Find count of store images.
+     *
+     * @return count of store images.
+     * @throws PersistentException dao exception.
+     */
     @Override
     public int findElementCount() throws PersistentException {
         try (PreparedStatement statement = getConnection()

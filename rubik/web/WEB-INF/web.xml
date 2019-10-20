@@ -6,12 +6,15 @@
     <welcome-file-list>
         <welcome-file>/WEB-INF/jsp/index.jsp</welcome-file>
     </welcome-file-list>
-    <jsp-config>
-        <taglib>
-            <taglib-uri>customtags</taglib-uri>
-            <taglib-location>/WEB-INF/tld/custom.tld</taglib-location>
-        </taglib>
-    </jsp-config>
+    <filter>
+        <filter-name>EncodingFilter</filter-name>
+        <filter-class>by.training.catalog.filter.EncodingFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>EncodingFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
     <filter>
         <filter-name>URLFilter</filter-name>
         <filter-class>by.training.catalog.filter.URLActionFilter</filter-class>
@@ -19,6 +22,7 @@
     <filter-mapping>
         <filter-name>URLFilter</filter-name>
         <url-pattern>*.html</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
     <filter>
         <filter-name>SecurityFilter</filter-name>
@@ -27,6 +31,7 @@
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>
         <url-pattern>*.html</url-pattern>
+        <url-pattern>/*</url-pattern>
     </filter-mapping>
     <error-page>
         <error-code>500</error-code>

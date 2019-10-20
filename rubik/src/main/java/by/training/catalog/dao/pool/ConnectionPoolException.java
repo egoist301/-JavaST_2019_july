@@ -15,7 +15,7 @@ public class ConnectionPoolException extends RuntimeException {
      *
      * @param message error message.
      */
-    public ConnectionPoolException(final String message) {
+    ConnectionPoolException(final String message) {
         super(message);
     }
 

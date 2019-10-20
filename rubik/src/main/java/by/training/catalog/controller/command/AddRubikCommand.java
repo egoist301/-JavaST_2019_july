@@ -3,9 +3,13 @@ package by.training.catalog.controller.command;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.impl.ServiceFactory;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class AddRubikCommand extends AdminCommand {
     @Override
@@ -22,6 +26,7 @@ public class AddRubikCommand extends AdminCommand {
         String plasticColor = requestNew.getParameter("plasticColor");
         String primaryPlastic = requestNew.getParameter("primaryPlastic");
         String size = requestNew.getParameter("size");
+        String[] paths = requestNew.getParameterValues("img");
         ServiceFactory factory = new ServiceFactory();
         RubikService service = factory.createRubikService();
         /*try {
@@ -29,6 +34,6 @@ public class AddRubikCommand extends AdminCommand {
         } catch (ServiceException eNew) {
 
         }*/
-        return null;
+        return new Forward("catalog.html");
     }
 }

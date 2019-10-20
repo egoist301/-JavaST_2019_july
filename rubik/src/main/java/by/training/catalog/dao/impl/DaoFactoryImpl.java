@@ -17,7 +17,7 @@ public class DaoFactoryImpl implements DaoFactory {
      * @return user dao.
      */
     @Override
-    public UserDao createAccountDao(
+    public UserDao createUserDao(
             final AbstractConnectionManager connectionManager) {
         return new UserDaoImpl(connectionManager);
     }
