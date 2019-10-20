@@ -52,6 +52,9 @@ public class RubiksCube extends Entity {
      * Blocked or not.
      */
     private boolean blocked;
+    /**
+     * List of path to images.
+     */
     private List<String> paths;
 
     /**
@@ -320,7 +323,8 @@ public class RubiksCube extends Entity {
                 && Objects.equals(getSize(), that.getSize())
                 && getForm().equals(that.getForm())
                 && Objects.equals(getDate(), that.getDate())
-                && isBlocked() == that.isBlocked();
+                && isBlocked() == that.isBlocked()
+                && getPaths().equals(that.getPaths());
     }
 
     /**
@@ -333,7 +337,7 @@ public class RubiksCube extends Entity {
         return Objects.hash(super.hashCode(), getModel(), getPrice(), getInfo(),
                 getManufacturer(), getWeight(), getPlasticColor(),
                 isPrimaryPlastic(), getSize(), getForm(),
-                getDate(), isBlocked());
+                getDate(), isBlocked(), getPaths());
     }
 
     /**
@@ -354,6 +358,7 @@ public class RubiksCube extends Entity {
                 + ", size='" + size + '\''
                 + ", typeCube=" + form
                 + ", localDateTime=" + date
+                + ", paths=" + paths
                 + ", blocked=" + blocked + '}';
     }
 }

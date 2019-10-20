@@ -12,14 +12,6 @@ import java.util.List;
  */
 public interface Dao<T extends Entity> {
     /**
-     * Find all objects
-     *
-     * @return list of objects.
-     * @throws PersistentException dao exception.
-     */
-    List<T> findAll() throws PersistentException;
-
-    /**
      * Find all objects in range.
      *
      * @param offset offset.

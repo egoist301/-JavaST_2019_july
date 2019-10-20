@@ -12,19 +12,21 @@ public interface UserService extends Service {
     boolean create(String username, String email, String phone,
                    String password) throws ServiceException;
 
-    User findAccountByEmail(String email) throws ServiceException;
+    User findUserByEmail(String email) throws ServiceException;
 
-    User findAccountByLogin(String login) throws ServiceException;
+    List<User> findUsersByUsername(String username,
+                                   int limit, int offset)
+            throws ServiceException;
+
+    User findUserByUsername(String username) throws ServiceException;
 
     User authorize(String login, String password)
             throws ServiceException;
 
-    List<User> findAccountsByRole(Role role, int limit, int offset)
+    List<User> findUsersByRole(Role role, int limit, int offset)
             throws ServiceException;
 
     User findById(long id) throws ServiceException;
-
-    List<User> findAll() throws ServiceException;
 
     List<User> findAll(int offset, int limit) throws ServiceException;
 
@@ -35,10 +37,10 @@ public interface UserService extends Service {
 
     boolean addCubeToBasket(User userNew, long cubeId) throws ServiceException;
 
-    RubiksCube findCubeFromBasket(User userNew, long cubeId)
+    RubiksCube findCubeFromBookmarks(User userNew, long cubeId)
             throws ServiceException;
 
-    void removeFromBasket(User userNew, long id) throws ServiceException;
+    void removeFromBookmarks(User userNew, long id) throws ServiceException;
 
     int findElementCount() throws ServiceException;
 }

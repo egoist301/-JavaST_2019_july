@@ -41,7 +41,7 @@
                             <a href="rubik.html?id=${cube.id}">
                                 <img class="small-icon"
                                      src="<c:url
-                                     value="${paths.get(cube).get(0)}"
+                                     value="${cube.paths.get(0)}"
                                       />"
                                      style="width: 100px; height: 100px;"
                                      alt="${cube.model}"/>

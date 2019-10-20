@@ -43,7 +43,7 @@ VALUES ('The Valk 3', 75, 85, 'В свое время модель Мофанг 
 износостойким. Скьюб выполнена из цветного пластика - без наклеек.', true,
         '2x2', 1, 9, 4, '2019-09-14', false);
 
-INSERT INTO basket_rubiks_cube(`cube_id`, `user_id`)
+INSERT INTO bookmarks(`cube_id`, `user_id`)
 VALUES (1, 1),
        (1, 2),
        (3, 1),

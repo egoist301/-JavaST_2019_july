@@ -94,18 +94,6 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public List<RubiksCube> findAll() throws ServiceException {
-        try (AbstractConnectionManager connectionManager =
-                     getConnectionManagerFactory().createConnectionManager()) {
-            RubikDao rubikDao =
-                    getDaoFactory().createRubikDao(connectionManager);
-            return rubikDao.findAll();
-        } catch (PersistentException eNew) {
-            throw new ServiceException(eNew);
-        }
-    }
-
-    @Override
     public List<RubiksCube> findAll(final int offset, final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =

@@ -66,7 +66,7 @@ CREATE INDEX IDX_Rubiks_Size
 CREATE INDEX IDX_Rubiks_Price
     ON `rubiks_cube` (`price`);
 
-CREATE TABLE `basket_rubiks_cube`
+CREATE TABLE `bookmarks`
 (
     `id`      INT UNSIGNED NOT NULL AUTO_INCREMENT,
     `cube_id` INT UNSIGNED NOT NULL,

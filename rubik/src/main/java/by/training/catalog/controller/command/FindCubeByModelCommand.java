@@ -9,39 +9,37 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
-public class FindRubikByModelCommand extends Command {
+public class FindCubeByModelCommand extends Command {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
         int records;
         List<RubiksCube> rubiksCubes;
-        Map<RubiksCube, List<String>> map = new HashMap<>();
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
             String model = requestNew.getParameter("model");
             rubiksCubes = rubikService.findRubiksByModel(model, offset, LIMIT);
-            records = rubiksCubes.size();
+            if (rubiksCubes.isEmpty()) {
+                records = 1;
+            } else {
+                records = rubiksCubes.size();
+            }
             for (RubiksCube cube : rubiksCubes) {
-                map.put(cube, imageService.findImagesByRubik(cube));
+                imageService.findImagesByRubik(cube);
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(500);
         }
-        return getForward(requestNew, page, records, rubiksCubes, map);
+        return getForward(requestNew, page, records, rubiksCubes);
     }
 }

@@ -15,26 +15,13 @@ public class StoreImageServiceImpl extends AbstractService implements
         StoreImageService {
 
     @Override
-    public List<String> findImagesByRubik(final RubiksCube cubeNew)
+    public void findImagesByRubik(final RubiksCube cubeNew)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             StoreImageDao storeImageDao =
                     getDaoFactory().createStoreImageDao(connectionManager);
             cubeNew.setPaths(storeImageDao.findImagesByRubik(cubeNew));
-            return storeImageDao.findImagesByRubik(cubeNew);
-        } catch (PersistentException eNew) {
-            throw new ServiceException(eNew);
-        }
-    }
-
-    @Override
-    public List<StoreImage> findAll() throws ServiceException {
-        try (AbstractConnectionManager connectionManager =
-                     getConnectionManagerFactory().createConnectionManager()) {
-            StoreImageDao storeImageDao =
-                    getDaoFactory().createStoreImageDao(connectionManager);
-            return storeImageDao.findAll();
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }

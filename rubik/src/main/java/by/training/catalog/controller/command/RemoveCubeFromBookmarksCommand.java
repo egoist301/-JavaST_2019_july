@@ -1,6 +1,5 @@
 package by.training.catalog.controller.command;
 
-import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
@@ -30,7 +29,7 @@ public class RemoveCubeFromBookmarksCommand extends UserCommand {
         User user = (User) session.getAttribute("user");
         UserService service = getFactory().createUserService();
         try {
-            service.removeFromBasket(user, id);
+            service.removeFromBookmarks(user, id);
             return new Forward("bookmarks.html");
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);

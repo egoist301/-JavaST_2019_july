@@ -65,9 +65,9 @@
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1" name="passwordOld"
                        placeholder=
-                       "<fmt:message
+                               "<fmt:message
                                key="profile.placeholder.oldpassword"/>"
-                               required>
+                       required minlength="4" maxlength="16">
             </div>
             <div class="form-group">
                 <label
@@ -77,8 +77,8 @@
                        class="form-control form-control-sm"
                        id="exampleInputPassword2" name="password"
                        placeholder=
-                       "<fmt:message key="profile.placeholder.newpassword"/>"
-                               required onkeyup='check();'>
+                               "<fmt:message key="profile.placeholder.newpassword"/>"
+                       required onkeyup='check();' minlength="4" maxlength="16">
             </div>
             <div class="form-group">
                 <label
@@ -87,9 +87,9 @@
                 <input type="password" id="confirm_password"
                        class="form-control form-control-sm"
                        id="exampleInputPassword3" placeholder=
-                           "<fmt:message
+                               "<fmt:message
                                    key="profile.placeholder.newpassword2"/>"
-                               required onkeyup='check();'>
+                       required onkeyup='check();' minlength="4" maxlength="16">
                 <span id="message"></span>
             </div>
             <button type="submit" class="btn btn-primary" id="submit"

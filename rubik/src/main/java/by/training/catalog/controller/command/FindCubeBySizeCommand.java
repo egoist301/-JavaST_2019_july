@@ -9,11 +9,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class FindCubeBySizeCommand extends Command {
     private static final int LIMIT = 10;
@@ -21,34 +17,34 @@ public class FindCubeBySizeCommand extends Command {
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
         int records;
         List<RubiksCube> rubiksCubes;
-        Map<RubiksCube, List<String>> map = new HashMap<>();
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
             String size = requestNew.getParameter("size");
             rubiksCubes = rubikService.findRubiksBySize(size, offset, LIMIT);
-            records = rubiksCubes.size();
+            if (rubiksCubes.isEmpty()) {
+                records = 1;
+            } else {
+                records = rubiksCubes.size();
+            }
             for (RubiksCube cube : rubiksCubes) {
-                map.put(cube, imageService.findImagesByRubik(cube));
+                imageService.findImagesByRubik(cube);
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(500);
         }
-        return getForward(requestNew, page, records, rubiksCubes, map);
+        return getForward(requestNew, page, records, rubiksCubes);
     }
 
     static Forward getForward(final HttpServletRequest requestNew,
                               final int pageNew, final int recordsNew,
-                              final List<RubiksCube> rubiksCubesNew,
-                              final Map<RubiksCube, List<String>> mapNew) {
-        requestNew.setAttribute("paths", mapNew);
+                              final List<RubiksCube> rubiksCubesNew) {
         requestNew.setAttribute("rubiks", rubiksCubesNew);
         requestNew.setAttribute("page", pageNew);
         requestNew.setAttribute("lastPage",

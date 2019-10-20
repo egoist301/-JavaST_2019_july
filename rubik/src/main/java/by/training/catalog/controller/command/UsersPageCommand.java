@@ -13,6 +13,7 @@ import java.util.List;
 public class UsersPageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int LIMIT = 10;
+
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {

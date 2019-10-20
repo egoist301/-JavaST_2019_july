@@ -37,7 +37,7 @@
                     <td>
                         <div class="view overlay zoom">
                             <img class="d-block img-fluid"
-                                 src="${paths.get(0)}"
+                                 src="${cube.paths.get(0)}"
                                  style="width: 300px; height: 300px;"
                                  alt="${cube.model}"/>
                         </div>
@@ -71,7 +71,7 @@
         <label>${cube.info}</label>
         <hr class="my-5">
         <div class="row">
-            <c:forEach items="${paths}" var="path">
+            <c:forEach items="${cube.paths}" var="path">
                 <div class="col-md-4 view overlay zoom">
                     <img src="${path}"
                          style="width: 200px; height: 200px;"

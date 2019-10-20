@@ -26,9 +26,6 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
             + " ?";
     private static final String FIND_STORE_IMAGE_COUNT =
             "SELECT COUNT(`id`) FROM `store_image`";
-    private static final String FIND_ALL_STORE_IMAGES =
-            "SELECT `id`, `cube_id`, `image_path` FROM `store_image` ORDER BY"
-                    + " `id`";
     private static final String FIND_ALL_STORE_IMAGES_LIMIT =
             "SELECT `id`, `cube_id`, `image_path` FROM `store_image` ORDER BY"
                     + " `id` LIMIT ? OFFSET ?";
@@ -55,22 +52,6 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
         } catch (SQLException e) {
             throw new PersistentException(
                     "SQLException while finding all images", e);
-        }
-        return list;
-    }
-
-    @Override
-    public List<StoreImage> findAll() throws PersistentException {
-        List<StoreImage> list = new LinkedList<>();
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(FIND_ALL_STORE_IMAGES);
-             ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                list.add(createStoreImage(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new PersistentException(
-                    "SQLException while finding all store images", e);
         }
         return list;
     }

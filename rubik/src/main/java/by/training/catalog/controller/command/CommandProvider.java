@@ -32,8 +32,9 @@ public final class CommandProvider {
         commandMap.put("/bookmarks", new BookmarksPageCommand());
         commandMap.put("/editcube", new EditCubePageCommand());
         commandMap.put("/findsize", new FindCubeBySizeCommand());
-        commandMap.put("/findmodel", new FindRubikByModelCommand());
+        commandMap.put("/findmodel", new FindCubeByModelCommand());
         commandMap.put("/removecube", new RemoveCubeFromBookmarksCommand());
+        commandMap.put("/findusername", new FindUserByUsernameCommand());
     }
 
     public static Command getCommand(final String actionNew) {

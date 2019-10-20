@@ -25,15 +25,14 @@
                        id="exampleName" aria-describedby="nameHelp"
                        placeholder=
                                "<fmt:message key="login.placeholder.username"/>"
-                       required
-                       maxlength="16" name="login">
+                       required minlength="4" maxlength="16" name="login">
             </div>
             <div class="form-group">
                 <label
                         for="exampleInputPassword1"><fmt:message
                         key="login.password"/></label>
                 <input type="password" class="form-control form-control-sm"
-                       id="exampleInputPassword1"
+                       id="exampleInputPassword1" minlength="4"
                        placeholder=
                                "<fmt:message
                                key="login.placeholder.password"/>"

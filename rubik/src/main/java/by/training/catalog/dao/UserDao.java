@@ -11,25 +11,25 @@ import java.util.List;
  */
 public interface UserDao extends Dao<User> {
     /**
-     * Find account by email.
+     * Find user by email.
      *
      * @param email email.
      * @return user.
      * @throws PersistentException dao exception.
      */
-    User findAccountByEmail(String email) throws PersistentException;
+    User findUserByEmail(String email) throws PersistentException;
 
     /**
-     * Find account by login.
+     * Find user by username.
      *
-     * @param login login or username.
+     * @param username username.
      * @return user.
      * @throws PersistentException dao exception.
      */
-    User findAccountByLogin(String login) throws PersistentException;
+    User findUserByUsername(String username) throws PersistentException;
 
     /**
-     * Find accounts by role in range.
+     * Find users by role in range.
      *
      * @param role   role.
      * @param limit  limit.
@@ -37,7 +37,7 @@ public interface UserDao extends Dao<User> {
      * @return list of users.
      * @throws PersistentException dao exception.
      */
-    List<User> findAccountByRole(Role role, int limit, int offset)
+    List<User> findUsersByRole(Role role, int limit, int offset)
             throws PersistentException;
 
     /**
@@ -53,28 +53,55 @@ public interface UserDao extends Dao<User> {
             throws PersistentException;
 
     /**
-     * Add cube to basket.
+     * Find users by username.
      *
-     * @param userNew user.
-     * @param cubeId cube id.
+     * @param username username.
+     * @param limit    limit.
+     * @param offset   offset.
+     * @return list of users.
      * @throws PersistentException dao exception.
      */
-    void addCubeToBasket(User userNew, long cubeId)
+    List<User> findUsersByUsername(String username, int limit,
+                                   int offset)
             throws PersistentException;
 
+    /**
+     * Add cube to bookmarks.
+     *
+     * @param userNew user.
+     * @param cubeId  cube id.
+     * @throws PersistentException dao exception.
+     */
+    void addCubeToBookmarks(User userNew, long cubeId)
+            throws PersistentException;
+
+    /**
+     * Update state of user. Ban.
+     *
+     * @param userNew user.
+     * @throws PersistentException dao exception.
+     */
     void updateState(User userNew) throws PersistentException;
 
     /**
-     * Remove cube from basket.
+     * Remove cube from bookmarks.
      *
      * @param userNew user.
-     * @param cubeId cube id.
+     * @param cubeId  cube id.
      * @throws PersistentException dao exception.
      */
-    void removeCubeFromBasket(User userNew, long cubeId)
+    void removeCubeFromBookmarks(User userNew, long cubeId)
             throws PersistentException;
 
-    RubiksCube findCubeFromBasketById(User userNew,
-                                      long cubeId)
+    /**
+     * Find cube from bookmarks by cube id.
+     *
+     * @param userNew user.
+     * @param cubeId  cube id.
+     * @return cube.
+     * @throws PersistentException dao exception.
+     */
+    RubiksCube findCubeFromBookmarksById(User userNew,
+                                         long cubeId)
             throws PersistentException;
 }

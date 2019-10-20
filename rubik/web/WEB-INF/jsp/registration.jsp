@@ -29,7 +29,8 @@
                 <input type="text" class="form-control" id="exampleName"
                        placeholder="<fmt:message
                                key="registration.placeholder.username"/>"
-                               required name="username" maxlength="16">
+                       required name="username" minlength="4"
+                       maxlength="16">
             </div>
             <div class="form-group">
                 <label for="exampleMail"><fmt:message
@@ -37,7 +38,7 @@
                 <input type="email" class="form-control" id="exampleMail"
                        placeholder="<fmt:message
                                key="registration.placeholder.email"/>" required
-                       name="email" maxlength="256">
+                       name="email" minlength="8" maxlength="256">
             </div>
             <div class="form-group">
                 <label for="examplePhone"><fmt:message
@@ -46,7 +47,7 @@
                        class="form-control" id="examplePhone"
                        placeholder="<fmt:message
                                key="registration.placeholder.phone"/>" required
-                       name="phone" maxlength="9">
+                       name="phone" minlength="9" maxlength="9">
             </div>
             <div class="form-group">
                 <label
@@ -54,9 +55,9 @@
                         key="registration.password"/> </label>
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1" placeholder=
-                       "<fmt:message
+                               "<fmt:message
                                key="registration.placeholder.password"/>"
-                               required name="password" maxlength="16">
+                       required name="password" minlength="4" maxlength="16">
             </div>
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>

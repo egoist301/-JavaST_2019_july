@@ -9,16 +9,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.List;
 
 public class RubikCommand extends Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         long id;
         Forward forward;
         try {
@@ -32,8 +29,7 @@ public class RubikCommand extends Command {
             RubiksCube cube = rubikService.findById(id);
             StoreImageService storeImageService =
                     getFactory().createStoreImageService();
-            List<String> list = storeImageService.findImagesByRubik(cube);
-            requestNew.setAttribute("paths", list);
+            storeImageService.findImagesByRubik(cube);
             requestNew.setAttribute("cube", cube);
             forward = new Forward("WEB-INF/jsp/rubik.jsp");
             return forward;

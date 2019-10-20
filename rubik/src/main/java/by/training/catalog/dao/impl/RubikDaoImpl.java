@@ -26,12 +26,6 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
                     + "`primary_plastic`, `size`, `plastic_color`, "
                     + "`name_manufacturer`, `name`, `date_added`, `blocked`"
                     + " FROM `rubiks_cube` " + JOIN_RUBIK_WITH_TABLES;
-    private static final String FIND_ALL_RUBIKS =
-            "SELECT `rubiks_cube`.`id`, `model`, `price`, `weight`, `info`, "
-                    + "`primary_plastic`, `size`, `plastic_color`, "
-                    + "`name_manufacturer`, `name`, `date_added`, `blocked`"
-                    + " FROM `rubiks_cube` " + JOIN_RUBIK_WITH_TABLES + " ORDER"
-                    + " BY `model`";
     private static final String FIND_RUBIK_BY_ID = FIND_RUBIK_BY
             + "WHERE `rubiks_cube`.`id` = ?";
     private static final String UPDATE_RUBIK_BY_ID =
@@ -58,7 +52,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
             + ", `blocked` FROM `rubiks_cube` " + JOIN_RUBIK_WITH_TABLES
             + " ORDER BY id LIMIT ? OFFSET ?";
     private static final String FIND_ALL_RUBIKS_BY_SIZE = FIND_RUBIK_BY
-            + " WHERE `size` LIKE ? LIMIT ? OFFSET ? ";
+            + " WHERE `size` LIKE ? LIMIT ? OFFSET ?";
     private static final String FIND_ALL_RUBIKS_BY_PRICE = FIND_RUBIK_BY
             + " WHERE `price` BETWEEN ? AND ? LIMIT ? OFFSET ?";
     private static final String FIND_ALL_RUBIKS_BY_FORM = FIND_RUBIK_BY
@@ -78,22 +72,6 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
 
     RubikDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
-    }
-
-    @Override
-    public List<RubiksCube> findAll() throws PersistentException {
-        List<RubiksCube> list = new LinkedList<>();
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(FIND_ALL_RUBIKS);
-             ResultSet resultSet = statement.executeQuery()) {
-            while (resultSet.next()) {
-                list.add(createRubikFromResultSet(resultSet));
-            }
-        } catch (SQLException e) {
-            throw new PersistentException(
-                    "SQLException while finding all rubiks", e);
-        }
-        return list;
     }
 
     @Override
@@ -181,9 +159,6 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     public List<RubiksCube> findRubikByModel(final String model,
                                              final int limit, int offset)
             throws PersistentException {
-        if (model == null) {
-            return null;
-        }
         List<RubiksCube> rubiksCubes = new ArrayList<>();
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_RUBIK_BY_MODEL)) {

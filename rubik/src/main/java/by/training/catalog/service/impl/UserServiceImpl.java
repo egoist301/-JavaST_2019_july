@@ -59,26 +59,31 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     @Override
     public boolean create(final String username, final String email,
-                          final String phone,
-                          final String password) throws ServiceException {
+                          final String phone, final String password)
+            throws ServiceException {
         boolean flag;
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
                 connectionManager.disableAutoCommit();
-                if (findAccountByLogin(username) == null
-                        && findAccountByEmail(email) == null) {
+                if (findUserByUsername(username) == null
+                        && findUserByEmail(email) == null) {
                     UserDao userDao =
                             getDaoFactory().createAccountDao(connectionManager);
                     UserParser parser = new UserParser();
                     User entityNew =
                             parser.getUser(username, email, phone, password);
-                    entityNew.setPassword(
-                            argonTwoHashAlgorithm(entityNew.getPassword()));
-                    entityNew.setId(userDao.create(entityNew));
-                    entityNew.setPassword(null);
-                    connectionManager.commit();
-                    flag = true;
+                    if (entityNew != null) {
+                        entityNew.setPassword(
+                                argonTwoHashAlgorithm(entityNew.getPassword()));
+                        entityNew.setId(userDao.create(entityNew));
+                        entityNew.setPassword(null);
+                        connectionManager.commit();
+                        flag = true;
+                    } else {
+                        connectionManager.rollback();
+                        flag = false;
+                    }
                 } else {
                     flag = false;
                     connectionManager.rollback();
@@ -94,24 +99,38 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public User findAccountByEmail(final String email) throws ServiceException {
+    public User findUserByEmail(final String email) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findAccountByEmail(email);
+            return userDao.findUserByEmail(email);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
     }
 
     @Override
-    public User findAccountByLogin(final String login) throws ServiceException {
+    public List<User> findUsersByUsername(final String username,
+                                          final int limit, final int offset)
+            throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findAccountByLogin(login);
+            return userDao.findUsersByUsername(username, limit, offset);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public User findUserByUsername(final String username) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao =
+                    getDaoFactory().createAccountDao(connectionManager);
+            return userDao.findUserByUsername(username);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -125,7 +144,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            User user = userDao.findAccountByLogin(login);
+            User user = userDao.findUserByUsername(login);
             if (user != null && argon2.verify(user.getPassword(), password)) {
                 user.setPassword(null);
                 return user;
@@ -137,14 +156,14 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public List<User> findAccountsByRole(final Role role, final int limit,
-                                         final int offset)
+    public List<User> findUsersByRole(final Role role, final int limit,
+                                      final int offset)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findAccountByRole(role, limit, offset);
+            return userDao.findUsersByRole(role, limit, offset);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -157,18 +176,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findEntityById(id);
-        } catch (PersistentException eNew) {
-            throw new ServiceException(eNew);
-        }
-    }
-
-    @Override
-    public List<User> findAll() throws ServiceException {
-        try (AbstractConnectionManager connectionManager =
-                     getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findAll();
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -242,9 +249,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 connectionManager.disableAutoCommit();
                 UserDao userDao =
                         getDaoFactory().createAccountDao(connectionManager);
-                RubiksCube cube1 = findCubeFromBasket(userNew, cubeId);
+                RubiksCube cube1 = findCubeFromBookmarks(userNew, cubeId);
                 if (cube1 == null) {
-                    userDao.addCubeToBasket(userNew, cubeId);
+                    userDao.addCubeToBookmarks(userNew, cubeId);
                     connectionManager.commit();
                     flag = true;
                 } else {
@@ -262,21 +269,21 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public RubiksCube findCubeFromBasket(final User userNew,
-                                         final long cubeId)
+    public RubiksCube findCubeFromBookmarks(final User userNew,
+                                            final long cubeId)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findCubeFromBasketById(userNew, cubeId);
+            return userDao.findCubeFromBookmarksById(userNew, cubeId);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
     }
 
     @Override
-    public void removeFromBasket(final User userNew, final long id)
+    public void removeFromBookmarks(final User userNew, final long id)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
@@ -284,7 +291,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 connectionManager.disableAutoCommit();
                 UserDao userDao =
                         getDaoFactory().createAccountDao(connectionManager);
-                userDao.removeCubeFromBasket(userNew, id);
+                userDao.removeCubeFromBookmarks(userNew, id);
                 connectionManager.commit();
             } catch (PersistentException eNew) {
                 connectionManager.rollback();

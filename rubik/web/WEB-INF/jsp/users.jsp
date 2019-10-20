@@ -23,6 +23,14 @@
         <h2><fmt:message key="header.users"/></h2>
     </div>
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
+        <form action="findusername.html" method="get">
+            <div class="md-form mt-0">
+                Find by username
+                <input class="form-control" type="text" name="username"
+                       placeholder="<fmt:message key="search.username"/>"
+                       aria-label="Search" maxlength="16">
+            </div>
+        </form>
         <table class="table table-hover table-bordered">
             <div class="row after-header">
                 <thead class="send-button-color">
