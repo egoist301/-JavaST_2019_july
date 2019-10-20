@@ -27,7 +27,8 @@ public interface RubikDao extends Dao<RubiksCube> {
      * @return cube.
      * @throws PersistentException dao exception.
      */
-    RubiksCube findRubikByModel(String model) throws PersistentException;
+    List<RubiksCube> findRubikByModel(String model, int limit, int offset)
+            throws PersistentException;
 
     /**
      * Find rubik's by range price in range.
@@ -86,4 +87,7 @@ public interface RubikDao extends Dao<RubiksCube> {
      * @throws PersistentException dao exception.
      */
     List<String> readAllPlasticColor() throws PersistentException;
+
+    void updateState(RubiksCube rubiksCubeNew)
+            throws PersistentException;
 }

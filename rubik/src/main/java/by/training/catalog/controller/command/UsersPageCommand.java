@@ -17,7 +17,7 @@ public class UsersPageCommand extends AdminCommand {
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
-        UserService teamService = getFactory().createUserService();
+        UserService userService = getFactory().createUserService();
         int records;
         List<User> users;
         try {
@@ -27,14 +27,11 @@ public class UsersPageCommand extends AdminCommand {
             } else {
                 offset = (page - 1) * LIMIT;
             }
-            records = teamService.findElementCount();
-            users = teamService.findAll(offset, LIMIT);
+            records = userService.findElementCount();
+            users = userService.findAll(offset, LIMIT);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            Forward forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 500);
-            return forward;
+            return sendError(500);
         }
         requestNew.setAttribute("users", users);
         requestNew.setAttribute("page", page);

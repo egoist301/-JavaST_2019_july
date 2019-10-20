@@ -15,11 +15,13 @@ import by.training.catalog.service.UserService;
 import by.training.catalog.service.parser.UserParser;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
 public class UserServiceImpl extends AbstractService implements UserService {
-
+    private static final Logger LOGGER = LogManager.getLogger();
     private final Argon2 argon2 =
             Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 
@@ -38,6 +40,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
+                connectionManager.disableAutoCommit();
                 UserDao userDao =
                         getDaoFactory().createAccountDao(connectionManager);
                 entityNew.setPassword(
@@ -55,21 +58,31 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public void create(final String username, final String email,
-                       final String phone,
-                       final String password) throws ServiceException {
+    public boolean create(final String username, final String email,
+                          final String phone,
+                          final String password) throws ServiceException {
+        boolean flag;
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
-                UserDao userDao =
-                        getDaoFactory().createAccountDao(connectionManager);
-                UserParser parser = new UserParser();
-                User entityNew =
-                        parser.getUser(username, email, phone, password);
-                entityNew.setPassword(
-                        argonTwoHashAlgorithm(entityNew.getPassword()));
-                entityNew.setId(userDao.create(entityNew));
-                connectionManager.commit();
+                connectionManager.disableAutoCommit();
+                if (findAccountByLogin(username) == null
+                        && findAccountByEmail(email) == null) {
+                    UserDao userDao =
+                            getDaoFactory().createAccountDao(connectionManager);
+                    UserParser parser = new UserParser();
+                    User entityNew =
+                            parser.getUser(username, email, phone, password);
+                    entityNew.setPassword(
+                            argonTwoHashAlgorithm(entityNew.getPassword()));
+                    entityNew.setId(userDao.create(entityNew));
+                    entityNew.setPassword(null);
+                    connectionManager.commit();
+                    flag = true;
+                } else {
+                    flag = false;
+                    connectionManager.rollback();
+                }
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
@@ -77,6 +90,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
+        return flag;
     }
 
     @Override
@@ -86,18 +100,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
             return userDao.findAccountByEmail(email);
-        } catch (PersistentException eNew) {
-            throw new ServiceException(eNew);
-        }
-    }
-
-    @Override
-    public User findAccountByPhone(final int phone) throws ServiceException {
-        try (AbstractConnectionManager connectionManager =
-                     getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findAccountByPhone(phone);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -116,8 +118,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public User findAccountByLoginAndPassword(final String login,
-                                              final String password)
+    public User authorize(final String login,
+                          final String password)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
@@ -135,8 +137,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public List<User> findAccountByRole(final Role role, final int limit,
-                                        final int offset)
+    public List<User> findAccountsByRole(final Role role, final int limit,
+                                         final int offset)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
@@ -173,12 +175,23 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public void updateState(final User userNew) throws ServiceException {
+    public void updateState(final long id) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createAccountDao(connectionManager);
-            userDao.updateState(userNew);
+            try {
+                connectionManager.disableAutoCommit();
+                UserDao userDao =
+                        getDaoFactory().createAccountDao(connectionManager);
+                User userNew = userDao.findEntityById(id);
+                userDao.updateState(userNew);
+                connectionManager.commit();
+                LOGGER.debug("<-----User id = {} state = {} commit",
+                        userNew.getId(),
+                        userNew.isBlocked());
+            } catch (PersistentException eNew) {
+                connectionManager.rollback();
+                throw new ServiceException(eNew);
+            }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -192,6 +205,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
+            LOGGER.debug("Service cubes {}",
+                    userDao.findLikedCubesByUser(userNew, limit, offset));
             userNew.setCubes(userDao.findLikedCubesByUser(userNew, limit,
                     offset));
             RubikDao rubikDao =
@@ -218,40 +233,63 @@ public class UserServiceImpl extends AbstractService implements UserService {
     }
 
     @Override
-    public void addCubeToBasket(final User userNew, final RubiksCube cubeNew)
+    public boolean addCubeToBasket(final User userNew, final long cubeId)
             throws ServiceException {
+        boolean flag;
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createAccountDao(connectionManager);
-            userDao.addCubeToBasket(userNew, cubeNew);
+            try {
+                connectionManager.disableAutoCommit();
+                UserDao userDao =
+                        getDaoFactory().createAccountDao(connectionManager);
+                RubiksCube cube1 = findCubeFromBasket(userNew, cubeId);
+                if (cube1 == null) {
+                    userDao.addCubeToBasket(userNew, cubeId);
+                    connectionManager.commit();
+                    flag = true;
+                } else {
+                    connectionManager.rollback();
+                    flag = false;
+                }
+            } catch (PersistentException eNew) {
+                connectionManager.rollback();
+                throw new ServiceException(eNew);
+            }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
+        return flag;
     }
 
     @Override
     public RubiksCube findCubeFromBasket(final User userNew,
-                                         final RubiksCube rubiksCubeNew)
+                                         final long cubeId)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createAccountDao(connectionManager);
-            return userDao.findCubeFromBasketById(userNew, rubiksCubeNew);
+            return userDao.findCubeFromBasketById(userNew, cubeId);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
     }
 
     @Override
-    public void removeFromBasket(final User userNew, final RubiksCube cubeNew)
+    public void removeFromBasket(final User userNew, final long id)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createAccountDao(connectionManager);
-            userDao.removeCubeFromBasket(userNew, cubeNew);
+            try {
+                connectionManager.disableAutoCommit();
+                UserDao userDao =
+                        getDaoFactory().createAccountDao(connectionManager);
+                userDao.removeCubeFromBasket(userNew, id);
+                connectionManager.commit();
+            } catch (PersistentException eNew) {
+                connectionManager.rollback();
+                throw new ServiceException(eNew);
+            }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }

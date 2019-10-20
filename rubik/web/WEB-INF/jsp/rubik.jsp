@@ -88,7 +88,8 @@
                     btn-primary"><fmt:message key="cube.like"/></button>
                 </form>
                 <c:if test="${sessionScope.get('user').role =='ADMIN'}">
-                    <form action="editcube.html?id=${cube.id}" method="get">
+                    <form action="editcube.html" method="get">
+                        <input type="hidden" value="${cube.id}" name="id">
                         <button type="submit"
                                 class="btn-primary btn"><fmt:message
                                 key="cube.edit"/>

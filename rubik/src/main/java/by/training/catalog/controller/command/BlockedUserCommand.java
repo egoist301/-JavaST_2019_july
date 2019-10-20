@@ -14,30 +14,20 @@ public class BlockedUserCommand extends AdminCommand {
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
-        int id;
+        long id;
         try {
-            id = Integer.parseInt(requestNew.getParameter("id"));
+            id = Long.parseLong(requestNew.getParameter("id"));
+            LOGGER.debug("Id = {}", id);
         } catch (NumberFormatException eNew) {
             LOGGER.error(eNew);
-            Forward forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 404);
-            return forward;
+            return sendError(404);
         }
+
         UserService service = getFactory().createUserService();
         try {
-            User user = service.findById(id);
-            if (user.isBlocked()){
-                user.setBlocked(false);
-            } else {
-                user.setBlocked(true);
-            }
-            service.updateState(user);
+            service.updateState(id);
         } catch (ServiceException eNew) {
-            Forward forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 500);
-            return forward;
+            return sendError(500);
         }
         return new Forward("users.html", true);
     }

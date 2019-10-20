@@ -1,5 +1,6 @@
 package by.training.catalog.bean;
 
+import java.util.List;
 import java.util.Date;
 import java.util.Objects;
 
@@ -51,6 +52,7 @@ public class RubiksCube extends Entity {
      * Blocked or not.
      */
     private boolean blocked;
+    private List<String> paths;
 
     /**
      * Super constructor.
@@ -84,6 +86,13 @@ public class RubiksCube extends Entity {
         blocked = blockedNew;
     }
 
+    public List<String> getPaths() {
+        return paths;
+    }
+
+    public void setPaths(final List<String> pathsNew) {
+        paths = pathsNew;
+    }
 
     /**
      * Getter.

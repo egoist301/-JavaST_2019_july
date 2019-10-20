@@ -1,16 +1,25 @@
 package by.training.catalog.service;
 
 import by.training.catalog.dao.pool.ConnectionPool;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
+import java.util.ResourceBundle;
+
+/**
+ * Initialize connection pool for app. Util class.
+ */
 public final class ServiceInitializer {
+    /**
+     * Default private constructor for util class.
+     */
     private ServiceInitializer() {
     }
 
-    public static void init() {
-
-        ConnectionPool.getInstance().init();
-
+    /**
+     * Connect to database.
+     *
+     * @param bundle resource bundle with parameter for database.
+     */
+    public static void init(final ResourceBundle bundle) {
+        ConnectionPool.getInstance().init(bundle);
     }
 }

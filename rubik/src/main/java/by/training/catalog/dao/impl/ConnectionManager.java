@@ -25,7 +25,7 @@ public class ConnectionManager implements AbstractConnectionManager {
     ConnectionManager() throws PersistentException {
         try {
             connection = ConnectionPool.getInstance().getConnection();
-            disableAutoCommit();
+            enableAutoCommit();
         } catch (ConnectionPoolException e) {
             throw new PersistentException(
                     "unable to get connection from the pool", e);

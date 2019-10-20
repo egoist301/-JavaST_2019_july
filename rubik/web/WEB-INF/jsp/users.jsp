@@ -27,13 +27,13 @@
             <div class="row after-header">
                 <thead class="send-button-color">
                 <tr>
-                    <td><fmt:message key="label.id"/></td>
-                    <td><fmt:message key="label.username"/></td>
-                    <td><fmt:message key="label.role"/></td>
-                    <td><fmt:message key="label.phone"/></td>
-                    <td><fmt:message key="label.email"/></td>
-                    <td><fmt:message key="label.blocked"/></td>
-                    <td><fmt:message key="users.change"/></td>
+                    <th><fmt:message key="label.id"/></th>
+                    <th><fmt:message key="label.username"/></th>
+                    <th><fmt:message key="label.role"/></th>
+                    <th><fmt:message key="label.phone"/></th>
+                    <th><fmt:message key="label.email"/></th>
+                    <th><fmt:message key="label.blocked"/></th>
+                    <th><fmt:message key="users.change"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,12 +65,14 @@
                             </label>
                         </td>
                         <td>
-                            <form action="blocked.html?id=${user.id}"
-                                  method="post">
-                                <button type="submit"
-                                        class="btn btn-primary"><fmt:message
-                                        key="users.change"/></button>
-                            </form>
+                            <c:if test="${!user.blocked}">
+                                <form action="blocked.html?id=${user.id}"
+                                      method="post">
+                                    <button type="submit"
+                                            class="btn btn-primary"><fmt:message
+                                            key="users.change"/></button>
+                                </form>
+                            </c:if>
                         </td>
                     </tr>
                 </c:forEach>

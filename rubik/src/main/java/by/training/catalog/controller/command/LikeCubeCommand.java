@@ -23,37 +23,26 @@ public class LikeCubeCommand extends UserCommand {
             throws IOException {
         UserService service = getFactory().createUserService();
         Forward forward;
-        int id;
+        long id;
         try {
-            id = Integer.parseInt(requestNew.getParameter("id"));
+            id = Long.parseLong(requestNew.getParameter("id"));
         } catch (NumberFormatException eNew) {
-            forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 404);
-            return forward;
+            return sendError(404);
         }
         try {
-            RubikService rubikService = getFactory().createRubikService();
-            RubiksCube cube = rubikService.findById(id);
             HttpSession session = requestNew.getSession(false);
             User user = (User) session.getAttribute("user");
-            RubiksCube cube1 = service.findCubeFromBasket(user, cube);
-            LOGGER.debug("Cube1: {}", cube);
-            LOGGER.debug("Cube2: {}", cube1);
-            LOGGER.debug("User: {}", user);
-            if (cube1 == null) {
-                service.addCubeToBasket(user, cube);
+            if (service.addCubeToBasket(user, id)) {
                 LOGGER.debug("added cube");
+                forward = new Forward("rubik.html?id=" + id);
+                return forward;
+            } else {
+                forward = new Forward("rubik.html?id=" + id);
+                return forward;
             }
-            forward = new Forward("rubik.html?id=" + id);
-            return forward;
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 500);
-            return forward;
+            return sendError(500);
         }
-
     }
 }

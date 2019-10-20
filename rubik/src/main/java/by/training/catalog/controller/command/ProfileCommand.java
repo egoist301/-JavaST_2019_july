@@ -3,7 +3,6 @@ package by.training.catalog.controller.command;
 import by.training.catalog.bean.User;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
-import by.training.catalog.service.impl.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,7 +25,7 @@ public class ProfileCommand extends UserCommand {
         LOGGER.debug(user);
         Forward forward;
         try {
-            if (userService.findAccountByLoginAndPassword(user.getUsername(),
+            if (userService.authorize(user.getUsername(),
                     oldPassword) != null) {
                 user.setPassword(newPassword);
                 LOGGER.debug(user);

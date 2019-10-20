@@ -23,8 +23,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             + "FROM `users` WHERE ";
     private static final String FIND_ACCOUNT_BY_EMAIL =
             FIND_ACCOUNT_BY + "`email` = ?";
-    private static final String FIND_ACCOUNT_BY_PHONE =
-            FIND_ACCOUNT_BY + "`phone` = ?";
     private static final String FIND_ACCOUNT_COUNT =
             "SELECT COUNT(`id`) FROM `users`";
     private static final String FIND_ALL_ACCOUNTS = "SELECT `id`, `username`, "
@@ -60,7 +58,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             + "FROM `basket_rubiks_cube` WHERE `user_id` = ? AND `cube_id` = ?";
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String UPDATE_STATE = "UPDATE `users` SET `blocked` = "
-            + "? WHERE `id` = ?";
+            + "true WHERE `id` = ?";
 
     public UserDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
@@ -84,25 +82,6 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         } catch (SQLException e) {
             throw new PersistentException(
                     "SQLException while finding by email", e);
-        }
-        return user;
-    }
-
-    @Override
-    public User findAccountByPhone(final int phone)
-            throws PersistentException {
-        User user = null;
-        try (PreparedStatement statement =
-                     getConnection().prepareStatement(FIND_ACCOUNT_BY_PHONE)) {
-            statement.setInt(1, phone);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    user = createAccountFromResultSet(resultSet);
-                }
-            }
-        } catch (SQLException e) {
-            throw new PersistentException(
-                    "SQLException while finding by phone", e);
         }
         return user;
     }
@@ -175,6 +154,9 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             preparedStatement.setLong(1, userNew.getId());
             preparedStatement.setInt(2, limit);
             preparedStatement.setInt(3, offset);
+            LOGGER.debug(preparedStatement);
+            LOGGER.debug("Id {}, limit {}, offset {}", userNew.getId(), limit,
+                    offset);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 while (resultSet.next()) {
                     rubiksCubes.add(new RubiksCube(resultSet.getLong(
@@ -275,17 +257,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     }
 
     @Override
-    public void addCubeToBasket(final User userNew, final RubiksCube cubeNew)
+    public void addCubeToBasket(final User userNew, final long cubeId)
             throws PersistentException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(ADD_CUBE,
                              RETURN_GENERATED_KEYS)) {
-            long cubeId = cubeNew.getId();
-            long userId = userNew.getId();
             statement.setLong(1, cubeId);
-            statement.setLong(2, userId);
-            LOGGER.debug("User {}", userId);
-            LOGGER.debug("Cube {}", cubeId);
+            statement.setLong(2, userNew.getId());
             statement.executeUpdate();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -302,8 +280,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void updateState(final User userNew) throws PersistentException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(UPDATE_STATE)) {
-            statement.setBoolean(1, userNew.isBlocked());
-            statement.setLong(2, userNew.getId());
+            statement.setLong(1, userNew.getId());
             statement.executeUpdate();
         } catch (SQLException eNew) {
             throw new PersistentException(eNew);
@@ -312,11 +289,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public void removeCubeFromBasket(final User userNew,
-                                     final RubiksCube cubeNew)
+                                     final long cubeId)
             throws PersistentException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(DELETE_CUBE)) {
-            statement.setLong(1, cubeNew.getId());
+            statement.setLong(1, cubeId);
             statement.setLong(2, userNew.getId());
             statement.executeUpdate();
         } catch (SQLException eNew) {
@@ -326,15 +303,15 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public RubiksCube findCubeFromBasketById(final User userNew,
-                                             final RubiksCube cubeNew)
+                                             final long cubeId)
             throws PersistentException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(FIND_CUBE_FROM_BASKET)) {
             statement.setLong(1, userNew.getId());
-            statement.setLong(2, cubeNew.getId());
+            statement.setLong(2, cubeId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new RubiksCube(resultSet.getLong("id"));
+                    return new RubiksCube(resultSet.getLong("cube_id"));
                 }
             }
         } catch (SQLException eNew) {

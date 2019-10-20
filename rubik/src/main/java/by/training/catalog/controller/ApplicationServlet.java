@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 @WebServlet("*.html")
 public class ApplicationServlet extends HttpServlet {
@@ -20,7 +21,8 @@ public class ApplicationServlet extends HttpServlet {
 
     @Override
     public void init() {
-        ServiceInitializer.init();
+        ResourceBundle bundle = ResourceBundle.getBundle("database");
+        ServiceInitializer.init(bundle);
     }
 
     @Override

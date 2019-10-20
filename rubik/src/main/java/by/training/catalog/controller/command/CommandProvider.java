@@ -27,11 +27,13 @@ public final class CommandProvider {
         commandMap.put("/blocked", new BlockedUserCommand());
         commandMap.put("/rubik", new RubikCommand());
         commandMap.put("/likecube", new LikeCubeCommand());
-        commandMap.put("/find1", new FindCubeByFormCommand());
+        commandMap.put("/findform", new FindCubeByFormCommand());
         commandMap.put("/blockedcube", new BlockedCubeCommand());
-        commandMap.put("/bookmarks", new BasketPageCommand());
-        commandMap.put("/editcube", new EditCubeCommand());
-        commandMap.put("/find2", new FindCubeBySizeCommand());
+        commandMap.put("/bookmarks", new BookmarksPageCommand());
+        commandMap.put("/editcube", new EditCubePageCommand());
+        commandMap.put("/findsize", new FindCubeBySizeCommand());
+        commandMap.put("/findmodel", new FindRubikByModelCommand());
+        commandMap.put("/removecube", new RemoveCubeFromBookmarksCommand());
     }
 
     public static Command getCommand(final String actionNew) {

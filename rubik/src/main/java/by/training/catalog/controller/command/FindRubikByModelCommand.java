@@ -15,10 +15,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FindCubeBySizeCommand extends Command {
+import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
+
+public class FindRubikByModelCommand extends Command {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
-
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
@@ -31,8 +32,8 @@ public class FindCubeBySizeCommand extends Command {
         Map<RubiksCube, List<String>> map = new HashMap<>();
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String size = requestNew.getParameter("size");
-            rubiksCubes = rubikService.findRubiksBySize(size, offset, LIMIT);
+            String model = requestNew.getParameter("model");
+            rubiksCubes = rubikService.findRubiksByModel(model, offset, LIMIT);
             records = rubiksCubes.size();
             for (RubiksCube cube : rubiksCubes) {
                 map.put(cube, imageService.findImagesByRubik(cube));
@@ -42,18 +43,5 @@ public class FindCubeBySizeCommand extends Command {
             return sendError(500);
         }
         return getForward(requestNew, page, records, rubiksCubes, map);
-    }
-
-    static Forward getForward(final HttpServletRequest requestNew,
-                              final int pageNew, final int recordsNew,
-                              final List<RubiksCube> rubiksCubesNew,
-                              final Map<RubiksCube, List<String>> mapNew) {
-        requestNew.setAttribute("paths", mapNew);
-        requestNew.setAttribute("rubiks", rubiksCubesNew);
-        requestNew.setAttribute("page", pageNew);
-        requestNew.setAttribute("lastPage",
-                recordsNew % LIMIT == 0 ? recordsNew / LIMIT : recordsNew
-                        / LIMIT + 1);
-        return new Forward("WEB-INF/jsp/catalog.jsp");
     }
 }

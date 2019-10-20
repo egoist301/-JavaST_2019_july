@@ -21,6 +21,7 @@ public class StoreImageServiceImpl extends AbstractService implements
                      getConnectionManagerFactory().createConnectionManager()) {
             StoreImageDao storeImageDao =
                     getDaoFactory().createStoreImageDao(connectionManager);
+            cubeNew.setPaths(storeImageDao.findImagesByRubik(cubeNew));
             return storeImageDao.findImagesByRubik(cubeNew);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
@@ -68,14 +69,9 @@ public class StoreImageServiceImpl extends AbstractService implements
     public void update(final StoreImage entityNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            try {
-                StoreImageDao storeImageDao =
-                        getDaoFactory().createStoreImageDao(connectionManager);
-                storeImageDao.update(entityNew);
-                connectionManager.commit();
-            } catch (PersistentException eNew) {
-                connectionManager.rollback();
-            }
+            StoreImageDao storeImageDao =
+                    getDaoFactory().createStoreImageDao(connectionManager);
+            storeImageDao.update(entityNew);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -85,14 +81,9 @@ public class StoreImageServiceImpl extends AbstractService implements
     public void create(final StoreImage entityNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            try {
-                StoreImageDao storeImageDao =
-                        getDaoFactory().createStoreImageDao(connectionManager);
-                entityNew.setId(storeImageDao.create(entityNew));
-                connectionManager.commit();
-            } catch (PersistentException eNew) {
-                connectionManager.rollback();
-            }
+            StoreImageDao storeImageDao =
+                    getDaoFactory().createStoreImageDao(connectionManager);
+            entityNew.setId(storeImageDao.create(entityNew));
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }

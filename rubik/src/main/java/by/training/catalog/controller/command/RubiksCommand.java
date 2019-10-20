@@ -29,8 +29,8 @@ public class RubiksCommand extends Command {
         int page = Pagination.calcPage(requestNew);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
-        int records = 0;
-        List<RubiksCube> rubiksCubes = new ArrayList<>();
+        int records;
+        List<RubiksCube> rubiksCubes;
         Map<RubiksCube, List<String>> map = new HashMap<>();
         try {
             int offset;
@@ -46,10 +46,7 @@ public class RubiksCommand extends Command {
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            Forward forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 500);
-            return forward;
+            return sendError(500);
         }
         return getForward(requestNew, page, records, rubiksCubes, map);
     }

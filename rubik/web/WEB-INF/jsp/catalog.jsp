@@ -23,19 +23,29 @@
         <h2><fmt:message key="header.catalog"/></h2>
     </div>
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
-        <form action="find1.html" method="get">
+        <form action="findform.html" method="get">
             <div class="md-form mt-0">
                 Find by form
                 <input class="form-control" type="text" name="form"
-                       placeholder="Search" aria-label="Search">
+                       placeholder="<fmt:message key="search.form"/>"
+                       aria-label="Search" maxlength="20">
             </div>
         </form>
-        <form action="find2.html" method="get">
+        <form action="findsize.html" method="get">
             <div class="md-form mt-0">
                 Find by size
                 <input class="form-control" type="text"
                        pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
-                       name="size" placeholder="Search" aria-label="Search">
+                       name="size" placeholder="<fmt:message
+                       key="search.size"/>" maxlength="8" aria-label="Search">
+            </div>
+        </form>
+        <form action="findmodel.html" method="get">
+            <div class="md-form mt-0">
+                Find by model
+                <input class="form-control" type="text"
+                       name="model" placeholder="<fmt:message
+                       key="search.model"/>" aria-label="Search" maxlength="30">
             </div>
         </form>
         <table class="table table-hover table-bordered">

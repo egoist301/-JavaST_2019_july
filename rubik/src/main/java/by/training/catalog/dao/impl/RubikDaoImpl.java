@@ -39,16 +39,16 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
                     + "?, `price` = ?, `weight` ="
                     + " ?, `info` = ?, `primary_plastic` = ?, `size` = ?,"
                     + " `plastic_color` = ?, `name_manufacturer` = ?, "
-                    + "`name` = ?, `date_added` = ?, `blocked` = ? WHERE "
+                    + "`name` = ?, `date_added` = ? WHERE "
                     + "`rubiks_cube`.`id` = ?";
     private static final String INSERT_RUBIK =
             "INSERT INTO `rubiks_cube` (`model`, "
                     + "`price`, `weight`, `info`, `primary_plastic`, `size`, "
                     + "`plastic_color_id`, `manufacturer_id`, `form_id`, "
                     + "`date_added`, `blocked`) VALUES (?, ?, ?, ?, ?, ?, "
-                    + "?, ?,  ?, ?, ?)";
+                    + "?, ?,  ?, ?, false)";
     private static final String FIND_RUBIK_BY_MODEL = FIND_RUBIK_BY
-            + " WHERE `model` = ?";
+            + " WHERE `model` LIKE ? LIMIT ? OFFSET ?";
     private static final String FIND_RUBIK_COUNT =
             "SELECT COUNT(`id`) FROM`rubiks_cube`";
     private static final String FIND_ALL_RUBIKS_PAGE = "SELECT `rubiks_cube`."
@@ -73,6 +73,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     private static final String READ_ALL_FORMS = "SELECT `name` FROM `form`";
     private static final String READ_ALL_COLORS =
             "SELECT `plastic_color` FROM `plastic_color`";
+    private static final String UPDATE_STATE =
+            "UPDATE rubiks_cube SET blocked = true WHERE id = ?";
 
     RubikDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
@@ -138,7 +140,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(UPDATE_RUBIK_BY_ID)) {
             execute(statement, entityNew);
-            statement.setLong(12, entityNew.getId());
+            statement.setLong(11, entityNew.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new PersistentException("SQLException while updating", e);
@@ -176,25 +178,28 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     }
 
     @Override
-    public RubiksCube findRubikByModel(final String model)
+    public List<RubiksCube> findRubikByModel(final String model,
+                                             final int limit, int offset)
             throws PersistentException {
         if (model == null) {
             return null;
         }
-        RubiksCube rubiksCube = null;
+        List<RubiksCube> rubiksCubes = new ArrayList<>();
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_RUBIK_BY_MODEL)) {
-            statement.setString(1, model);
+            statement.setString(1, model + '%');
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
             try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    rubiksCube = createRubikFromResultSet(resultSet);
+                while (resultSet.next()) {
+                    rubiksCubes.add(createRubikFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e) {
             throw new PersistentException("SQLException while finding by "
                     + "model", e);
         }
-        return rubiksCube;
+        return rubiksCubes;
     }
 
     @Override
@@ -205,20 +210,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
             preparedStatement.setLong(1, rubiksCubeNew.getId());
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    rubiksCubeNew.setModel(resultSet.getString("model"));
-                    rubiksCubeNew.setPrice(resultSet.getDouble("price"));
-                    rubiksCubeNew.setWeight(resultSet.getDouble("weight"));
-                    rubiksCubeNew.setInfo(resultSet.getString("info"));
-                    rubiksCubeNew.setPrimaryPlastic(resultSet.getBoolean(
-                            "primary_plastic"));
-                    rubiksCubeNew.setSize(resultSet.getString("size"));
-                    rubiksCubeNew.setPlasticColor(resultSet.getString(
-                            "plastic_color"));
-                    rubiksCubeNew.setManufacturer(resultSet.getString(
-                            "name_manufacturer"));
-                    rubiksCubeNew.setForm(resultSet.getString("name"));
-                    rubiksCubeNew.setDate(resultSet.getDate("date_added"));
-                    rubiksCubeNew.setBlocked(resultSet.getBoolean("blocked"));
+                    buildCube(resultSet, rubiksCubeNew);
                 }
             }
         } catch (SQLException eNew) {
@@ -325,6 +317,18 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     }
 
     @Override
+    public void updateState(final RubiksCube rubiksCubeNew)
+            throws PersistentException {
+        try (PreparedStatement statement =
+                     getConnection().prepareStatement(UPDATE_STATE)) {
+            statement.setLong(1, rubiksCubeNew.getId());
+            statement.executeUpdate();
+        } catch (SQLException eNew) {
+            throw new PersistentException(eNew);
+        }
+    }
+
+    @Override
     public int findElementCount() throws PersistentException {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_RUBIK_COUNT)) {
@@ -353,25 +357,30 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
         statement.setString(8, entityNew.getManufacturer());
         statement.setString(9, entityNew.getForm());
         statement.setDate(10, new Date(entityNew.getDate().getTime()));
-        statement.setBoolean(11, entityNew.isBlocked());
     }
 
     private RubiksCube createRubikFromResultSet(final ResultSet resultSet)
             throws SQLException {
-        long accountId = resultSet.getLong("id");
-        String model = resultSet.getString("model");
-        double price = resultSet.getDouble("price");
-        double weight = resultSet.getDouble("weight");
-        String info = resultSet.getString("info");
-        boolean primaryPlastic = resultSet.getBoolean("primary_plastic");
-        String size = resultSet.getString("size");
-        String plasticColor = resultSet.getString("plastic_color");
-        String manufacturer = resultSet.getString("name_manufacturer");
-        String form = resultSet.getString("name");
-        Date date = new Date(resultSet.getDate("date_added").getTime());
-        boolean blocked = resultSet.getBoolean("blocked");
-        return new RubiksCube(accountId, model, price, weight, info,
-                primaryPlastic, size, plasticColor, manufacturer, form, date,
-                blocked);
+        RubiksCube cube = new RubiksCube(resultSet.getLong("id"));
+        buildCube(resultSet, cube);
+        return cube;
+    }
+
+    private void buildCube(final ResultSet resultSet, final RubiksCube cubeNew)
+            throws SQLException {
+        cubeNew.setModel(resultSet.getString("model"));
+        cubeNew.setPrice(resultSet.getDouble("price"));
+        cubeNew.setWeight(resultSet.getDouble("weight"));
+        cubeNew.setInfo(resultSet.getString("info"));
+        cubeNew.setPrimaryPlastic(resultSet.getBoolean(
+                "primary_plastic"));
+        cubeNew.setSize(resultSet.getString("size"));
+        cubeNew.setPlasticColor(resultSet.getString(
+                "plastic_color"));
+        cubeNew.setManufacturer(resultSet.getString(
+                "name_manufacturer"));
+        cubeNew.setForm(resultSet.getString("name"));
+        cubeNew.setDate(resultSet.getDate("date_added"));
+        cubeNew.setBlocked(resultSet.getBoolean("blocked"));
     }
 }

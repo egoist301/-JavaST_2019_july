@@ -1,11 +1,9 @@
 package by.training.catalog.service.impl;
 
+import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
-import by.training.catalog.dao.ConnectionManagerFactory;
-import by.training.catalog.dao.DaoFactory;
-import by.training.catalog.dao.PersistentException;
-import by.training.catalog.dao.RubikDao;
-import by.training.catalog.dao.AbstractConnectionManager;
+import by.training.catalog.bean.StoreImage;
+import by.training.catalog.dao.*;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
@@ -38,13 +36,14 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public RubiksCube findRubikByModel(final String model)
+    public List<RubiksCube> findRubiksByModel(final String model,
+                                              final int offset, final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
-            return rubikDao.findRubikByModel(model);
+            return rubikDao.findRubikByModel(model, limit, offset);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -120,13 +119,15 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public void update(final RubiksCube entityNew) throws ServiceException {
+    public void update(final RubiksCube entityNew,
+                       final List<RawData> rawDataNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
                 rubikDao.update(entityNew);
+
                 connectionManager.commit();
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
@@ -145,6 +146,26 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
                 entityNew.setId(rubikDao.create(entityNew));
+                connectionManager.commit();
+            } catch (PersistentException eNew) {
+                connectionManager.rollback();
+                throw new ServiceException(eNew);
+            }
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public void updateState(final long id) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            try {
+                connectionManager.disableAutoCommit();
+                RubikDao rubikDao =
+                        getDaoFactory().createRubikDao(connectionManager);
+                RubiksCube cubeNew = findById(id);
+                rubikDao.updateState(cubeNew);
                 connectionManager.commit();
             } catch (PersistentException eNew) {
                 connectionManager.rollback();

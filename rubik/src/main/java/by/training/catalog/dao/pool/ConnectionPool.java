@@ -39,10 +39,9 @@ public final class ConnectionPool {
         return INSTANCE;
     }
 
-    public void init() {
+    public void init(final ResourceBundle bundle) {
         try {
             logger.info("Initializing connection pool.");
-            ResourceBundle bundle = ResourceBundle.getBundle("database");
             String driver = bundle.getString("db.driver");
             String url = bundle.getString("db.url");
             String user = bundle.getString("db.user");

@@ -4,7 +4,6 @@ import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
-import by.training.catalog.service.impl.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,8 +28,8 @@ public class FindCubeByFormCommand extends Command {
         int page = Pagination.calcPage(requestNew);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
-        int records = 0;
-        List<RubiksCube> rubiksCubes = new ArrayList<>();
+        int records;
+        List<RubiksCube> rubiksCubes;
         Map<RubiksCube, List<String>> map = new HashMap<>();
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
@@ -42,12 +41,8 @@ public class FindCubeByFormCommand extends Command {
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            Forward forward = new Forward();
-            forward.setError(true);
-            forward.getAttributes().put("error", 500);
-            return forward;
+            return sendError(500);
         }
         return getForward(requestNew, page, records, rubiksCubes, map);
     }
-
 }

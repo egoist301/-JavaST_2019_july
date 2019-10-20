@@ -79,10 +79,10 @@
                         <div class="dropdown-menu"
                              aria-labelledby="languageDropdown">
                             <a class="dropdown-item"
-                               href="lang.html?id=en"><fmt:message
+                               href="lang.html?id=en&from=${from}"><fmt:message
                                     key="header.language_dropdown.english"/></a>
                             <a class="dropdown-item"
-                               href="lang.html?id=ru"><fmt:message
+                               href="lang.html?id=ru&from=${from}"><fmt:message
                                     key="header.language_dropdown.russian"/></a>
                         </div>
                     </li>
@@ -93,8 +93,16 @@
                            id="navbarDropdownMenuLink-4"
                            data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false"><em
-                                class="fas fa-user"></em><fmt:message
-                                key="header.profile"/></a>
+                                class="fas fa-user"></em>
+                            <c:choose>
+                                <c:when test="${sessionScope.get('user')!=null}">
+                                    ${sessionScope.get('user').username}
+                                </c:when>
+                                <c:otherwise>
+                                    <fmt:message key="header.profile"/>
+                                </c:otherwise>
+                            </c:choose>
+                        </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-info"
                              aria-labelledby="navbarDropdownMenuLink-4">
                             <c:choose>

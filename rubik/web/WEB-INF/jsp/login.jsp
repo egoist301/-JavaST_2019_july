@@ -2,6 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${cookie.get('locale').value}"/>
 <fmt:setBundle basename="property/localization"/>
 <html lang="en">
@@ -23,7 +24,8 @@
                 <input type="text" class="form-control form-control-sm"
                        id="exampleName" aria-describedby="nameHelp"
                        placeholder=
-                       "<fmt:message key="login.placeholder.username"/>" required
+                               "<fmt:message key="login.placeholder.username"/>"
+                       required
                        maxlength="16" name="login">
             </div>
             <div class="form-group">
@@ -33,9 +35,9 @@
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1"
                        placeholder=
-                       "<fmt:message
+                               "<fmt:message
                                key="login.placeholder.password"/>"
-                               required maxlength="16" name="password">
+                       required maxlength="16" name="password">
             </div>
             <button type="submit"
                     class="btn btn-primary"><fmt:message
@@ -48,7 +50,6 @@
     </div>
 </div>
 <hr class="my-5">
-
 <!-- Footer -->
 <ctgg:footer/>
 </body>

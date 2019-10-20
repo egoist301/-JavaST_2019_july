@@ -20,15 +20,6 @@ public interface UserDao extends Dao<User> {
     User findAccountByEmail(String email) throws PersistentException;
 
     /**
-     * Find account by phone.
-     *
-     * @param phone phone.
-     * @return user.
-     * @throws PersistentException dao exception.
-     */
-    User findAccountByPhone(int phone) throws PersistentException;
-
-    /**
      * Find account by login.
      *
      * @param login login or username.
@@ -65,10 +56,10 @@ public interface UserDao extends Dao<User> {
      * Add cube to basket.
      *
      * @param userNew user.
-     * @param cubeNew cube.
+     * @param cubeId cube id.
      * @throws PersistentException dao exception.
      */
-    void addCubeToBasket(User userNew, RubiksCube cubeNew)
+    void addCubeToBasket(User userNew, long cubeId)
             throws PersistentException;
 
     void updateState(User userNew) throws PersistentException;
@@ -77,13 +68,13 @@ public interface UserDao extends Dao<User> {
      * Remove cube from basket.
      *
      * @param userNew user.
-     * @param cubeNew cube.
+     * @param cubeId cube id.
      * @throws PersistentException dao exception.
      */
-    void removeCubeFromBasket(User userNew, RubiksCube cubeNew)
+    void removeCubeFromBasket(User userNew, long cubeId)
             throws PersistentException;
 
     RubiksCube findCubeFromBasketById(User userNew,
-                                      RubiksCube cubeNew)
+                                      long cubeId)
             throws PersistentException;
 }

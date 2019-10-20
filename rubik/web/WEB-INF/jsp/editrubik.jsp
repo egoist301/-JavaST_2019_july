@@ -22,7 +22,7 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="cube"/>
         </h2>
-        <form action="editc.html" method="post">
+        <form action="editc.html" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
                         key="cube.model"/></label>
@@ -72,10 +72,10 @@
                         id="examplePlasticColor">
                     <c:forEach items="${requestScope.get('colors')}"
                                var="color">
-                        <option value="${color}">${color}</option>
+                        <option value="${color}" <c:if
+                                test="${color.equals(cube.plasticColor)}">
+                            selected</c:if>>${color}</option>
                     </c:forEach>
-                    <option value="${cube.plasticColor}"
-                            selected>${cube.plasticColor}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -85,10 +85,11 @@
                         id="exampleManufacturer">
                     <c:forEach items="${requestScope.get('manufacturers')}"
                                var="manufact">
-                        <option value="${manufact}">${manufact}</option>
+                        <option value="${manufact}" <c:if
+                                test="${manufact.equals(cube.manufacturer)}">
+                            selected
+                        </c:if>>${manufact}</option>
                     </c:forEach>
-                    <option value="${cube.manufacturer}"
-                            selected>${cube.manufacturer}</option>
                 </select>
             </div>
             <div class="form-group">
@@ -97,10 +98,14 @@
                 <select class="custom-select mb-1" name="forma"
                         id="exampleForm">
                     <c:forEach items="${requestScope.get('forms')}" var="form">
-                        <option value="${form}">${form}</option>
+                        <option value="${form}"
+                                <c:if test="${form.equals(cube.form)}"> selected</c:if>>
+                                ${form}</option>
                     </c:forEach>
-                    <option value="${cube.form}" selected>${cube.form}</option>
                 </select>
+            </div>
+            <div class="form-group">
+                <input type="file" multiple name="img" class="custom-file">
             </div>
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>

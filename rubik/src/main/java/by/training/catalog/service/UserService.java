@@ -9,19 +9,17 @@ import java.util.List;
 public interface UserService extends Service {
     void update(User entityNew) throws ServiceException;
 
-    void create(String username, String email, String phone,
-                String password) throws ServiceException;
+    boolean create(String username, String email, String phone,
+                   String password) throws ServiceException;
 
     User findAccountByEmail(String email) throws ServiceException;
 
-    User findAccountByPhone(int phone) throws ServiceException;
-
     User findAccountByLogin(String login) throws ServiceException;
 
-    User findAccountByLoginAndPassword(String login, String password)
+    User authorize(String login, String password)
             throws ServiceException;
 
-    List<User> findAccountByRole(Role role, int limit, int offset)
+    List<User> findAccountsByRole(Role role, int limit, int offset)
             throws ServiceException;
 
     User findById(long id) throws ServiceException;
@@ -30,20 +28,17 @@ public interface UserService extends Service {
 
     List<User> findAll(int offset, int limit) throws ServiceException;
 
-    void updateState(User userNew) throws ServiceException;
+    void updateState(long id) throws ServiceException;
 
     void findLikedCubes(User userNew, int limit, int offset)
             throws ServiceException;
 
-    void addCubeToBasket(User userNew, RubiksCube cubeNew)
+    boolean addCubeToBasket(User userNew, long cubeId) throws ServiceException;
+
+    RubiksCube findCubeFromBasket(User userNew, long cubeId)
             throws ServiceException;
 
-    RubiksCube findCubeFromBasket(User userNew,
-                                  RubiksCube rubiksCubeNew)
-            throws ServiceException;
-
-    void removeFromBasket(User userNew, RubiksCube cubeNew)
-            throws ServiceException;
+    void removeFromBasket(User userNew, long id) throws ServiceException;
 
     int findElementCount() throws ServiceException;
 }

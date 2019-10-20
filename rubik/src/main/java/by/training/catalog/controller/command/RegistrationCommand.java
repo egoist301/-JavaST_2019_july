@@ -22,13 +22,12 @@ public class RegistrationCommand extends Command {
         UserService service = getFactory().createUserService();
         Forward forward;
         try {
-            if (service.findAccountByLogin(username) != null
-                    && service.findAccountByEmail(email) != null) {
-                service.create(username, email, phone, password);
+            if (service.create(username, email, phone, password)) {
                 LOGGER.debug("account is create");
                 forward = new Forward("index.html");
             } else {
-                LOGGER.debug("account don't create"); //TODO error message
+                LOGGER.debug("account don't create");
+                requestNew.setAttribute("error", "registration.error");
                 forward = new Forward("registration.html");
             }
         } catch (ServiceException eNew) {

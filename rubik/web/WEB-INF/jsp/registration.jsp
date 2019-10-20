@@ -29,7 +29,7 @@
                 <input type="text" class="form-control" id="exampleName"
                        placeholder="<fmt:message
                                key="registration.placeholder.username"/>"
-                               required name="username">
+                               required name="username" maxlength="16">
             </div>
             <div class="form-group">
                 <label for="exampleMail"><fmt:message
@@ -37,7 +37,7 @@
                 <input type="email" class="form-control" id="exampleMail"
                        placeholder="<fmt:message
                                key="registration.placeholder.email"/>" required
-                       name="email">
+                       name="email" maxlength="256">
             </div>
             <div class="form-group">
                 <label for="examplePhone"><fmt:message
@@ -46,7 +46,7 @@
                        class="form-control" id="examplePhone"
                        placeholder="<fmt:message
                                key="registration.placeholder.phone"/>" required
-                       name="phone">
+                       name="phone" maxlength="9">
             </div>
             <div class="form-group">
                 <label
@@ -56,7 +56,7 @@
                        id="exampleInputPassword1" placeholder=
                        "<fmt:message
                                key="registration.placeholder.password"/>"
-                               required name="password">
+                               required name="password" maxlength="16">
             </div>
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>
