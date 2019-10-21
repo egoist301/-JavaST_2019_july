@@ -1,18 +1,30 @@
 package by.training.catalog.service.parser;
 
 import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.service.ServiceException;
+import by.training.catalog.validator.RubikValidator;
 
-//TODO write this class
+import java.util.Date;
+import java.util.List;
+
 public class RubikParser {
-    public RubiksCube getCube(final String model, final String size,
-                              final String price, final String weight,
-                              final String info, final String manufacturer,
-                              final String form, final String plasticColor,
-                              final String primaryPlastic) {
-        RubiksCube rubiksCube = new RubiksCube(1);
-        rubiksCube.setModel(model);
-        rubiksCube.setInfo(info);
-
-        return rubiksCube;
+    public RubiksCube getCube(List<String> parameters) throws ServiceException {
+        if (RubikValidator.isValid(parameters)) {
+            RubiksCube rubiksCube = new RubiksCube(1);
+            int i = 0;
+            rubiksCube.setModel(parameters.get(i));
+            rubiksCube.setPrice(Double.parseDouble(parameters.get(++i)));
+            rubiksCube.setWeight(Double.parseDouble(parameters.get(++i)));
+            rubiksCube.setInfo(parameters.get(++i));
+            rubiksCube.setSize(parameters.get(++i));
+            rubiksCube.setManufacturer(parameters.get(++i));
+            rubiksCube.setForm(parameters.get(++i));
+            rubiksCube.setPlasticColor(parameters.get(++i));
+            rubiksCube.setPrimaryPlastic(parameters.get(++i).equals("on"));
+            rubiksCube.setDate(new Date());
+            return rubiksCube;
+        } else {
+            throw new ServiceException();
+        }
     }
 }

@@ -25,7 +25,7 @@
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <form action="findform.html" method="get">
                         <fmt:message key="search.form"/>
                         <input class="form-control" type="text" name="form"
@@ -33,7 +33,7 @@
                                aria-label="Search" maxlength="20">
                     </form>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <form action="findsize.html" method="get">
                         <fmt:message key="search.size"/>
                         <input class="form-control" type="text"
@@ -43,13 +43,24 @@
 
                     </form>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <form action="findmodel.html" method="get">
                         <fmt:message key="search.model"/>
                         <input class="form-control" type="text"
                                name="model" placeholder="<fmt:message
                        key="search.model"/>" aria-label="Search" maxlength="30">
 
+                    </form>
+                </div>
+                <div class="col-md-3">
+                    <form action="findprice.html" method="get">
+                        <fmt:message key="search.model"/>
+                        <input class="form-control" type="number"
+                               name="minprice" placeholder="<fmt:message
+                       key="search.model"/>" aria-label="Search" maxlength="30">
+                        <input class="form-control" type="number"
+                               name="minprice" placeholder="<fmt:message
+                       key="search.model"/>" aria-label="Search" maxlength="30">
                     </form>
                 </div>
             </div>

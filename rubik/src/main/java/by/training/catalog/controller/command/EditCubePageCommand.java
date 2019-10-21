@@ -3,7 +3,6 @@ package by.training.catalog.controller.command;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
-import by.training.catalog.service.impl.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

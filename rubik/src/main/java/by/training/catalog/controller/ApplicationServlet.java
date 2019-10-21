@@ -7,17 +7,20 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 /**
  * Application servlet. Runner.
  */
 @WebServlet("*.html")
+@MultipartConfig
 public class ApplicationServlet extends HttpServlet {
     /**
      * Logger.
@@ -30,7 +33,8 @@ public class ApplicationServlet extends HttpServlet {
     @Override
     public void init() {
         ResourceBundle bundle = ResourceBundle.getBundle("database");
-        ServiceInitializer.init(bundle);
+        String path = getServletContext().getRealPath("/");
+        ServiceInitializer.init(bundle, path);
     }
 
     /**

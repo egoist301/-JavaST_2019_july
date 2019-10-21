@@ -6,7 +6,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * User validator parameters.
  */
-public class UserValidator {
+public final class UserValidator {
     /**
      * Logger.
      */
@@ -25,7 +25,8 @@ public class UserValidator {
      * Email regex.
      */
     private static final String USER_EMAIL_REGEX =
-            "^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\.[a-z]{2,6}$";
+            "^([a-z0-9_-]+\\.)*[a-z0-9_-]+@[a-z0-9_-]+(\\.[a-z0-9_-]+)*\\"
+                    + ".[a-z]{2,6}$";
     /**
      * Phone regex.
      */

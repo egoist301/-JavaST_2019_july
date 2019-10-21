@@ -1,5 +1,6 @@
 package by.training.catalog.service;
 
+import by.training.catalog.bean.RawData;
 import by.training.catalog.dao.pool.ConnectionPool;
 
 import java.util.ResourceBundle;
@@ -19,7 +20,8 @@ public final class ServiceInitializer {
      *
      * @param bundle resource bundle with parameter for database.
      */
-    public static void init(final ResourceBundle bundle) {
+    public static void init(final ResourceBundle bundle, final String path) {
         ConnectionPool.getInstance().init(bundle);
+        RawData.setRootPath(path);
     }
 }

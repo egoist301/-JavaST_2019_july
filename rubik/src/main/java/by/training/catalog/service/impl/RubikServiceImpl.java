@@ -2,8 +2,11 @@ package by.training.catalog.service.impl;
 
 import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
-import by.training.catalog.bean.StoreImage;
-import by.training.catalog.dao.*;
+import by.training.catalog.dao.AbstractConnectionManager;
+import by.training.catalog.dao.ConnectionManagerFactory;
+import by.training.catalog.dao.DaoFactory;
+import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.RubikDao;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
@@ -134,6 +137,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
                 entityNew.setId(rubikDao.create(entityNew));
+                ImageService service = new ImageService();
                 connectionManager.commit();
             } catch (PersistentException eNew) {
                 connectionManager.rollback();

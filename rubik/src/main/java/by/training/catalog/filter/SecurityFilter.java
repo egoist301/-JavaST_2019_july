@@ -4,7 +4,12 @@ import by.training.catalog.bean.Role;
 import by.training.catalog.bean.User;
 import by.training.catalog.controller.command.Command;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -32,8 +37,9 @@ public class SecurityFilter implements Filter {
      * @throws IOException      i/o exception.
      */
     @Override
-    public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain)
+    public void doFilter(final ServletRequest request,
+                         final ServletResponse response,
+                         final FilterChain chain)
             throws ServletException, IOException {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
@@ -60,7 +66,7 @@ public class SecurityFilter implements Filter {
      * @param config filter config.
      */
     @Override
-    public void init(FilterConfig config) {
+    public void init(final FilterConfig config) {
 
     }
 

@@ -2,14 +2,12 @@ package by.training.catalog.controller.command;
 
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
-import by.training.catalog.service.impl.ServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 public class CreateCubePageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();

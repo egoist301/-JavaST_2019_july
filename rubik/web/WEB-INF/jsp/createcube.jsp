@@ -22,7 +22,7 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="cube"/>
         </h2>
-        <form action="createcube.html" method="post">
+        <form action="createcube.html" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
                         key="cube.model"/></label>
@@ -106,7 +106,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <input type="file" multiple name="img" class="custom-file">
+                <input formenctype="multipart/form-data" type="file" multiple
+                       name="img" class="custom-file">
             </div>
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>

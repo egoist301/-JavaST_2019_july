@@ -17,6 +17,7 @@ import java.util.concurrent.locks.ReentrantLock;
 /**
  * Connection pool, which contains connections of ProxyConnection type.
  * Implemented as singleton.
+ *
  * @see ProxyConnection
  */
 public final class ConnectionPool {
@@ -137,6 +138,7 @@ public final class ConnectionPool {
      * to using connection container. If available
      * connections container hasn't any connection, tries to create new
      * connection. Then returns this connection.
+     *
      * @return a connection
      */
     public ProxyConnection getConnection() {
@@ -169,6 +171,7 @@ public final class ConnectionPool {
     /**
      * Receive a connection, check it and put into available
      * connections container.
+     *
      * @param connection received connection.
      */
     void releaseConnection(final ProxyConnection connection) {

@@ -22,7 +22,7 @@ public final class Pagination {
         }
         return page;
     }
-    static int calcOffset(int page, int limit) {
+    static int calcOffset(final int page, final int limit) {
         int offset;
         if (page == 1) {
             offset = 0;

@@ -66,33 +66,20 @@ public class RubiksCube extends Entity {
         super(idNew);
     }
 
-    public RubiksCube(final long idNew, final String modelNew,
-                      final double priceNew,
-                      final double weightNew, final String infoNew,
-                      final boolean primaryPlasticNew,
-                      final String sizeNew,
-                      final String plasticColorNew,
-                      final String manufacturerNew,
-                      final String formNew, final Date dateNew,
-                      final boolean blockedNew) {
-        super(idNew);
-        model = modelNew;
-        price = priceNew;
-        weight = weightNew;
-        info = infoNew;
-        primaryPlastic = primaryPlasticNew;
-        size = sizeNew;
-        plasticColor = plasticColorNew;
-        manufacturer = manufacturerNew;
-        form = formNew;
-        date = dateNew;
-        blocked = blockedNew;
-    }
-
+    /**
+     * Getter.
+     *
+     * @return paths to file.
+     */
     public List<String> getPaths() {
         return paths;
     }
 
+    /**
+     * Setter.
+     *
+     * @param pathsNew paths to file.
+     */
     public void setPaths(final List<String> pathsNew) {
         paths = pathsNew;
     }

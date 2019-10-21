@@ -39,7 +39,7 @@ CREATE TABLE `form`
 CREATE TABLE rubiks_cube
 (
     `id`               INT UNSIGNED     NOT NULL AUTO_INCREMENT,
-    `model`            VARCHAR(30)      NOT NULL,
+    `model`            VARCHAR(16)      NOT NULL,
     `price`            DECIMAL          NOT NULL,
     `weight`           DOUBLE           NOT NULL,
     `info`             VARCHAR(2000)    NOT NULL,

@@ -1,7 +1,9 @@
 package by.training.catalog.controller.command;
 
-import by.training.catalog.service.RubikService;
-import by.training.catalog.service.impl.ServiceFactory;
+import by.training.catalog.bean.RawData;
+import by.training.catalog.service.impl.ImageService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -12,28 +14,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddRubikCommand extends AdminCommand {
+    private static final Logger LOGGER = LogManager.getLogger();
+
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
             throws IOException {
-
-        String model = requestNew.getParameter("model");
-        String price = requestNew.getParameter("price");
-        String weight = requestNew.getParameter("weight");
-        String info = requestNew.getParameter("info");
-        String manufacturer = requestNew.getParameter("manufacturer");
-        String form = requestNew.getParameter("form");
-        String plasticColor = requestNew.getParameter("plasticColor");
-        String primaryPlastic = requestNew.getParameter("primaryPlastic");
-        String size = requestNew.getParameter("size");
-        String[] paths = requestNew.getParameterValues("img");
-        ServiceFactory factory = new ServiceFactory();
-        RubikService service = factory.createRubikService();
-        /*try {
-            service.create();
-        } catch (ServiceException eNew) {
-
-        }*/
+        List<String> parameters = new ArrayList<>();
+        parameters.add(requestNew.getParameter("model"));
+        parameters.add(requestNew.getParameter("price"));
+        parameters.add(requestNew.getParameter("weight"));
+        parameters.add(requestNew.getParameter("info"));
+        parameters.add(requestNew.getParameter("size"));
+        parameters.add(requestNew.getParameter("manufacturer"));
+        parameters.add(requestNew.getParameter("form"));
+        parameters.add(requestNew.getParameter("plasticColor"));
+        parameters.add(requestNew.getParameter("primaryPlastic"));
+        List<Part> parts;
+        List<RawData> rawData = new ArrayList<>();
+        try {
+            parts = new ArrayList<>(requestNew.getParts());
+            for (Part part : parts) {
+                if (!part.getName().isEmpty()) {
+                    RawData rd = new RawData();
+                    rd.setStream(part.getInputStream());
+                    rd.setContentType(part.getContentType());
+                    rawData.add(rd);
+                }
+            }
+            ImageService service = new ImageService();
+            for (RawData rd : rawData) {
+                service.save(rd);
+            }
+        } catch (ServletException eNew) {
+            LOGGER.error(eNew.getMessage(), eNew);
+            return sendError(500);
+        }
+        LOGGER.debug("RawData {}", rawData);
         return new Forward("catalog.html");
     }
 }
