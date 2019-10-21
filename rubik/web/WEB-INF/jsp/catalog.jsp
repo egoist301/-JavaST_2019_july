@@ -54,13 +54,19 @@
                 </div>
                 <div class="col-md-3">
                     <form action="findprice.html" method="get">
-                        <fmt:message key="search.model"/>
-                        <input class="form-control" type="number"
+                        <fmt:message key="search.price"/>
+                        <input class="form-control" type="text"
+                               name="minprice"
+                               onkeypress='return event.charCode >= 48 &&
+                               event.charCode <= 57'
+                               placeholder="<fmt:message
+                       key="search.price.min"/>" required aria-label="Search"
+                               min="1" max="2000">
+                        <input class="form-control" required type="text"
                                name="minprice" placeholder="<fmt:message
-                       key="search.model"/>" aria-label="Search" maxlength="30">
-                        <input class="form-control" type="number"
-                               name="minprice" placeholder="<fmt:message
-                       key="search.model"/>" aria-label="Search" maxlength="30">
+                       key="search.price.max"/>" aria-label="Search" min="1"
+                               max="2000" onkeypress='return event.charCode
+                               >= 48 && event.charCode <= 57'>
                     </form>
                 </div>
             </div>
@@ -88,22 +94,40 @@
                                  type="by.training.catalog.bean.RubiksCube"/>
                     <tr>
                         <td>
-                            <a href="rubik.html?id=${cube.id}">
-                                <img class="small-icon"
-                                     src="<c:url
+                            <div class="container col-md-6">
+                                <a href="rubik.html?id=${cube.id}">
+                                    <img class="small-icon"
+                                         src="<c:url
                                      value="${cube.paths.get(0)}"
                                       />"
-                                     style="width: 100px; height: 100px;"
-                                     alt="${cube.model}"/>
-                            </a>
+                                         style="width: 100px; height: 100px;"
+                                         alt="${cube.model}"/>
+                                </a>
+                            </div>
                         </td>
                         <td>
                             <a href="rubik.html?id=${cube.id}">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item">${cube.model}</li>
-                                    <li class="nav-item">${cube.form}</li>
-                                    <li class="nav-item">${cube.size}</li>
-                                    <li class="nav-item">${cube.price}</li>
+                                    <li class="nav-item"><fmt:message
+                                            key="cube.model"/>: ${cube.model}
+                                    </li>
+                                    <li
+                                            class="nav-item"><fmt:message
+                                            key="cube.form"/>: ${cube.form}</li>
+                                    <li
+                                            class="nav-item"><fmt:message
+                                            key="cube.size"/>: ${cube.size}</li>
+                                    <li
+                                            class="nav-item"><fmt:message
+                                            key="cube.price"/>:
+                                            ${cube.price}
+                                        <fmt:message
+                                                key="cube.price.value"/>
+                                    </li>
+                                    <li
+                                            class="nav-item"><fmt:message
+                                            key="cube.date"/>: ${cube.date}
+                                    </li>
                                 </ul>
                             </a>
                         </td>

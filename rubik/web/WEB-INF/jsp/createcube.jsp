@@ -29,7 +29,7 @@
                 <input type="text" class="form-control" id="exampleModel"
                        placeholder="<fmt:message
                                key="registration.placeholder.username"/>"
-                       required name="model">
+                       required name="model" maxlength="30">
             </div>
             <div class="form-group">
                 <label for="examplePrice"><fmt:message
@@ -43,7 +43,7 @@
                 <label for="exampleWeight"><fmt:message
                         key="cube.weight"/></label>
                 <input type="number" class="form-control" id="exampleWeight"
-                       min="1" max="2000" placeholder="<fmt:message
+                       min="1" max="3000" placeholder="<fmt:message
                                key="registration.placeholder.username"/>"
                        required name="weight">
             </div>
@@ -71,7 +71,7 @@
                                key="registration.placeholder.username"/>"
                        required
                        pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
-                       name="size">
+                       name="size" maxlength="8">
             </div>
             <div class="form-group">
                 <label for="examplePlasticColor"><fmt:message

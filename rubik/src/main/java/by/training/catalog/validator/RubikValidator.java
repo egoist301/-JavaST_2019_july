@@ -7,12 +7,12 @@ import java.util.List;
 
 public final class RubikValidator {
     private static final Logger LOGGER = LogManager.getLogger();
-    private static final double MAX_WEIGHT = 2000;
+    private static final double MAX_WEIGHT = 3000;
     private static final double MIN_WEIGHT = 1;
     private static final double MAX_PRICE = 2000;
     private static final double MIN_PRICE = 2000;
     private static final int MIN_MODEL_LENGTH = 4;
-    private static final int MAX_MODEL_LENGTH = 16;
+    private static final int MAX_MODEL_LENGTH = 30;
     private static final int MAX_INFO_LENGTH = 2000;
     private static final String REGEX_SIZE = "([0-9]{1,2}x[0-9]{1,2})|"
             + "([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})";

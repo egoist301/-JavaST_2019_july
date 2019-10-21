@@ -35,7 +35,7 @@
                 <tbody>
                 <tr>
                     <td>
-                        <div class="view overlay zoom">
+                        <div class="view overlay zoom col-md-6">
                             <img class="d-block img-fluid"
                                  src="${cube.paths.get(0)}"
                                  style="width: 300px; height: 300px;"
@@ -59,9 +59,16 @@
                                     key="cube.manufacturer"/>:
                                 ${cube.manufacturer}</li>
                             <li class="nav-item"><fmt:message
-                                    key="cube.weight"/>: ${cube.weight}</li>
+                                    key="cube.weight"/>: ${cube.weight}
+                            <fmt:message key="cube.weight.value"/></li>
                             <li class="nav-item"><fmt:message
-                                    key="cube.price"/>: ${cube.price}</li>
+                                    key="cube.price"/>:
+                                ${cube.price} <fmt:message
+                                        key="cube.price.value"/>
+                            </li>
+                            <li class="nav-item"><fmt:message
+                                    key="cube.date"/>: ${cube.date}
+                            </li>
                         </ul>
                     </td>
                 </tr>

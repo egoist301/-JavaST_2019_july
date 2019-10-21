@@ -39,7 +39,7 @@ CREATE TABLE `form`
 CREATE TABLE rubiks_cube
 (
     `id`               INT UNSIGNED     NOT NULL AUTO_INCREMENT,
-    `model`            VARCHAR(16)      NOT NULL,
+    `model`            VARCHAR(30)      NOT NULL,
     `price`            DECIMAL          NOT NULL,
     `weight`           DOUBLE           NOT NULL,
     `info`             VARCHAR(2000)    NOT NULL,
@@ -56,7 +56,11 @@ CREATE TABLE rubiks_cube
     CONSTRAINT FK_Rubiks_Manufacturer FOREIGN KEY (`manufacturer_id`)
         REFERENCES `manufacturer` (`id`),
     CONSTRAINT FK_Rubiks_Form FOREIGN KEY (`form_id`)
-        REFERENCES `form` (`id`)
+        REFERENCES `form` (`id`),
+    CONSTRAINT weight_check CHECK (`weight` < 3000 AND `weight` > 0),
+    CONSTRAINT price_check CHECK (`price` < 2000 AND `price` > 0),
+    CONSTRAINT size_check CHECK ( `size` REGEXP
+                                  '([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})')
 );
 
 CREATE INDEX IDX_Rubiks_Form
