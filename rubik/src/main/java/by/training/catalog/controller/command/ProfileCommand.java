@@ -29,23 +29,16 @@ public class ProfileCommand extends UserCommand {
                     oldPassword) != null) {
                 user.setPassword(newPassword);
                 LOGGER.debug(user);
-                try {
-                    userService.update(user);
-                    forward = new Forward(profile, true);
-                    LOGGER.debug("password is change");
-                } catch (ServiceException eNew) {
-                    forward = new Forward();
-                    forward.setError(true);
-                    forward.getAttributes().put("error", 500);
-                    return forward;
-                }
+                userService.update(user);
+                forward = new Forward(profile, true);
+                LOGGER.debug("password is change");
             } else {
                 forward = new Forward(profile);
                 LOGGER.debug("incorrect old password");
             }
         } catch (ServiceException eNew) {
-            forward = new Forward(profile);
-            LOGGER.debug("incorrect old password");
+            LOGGER.error(eNew);
+            return sendError(SERVER_ERROR);
         }
         return forward;
     }

@@ -26,6 +26,8 @@ public class RubiksCommand extends Command {
         int records;
         List<RubiksCube> rubiksCubes;
         try {
+            List<String> forms = rubikService.readAllForm();
+            List<String> manufacturers = rubikService.readAllManufacturer();
             int offset;
             if (page == 1) {
                 offset = 0;
@@ -37,9 +39,11 @@ public class RubiksCommand extends Command {
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }
+            requestNew.setAttribute("forms", forms);
+            requestNew.setAttribute("manufacturer", manufacturers);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         return getForward(requestNew, page, records, rubiksCubes);
     }

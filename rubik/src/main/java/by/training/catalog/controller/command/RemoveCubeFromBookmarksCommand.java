@@ -23,7 +23,7 @@ public class RemoveCubeFromBookmarksCommand extends UserCommand {
             id = Long.parseLong(requestNew.getParameter("id"));
         } catch (NumberFormatException eNew) {
             LOGGER.error(eNew);
-            return sendError(404);
+            return sendError(NOT_FOUND);
         }
         HttpSession session = requestNew.getSession(false);
         User user = (User) session.getAttribute("user");
@@ -33,7 +33,7 @@ public class RemoveCubeFromBookmarksCommand extends UserCommand {
             return new Forward("bookmarks.html");
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
     }
 }

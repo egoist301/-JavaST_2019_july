@@ -34,7 +34,7 @@ public class SignInCommand extends Command {
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         return forward;
     }

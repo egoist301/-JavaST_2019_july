@@ -19,14 +19,14 @@ public class BlockedUserCommand extends AdminCommand {
             LOGGER.debug("Id = {}", id);
         } catch (NumberFormatException eNew) {
             LOGGER.error(eNew);
-            return sendError(404);
+            return sendError(NOT_FOUND);
         }
 
         UserService service = getFactory().createUserService();
         try {
             service.updateState(id);
         } catch (ServiceException eNew) {
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         return new Forward("users.html", true);
     }

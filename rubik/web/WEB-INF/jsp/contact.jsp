@@ -83,7 +83,8 @@
             </div>
             <div id="map-container-google-1"
                  class="z-depth-1-half map-container" style="height: 400px">
-                <iframe src="https://maps.google.com/maps?q=minsk&t=&z=10&ie=UTF8&iwloc=&output=embed"
+                <iframe
+                        src="https://maps.google.com/maps?q=minsksurganova37/2&t=&z=15&ie=UTF8&iwloc=&output=embed"
                         frameborder="0" style="border:0"
                         allowfullscreen></iframe>
             </div>

@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
 public class ImageService {
-    private Logger logger = LogManager.getLogger();
-    private static final String UPLOAD_DIRECTORY = "img/";
+    private static final Logger LOGGER = LogManager.getLogger();
+    private static final String UPLOAD_DIRECTORY = "img";
 
     public String save(final RawData rawData) {
         if (rawData == null) {
@@ -19,30 +19,32 @@ public class ImageService {
         String permittedContentType = "image/";
         String contentType = rawData.getContentType();
         if (!contentType.contains(permittedContentType)) {
-            logger.warn("Attempt to load file with prohibited content type");
+            LOGGER.warn("Attempt to load file with prohibited content type");
             return null;
         }
         String container = contentType.substring(permittedContentType.length());
         try {
             byte[] data = rawData.getStream().readAllBytes();
-            logger.debug("Read {} bytes of data.", data.length);
-            return ImageManager.save(data, UPLOAD_DIRECTORY, container);
+            LOGGER.debug("Read {} bytes of data.", data.length);
+            String temp = ImageManager.save(data, UPLOAD_DIRECTORY, container);
+            LOGGER.debug("TEMP!!!!!!   {}", temp);
+            return temp;
         } catch (IOException e) {
-            logger.error("Cannot save image. {}", e.getMessage());
+            LOGGER.error("Cannot save image. {}", e.getMessage());
             return null;
         }
     }
 
     public boolean delete(final String relativePath) {
         if (relativePath == null || relativePath.isBlank()) {
-            logger.debug("Cannot delete file, path is null.");
+            LOGGER.debug("Cannot delete file, path is null.");
             return false;
         }
-        logger.debug("Attempt to delete file: {}", relativePath);
+        LOGGER.debug("Attempt to delete file: {}", relativePath);
         try {
             ImageManager.delete(relativePath);
         } catch (PersistentException e) {
-            logger.error("Cannot delete file. {}", e.getMessage());
+            LOGGER.error("Cannot delete file. {}", e.getMessage());
             return false;
         }
         return true;

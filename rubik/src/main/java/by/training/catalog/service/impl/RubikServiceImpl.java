@@ -25,6 +25,22 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
+    public List<RubiksCube> findRubiksByManufacturer(final String manufacturer,
+                                                     final int limit,
+                                                     final int offset)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.findRubiksByManufacturer(manufacturer, limit,
+                    offset);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
     public List<RubiksCube> findRubiksBySize(final String size,
                                              final int offset, final int limit)
             throws ServiceException {
@@ -53,17 +69,63 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public List<RubiksCube> findRubiksByRangePrice(final int minPrice,
-                                                   final int maxPrice,
+    public List<RubiksCube> findRubiksByRangePrice(final String minPrice,
+                                                   final String maxPrice,
                                                    final int offset,
                                                    final int limit)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
+            double min = Double.parseDouble(minPrice);
+            double max = Double.parseDouble(maxPrice);
+            if (min > max) {
+                min += max;
+                max = min - max;
+                min -= max;
+            }
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao
-                    .findRubiksByRangePrice(minPrice, maxPrice, offset, limit);
+                    .findRubiksByRangePrice(min, max, offset, limit);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public int findCountByForm(final String form) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.findCountByForm(form);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public int findCountByPrice(final String min, final String max)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.findCountByPrice(Double.parseDouble(min),
+                    Double.parseDouble(max));
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public int findCountByManufacturer(final String manufacturer)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.findCountByManufacturer(manufacturer);
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -129,6 +191,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
         }
     }
 
+    //TODO write this method...
     @Override
     public void create(final RubiksCube entityNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
@@ -141,6 +204,22 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                 connectionManager.commit();
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
+                throw new ServiceException(eNew);
+            }
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public int findCountByModel(final String model) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            try {
+                RubikDao rubikDao =
+                        getDaoFactory().createRubikDao(connectionManager);
+                return rubikDao.findCountByModel(model);
+            } catch (PersistentException eNew) {
                 throw new ServiceException(eNew);
             }
         } catch (PersistentException eNew) {

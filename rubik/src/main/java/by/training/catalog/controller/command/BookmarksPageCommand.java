@@ -35,7 +35,7 @@ public class BookmarksPageCommand extends UserCommand {
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         LOGGER.debug("Paths {}", user.getCubes());
         requestNew.setAttribute("page", page);

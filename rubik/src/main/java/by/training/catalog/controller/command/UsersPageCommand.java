@@ -32,7 +32,7 @@ public class UsersPageCommand extends AdminCommand {
             users = userService.findAll(offset, LIMIT);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         requestNew.setAttribute("users", users);
         requestNew.setAttribute("page", page);

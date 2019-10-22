@@ -4,8 +4,20 @@ import by.training.catalog.bean.Role;
 import by.training.catalog.bean.User;
 import by.training.catalog.validator.UserValidator;
 
+/**
+ * User parser.
+ */
 public class UserParser {
 
+    /**
+     * Get valid user.
+     *
+     * @param usernameNew username.
+     * @param emailNew    email.
+     * @param phoneNew    phone.
+     * @param passwordNew password.
+     * @return user.
+     */
     public User getUser(final String usernameNew, final String emailNew,
                         final String phoneNew,
                         final String passwordNew) {

@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class Command {
+    static final int NOT_FOUND = 404;
+    static final int SERVER_ERROR = 500;
     private ServiceFactory factory = new ServiceFactory();
     private Set<Role> roles = new HashSet<>();
 

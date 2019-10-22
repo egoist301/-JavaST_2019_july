@@ -36,6 +36,9 @@ public final class CommandProvider {
         commandMap.put("/removecube", new RemoveCubeFromBookmarksCommand());
         commandMap.put("/findusername", new FindUserByUsernameCommand());
         commandMap.put("/createcube", new AddRubikCommand());
+        commandMap
+                .put("/findmanufacturer", new FindCubeByManufacturerCommand());
+        commandMap.put("/findprice", new FindCubeByPriceCommand());
     }
 
     public static Command getCommand(final String actionNew) {

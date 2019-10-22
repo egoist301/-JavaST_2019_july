@@ -9,17 +9,19 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
-public class FindCubeByModelCommand extends FindCubeCommand {
+public class FindCubeByManufacturerCommand extends FindCubeCommand {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+                           final HttpServletResponse responseNew)
+            throws IOException {
         int page = Pagination.calcPage(requestNew);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
@@ -27,9 +29,10 @@ public class FindCubeByModelCommand extends FindCubeCommand {
         List<RubiksCube> rubiksCubes;
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String model = requestNew.getParameter("model");
-            rubiksCubes = rubikService.findRubiksByModel(model, offset, LIMIT);
-            records = rubikService.findCountByModel(model);
+            String manufacturer = requestNew.getParameter("manufacturer");
+            rubiksCubes = rubikService
+                    .findRubiksByManufacturer(manufacturer, offset, LIMIT);
+            records = rubikService.findCountByManufacturer(manufacturer);
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }

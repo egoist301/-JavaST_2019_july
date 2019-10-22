@@ -7,7 +7,17 @@ import by.training.catalog.validator.RubikValidator;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Rubik parser.
+ */
 public class RubikParser {
+    /**
+     * Get valid cube or throw exception.
+     *
+     * @param parameters parameters for cube.
+     * @return cube.
+     * @throws ServiceException if cube invalid.
+     */
     public RubiksCube getCube(List<String> parameters) throws ServiceException {
         if (RubikValidator.isValid(parameters)) {
             RubiksCube rubiksCube = new RubiksCube(1);

@@ -24,7 +24,7 @@ public class CreateCubePageCommand extends AdminCommand {
             requestNew.setAttribute("colors", colors);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         return new Forward("WEB-INF/jsp/createcube.jsp");
     }

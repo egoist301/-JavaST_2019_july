@@ -9,6 +9,48 @@ import java.util.List;
  */
 public interface RubikDao extends Dao<RubiksCube> {
     /**
+     * Find count of rubik's by model.
+     *
+     * @param model model.
+     * @return count of rubik's.
+     * @throws PersistentException dao exception.
+     */
+    int findCountByModel(String model) throws PersistentException;
+
+    /**
+     * Find count of rubik's by form.
+     *
+     * @param form form.
+     * @return count of rubik's.
+     * @throws PersistentException dao exception.
+     */
+    int findCountByForm(String form) throws PersistentException;
+
+    /**
+     * Find count of rubik's by price in range.
+     *
+     * @param min min price.
+     * @param max max price.
+     * @return count of rubik's.
+     * @throws PersistentException dao exception.
+     */
+    int findCountByPrice(double min, double max)
+            throws PersistentException;
+
+    /**
+     * Find all rubik's by manufacturer in range.
+     *
+     * @param manufacturer manufacturer.
+     * @param limit        limit.
+     * @param offset       offset.
+     * @return list of rubik's.
+     * @throws PersistentException dao exception.
+     */
+    List<RubiksCube> findRubiksByManufacturer(String manufacturer, int limit,
+                                              int offset)
+            throws PersistentException;
+
+    /**
      * Find rubiks by size in range.
      *
      * @param size   size of cube.
@@ -23,8 +65,8 @@ public interface RubikDao extends Dao<RubiksCube> {
     /**
      * Find rubik by model.
      *
-     * @param model model.
-     * @param limit limit.
+     * @param model  model.
+     * @param limit  limit.
      * @param offset offset.
      * @return cube.
      * @throws PersistentException dao exception.
@@ -42,7 +84,7 @@ public interface RubikDao extends Dao<RubiksCube> {
      * @return list of cubes.
      * @throws PersistentException dao exception.
      */
-    List<RubiksCube> findRubiksByRangePrice(int minPrice, int maxPrice,
+    List<RubiksCube> findRubiksByRangePrice(double minPrice, double maxPrice,
                                             int offset, int limit)
             throws PersistentException;
 
@@ -91,7 +133,18 @@ public interface RubikDao extends Dao<RubiksCube> {
     List<String> readAllPlasticColor() throws PersistentException;
 
     /**
+     * Find count of rubik's by manufacturer.
+     *
+     * @param manufacturer manufacturer.
+     * @return count of rubik's.
+     * @throws PersistentException dao exception.
+     */
+    int findCountByManufacturer(String manufacturer)
+            throws PersistentException;
+
+    /**
      * Update state of cube. Ban.
+     *
      * @param rubiksCubeNew cube.
      * @throws PersistentException dao exception.
      */

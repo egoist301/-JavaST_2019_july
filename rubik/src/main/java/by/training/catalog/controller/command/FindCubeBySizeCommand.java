@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class FindCubeBySizeCommand extends Command {
+public class FindCubeBySizeCommand extends FindCubeCommand {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -35,9 +35,11 @@ public class FindCubeBySizeCommand extends Command {
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }
+            getForms(requestNew);
+            getManufacturers(requestNew);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         return getForward(requestNew, page, records, rubiksCubes);
     }

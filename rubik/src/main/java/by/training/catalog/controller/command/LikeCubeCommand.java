@@ -24,7 +24,7 @@ public class LikeCubeCommand extends UserCommand {
         try {
             id = Long.parseLong(requestNew.getParameter("id"));
         } catch (NumberFormatException eNew) {
-            return sendError(404);
+            return sendError(NOT_FOUND);
         }
         try {
             HttpSession session = requestNew.getSession(false);

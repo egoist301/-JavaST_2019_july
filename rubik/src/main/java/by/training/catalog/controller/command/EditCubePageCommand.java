@@ -25,7 +25,7 @@ public class EditCubePageCommand extends AdminCommand {
             id = Long.parseLong(requestNew.getParameter("id"));
         } catch (NumberFormatException eNew) {
             LOGGER.error(eNew);
-            return sendError(404);
+            return sendError(NOT_FOUND);
         }
         RubikService service = getFactory().createRubikService();
         try {
@@ -41,7 +41,7 @@ public class EditCubePageCommand extends AdminCommand {
             return forward;
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
     }
 }

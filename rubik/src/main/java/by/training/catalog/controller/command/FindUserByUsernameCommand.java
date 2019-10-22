@@ -37,7 +37,7 @@ public class FindUserByUsernameCommand extends AdminCommand {
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         requestNew.setAttribute("users", users);
         requestNew.setAttribute("page", page);

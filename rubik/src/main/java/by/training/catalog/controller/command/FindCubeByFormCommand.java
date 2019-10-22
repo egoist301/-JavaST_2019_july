@@ -13,7 +13,7 @@ import java.util.List;
 
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
-public class FindCubeByFormCommand extends Command {
+public class FindCubeByFormCommand extends FindCubeCommand {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -29,17 +29,15 @@ public class FindCubeByFormCommand extends Command {
             int offset = Pagination.calcOffset(page, LIMIT);
             String form = requestNew.getParameter("form");
             rubiksCubes = rubikService.findRubiksByForm(form, offset, LIMIT);
-            if (rubiksCubes.isEmpty()) {
-                records = 1;
-            } else {
-                records = rubiksCubes.size();
-            }
+            records = rubikService.findCountByForm(form);
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }
+            getForms(requestNew);
+            getManufacturers(requestNew);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         return getForward(requestNew, page, records, rubiksCubes);
     }

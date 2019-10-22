@@ -44,7 +44,7 @@ public class URLActionFilter implements Filter {
         Command command = CommandProvider.getCommand(action);
         getPageToReturn(req, action);
         if (command == null) {
-            resp.sendError(404);
+            resp.sendError(400);
         } else {
             servletRequestNew.setAttribute("command", command);
             filterChainNew.doFilter(req, resp);
@@ -104,6 +104,8 @@ public class URLActionFilter implements Filter {
             if (request.getQueryString() != null) {
                 String redirect = action.substring(1) + ".html?"
                         + request.getQueryString();
+                LOGGER.debug("QUERY!!!!!!!!  {}", request.getParameterMap());
+                LOGGER.debug("REDIRECT!!!!!!  {}", redirect);
                 request.setAttribute("from", redirect);
             } else {
                 request.setAttribute("from", action.substring(1) + ".html");

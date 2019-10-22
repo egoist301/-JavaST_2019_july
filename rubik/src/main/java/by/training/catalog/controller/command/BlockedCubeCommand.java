@@ -20,14 +20,14 @@ public class BlockedCubeCommand extends AdminCommand {
             id = Long.parseLong(requestNew.getParameter("id"));
         } catch (NumberFormatException eNew) {
             LOGGER.error(eNew);
-            return sendError(404);
+            return sendError(NOT_FOUND);
         }
         RubikService service = getFactory().createRubikService();
         try {
             service.updateState(id);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
         return new Forward("catalog.html", true);
     }

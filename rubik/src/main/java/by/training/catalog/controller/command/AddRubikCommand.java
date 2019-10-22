@@ -35,22 +35,22 @@ public class AddRubikCommand extends AdminCommand {
         try {
             parts = new ArrayList<>(requestNew.getParts());
             for (Part part : parts) {
-                if (!part.getName().isEmpty()) {
+                if (part.getContentType() != null) {
                     RawData rd = new RawData();
                     rd.setStream(part.getInputStream());
                     rd.setContentType(part.getContentType());
                     rawData.add(rd);
                 }
             }
+            LOGGER.debug("RawData {}", rawData);
             ImageService service = new ImageService();
             for (RawData rd : rawData) {
                 service.save(rd);
             }
         } catch (ServletException eNew) {
             LOGGER.error(eNew.getMessage(), eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
-        LOGGER.debug("RawData {}", rawData);
         return new Forward("catalog.html");
     }
 }

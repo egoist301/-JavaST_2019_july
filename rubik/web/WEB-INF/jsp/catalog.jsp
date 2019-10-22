@@ -25,48 +25,78 @@
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <form action="findform.html" method="get">
-                        <fmt:message key="search.form"/>
-                        <input class="form-control" type="text" name="form"
-                               placeholder="<fmt:message key="search.form"/>"
-                               aria-label="Search" maxlength="20">
+                        <label for="exampleForm"><fmt:message
+                                key="search.form"/></label>
+                        <select class="custom-select mb-1" name="form"
+                                id="exampleForm" required>
+                            <option value="" disabled selected>Choose your form
+                            </option>
+                            <c:forEach items="${requestScope.get('forms')}"
+                                       var="form">
+                                <option value="${form}">${form}</option>
+                            </c:forEach>
+                        </select>
+                        <button type="submit"
+                                class="btn-primary btn"><fmt:message
+                                key="search"/>
+                        </button>
                     </form>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
+                    <form action="findmanufacturer.html" method="get">
+                        <label for="exampleManufacturer"><fmt:message
+                                key="search.manufacturer"/></label>
+                        <select class="custom-select mb-1" name="manufacturer"
+                                id="exampleManufacturer" required>
+                            <option value="" disabled selected>Choose your manufacturer
+                            </option>
+                            <c:forEach
+                                    items="${requestScope.get('manufacturer')}"
+                                    var="manufacturer">
+                                <option value="${manufacturer}">${manufacturer}</option>
+                            </c:forEach>
+                        </select>
+                        <button type="submit"
+                                class="btn-primary btn"><fmt:message
+                                key="search"/>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form action="findprice.html" method="get">
+                        <fmt:message key="search.price"/>
+                        <input class="form-control" type="number"
+                               name="minprice" value="1"
+                               placeholder="<fmt:message
+                       key="search.price.min"/>" required aria-label="Search"
+                               min="1" max="2000">
+                        <input class="form-control" required type="text"
+                               name="maxprice" placeholder="<fmt:message
+                       key="search.price.max"/>" aria-label="Search" min="1"
+                               max="2000" value="2000">
+                        <button type="submit"
+                                class="btn-primary btn"><fmt:message
+                                key="search"/>
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-4">
                     <form action="findsize.html" method="get">
                         <fmt:message key="search.size"/>
                         <input class="form-control" type="text"
                                pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
                                name="size" placeholder="<fmt:message
                        key="search.size"/>" maxlength="8" aria-label="Search">
-
                     </form>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <form action="findmodel.html" method="get">
                         <fmt:message key="search.model"/>
                         <input class="form-control" type="text"
                                name="model" placeholder="<fmt:message
                        key="search.model"/>" aria-label="Search" maxlength="30">
-
-                    </form>
-                </div>
-                <div class="col-md-3">
-                    <form action="findprice.html" method="get">
-                        <fmt:message key="search.price"/>
-                        <input class="form-control" type="text"
-                               name="minprice"
-                               onkeypress='return event.charCode >= 48 &&
-                               event.charCode <= 57'
-                               placeholder="<fmt:message
-                       key="search.price.min"/>" required aria-label="Search"
-                               min="1" max="2000">
-                        <input class="form-control" required type="text"
-                               name="minprice" placeholder="<fmt:message
-                       key="search.price.max"/>" aria-label="Search" min="1"
-                               max="2000" onkeypress='return event.charCode
-                               >= 48 && event.charCode <= 57'>
                     </form>
                 </div>
             </div>
@@ -110,6 +140,10 @@
                                 <ul class="navbar-nav">
                                     <li class="nav-item"><fmt:message
                                             key="cube.model"/>: ${cube.model}
+                                    </li>
+                                    <li class="nav-item">
+                                        <fmt:message key="cube.manufacturer"/>:
+                                            ${cube.manufacturer}
                                     </li>
                                     <li
                                             class="nav-item"><fmt:message
