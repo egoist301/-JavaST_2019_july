@@ -22,13 +22,14 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="cube"/>
         </h2>
-        <form action="createcube.html" method="post" enctype="multipart/form-data">
+        <form action="createcube.html" method="post"
+              enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
                         key="cube.model"/></label>
                 <input type="text" class="form-control" id="exampleModel"
                        placeholder="<fmt:message
-                               key="registration.placeholder.username"/>"
+                               key="createcube.placeholder.model"/>"
                        required name="model" maxlength="30">
             </div>
             <div class="form-group">
@@ -36,7 +37,7 @@
                         key="cube.price"/></label>
                 <input type="number" class="form-control" id="examplePrice"
                        min="1" max="2000" placeholder="<fmt:message
-                               key="registration.placeholder.username"/>"
+                               key="createcube.placeholder.price"/>"
                        required name="price">
             </div>
             <div class="form-group">
@@ -44,7 +45,7 @@
                         key="cube.weight"/></label>
                 <input type="number" class="form-control" id="exampleWeight"
                        min="1" max="3000" placeholder="<fmt:message
-                               key="registration.placeholder.username"/>"
+                               key="createcube.placeholder.weight"/>"
                        required name="weight">
             </div>
             <div class="form-group">
@@ -58,17 +59,14 @@
                 <label for="examplePrimaryPlastic"><fmt:message
                         key="cube.primaryplastic"/></label>
                 <input type="checkbox" class="form-control"
-                       id="examplePrimaryPlastic"
-                       placeholder="<fmt:message
-                               key="registration.placeholder.username"/>"
-                       name="primaryPlastic">
+                       id="examplePrimaryPlastic" name="primaryPlastic">
             </div>
             <div class="form-group">
                 <label for="exampleSize"><fmt:message
                         key="cube.size"/></label>
                 <input type="text" class="form-control" id="exampleSize"
                        placeholder="<fmt:message
-                               key="registration.placeholder.username"/>"
+                               key="creactecube.placeholder.size"/>"
                        required
                        pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
                        name="size" maxlength="8">

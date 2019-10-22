@@ -58,7 +58,8 @@
                     </li>
                     <c:choose>
                         <c:when test="${user!=null}">
-                            <c:if test="${user.role == 'ADMIN'}">
+                            <c:if test="${user.role == 'ADMIN' &&
+                            !user.blocked}">
                                 <li class="nav-item">
                                     <a href="users.html"
                                        class="nav-link waves-effect
@@ -95,7 +96,10 @@
                                 class="fas fa-user"></em>
                             <c:choose>
                                 <c:when test="${sessionScope.get('user')!=null}">
-                                    ${sessionScope.get('user').username}
+                                    ${sessionScope.get('user').username}<c:if
+                                        test="${user.blocked}"> - <fmt:message
+                                        key="profile.ban"/>
+                                </c:if>
                                 </c:when>
                                 <c:otherwise>
                                     <fmt:message key="header.profile"/>
@@ -106,12 +110,14 @@
                              aria-labelledby="navbarDropdownMenuLink-4">
                             <c:choose>
                                 <c:when test="${sessionScope.get('user')!=null}">
-                                    <a class="dropdown-item"
-                                       href="profile.html"><fmt:message
-                                            key="header.account"/></a>
-                                    <a class="dropdown-item"
-                                       href="bookmarks.html"><fmt:message
-                                            key="header.bookmarks"/></a>
+                                    <c:if test="${!sessionScope.get('user').blocked}">
+                                        <a class="dropdown-item"
+                                           href="profile.html"><fmt:message
+                                                key="header.account"/></a>
+                                        <a class="dropdown-item"
+                                           href="bookmarks.html"><fmt:message
+                                                key="header.bookmarks"/></a>
+                                    </c:if>
                                     <a class="dropdown-item"
                                        href="signout.html"><fmt:message
                                             key="header.logout"/></a>

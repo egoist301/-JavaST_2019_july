@@ -3,6 +3,7 @@ package by.training.catalog.filter;
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.User;
 import by.training.catalog.controller.command.Command;
+import by.training.catalog.controller.command.SignOutCommand;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -53,7 +54,11 @@ public class SecurityFilter implements Filter {
             boolean canExecute =
                     user != null && commandRoles.contains(user.getRole());
             if (canExecute) {
-                chain.doFilter(req, response);
+                if (!user.isBlocked() || command instanceof SignOutCommand) {
+                    chain.doFilter(req, resp);
+                } else {
+                    resp.sendError(404);
+                }
             } else {
                 resp.sendError(404);
             }

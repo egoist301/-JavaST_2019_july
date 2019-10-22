@@ -82,7 +82,7 @@
                             <c:if test="${sessionScope.get('user').role ==
                             'ADMIN'}">
                                 <th><fmt:message key="label.blocked"/></th>
-                                <th><fmt:message key="users.change"/></th>
+                                <th><fmt:message key="cube.change"/></th>
                             </c:if>
                         </c:when>
                     </c:choose>
@@ -143,7 +143,7 @@
                                             <button type="submit"
                                                     class="btn btn-primary">
                                                 <fmt:message
-                                                        key="users.change"/>
+                                                        key="cube.change"/>
                                             </button>
                                         </form>
                                     </td>

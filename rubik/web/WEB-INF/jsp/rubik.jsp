@@ -60,7 +60,7 @@
                                 ${cube.manufacturer}</li>
                             <li class="nav-item"><fmt:message
                                     key="cube.weight"/>: ${cube.weight}
-                            <fmt:message key="cube.weight.value"/></li>
+                                <fmt:message key="cube.weight.value"/></li>
                             <li class="nav-item"><fmt:message
                                     key="cube.price"/>:
                                 ${cube.price} <fmt:message
@@ -75,7 +75,9 @@
                 </tbody>
             </div>
         </table>
-        <label>${cube.info}</label>
+        <label style="padding-left: 50px;padding-right: 20px;">
+            ${cube.info}
+        </label>
         <hr class="my-5">
         <div class="container">
             <div class="row">
@@ -91,12 +93,14 @@
         </div>
         <hr class="my-5">
         <c:choose>
-            <c:when test="${sessionScope.get('user')!=null}">
+            <c:when test="${sessionScope.get('user')!=null &&
+            !sessionScope.get('user').blocked}">
                 <form action="likecube.html?id=${cube.id}" method="post">
                     <button type="submit" class="btn
                     btn-primary"><fmt:message key="cube.like"/></button>
                 </form>
-                <c:if test="${sessionScope.get('user').role =='ADMIN'}">
+                <c:if test="${sessionScope.get('user').role =='ADMIN' &&
+                !sessionScope.get('user').blocked}">
                     <form action="editcube.html" method="get">
                         <input type="hidden" value="${cube.id}" name="id">
                         <button type="submit"
