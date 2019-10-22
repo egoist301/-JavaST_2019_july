@@ -61,10 +61,16 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      */
     private static final String INSERT_RUBIK =
             "INSERT INTO `rubiks_cube` (`model`, "
-                    + "`price`, `weight`, `info`, `primary_plastic`, `size`, "
+                    + "`price`, `weight`, `info`, `primary_plastic`, "
+                    + "`size`, "
                     + "`plastic_color_id`, `manufacturer_id`, `form_id`, "
                     + "`date_added`, `blocked`) VALUES (?, ?, ?, ?, ?, ?, "
-                    + "?, ?,  ?, ?, false)";
+                    + "(SELECT plastic_color.id FROM  plastic_color WHERE "
+                    + "plastic_color = ?), "
+                    + "(SELECT manufacturer.id FROM  manufacturer WHERE "
+                    + "name_manufacturer = ?), "
+                    + "(SELECT form.id FROM form WHERE name = ?), ?, "
+                    + "false)";
     /**
      * Find rubik by model. SQL query.
      */

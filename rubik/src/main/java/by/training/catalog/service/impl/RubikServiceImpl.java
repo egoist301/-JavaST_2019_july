@@ -10,6 +10,8 @@ import by.training.catalog.dao.RubikDao;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
+import by.training.catalog.service.StoreImageService;
+import by.training.catalog.service.parser.RubikParser;
 
 import java.util.List;
 
@@ -191,16 +193,22 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
         }
     }
 
-    //TODO write this method...
     @Override
-    public void create(final RubiksCube entityNew) throws ServiceException {
+    public void create(final List<String> parameters,
+                       final List<RawData> rawDataNew) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
+                connectionManager.disableAutoCommit();
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
-                entityNew.setId(rubikDao.create(entityNew));
-                ImageService service = new ImageService();
+                RubikParser parser = new RubikParser();
+                RubiksCube cube = parser.getCube(parameters);
+                StoreImageService storeImageService =
+                        new StoreImageServiceImpl();
+                cube.setId(rubikDao.create(cube));
+                connectionManager.commit();
+                storeImageService.create(cube, rawDataNew);
                 connectionManager.commit();
             } catch (PersistentException eNew) {
                 connectionManager.rollback();

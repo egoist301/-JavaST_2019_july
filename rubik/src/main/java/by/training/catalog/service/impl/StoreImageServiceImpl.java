@@ -1,5 +1,6 @@
 package by.training.catalog.service.impl;
 
+import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.StoreImage;
 import by.training.catalog.dao.AbstractConnectionManager;
@@ -9,6 +10,7 @@ import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StoreImageServiceImpl extends AbstractService implements
@@ -65,12 +67,28 @@ public class StoreImageServiceImpl extends AbstractService implements
     }
 
     @Override
-    public void create(final StoreImage entityNew) throws ServiceException {
+    public void create(final RubiksCube cubeNew, final List<RawData> rawData)
+            throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            StoreImageDao storeImageDao =
-                    getDaoFactory().createStoreImageDao(connectionManager);
-            entityNew.setId(storeImageDao.create(entityNew));
+            try {
+                connectionManager.disableAutoCommit();
+                List<String> paths = new ArrayList<>();
+                ImageService service = new ImageService();
+                for (RawData rd : rawData) {
+                    paths.add(service.save(rd));
+                }
+                StoreImageDao storeImageDao =
+                        getDaoFactory().createStoreImageDao(connectionManager);
+                for (String path : paths) {
+                    StoreImage storeImage = new StoreImage(1, cubeNew, path);
+                    storeImageDao.create(storeImage);
+                }
+                connectionManager.commit();
+            } catch (PersistentException eNew) {
+                connectionManager.rollback();
+                throw new ServiceException(eNew);
+            }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }

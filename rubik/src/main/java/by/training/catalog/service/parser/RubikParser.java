@@ -30,7 +30,7 @@ public class RubikParser {
             rubiksCube.setManufacturer(parameters.get(++i));
             rubiksCube.setForm(parameters.get(++i));
             rubiksCube.setPlasticColor(parameters.get(++i));
-            rubiksCube.setPrimaryPlastic(parameters.get(++i).equals("on"));
+            rubiksCube.setPrimaryPlastic(parameters.get(++i) != null);
             rubiksCube.setDate(new Date());
             return rubiksCube;
         } else {

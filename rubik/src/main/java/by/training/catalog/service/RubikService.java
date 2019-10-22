@@ -123,7 +123,8 @@ public interface RubikService {
     void update(RubiksCube entityNew, List<RawData> rawDataNew)
             throws ServiceException;
 
-    void create(RubiksCube entityNew) throws ServiceException;
+    void create(List<String> parameters, List<RawData> rawDataNew)
+            throws ServiceException;
 
     /**
      * Find count of rubik's.

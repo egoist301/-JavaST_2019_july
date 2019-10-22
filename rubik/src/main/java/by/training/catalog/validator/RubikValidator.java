@@ -10,7 +10,7 @@ public final class RubikValidator {
     private static final double MAX_WEIGHT = 3000;
     private static final double MIN_WEIGHT = 1;
     private static final double MAX_PRICE = 2000;
-    private static final double MIN_PRICE = 2000;
+    private static final double MIN_PRICE = 1;
     private static final int MIN_MODEL_LENGTH = 4;
     private static final int MAX_MODEL_LENGTH = 30;
     private static final int MAX_INFO_LENGTH = 2000;
@@ -38,7 +38,7 @@ public final class RubikValidator {
             LOGGER.warn("Incorrect weight: {}", weight);
             valid = false;
         }
-        int infoLength = Integer.parseInt(parameters.get(++i));
+        int infoLength = parameters.get(++i).length();
         if (infoLength > MAX_INFO_LENGTH || infoLength < 1) {
             LOGGER.warn("Incorrect info: {}", parameters.get(i));
             valid = false;

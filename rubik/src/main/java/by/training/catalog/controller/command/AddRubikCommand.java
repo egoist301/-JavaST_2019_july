@@ -1,7 +1,8 @@
 package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.RawData;
-import by.training.catalog.service.impl.ImageService;
+import by.training.catalog.service.RubikService;
+import by.training.catalog.service.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -42,12 +43,10 @@ public class AddRubikCommand extends AdminCommand {
                     rawData.add(rd);
                 }
             }
-            LOGGER.debug("RawData {}", rawData);
-            ImageService service = new ImageService();
-            for (RawData rd : rawData) {
-                service.save(rd);
-            }
-        } catch (ServletException eNew) {
+            RubikService rubikService = getFactory().createRubikService();
+            rubikService.create(parameters, rawData);
+
+        } catch (ServletException | ServiceException eNew) {
             LOGGER.error(eNew.getMessage(), eNew);
             return sendError(SERVER_ERROR);
         }

@@ -1,5 +1,6 @@
 package by.training.catalog.service;
 
+import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.StoreImage;
 
@@ -17,7 +18,7 @@ public interface StoreImageService {
 
     void update(StoreImage entityNew) throws ServiceException;
 
-    void create(StoreImage entityNew) throws ServiceException;
+    void create(RubiksCube entityNew, List<RawData> rawDataNew) throws ServiceException;
 
     int findElementCount() throws ServiceException;
 }
