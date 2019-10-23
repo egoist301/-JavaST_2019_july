@@ -50,10 +50,14 @@
                         <td>
                             <a href="rubik.html?id=${cube.id}">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item">${cube.model}</li>
-                                    <li class="nav-item">${cube.form}</li>
-                                    <li class="nav-item">${cube.size}</li>
-                                    <li class="nav-item">${cube.price}</li>
+                                    <li class="nav-item"><c:out value="${cube
+                                    .model}"/></li>
+                                    <li class="nav-item"><c:out
+                                            value="${cube.form}"/></li>
+                                    <li class="nav-item"><c:out value="${cube
+                                    .size}"/></li>
+                                    <li class="nav-item"><c:out value="${cube
+                                    .price}"/></li>
                                 </ul>
                             </a>
                         </td>
@@ -75,7 +79,7 @@
         </table>
     </div>
     <ctgg:pagination page="${page}" lastPage="${lastPage}"
-                     pageURL="catalog"/>
+                     pageURL="bookmarks"/>
 </div>
 <hr class="my-5">
 <ctgg:footer/>

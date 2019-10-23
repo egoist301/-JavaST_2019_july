@@ -10,6 +10,9 @@ import java.util.List;
  * User dao interface.
  */
 public interface UserDao extends Dao<User> {
+    int findCountOfRubiks(User userNew)
+            throws PersistentException;
+
     /**
      * Find user by email.
      *

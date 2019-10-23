@@ -21,6 +21,8 @@ public interface UserService {
      */
     void update(User entityNew) throws ServiceException;
 
+    int findCountRubiks(long id) throws ServiceException;
+
     /**
      * Create user.
      *

@@ -96,10 +96,11 @@
                                 class="fas fa-user"></em>
                             <c:choose>
                                 <c:when test="${sessionScope.get('user')!=null}">
-                                    ${sessionScope.get('user').username}<c:if
-                                        test="${user.blocked}"> - <fmt:message
-                                        key="profile.ban"/>
-                                </c:if>
+                                    <c:out value="
+                                    ${sessionScope.get('user').username}"/>
+                                    <c:if test="${user.blocked}"> -
+                                        <fmt:message key="profile.ban"/>
+                                    </c:if>
                                 </c:when>
                                 <c:otherwise>
                                     <fmt:message key="header.profile"/>

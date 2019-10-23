@@ -39,6 +39,7 @@ public final class CommandProvider {
         commandMap
                 .put("/findmanufacturer", new FindCubeByManufacturerCommand());
         commandMap.put("/findprice", new FindCubeByPriceCommand());
+        commandMap.put("/updateinfo", new EditCubeCommand());
     }
 
     public static Command getCommand(final String actionNew) {

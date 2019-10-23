@@ -50,12 +50,14 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      * Update rubik info by id. SQL query.
      */
     private static final String UPDATE_RUBIK_BY_ID =
-            "UPDATE `rubiks_cube`" + JOIN_RUBIK_WITH_TABLES + " SET `model` = "
-                    + "?, `price` = ?, `weight` ="
+            "UPDATE `rubiks_cube` SET `model` = ?, `price` = ?, `weight` ="
                     + " ?, `info` = ?, `primary_plastic` = ?, `size` = ?,"
-                    + " `plastic_color` = ?, `name_manufacturer` = ?, "
-                    + "`name` = ?, `date_added` = ? WHERE "
-                    + "`rubiks_cube`.`id` = ?";
+                    + " `plastic_color_id` = (SELECT plastic_color.id FROM "
+                    + "plastic_color WHERE plastic_color.plastic_color = ?), "
+                    + "`manufacturer_id` = (SELECT manufacturer.id FROM  "
+                    + "manufacturer WHERE name_manufacturer = ?), "
+                    + "`form_id` = (SELECT form.id FROM form WHERE name = ?), "
+                    + "`date_added` = ? WHERE `rubiks_cube`.`id` = ?";
     /**
      * Insert rubik. SQL query.
      */

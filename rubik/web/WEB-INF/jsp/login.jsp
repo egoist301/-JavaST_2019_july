@@ -34,16 +34,14 @@
                 <input type="password" class="form-control form-control-sm"
                        id="exampleInputPassword1" minlength="4"
                        placeholder=
-                               "<fmt:message
-                               key="login.placeholder.password"/>"
+                               "<fmt:message key="login.placeholder.password"/>"
                        required maxlength="16" name="password">
             </div>
             <button type="submit"
                     class="btn btn-primary"><fmt:message
                     key="login"/></button>
             <a href="registration.html" class="btn-link
-            waves-effect"><fmt:message
-                    key="login.registration"/></a>
+            waves-effect"><fmt:message key="login.registration"/></a>
 
         </form>
     </div>

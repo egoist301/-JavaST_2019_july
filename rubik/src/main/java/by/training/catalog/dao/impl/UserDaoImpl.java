@@ -90,6 +90,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     private static final String ADD_RUBIK =
             "INSERT INTO bookmarks(`cube_id`, `user_id`) VALUES "
                     + "(?, ?)";
+    private static final String FIND_COUNT_RUBIKS = "SELECT COUNT(cube_id) "
+            + "FROM bookmarks WHERE user_id = ?";
     /**
      * Delete rubik(dislike). SQL query.
      */
@@ -118,6 +120,23 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      */
     public UserDaoImpl(final AbstractConnectionManager managerNew) {
         super(managerNew);
+    }
+
+    @Override
+    public int findCountOfRubiks(final User userNew)
+            throws PersistentException {
+        try (PreparedStatement statement =
+                     getConnection().prepareStatement(FIND_COUNT_RUBIKS)) {
+            statement.setLong(1, userNew.getId());
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException eNew) {
+            throw new PersistentException(eNew);
+        }
+        return 0;
     }
 
     /**

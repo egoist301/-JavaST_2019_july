@@ -82,6 +82,22 @@ public class UserServiceImpl extends AbstractService implements UserService {
         }
     }
 
+    @Override
+    public int findCountRubiks(final long id) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            UserDao userDao = getDaoFactory().createUserDao(connectionManager);
+            User user = userDao.findEntityById(id);
+            if (user != null) {
+                return userDao.findCountOfRubiks(user);
+            } else {
+                return 0;
+            }
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
     /**
      * Create user.
      *

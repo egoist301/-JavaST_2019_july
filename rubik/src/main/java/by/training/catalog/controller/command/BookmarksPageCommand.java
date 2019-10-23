@@ -28,7 +28,7 @@ public class BookmarksPageCommand extends UserCommand {
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
             service.findLikedCubes(user, LIMIT, offset);
-            records = user.getCubes().size();
+            records = service.findCountRubiks(user.getId());
             LOGGER.debug("Cube's on page {}", user.getCubes());
             for (RubiksCube cube : user.getCubes()) {
                 imageService.findImagesByRubik(cube);

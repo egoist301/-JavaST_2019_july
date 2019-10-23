@@ -13,6 +13,7 @@ import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
 import by.training.catalog.service.parser.RubikParser;
 
+import java.util.Date;
 import java.util.List;
 
 public class RubikServiceImpl extends AbstractService implements RubikService {
@@ -174,16 +175,24 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public void update(final RubiksCube entityNew,
-                       final List<RawData> rawDataNew) throws ServiceException {
+    public void update(final long id, final List<String> parameters)
+            throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
+                connectionManager.disableAutoCommit();
+                RubikParser parser = new RubikParser();
+                RubiksCube cube1 = parser.getCube(parameters);
+                cube1.setId(id);
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
-                rubikDao.update(entityNew);
-
-                connectionManager.commit();
+                RubiksCube cube2 = rubikDao.findEntityById(id);
+                if (cube1.getId() == rubikDao.findEntityById(id).getId()) {
+                    rubikDao.update(cube1);
+                    connectionManager.commit();
+                } else {
+                    connectionManager.rollback();
+                }
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);

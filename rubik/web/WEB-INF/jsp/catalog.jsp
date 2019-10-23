@@ -31,7 +31,8 @@
                                 key="search.form"/></label>
                         <select class="custom-select mb-1" name="form"
                                 id="exampleForm" required>
-                            <option value="" disabled selected>Choose your form
+                            <option value="" disabled selected><fmt:message
+                                    key="search.form.option"/>
                             </option>
                             <c:forEach items="${requestScope.get('forms')}"
                                        var="form">
@@ -50,12 +51,14 @@
                                 key="search.manufacturer"/></label>
                         <select class="custom-select mb-1" name="manufacturer"
                                 id="exampleManufacturer" required>
-                            <option value="" disabled selected>Choose your manufacturer
+                            <option value="" disabled selected>
+                                <fmt:message key="search.manufacturer.option"/>
                             </option>
                             <c:forEach
                                     items="${requestScope.get('manufacturer')}"
                                     var="manufacturer">
-                                <option value="${manufacturer}">${manufacturer}</option>
+                                <option value="${manufacturer}">
+                                    <c:out value="${manufacturer}"/></option>
                             </c:forEach>
                         </select>
                         <button type="submit"
@@ -139,28 +142,32 @@
                             <a href="rubik.html?id=${cube.id}">
                                 <ul class="navbar-nav">
                                     <li class="nav-item"><fmt:message
-                                            key="cube.model"/>: ${cube.model}
+                                            key="cube.model"/>:
+                                        <c:out value=" ${cube.model}"/>
                                     </li>
                                     <li class="nav-item">
                                         <fmt:message key="cube.manufacturer"/>:
-                                            ${cube.manufacturer}
+                                        <c:out value=" ${cube.manufacturer}"/>
                                     </li>
                                     <li
                                             class="nav-item"><fmt:message
-                                            key="cube.form"/>: ${cube.form}</li>
+                                            key="cube.form"/>:
+                                        <c:out value="${cube.form}"/></li>
                                     <li
                                             class="nav-item"><fmt:message
-                                            key="cube.size"/>: ${cube.size}</li>
+                                            key="cube.size"/>:
+                                        <c:out value=" ${cube.size}"/></li>
                                     <li
                                             class="nav-item"><fmt:message
                                             key="cube.price"/>:
-                                            ${cube.price}
+                                        <c:out value=" ${cube.price}"/>
                                         <fmt:message
                                                 key="cube.price.value"/>
                                     </li>
                                     <li
                                             class="nav-item"><fmt:message
-                                            key="cube.date"/>: ${cube.date}
+                                            key="cube.date"/>:
+                                        <c:out value=" ${cube.date}"/>
                                     </li>
                                 </ul>
                             </a>
@@ -169,7 +176,7 @@
                             <c:when test="${sessionScope.get('user')!=null}">
                                 <c:if test="${sessionScope.get('user').role ==
                             'ADMIN'}">
-                                    <td>${cube.blocked}</td>
+                                    <td><c:out value="${cube.blocked}"/></td>
                                     <td>
                                         <form
                                                 action="blockedcube.html?id=${cube.id}"

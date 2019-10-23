@@ -45,29 +45,35 @@
                     <td>
                         <ul class="navbar-nav">
                             <li class="nav-item"><fmt:message
-                                    key="cube.model"/>: ${cube.model}</li>
+                                    key="cube.model"/>: <c:out value="${cube
+                                    .model}"/></li>
                             <li class="nav-item"><fmt:message
-                                    key="cube.form"/>: ${cube.form}</li>
+                                    key="cube.form"/>: <c:out
+                                    value="${cube.form}"/></li>
                             <li class="nav-item"><fmt:message
-                                    key="cube.size"/>: ${cube.size}</li>
+                                    key="cube.size"/>: <c:out
+                                    value="${cube.size}"/></li>
                             <li class="nav-item"><fmt:message
-                                    key="cube.primaryplastic"/>: ${cube.primaryPlastic}</li>
+                                    key="cube.primaryplastic"/>:
+                                <c:out value="${cube.primaryPlastic}"/></li>
                             <li value="nav-item"><fmt:message
                                     key="cube.plasticcolor"/>:
-                                ${cube.plasticColor}</li>
+                                <c:out value="${cube.plasticColor}"/></li>
                             <li value="nav-item"><fmt:message
                                     key="cube.manufacturer"/>:
-                                ${cube.manufacturer}</li>
+                                <c:out value="${cube.manufacturer}"/></li>
                             <li class="nav-item"><fmt:message
-                                    key="cube.weight"/>: ${cube.weight}
+                                    key="cube.weight"/>: <c:out
+                                    value="${cube.weight}"/>
                                 <fmt:message key="cube.weight.value"/></li>
                             <li class="nav-item"><fmt:message
                                     key="cube.price"/>:
-                                ${cube.price} <fmt:message
+                                <c:out value="${cube.price}"/> <fmt:message
                                         key="cube.price.value"/>
                             </li>
                             <li class="nav-item"><fmt:message
-                                    key="cube.date"/>: ${cube.date}
+                                    key="cube.date"/>: <c:out
+                                    value="${cube.date}"/>
                             </li>
                         </ul>
                     </td>
@@ -76,14 +82,14 @@
             </div>
         </table>
         <label style="padding-left: 50px;padding-right: 20px;">
-            ${cube.info}
+            <c:out value="${cube.info}"/>
         </label>
         <hr class="my-5">
         <div class="container">
             <div class="row">
                 <c:forEach items="${cube.paths}" var="path">
                     <div class="col-md-4 view overlay zoom">
-                        <img src="${path}"
+                        <img src="<c:url value='${path}'/>"
                              style="width: 200px; height: 200px;"
                              alt="placeholder"
                              class="img-fluid">

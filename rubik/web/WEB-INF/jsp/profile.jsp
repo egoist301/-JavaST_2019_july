@@ -29,7 +29,7 @@
                 <label for="exampleName"><fmt:message
                         key="profile.username"/></label>
                 <input type="text" class="form-control" id="exampleName"
-                       placeholder="${user.username}" name="username"
+                       value="${user.username}" name="username"
                        required
                        disabled>
             </div>
@@ -39,15 +39,14 @@
                         key="profile.role"/></label>
                 <input type="password" class="form-control form-control-sm"
                        id="exampleRole" name="role"
-                       placeholder="${user.role}" required disabled>
+                       value="${user.role}" required disabled>
             </div>
             <div class="form-group">
                 <label
                         for="exampleMail"><fmt:message
                         key="profile.email"/></label>
                 <input type="email" class="form-control" id="exampleMail"
-                       placeholder="${user.email}" name="email" required
-                       disabled>
+                       value="${user.email}" name="email" required disabled>
             </div>
             <div class="form-group">
                 <label
@@ -55,7 +54,7 @@
                         key="profile.phone"/></label>
                 <input type="tel" pattern="[0-9]{3}-[0-9]{2}-[0-9]{2}"
                        class="form-control" id="examplePhone"
-                       placeholder="${user.phone}" name="phone" required
+                       value="${user.phone}" name="phone" required
                        disabled>
             </div>
             <div class="form-group">

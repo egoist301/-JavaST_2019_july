@@ -78,7 +78,8 @@
                         id="examplePlasticColor">
                     <c:forEach items="${requestScope.get('colors')}"
                                var="color">
-                        <option value="${color}">${color}</option>
+                        <option value="${color}"><c:out value="${color}"/>
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -88,8 +89,10 @@
                 <select class="custom-select mb-1" name="manufacturer"
                         id="exampleManufacturer">
                     <c:forEach items="${requestScope.get('manufacturers')}"
-                               var="manufact">
-                        <option value="${manufact}">${manufact}</option>
+                               var="manufacturer">
+                        <option value="${manufacturer}">
+                            <c:out value="${manufacturer}"/>
+                        </option>
                     </c:forEach>
                 </select>
             </div>
@@ -99,7 +102,9 @@
                 <select class="custom-select mb-1" name="form"
                         id="exampleForm">
                     <c:forEach items="${requestScope.get('forms')}" var="form">
-                        <option value="${form}">${form}</option>
+                        <option value="${form}">
+                                <c:out value="${form}"/>
+                        </option>
                     </c:forEach>
                 </select>
             </div>

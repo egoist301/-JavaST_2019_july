@@ -50,26 +50,28 @@
                                  type="by.training.catalog.bean.User"/>
                     <tr>
                         <td>
-                            <label>${user.id}</label>
+                            <label><c:out value="${user.id}"/></label>
                         </td>
                         <td>
-                            <label>${user.username}</label>
+                            <label><c:out value="${user.username}"/></label>
                         </td>
                         <td>
-                            <label>${user.role}</label>
+                            <label><c:out value="${user.role}"/></label>
                         </td>
                         <td>
-                            <label><a href="tel:${user.phone}">${user.phone}</a>
+                            <label><a href="tel:${user.phone}"><c:out value="
+                                    ${user.phone}"/></a>
                             </label>
                         </td>
                         <td>
                             <label><a
-                                    href="mailto:${user.email}">${user.email}</a>
+                                    href="mailto:${user.email}"><c:out value=
+                                    "${user.email}"/></a>
                             </label>
                         </td>
                         <td>
                             <label>
-                                    ${user.blocked}
+                                    <c:out value="${user.blocked}"/>
                             </label>
                         </td>
                         <td>

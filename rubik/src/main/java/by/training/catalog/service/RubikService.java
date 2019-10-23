@@ -9,6 +9,15 @@ import java.util.List;
  * Service for rubik.
  */
 public interface RubikService {
+    /**
+     * Find rubik's by manufacturer in range.
+     *
+     * @param manufacturer manufacturer.
+     * @param limit        limit.
+     * @param offset       offset.
+     * @return list of rubik's.
+     * @throws ServiceException service exception.
+     */
     List<RubiksCube> findRubiksByManufacturer(String manufacturer,
                                               int limit,
                                               int offset)
@@ -116,13 +125,19 @@ public interface RubikService {
     /**
      * Edit cube.
      *
-     * @param entityNew  rubik.
-     * @param rawDataNew rawData.
+     * @param parameters parameters of cube.
      * @throws ServiceException service exception.
      */
-    void update(RubiksCube entityNew, List<RawData> rawDataNew)
+    void update(long id, List<String> parameters)
             throws ServiceException;
 
+    /**
+     * Create cube by parameters and images.
+     *
+     * @param parameters parameters of cube.
+     * @param rawDataNew raw data.
+     * @throws ServiceException service exception.
+     */
     void create(List<String> parameters, List<RawData> rawDataNew)
             throws ServiceException;
 
@@ -134,6 +149,13 @@ public interface RubikService {
      */
     int findElementCount() throws ServiceException;
 
+    /**
+     * Find count of rubik's by model.
+     *
+     * @param model model.
+     * @return count of rubik's.
+     * @throws ServiceException service exception.
+     */
     int findCountByModel(String model) throws ServiceException;
 
     /**

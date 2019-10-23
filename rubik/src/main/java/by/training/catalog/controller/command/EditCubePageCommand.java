@@ -37,6 +37,7 @@ public class EditCubePageCommand extends AdminCommand {
             requestNew.setAttribute("manufacturers", manufacturers);
             requestNew.setAttribute("colors", colors);
             requestNew.setAttribute("cube", cube);
+            requestNew.setAttribute("id", id);
             forward = new Forward("WEB-INF/jsp/editrubik.jsp");
             return forward;
         } catch (ServiceException eNew) {
