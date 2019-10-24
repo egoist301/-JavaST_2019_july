@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * Cube of Rubik's.
+ * Entity which represents Rubik's Cube.
  */
 public class RubiksCube extends Entity {
     /**

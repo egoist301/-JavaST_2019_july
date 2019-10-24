@@ -1,7 +1,7 @@
 package by.training.catalog.bean;
 
 /**
- * Role in web.
+ * Enum which represents roles.
  */
 public enum Role {
     /**

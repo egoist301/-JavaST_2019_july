@@ -30,21 +30,30 @@
     <div class="col-sm-12 mx-auto">
         <ul class="pagination" style="justify-content: center">
             <li class="page-item">
-                <a class="page-link" href="${pageURL}.html?page=1">
+                <a class="page-link"
+                   href="${pageURL}<c:choose>
+<c:when test='${pageURL.contains("?")}'>&
+</c:when><c:otherwise>?</c:otherwise></c:choose>page=1">
                     <fmt:message key="pagination.first"/></a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="${pageURL}.html?page=${prevPage}">
+                <a class="page-link"
+                   href="${pageURL}<c:choose><c:when test='${pageURL.contains("?")}'>&
+</c:when><c:otherwise>?</c:otherwise></c:choose>page=${prevPage}">
                     <fmt:message key="pagination.previous"/> </a>
             </li>
             <span class="text-primary"
                   style="margin: 6px 10px">${page} of ${lastPage}</span>
             <li class="page-item">
-                <a class="page-link" href="${pageURL}.html?page=${nextPage}">
+                <a class="page-link"
+                   href="${pageURL}<c:choose><c:when test='${pageURL.contains("?")}'>&
+</c:when><c:otherwise>?</c:otherwise></c:choose>page=${nextPage}">
                     <fmt:message key="pagination.next"/> </a>
             </li>
             <li class="page-item">
-                <a class="page-link" href="${pageURL}.html?page=${lastPage}">
+                <a class="page-link"
+                   href="${pageURL}<c:choose><c:when test='${pageURL.contains("?")}'>&
+</c:when><c:otherwise>?</c:otherwise></c:choose>page=${lastPage}">
                     <fmt:message key="pagination.last"/> </a>
             </li>
         </ul>

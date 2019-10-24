@@ -29,7 +29,7 @@
                 <tr>
                     <th><fmt:message key="label.image"/></th>
                     <th><fmt:message key="label.info"/></th>
-                    <th><fmt:message key="users.change"/></th>
+                    <th><fmt:message key="bookmarks.action"/></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,9 +66,9 @@
                                     action="removecube.html?id=${cube.id}"
                                     method="post">
                                 <button type="submit"
-                                        class="btn btn-primary">
+                                        class="btn btn-danger">
                                     <fmt:message
-                                            key="users.change"/>
+                                            key="bookmarks.remove"/>
                                 </button>
                             </form>
                         </td>
@@ -79,7 +79,7 @@
         </table>
     </div>
     <ctgg:pagination page="${page}" lastPage="${lastPage}"
-                     pageURL="bookmarks"/>
+                     pageURL="bookmarks.html"/>
 </div>
 <hr class="my-5">
 <ctgg:footer/>

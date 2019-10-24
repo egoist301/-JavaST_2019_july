@@ -160,14 +160,75 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      */
     private static final String COUNT_RUBIK_BY_MODEL = COUNT_RUBIK_BY
             + " WHERE `model` = ?";
+    /**
+     * Find all rubik's by blocked = false(unblocked). SQL query.
+     */
+    private static final String FIND_ALL_UNBLOCKED_RUBIKS = FIND_RUBIK_BY
+            + " WHERE `blocked` = false LIMIT ? OFFSET ?";
+    /**
+     * Find count of rubik's by blocked = false(unblocked). SQL query.
+     */
+    private static final String COUNT_RUBIK_BY_UNBLOCKED = COUNT_RUBIK_BY
+            + " WHERE blocked = false";
 
     /**
      * Constructor.
      *
      * @param managerNew connection manager.
      */
-    RubikDaoImpl(final AbstractConnectionManager managerNew) {
+    RubikDaoImpl(
+            final AbstractConnectionManager managerNew) {
         super(managerNew);
+    }
+
+    /**
+     * Find count of rubik's by unblocked.
+     *
+     * @return count of rubik's.
+     * @throws PersistentException persistent exception.
+     */
+    @Override
+    public int findCountByUnblocked() throws PersistentException {
+        try (PreparedStatement statement =
+                     getConnection()
+                             .prepareStatement(COUNT_RUBIK_BY_UNBLOCKED);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getInt(1);
+            }
+        } catch (SQLException eNew) {
+            throw new PersistentException(eNew);
+        }
+        return 0;
+    }
+
+    /**
+     * Find rubik's by unblocked in range.
+     *
+     * @param limit  limit.
+     * @param offset offset.
+     * @return list of rubik's.
+     * @throws PersistentException persistent exception.
+     */
+    @Override
+    public List<RubiksCube> findRubiksByUnblocked(final int limit,
+                                                  final int offset)
+            throws PersistentException {
+        try (PreparedStatement statement =
+                     getConnection()
+                             .prepareStatement(FIND_ALL_UNBLOCKED_RUBIKS)) {
+            List<RubiksCube> cubes = new LinkedList<>();
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                while (resultSet.next()) {
+                    cubes.add(createRubikFromResultSet(resultSet));
+                }
+                return cubes;
+            }
+        } catch (SQLException eNew) {
+            throw new PersistentException(eNew);
+        }
     }
 
     /**
@@ -178,7 +239,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      * @throws PersistentException persistent exception.
      */
     @Override
-    public int findCountByModel(final String model) throws PersistentException {
+    public int findCountByModel(final String model) throws
+            PersistentException {
         return findCountBy(model, COUNT_RUBIK_BY_MODEL);
     }
 
@@ -214,7 +276,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      * @throws PersistentException persistent exception.
      */
     @Override
-    public int findCountByForm(final String form) throws PersistentException {
+    public int findCountByForm(final String form) throws
+            PersistentException {
         return findCountBy(form, COUNT_RUBIK_BY_FORM);
     }
 
@@ -230,7 +293,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     public int findCountByPrice(final double min, final double max)
             throws PersistentException {
         try (PreparedStatement statement =
-                     getConnection().prepareStatement(COUNT_RUBIK_BY_PRICE)) {
+                     getConnection()
+                             .prepareStatement(COUNT_RUBIK_BY_PRICE)) {
             statement.setDouble(1, min);
             statement.setDouble(2, max);
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -281,9 +345,10 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      * @throws PersistentException persistent exception.
      */
     @Override
-    public List<RubiksCube> findRubiksByManufacturer(final String manufacturer,
-                                                     final int limit,
-                                                     final int offset)
+    public List<RubiksCube> findRubiksByManufacturer(
+            final String manufacturer,
+            final int limit,
+            final int offset)
             throws PersistentException {
         return getCubes(manufacturer, limit, offset,
                 FIND_ALL_RUBIKS_BY_MANUFACTURER);
@@ -309,7 +374,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException("SQLException while finding by id",
+            throw new PersistentException(
+                    "SQLException while finding by id",
                     e);
         }
         return rubiksCube;
@@ -480,7 +546,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      * @return list of rubik's.
      * @throws PersistentException dao exception.
      */
-    private List<RubiksCube> getCubes(final String parameter, final int offset,
+    private List<RubiksCube> getCubes(final String parameter,
+                                      final int offset,
                                       final int limit,
                                       final String findAllRubiksBy)
             throws PersistentException {
@@ -512,7 +579,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     public List<String> readAllManufacturer() throws PersistentException {
         List<String> manufacturers = new ArrayList<>();
         try (PreparedStatement statement =
-                     getConnection().prepareStatement(READ_ALL_MANUFACTURERS);
+                     getConnection()
+                             .prepareStatement(READ_ALL_MANUFACTURERS);
              ResultSet resultSet = statement.executeQuery()) {
             while (resultSet.next()) {
                 manufacturers.add(resultSet.getString("name_manufacturer"));
@@ -662,7 +730,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      * @param cubeNew   rubik.
      * @throws SQLException sql exception.
      */
-    private void buildCube(final ResultSet resultSet, final RubiksCube cubeNew)
+    private void buildCube(final ResultSet resultSet,
+                           final RubiksCube cubeNew)
             throws SQLException {
         cubeNew.setModel(resultSet.getString("model"));
         cubeNew.setPrice(resultSet.getDouble("price"));

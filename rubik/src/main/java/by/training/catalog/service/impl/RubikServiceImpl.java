@@ -28,6 +28,31 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
+    public List<RubiksCube> findRubiksByUnblocked(final int limit,
+                                                  final int offset)
+            throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.findRubiksByUnblocked(limit, offset);
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
+    public int findCountByUnblocked() throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            RubikDao rubikDao = getDaoFactory().createRubikDao(connectionManager);
+            return rubikDao.findCountByUnblocked();
+        } catch (PersistentException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    @Override
     public List<RubiksCube> findRubiksByManufacturer(final String manufacturer,
                                                      final int limit,
                                                      final int offset)

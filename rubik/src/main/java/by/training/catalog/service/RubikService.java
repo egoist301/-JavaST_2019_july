@@ -9,6 +9,12 @@ import java.util.List;
  * Service for rubik.
  */
 public interface RubikService {
+    List<RubiksCube> findRubiksByUnblocked(int limit,
+                                           int offset)
+            throws ServiceException;
+
+    int findCountByUnblocked() throws ServiceException;
+
     /**
      * Find rubik's by manufacturer in range.
      *

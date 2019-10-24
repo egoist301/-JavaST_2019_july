@@ -2,25 +2,50 @@ package by.training.catalog.bean;
 
 import java.util.Objects;
 
+/**
+ * Store which retrieves image of cube by it's id.
+ */
 public class StoreImage extends Entity {
     private RubiksCube rubiksCube;
     private String imgPath;
 
+    /**
+     * Super constructor.
+     *
+     * @param idNew new id for image.
+     */
     public StoreImage(final long idNew) {
         super(idNew);
     }
 
-    public StoreImage(final long idNew,
-                      final RubiksCube rubiksCubeNew, final String imgPathNew) {
-        super(idNew);
-        rubiksCube = rubiksCubeNew;
-        imgPath = imgPathNew;
+    /**
+     * Primary constructor.
+     *
+     * @param newId         new id of cube's image.
+     * @param newRubiksCube cube which is tight to image.
+     * @param newImgPath    path of image.
+     */
+    public StoreImage(final long newId,
+                      final RubiksCube newRubiksCube, final String newImgPath) {
+        super(newId);
+        rubiksCube = newRubiksCube;
+        imgPath = newImgPath;
     }
 
+    /**
+     * Cube getter.
+     *
+     * @return rubiksCube.
+     */
     public RubiksCube getRubiksCube() {
         return rubiksCube;
     }
 
+    /**
+     * Cube setter.
+     *
+     * @param rubiksCubeNew rubiksCube.
+     */
     public void setRubiksCube(final RubiksCube rubiksCubeNew) {
         rubiksCube = rubiksCubeNew;
     }

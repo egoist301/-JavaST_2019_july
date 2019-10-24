@@ -178,15 +178,17 @@
                             'ADMIN'}">
                                     <td><c:out value="${cube.blocked}"/></td>
                                     <td>
-                                        <form
-                                                action="blockedcube.html?id=${cube.id}"
-                                                method="post">
-                                            <button type="submit"
-                                                    class="btn btn-primary">
-                                                <fmt:message
-                                                        key="cube.change"/>
-                                            </button>
-                                        </form>
+                                        <c:if test="${!cube.blocked}">
+                                            <form
+                                                    action="blockedcube.html?id=${cube.id}"
+                                                    method="post">
+                                                <button type="submit"
+                                                        class="btn btn-danger">
+                                                    <fmt:message
+                                                            key="cube.change"/>
+                                                </button>
+                                            </form>
+                                        </c:if>
                                     </td>
                                 </c:if>
                             </c:when>
@@ -208,7 +210,7 @@
         </c:choose>
     </div>
     <ctgg:pagination page="${page}" lastPage="${lastPage}"
-                     pageURL="catalog"/>
+                     pageURL="catalog.html"/>
 </div>
 <hr class="my-5">
 <ctgg:footer/>

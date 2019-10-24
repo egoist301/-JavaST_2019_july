@@ -3,11 +3,11 @@ package by.training.catalog.bean;
 import java.util.Objects;
 
 /**
- * Abstract class Entity.
+ * Abstract class from which all other entity classes are inherited.
  */
 public class Entity {
     /**
-     * Entity id.
+     * Unique entity id.
      */
     private long id;
 
@@ -21,7 +21,7 @@ public class Entity {
     }
 
     /**
-     * Getter.
+     * Id getter.
      *
      * @return entity id.
      */
@@ -30,7 +30,7 @@ public class Entity {
     }
 
     /**
-     * Setter.
+     * Id setter.
      *
      * @param idNew entity id.
      */

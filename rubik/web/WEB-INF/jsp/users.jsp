@@ -79,7 +79,7 @@
                                 <form action="blocked.html?id=${user.id}"
                                       method="post">
                                     <button type="submit"
-                                            class="btn btn-primary"><fmt:message
+                                            class="btn btn-danger"><fmt:message
                                             key="users.change"/></button>
                                 </form>
                             </c:if>

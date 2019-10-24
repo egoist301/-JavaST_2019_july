@@ -14,13 +14,14 @@
 <%@ taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
 <html>
 <head>
+    <title><fmt:message key="error.404"/></title>
 </head>
 <body>
 <jsp:include page="header.jsp"/>
 <hr class="my-5">
 <div class="after-header">
-    <div class="col-5 mx-auto">
-        <h3>Page not found</h3>
+    <div class="container">
+        <img src="<c:url value='/img/404-error.jpg'/>" alt="404">
     </div>
 </div>
 <hr class="my-5">

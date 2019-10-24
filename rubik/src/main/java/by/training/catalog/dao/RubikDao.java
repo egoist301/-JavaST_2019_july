@@ -9,6 +9,25 @@ import java.util.List;
  */
 public interface RubikDao extends Dao<RubiksCube> {
     /**
+     * Find count of rubik's by unblocked.
+     *
+     * @return count of rubik's.
+     * @throws PersistentException dao exception.
+     */
+    int findCountByUnblocked() throws PersistentException;
+
+    /**
+     * Find rubik's by unblocked in range.
+     *
+     * @param limit  limit.
+     * @param offset offset.
+     * @return list of rubik's.
+     * @throws PersistentException dao exception.
+     */
+    List<RubiksCube> findRubiksByUnblocked(int limit, int offset)
+            throws PersistentException;
+
+    /**
      * Find count of rubik's by model.
      *
      * @param model model.

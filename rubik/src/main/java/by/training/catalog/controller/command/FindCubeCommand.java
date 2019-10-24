@@ -2,11 +2,13 @@ package by.training.catalog.controller.command;
 
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
-public abstract class FindCubeCommand extends Command {
+abstract class FindCubeCommand extends Command {
     void getForms(final HttpServletRequest requestNew) throws ServiceException {
         RubikService rubikService = getFactory().createRubikService();
         List<String> forms = rubikService.readAllForm();

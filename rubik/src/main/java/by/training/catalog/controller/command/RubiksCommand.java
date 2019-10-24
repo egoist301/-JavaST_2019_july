@@ -1,6 +1,8 @@
 package by.training.catalog.controller.command;
 
+import by.training.catalog.bean.Role;
 import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.bean.User;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
@@ -9,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
@@ -21,6 +24,8 @@ public class RubiksCommand extends Command {
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
+        HttpSession session = requestNew.getSession(false);
+        User user = (User) session.getAttribute("user");
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
         int records;
@@ -34,8 +39,14 @@ public class RubiksCommand extends Command {
             } else {
                 offset = (page - 1) * LIMIT;
             }
-            records = rubikService.findElementCount();
-            rubiksCubes = rubikService.findAll(offset, LIMIT);
+            if (user == null || user.getRole() == Role.USER) {
+                    rubiksCubes =
+                            rubikService.findRubiksByUnblocked(LIMIT, offset);
+                    records = rubikService.findCountByUnblocked();
+            } else {
+                rubiksCubes = rubikService.findAll(offset, LIMIT);
+                records = rubikService.findElementCount();
+            }
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }
