@@ -35,18 +35,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
             Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
 
     /**
-     * Constructor with parameters.
-     *
-     * @param daoFactoryNew               factory of dao.
-     * @param connectionManagerFactoryNew connection manager factory.
-     */
-    public UserServiceImpl(final DaoFactory daoFactoryNew,
-                           final ConnectionManagerFactory
-                                   connectionManagerFactoryNew) {
-        super(daoFactoryNew, connectionManagerFactoryNew);
-    }
-
-    /**
      * Default constructor.
      */
     public UserServiceImpl() {
@@ -68,11 +56,16 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 connectionManager.disableAutoCommit();
                 UserDao userDao =
                         getDaoFactory().createUserDao(connectionManager);
-                entityNew.setPassword(
-                        argonTwoHashAlgorithm(entityNew.getPassword()));
-                userDao.update(entityNew);
-                entityNew.setPassword(null);
-                connectionManager.commit();
+                if (entityNew != null && findById(entityNew.getId()) != null
+                        && entityNew.getPassword() != null) {
+                    entityNew.setPassword(
+                            argonTwoHashAlgorithm(entityNew.getPassword()));
+                    userDao.update(entityNew);
+                    entityNew.setPassword(null);
+                    connectionManager.commit();
+                } else {
+                    throw new ServiceException("user not initialized");
+                }
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
@@ -87,11 +80,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao = getDaoFactory().createUserDao(connectionManager);
-            User user = userDao.findEntityById(id);
+            User user = findById(id);
             if (user != null) {
                 return userDao.findCountOfRubiks(user);
             } else {
-                return 0;
+                throw new ServiceException("user is not logged in");
             }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
@@ -138,7 +131,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
                     }
                 } else {
                     flag = false;
-                    connectionManager.rollback();
                 }
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
@@ -186,9 +178,13 @@ public class UserServiceImpl extends AbstractService implements UserService {
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createUserDao(connectionManager);
-            return userDao.findUsersByUsername(username, limit, offset);
+            if (username != null) {
+                UserDao userDao =
+                        getDaoFactory().createUserDao(connectionManager);
+                return userDao.findUsersByUsername(username, limit, offset);
+            } else {
+                throw new ServiceException("username is null");
+            }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -233,7 +229,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
             User user = userDao.findUserByUsername(username);
-            if (user != null && argon2.verify(user.getPassword(), password)) {
+            if (user != null && password != null && argon2
+                    .verify(user.getPassword(),
+                            password)) {
                 user.setPassword(null);
                 return user;
             }
@@ -259,9 +257,15 @@ public class UserServiceImpl extends AbstractService implements UserService {
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            UserDao userDao =
-                    getDaoFactory().createUserDao(connectionManager);
-            return userDao.findUsersByRole(role, limit, offset);
+            if (role != null) {
+
+
+                UserDao userDao =
+                        getDaoFactory().createUserDao(connectionManager);
+                return userDao.findUsersByRole(role, limit, offset);
+            } else {
+                throw new ServiceException("Role is null");
+            }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
         }
@@ -302,12 +306,16 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 connectionManager.disableAutoCommit();
                 UserDao userDao =
                         getDaoFactory().createUserDao(connectionManager);
-                User userNew = userDao.findEntityById(id);
-                userDao.updateState(userNew);
-                connectionManager.commit();
-                LOGGER.debug("<-----User id = {} state = {} commit",
-                        userNew.getId(),
-                        userNew.isBlocked());
+                User userNew = findById(id);
+                if (userNew != null) {
+                    userDao.updateState(userNew);
+                    connectionManager.commit();
+                    LOGGER.debug("<-----User id = {} state = {} commit",
+                            userNew.getId(),
+                            userNew.isBlocked());
+                } else {
+                    throw new ServiceException("Incorrect id");
+                }
             } catch (PersistentException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
@@ -334,14 +342,18 @@ public class UserServiceImpl extends AbstractService implements UserService {
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
-            LOGGER.debug("Service cubes {}",
-                    userDao.findLikedCubesByUser(userNew, limit, offset));
-            userNew.setCubes(userDao.findLikedCubesByUser(userNew, limit,
-                    offset));
-            RubikDao rubikDao =
-                    getDaoFactory().createRubikDao(connectionManager);
-            for (RubiksCube rubiksCube : userNew.getCubes()) {
-                rubikDao.read(rubiksCube);
+            if (userNew != null && findById(userNew.getId()) != null) {
+                LOGGER.debug("Service cubes {}",
+                        userDao.findLikedCubesByUser(userNew, limit, offset));
+                userNew.setCubes(userDao.findLikedCubesByUser(userNew, limit,
+                        offset));
+                RubikDao rubikDao =
+                        getDaoFactory().createRubikDao(connectionManager);
+                for (RubiksCube rubiksCube : userNew.getCubes()) {
+                    rubikDao.read(rubiksCube);
+                }
+            } else {
+                throw new ServiceException("User is not logged in");
             }
         } catch (PersistentException eNew) {
             throw new ServiceException(eNew);
@@ -383,6 +395,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
     public boolean addCubeToBookmarks(final User userNew, final long cubeId)
             throws ServiceException {
         boolean flag;
+        if (userNew == null) {
+            throw new ServiceException("user is null");
+        }
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
@@ -442,6 +457,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
     @Override
     public void removeFromBookmarks(final User userNew, final long id)
             throws ServiceException {
+        if (userNew == null) {
+            throw new ServiceException("user is null");
+        }
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
@@ -486,7 +504,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      */
     private String argonTwoHashAlgorithm(final String newPassword) {
         final int iNew = 4;
-        final int iNew1 = 1024;
-        return argon2.hash(iNew, iNew1 * iNew1, iNew, newPassword);
+        final int iNew1 = 256;
+        return argon2.hash(2, iNew1 * iNew1, iNew, newPassword);
     }
 }

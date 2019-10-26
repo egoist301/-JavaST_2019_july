@@ -13,8 +13,7 @@ public class BlockedCubeCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         long id;
         try {
             id = Long.parseLong(requestNew.getParameter("id"));

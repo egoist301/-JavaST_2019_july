@@ -3,8 +3,6 @@ package by.training.catalog.service.impl;
 import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.dao.AbstractConnectionManager;
-import by.training.catalog.dao.ConnectionManagerFactory;
-import by.training.catalog.dao.DaoFactory;
 import by.training.catalog.dao.PersistentException;
 import by.training.catalog.dao.RubikDao;
 import by.training.catalog.service.AbstractService;
@@ -13,18 +11,11 @@ import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
 import by.training.catalog.service.parser.RubikParser;
 
-import java.util.Date;
 import java.util.List;
 
 public class RubikServiceImpl extends AbstractService implements RubikService {
-    public RubikServiceImpl() {
+    RubikServiceImpl() {
         super();
-    }
-
-    public RubikServiceImpl(final DaoFactory daoFactoryNew,
-                            final ConnectionManagerFactory
-                                    connectionManagerFactoryNew) {
-        super(daoFactoryNew, connectionManagerFactoryNew);
     }
 
     @Override

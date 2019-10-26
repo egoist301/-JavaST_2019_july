@@ -58,7 +58,8 @@
                         key="cube.primaryplastic"/></label>
                 <input type="checkbox" class="form-control"
                        id="examplePrimaryPlastic"
-                       value="<c:if test='${cube.primaryPlastic}'>on</c:if>"
+                       <c:if
+                               test='${cube.primaryPlastic}'>checked</c:if>
                        name="primaryPlastic">
             </div>
             <div class="form-group">

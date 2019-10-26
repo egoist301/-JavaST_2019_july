@@ -20,8 +20,7 @@ public class FindCubeByPriceCommand extends FindCubeCommand {
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();

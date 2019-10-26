@@ -9,15 +9,13 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 public class RemoveCubeFromBookmarksCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         long id;
         try {
             id = Long.parseLong(requestNew.getParameter("id"));

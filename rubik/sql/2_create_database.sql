@@ -1,6 +1,6 @@
-CREATE DATABASE `rubik` DEFAULT CHARACTER SET utf8;
+CREATE DATABASE IF NOT EXISTS `rubik` DEFAULT CHARACTER SET utf8;
 
-CREATE USER `rubik_user`@`localhost` IDENTIFIED BY 'rubik_password';
+CREATE USER IF NOT EXISTS `rubik_user`@`localhost` IDENTIFIED BY 'rubik_password';
 
 GRANT SELECT, UPDATE, INSERT, DELETE
     ON `rubik`.*

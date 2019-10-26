@@ -7,8 +7,7 @@ import java.io.IOException;
 public class MainCommand extends Command {
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         return new Forward("WEB-INF/jsp/index.jsp");
     }
 }

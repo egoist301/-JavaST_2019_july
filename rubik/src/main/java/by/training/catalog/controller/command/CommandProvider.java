@@ -11,6 +11,7 @@ public final class CommandProvider {
 
     static {
         commandMap = new HashMap<>();
+        commandMap.put("/", new MainCommand());
         commandMap.put("/login", new LoginPageCommand());
         commandMap.put("/signin", new SignInCommand());
         commandMap.put("/index", new MainCommand());

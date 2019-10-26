@@ -9,8 +9,7 @@ public class SignOutCommand extends UserCommand {
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         HttpSession session = requestNew.getSession(false);
         if (session != null) {
             session.invalidate();

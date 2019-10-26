@@ -16,8 +16,7 @@ public class LikeCubeCommand extends UserCommand {
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         UserService service = getFactory().createUserService();
         Forward forward;
         long id;

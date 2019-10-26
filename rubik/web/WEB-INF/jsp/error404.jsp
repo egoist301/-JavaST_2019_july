@@ -21,7 +21,7 @@
 <hr class="my-5">
 <div class="after-header">
     <div class="container">
-        <img src="<c:url value='/img/404-error.jpg'/>" alt="404">
+        <img class="w-100" src="<c:url value='/img/404-error.jpg'/>" alt="404">
     </div>
 </div>
 <hr class="my-5">

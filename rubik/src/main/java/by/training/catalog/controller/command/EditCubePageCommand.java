@@ -8,17 +8,14 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
-//TODO fix
 public class EditCubePageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
-            throws IOException {
+                           final HttpServletResponse responseNew) {
         Forward forward;
         long id;
         try {

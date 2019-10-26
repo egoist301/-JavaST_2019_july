@@ -52,9 +52,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * Update user by id. SQL query.
      */
     private static final String UPDATE_USER_BY_ID =
-            "UPDATE `users` SET `username` = ?, `password` = ?, `email` ="
-                    + " ?, `role` = ?, `phone` = ?, `blocked` = ? WHERE `id` ="
-                    + " ?";
+            "UPDATE `users` SET `password` = ? WHERE `id` = ?";
     /**
      * Find all users page. SQL query.
      */
@@ -231,7 +229,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement(FIND_USERS_BY_ROLE)) {
             int temp = 0;
-            preparedStatement.setInt(++temp, role.ordinal() + 1);
+            preparedStatement.setInt(++temp, role.ordinal());
             preparedStatement.setInt(++temp, limit);
             preparedStatement.setInt(++temp, offset);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -344,8 +342,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public void update(final User entityNew) throws PersistentException {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(UPDATE_USER_BY_ID)) {
-            execute(statement, entityNew);
-            statement.setLong(7, entityNew.getId());
+            statement.setString(1, entityNew.getPassword());
+            statement.setLong(2, entityNew.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new PersistentException("SQLException while updating", e);
@@ -355,18 +353,24 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     /**
      * Add user in DB.
      *
-     * @param entityNew object.
+     * @param user object.
      * @return id of user.
      * @throws PersistentException sql exception.
      */
     @Override
-    public int create(final User entityNew) throws PersistentException {
-        if (entityNew == null) {
+    public int create(final User user) throws PersistentException {
+        if (user == null) {
             return 0;
         }
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(INSERT_USER, RETURN_GENERATED_KEYS)) {
-            execute(statement, entityNew);
+            int temp = 0;
+            statement.setString(++temp, user.getUsername());
+            statement.setString(++temp, user.getPassword());
+            statement.setString(++temp, user.getEmail());
+            statement.setInt(++temp, user.getRole().ordinal());
+            statement.setInt(++temp, user.getPhone());
+            statement.setBoolean(++temp, user.isBlocked());
             statement.executeUpdate();
             try (ResultSet resultSet = statement.getGeneratedKeys()) {
                 if (resultSet.next()) {
@@ -484,6 +488,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     public RubiksCube findCubeFromBookmarksById(final User userNew,
                                                 final long cubeId)
             throws PersistentException {
+        if (userNew == null) {
+            return null;
+        }
+        RubiksCube cube = null;
         try (PreparedStatement statement =
                      getConnection()
                              .prepareStatement(FIND_RUBIK_FROM_BOOKMARKS)) {
@@ -491,32 +499,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(2, cubeId);
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new RubiksCube(resultSet.getLong("cube_id"));
+                    cube = new RubiksCube(resultSet.getLong("cube_id"));
                 }
             }
         } catch (SQLException eNew) {
             throw new PersistentException(eNew);
         }
-        return null;
-    }
-
-    /**
-     * Execute statement.
-     *
-     * @param statement statement.
-     * @param user      user.
-     * @throws SQLException sql exception.
-     */
-    private void execute(final PreparedStatement statement,
-                         final User user)
-            throws SQLException {
-        int temp = 0;
-        statement.setString(++temp, user.getUsername());
-        statement.setString(++temp, user.getPassword());
-        statement.setString(++temp, user.getEmail());
-        statement.setInt(++temp, user.getRole().ordinal());
-        statement.setInt(++temp, user.getPhone());
-        statement.setBoolean(++temp, user.isBlocked());
+        return cube;
     }
 
     /**

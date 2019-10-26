@@ -247,8 +247,7 @@ public class User extends Entity {
                 && Objects.equals(getPassword(), user.getPassword())
                 && getRole() == user.getRole()
                 && Objects.equals(getEmail(), user.getEmail())
-                && isBlocked() == user.isBlocked()
-                && getCubes().equals(user.getCubes());
+                && isBlocked() == user.isBlocked();
     }
 
     /**

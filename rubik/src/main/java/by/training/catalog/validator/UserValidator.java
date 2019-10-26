@@ -38,14 +38,6 @@ public final class UserValidator {
      */
     private UserValidator() {
     }
-    /*public static Map<String, Boolean> validateUserParameters(
-            final List<String> newParams) {
-        for (String temp : newParams) {
-            if (temp.contains("'")) {
-                LOGGER.warn("Potential SQL injection attack: " + temp);
-            }
-        }
-    }*/
 
     /**
      * Check valid parameters or not.
@@ -59,19 +51,19 @@ public final class UserValidator {
     public static boolean isValid(final String username, final String password,
                                   final String email, final String phone) {
         boolean valid = true;
-        if (!username.matches(USER_USERNAME_REGEX)) {
+        if (username == null || !username.matches(USER_USERNAME_REGEX)) {
             LOGGER.warn("incorrect login: {}", username);
             valid = false;
         }
-        if (!password.matches(USER_PASSWORD_REGEX)) {
+        if (password == null || !password.matches(USER_PASSWORD_REGEX)) {
             LOGGER.warn("incorrect password: {}", password);
             valid = false;
         }
-        if (!email.matches(USER_EMAIL_REGEX)) {
+        if (email == null || !email.matches(USER_EMAIL_REGEX)) {
             LOGGER.warn("incorrect email: {}", email);
             valid = false;
         }
-        if (!phone.matches(USER_MOBILE_REGEX)) {
+        if (phone == null || !phone.matches(USER_MOBILE_REGEX)) {
             LOGGER.warn("incorrect phone: {}", phone);
             valid = false;
         }

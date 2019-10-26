@@ -27,19 +27,6 @@ public abstract class AbstractService {
     }
 
     /**
-     * Constructor with parameters.
-     *
-     * @param daoFactoryNew               factory of dao.
-     * @param connectionManagerFactoryNew connection manager factory.
-     */
-    public AbstractService(final DaoFactory daoFactoryNew,
-                           final ConnectionManagerFactory
-                                   connectionManagerFactoryNew) {
-        daoFactory = daoFactoryNew;
-        connectionManagerFactory = connectionManagerFactoryNew;
-    }
-
-    /**
      * Getter for dao factory.
      *
      * @return factory of dao.
