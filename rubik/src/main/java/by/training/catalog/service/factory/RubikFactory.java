@@ -1,7 +1,6 @@
 package by.training.catalog.service.factory;
 
 import by.training.catalog.bean.RubiksCube;
-import by.training.catalog.service.ServiceException;
 import by.training.catalog.validator.RubikValidator;
 
 import java.util.Date;
@@ -16,9 +15,8 @@ public class RubikFactory {
      *
      * @param parameters parameters for cube.
      * @return cube.
-     * @throws ServiceException if cube invalid.
      */
-    public RubiksCube createCube(List<String> parameters) throws ServiceException {
+    public RubiksCube createCube(List<String> parameters) {
         if (RubikValidator.isValid(parameters)) {
             RubiksCube rubiksCube = new RubiksCube(1);
             int i = 0;
@@ -34,7 +32,7 @@ public class RubikFactory {
             rubiksCube.setDate(new Date());
             return rubiksCube;
         } else {
-            throw new ServiceException();
+            return null;
         }
     }
 }

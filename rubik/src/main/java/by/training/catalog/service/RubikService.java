@@ -144,7 +144,7 @@ public interface RubikService {
      * @param rawDataNew raw data.
      * @throws ServiceException service exception.
      */
-    void create(List<String> parameters, List<RawData> rawDataNew)
+    boolean create(List<String> parameters, List<RawData> rawDataNew)
             throws ServiceException;
 
     /**

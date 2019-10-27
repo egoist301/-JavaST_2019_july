@@ -243,8 +243,9 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     }
 
     @Override
-    public void create(final List<String> parameters,
+    public boolean create(final List<String> parameters,
                        final List<RawData> rawDataNew) throws ServiceException {
+        boolean flag;
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
@@ -253,9 +254,14 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                         getDaoFactory().createRubikDao(connectionManager);
                 RubikFactory parser = new RubikFactory();
                 RubiksCube cube = parser.createCube(parameters);
-                cube.setId(rubikDao.create(cube));
-                addImagesForCube(cube, rawDataNew, connectionManager);
-                connectionManager.commit();
+                if (cube != null) {
+                    cube.setId(rubikDao.create(cube));
+                    addImagesForCube(cube, rawDataNew, connectionManager);
+                    connectionManager.commit();
+                    flag = true;
+                } else {
+                    flag = false;
+                }
             } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
@@ -263,6 +269,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
         } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
+        return flag;
     }
 
     private void addImagesForCube(final RubiksCube cubeNew,

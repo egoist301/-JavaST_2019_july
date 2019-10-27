@@ -44,12 +44,15 @@ public class AddRubikCommand extends AdminCommand {
                 }
             }
             RubikService rubikService = getFactory().createRubikService();
-            rubikService.create(parameters, rawData);
+            if (rubikService.create(parameters, rawData)) {
+                return new Forward("catalog.html");
+            } else {
+                return new Forward("registration.html");
+            }
 
         } catch (ServletException | ServiceException eNew) {
             LOGGER.error(eNew.getMessage(), eNew);
             return sendError(SERVER_ERROR);
         }
-        return new Forward("catalog.html");
     }
 }
