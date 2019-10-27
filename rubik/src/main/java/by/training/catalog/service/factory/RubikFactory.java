@@ -1,4 +1,4 @@
-package by.training.catalog.service.parser;
+package by.training.catalog.service.factory;
 
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.service.ServiceException;
@@ -8,9 +8,9 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Rubik parser.
+ * Rubik factory.
  */
-public class RubikParser {
+public class RubikFactory {
     /**
      * Get valid cube or throw exception.
      *
@@ -18,7 +18,7 @@ public class RubikParser {
      * @return cube.
      * @throws ServiceException if cube invalid.
      */
-    public RubiksCube getCube(List<String> parameters) throws ServiceException {
+    public RubiksCube createCube(List<String> parameters) throws ServiceException {
         if (RubikValidator.isValid(parameters)) {
             RubiksCube rubiksCube = new RubiksCube(1);
             int i = 0;

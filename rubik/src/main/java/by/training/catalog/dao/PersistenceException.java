@@ -3,11 +3,11 @@ package by.training.catalog.dao;
 /**
  * Dao exception. Catch SQL exception.
  */
-public class PersistentException extends Exception {
+public class PersistenceException extends Exception {
     /**
      * Default constructor.
      */
-    public PersistentException() {
+    public PersistenceException() {
     }
 
     /**
@@ -15,7 +15,7 @@ public class PersistentException extends Exception {
      *
      * @param message error message.
      */
-    public PersistentException(final String message) {
+    public PersistenceException(final String message) {
         super(message);
     }
 
@@ -25,7 +25,7 @@ public class PersistentException extends Exception {
      * @param message error message.
      * @param cause   exception.
      */
-    public PersistentException(final String message, final Throwable cause) {
+    public PersistenceException(final String message, final Throwable cause) {
         super(message, cause);
     }
 
@@ -34,7 +34,7 @@ public class PersistentException extends Exception {
      *
      * @param cause exception.
      */
-    public PersistentException(final Throwable cause) {
+    public PersistenceException(final Throwable cause) {
         super(cause);
     }
 }

@@ -12,37 +12,37 @@ public interface AbstractConnectionManager extends AutoCloseable {
     /**
      * Disables auto commit.
      *
-     * @throws PersistentException if SQL exception is throw.
+     * @throws PersistenceException if SQL exception is throw.
      */
-    void disableAutoCommit() throws PersistentException;
+    void disableAutoCommit() throws PersistenceException;
 
     /**
      * Enables auto commit.
      *
-     * @throws PersistentException if SQL exception is throw.
+     * @throws PersistenceException if SQL exception is throw.
      */
-    void enableAutoCommit() throws PersistentException;
+    void enableAutoCommit() throws PersistenceException;
 
     /**
      * Delegates commit call to the connection.
      *
-     * @throws PersistentException if SQL exception is throw.
+     * @throws PersistenceException if SQL exception is throw.
      */
-    void commit() throws PersistentException;
+    void commit() throws PersistenceException;
 
     /**
      * Delegates rollback call to the connection.
      *
-     * @throws PersistentException if SQL exception is throw.
+     * @throws PersistenceException if SQL exception is throw.
      */
-    void rollback() throws PersistentException;
+    void rollback() throws PersistenceException;
 
     /**
      * Close.
      *
-     * @throws PersistentException if SQL exception is throw.
+     * @throws PersistenceException if SQL exception is throw.
      */
-    void close() throws PersistentException;
+    void close() throws PersistenceException;
 
     /**
      * Getter.

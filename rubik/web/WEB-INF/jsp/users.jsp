@@ -90,7 +90,8 @@
             </div>
         </table>
     </div>
-    <ctgg:pagination page="${page}" lastPage="${lastPage}" pageURL="users"/>
+    <ctgg:pagination page="${page}" lastPage="${lastPage}"
+                     pageURL="users.html"/>
 </div>
 <hr class="my-5">
 <ctgg:footer/>

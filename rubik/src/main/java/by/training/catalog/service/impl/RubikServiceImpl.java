@@ -2,15 +2,18 @@ package by.training.catalog.service.impl;
 
 import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.bean.StoreImage;
 import by.training.catalog.dao.AbstractConnectionManager;
-import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.dao.RubikDao;
+import by.training.catalog.dao.StoreImageDao;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
-import by.training.catalog.service.parser.RubikParser;
+import by.training.catalog.service.factory.RubikFactory;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class RubikServiceImpl extends AbstractService implements RubikService {
@@ -27,7 +30,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubiksByUnblocked(limit, offset);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -36,9 +39,10 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     public int findCountByUnblocked() throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
-            RubikDao rubikDao = getDaoFactory().createRubikDao(connectionManager);
+            RubikDao rubikDao =
+                    getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findCountByUnblocked();
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -48,13 +52,16 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                                                      final int limit,
                                                      final int offset)
             throws ServiceException {
+        if (manufacturer == null) {
+            return new ArrayList<>();
+        }
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubiksByManufacturer(manufacturer, limit,
                     offset);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -63,12 +70,15 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     public List<RubiksCube> findRubiksBySize(final String size,
                                              final int offset, final int limit)
             throws ServiceException {
+        if (size == null) {
+            return new ArrayList<>();
+        }
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubiksBySize(size, offset, limit);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -77,12 +87,15 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
     public List<RubiksCube> findRubiksByModel(final String model,
                                               final int offset, final int limit)
             throws ServiceException {
+        if (model == null) {
+            return new ArrayList<>();
+        }
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubikByModel(model, limit, offset);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -93,6 +106,9 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                                                    final int offset,
                                                    final int limit)
             throws ServiceException {
+        if (maxPrice == null || minPrice == null) {
+            return new ArrayList<>();
+        }
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             double min = Double.parseDouble(minPrice);
@@ -106,7 +122,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao
                     .findRubiksByRangePrice(min, max, offset, limit);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -118,21 +134,27 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findCountByForm(form);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
 
     @Override
-    public int findCountByPrice(final String min, final String max)
+    public int findCountByPrice(final String minPrice, final String maxPrice)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
+            double max = Double.parseDouble(maxPrice);
+            double min = Double.parseDouble(minPrice);
+            if (min > max) {
+                min += max;
+                max = min - max;
+                min -= max;
+            }
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
-            return rubikDao.findCountByPrice(Double.parseDouble(min),
-                    Double.parseDouble(max));
-        } catch (PersistentException eNew) {
+            return rubikDao.findCountByPrice(min, max);
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -145,7 +167,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findCountByManufacturer(manufacturer);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -155,12 +177,15 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                                              final int offset,
                                              final int limit)
             throws ServiceException {
+        if (form == null) {
+            return new ArrayList<>();
+        }
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findRubiksByForm(form, offset, limit);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -172,7 +197,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findEntityById(id);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -185,7 +210,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findAll(offset, limit);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -197,23 +222,22 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
                 connectionManager.disableAutoCommit();
-                RubikParser parser = new RubikParser();
-                RubiksCube cube1 = parser.getCube(parameters);
-                cube1.setId(id);
+                RubikFactory parser = new RubikFactory();
+                RubiksCube cube = parser.createCube(parameters);
+                cube.setId(id);
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
-                RubiksCube cube2 = rubikDao.findEntityById(id);
-                if (cube1.getId() == rubikDao.findEntityById(id).getId()) {
-                    rubikDao.update(cube1);
+                if (cube.getId() == rubikDao.findEntityById(id).getId()) {
+                    rubikDao.update(cube);
                     connectionManager.commit();
                 } else {
                     connectionManager.rollback();
                 }
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -227,19 +251,49 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                 connectionManager.disableAutoCommit();
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
-                RubikParser parser = new RubikParser();
-                RubiksCube cube = parser.getCube(parameters);
-                StoreImageService storeImageService =
-                        new StoreImageServiceImpl();
+                RubikFactory parser = new RubikFactory();
+                RubiksCube cube = parser.createCube(parameters);
                 cube.setId(rubikDao.create(cube));
+                addImagesForCube(cube, rawDataNew, connectionManager);
                 connectionManager.commit();
-                storeImageService.create(cube, rawDataNew);
-                connectionManager.commit();
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
+            throw new ServiceException(eNew);
+        }
+    }
+
+    private void addImagesForCube(final RubiksCube cubeNew,
+                                  final List<RawData> rawData,
+                                  final AbstractConnectionManager connectionManager)
+            throws PersistenceException {
+        List<String> paths = new ArrayList<>();
+        ImageService service = new ImageService();
+        for (RawData rd : rawData) {
+            paths.add(service.save(rd));
+        }
+        StoreImageDao storeImageDao =
+                getDaoFactory().createStoreImageDao(connectionManager);
+        for (String path : paths) {
+            StoreImage storeImage = new StoreImage(1, cubeNew, path);
+            storeImageDao.create(storeImage);
+        }
+    }
+
+    @Override
+    public int findCountBySize(final String size) throws ServiceException {
+        try (AbstractConnectionManager connectionManager =
+                     getConnectionManagerFactory().createConnectionManager()) {
+            try {
+                RubikDao rubikDao =
+                        getDaoFactory().createRubikDao(connectionManager);
+                return rubikDao.findCountBySize(size);
+            } catch (PersistenceException eNew) {
+                throw new ServiceException(eNew);
+            }
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -252,10 +306,10 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
                 return rubikDao.findCountByModel(model);
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -269,13 +323,15 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
                 RubiksCube cubeNew = findById(id);
-                rubikDao.updateState(cubeNew);
-                connectionManager.commit();
-            } catch (PersistentException eNew) {
+                if (cubeNew != null) {
+                    rubikDao.updateState(cubeNew);
+                    connectionManager.commit();
+                }
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -287,7 +343,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.readAllManufacturer();
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -299,7 +355,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.readAllForm();
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -311,7 +367,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.readAllPlasticColor();
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -323,7 +379,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
             RubikDao rubikDao =
                     getDaoFactory().createRubikDao(connectionManager);
             return rubikDao.findElementCount();
-        } catch (PersistentException e) {
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }

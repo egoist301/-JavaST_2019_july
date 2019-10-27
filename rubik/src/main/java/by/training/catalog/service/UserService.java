@@ -3,6 +3,7 @@ package by.training.catalog.service;
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
+import by.training.catalog.dao.PersistenceException;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public interface UserService {
      *
      * @param entityNew user.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException}
+     *                          {@link PersistenceException}
      *                          has occurred
      *                          when working with database.
      */
@@ -32,7 +33,7 @@ public interface UserService {
      * @param password password.
      * @return true or false.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException}
+     *                          {@link PersistenceException}
      *                          has occurred
      *                          when working with database.
      */
@@ -45,7 +46,7 @@ public interface UserService {
      * @param email email.
      * @return user.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException}
+     *                          {@link PersistenceException}
      *                          has occurred
      *                          when working with database.
      */
@@ -59,7 +60,7 @@ public interface UserService {
      * @param offset   offset.
      * @return list of users.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     List<User> findUsersByUsername(String username,
@@ -72,7 +73,7 @@ public interface UserService {
      * @param username username.
      * @return user.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     User findUserByUsername(String username) throws ServiceException;
@@ -84,7 +85,7 @@ public interface UserService {
      * @param password password.
      * @return user.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     User authorize(String username, String password)
@@ -98,7 +99,7 @@ public interface UserService {
      * @param offset offset.
      * @return list of users.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     List<User> findUsersByRole(Role role, int limit, int offset)
@@ -110,7 +111,7 @@ public interface UserService {
      * @param id id of user.
      * @return user.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     User findById(long id) throws ServiceException;
@@ -122,7 +123,7 @@ public interface UserService {
      * @param limit  limit.
      * @return list of users.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     List<User> findAll(int offset, int limit) throws ServiceException;
@@ -132,7 +133,7 @@ public interface UserService {
      *
      * @param id id of user.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     void updateState(long id) throws ServiceException;
@@ -144,7 +145,7 @@ public interface UserService {
      * @param limit   limit.
      * @param offset  offset.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     void findLikedCubes(User userNew, int limit, int offset)
@@ -157,7 +158,7 @@ public interface UserService {
      * @param cubeId  id of cube.
      * @return true or false.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     boolean addCubeToBookmarks(User userNew, long cubeId)
@@ -170,7 +171,7 @@ public interface UserService {
      * @param cubeId  id of cube.
      * @return cube.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     RubiksCube findCubeFromBookmarks(User userNew, long cubeId)
@@ -182,7 +183,7 @@ public interface UserService {
      * @param userNew user.
      * @param id      id of cube.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     void removeFromBookmarks(User userNew, long id) throws ServiceException;
@@ -192,7 +193,7 @@ public interface UserService {
      *
      * @return count of users.
      * @throws ServiceException if
-     *                          {@link by.training.catalog.dao.PersistentException} has occurred
+     *                          {@link PersistenceException} has occurred
      *                          when working with database.
      */
     int findElementCount() throws ServiceException;

@@ -4,20 +4,19 @@ import by.training.catalog.bean.Role;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
 import by.training.catalog.dao.AbstractConnectionManager;
-import by.training.catalog.dao.ConnectionManagerFactory;
-import by.training.catalog.dao.DaoFactory;
-import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.dao.RubikDao;
 import by.training.catalog.dao.UserDao;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
-import by.training.catalog.service.parser.UserParser;
+import by.training.catalog.service.factory.UserFactory;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,7 +44,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * Update info about user.
      *
      * @param entityNew user.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -56,7 +55,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 connectionManager.disableAutoCommit();
                 UserDao userDao =
                         getDaoFactory().createUserDao(connectionManager);
-                if (entityNew != null && findById(entityNew.getId()) != null
+                if (entityNew != null
+                        && userDao.findEntityById(entityNew.getId()) != null
                         && entityNew.getPassword() != null) {
                     entityNew.setPassword(
                             argonTwoHashAlgorithm(entityNew.getPassword()));
@@ -66,11 +66,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 } else {
                     throw new ServiceException("user not initialized");
                 }
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -80,13 +80,13 @@ public class UserServiceImpl extends AbstractService implements UserService {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao = getDaoFactory().createUserDao(connectionManager);
-            User user = findById(id);
+            User user = userDao.findEntityById(id);
             if (user != null) {
                 return userDao.findCountOfRubiks(user);
             } else {
                 throw new ServiceException("user is not logged in");
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -99,7 +99,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param phone    phone.
      * @param password password.
      * @return true or false.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -115,9 +115,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
                         && findUserByEmail(email) == null) {
                     UserDao userDao =
                             getDaoFactory().createUserDao(connectionManager);
-                    UserParser parser = new UserParser();
+                    UserFactory parser = new UserFactory();
                     User entityNew =
-                            parser.getUser(username, email, phone, password);
+                            parser.createUser(username, email, phone, password);
                     if (entityNew != null) {
                         entityNew.setPassword(
                                 argonTwoHashAlgorithm(entityNew.getPassword()));
@@ -132,11 +132,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 } else {
                     flag = false;
                 }
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
         return flag;
@@ -147,7 +147,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      *
      * @param email email.
      * @return user.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -157,7 +157,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
             return userDao.findUserByEmail(email);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -169,7 +169,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param limit    limit.
      * @param offset   offset.
      * @return list of user in range.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -183,9 +183,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
                         getDaoFactory().createUserDao(connectionManager);
                 return userDao.findUsersByUsername(username, limit, offset);
             } else {
-                throw new ServiceException("username is null");
+                return new ArrayList<>();
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -195,7 +195,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      *
      * @param username username.
      * @return user.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -206,7 +206,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
             return userDao.findUserByUsername(username);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -217,7 +217,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param username username.
      * @param password password.
      * @return user.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -235,7 +235,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 user.setPassword(null);
                 return user;
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
         return null;
@@ -248,7 +248,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param limit  limit.
      * @param offset offset.
      * @return list of users in range.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -258,15 +258,13 @@ public class UserServiceImpl extends AbstractService implements UserService {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
             if (role != null) {
-
-
                 UserDao userDao =
                         getDaoFactory().createUserDao(connectionManager);
                 return userDao.findUsersByRole(role, limit, offset);
             } else {
-                throw new ServiceException("Role is null");
+                return new ArrayList<>();
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -276,7 +274,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      *
      * @param id id of user.
      * @return user.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -286,7 +284,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
             return userDao.findEntityById(id);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -295,7 +293,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * Update state of user. Ban.
      *
      * @param id id of user.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -306,21 +304,19 @@ public class UserServiceImpl extends AbstractService implements UserService {
                 connectionManager.disableAutoCommit();
                 UserDao userDao =
                         getDaoFactory().createUserDao(connectionManager);
-                User userNew = findById(id);
+                User userNew = userDao.findEntityById(id);
                 if (userNew != null) {
                     userDao.updateState(userNew);
                     connectionManager.commit();
                     LOGGER.debug("<-----User id = {} state = {} commit",
                             userNew.getId(),
                             userNew.isBlocked());
-                } else {
-                    throw new ServiceException("Incorrect id");
                 }
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -331,7 +327,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param userNew user.
      * @param limit   limit.
      * @param offset  offset.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -342,7 +338,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
                      getConnectionManagerFactory().createConnectionManager()) {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
-            if (userNew != null && findById(userNew.getId()) != null) {
+            if (userNew != null
+                    && userDao.findEntityById(userNew.getId()) != null) {
                 LOGGER.debug("Service cubes {}",
                         userDao.findLikedCubesByUser(userNew, limit, offset));
                 userNew.setCubes(userDao.findLikedCubesByUser(userNew, limit,
@@ -355,7 +352,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             } else {
                 throw new ServiceException("User is not logged in");
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -366,7 +363,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param offset offset.
      * @param limit  limit.
      * @return list of users.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -377,7 +374,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
             return userDao.findAll(offset, limit);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -388,7 +385,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param userNew user.
      * @param cubeId  id of cube.
      * @return true or false.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -413,11 +410,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
                     connectionManager.rollback();
                     flag = false;
                 }
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
         return flag;
@@ -429,7 +426,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * @param userNew user.
      * @param cubeId  id of cube.
      * @return rubik.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -441,7 +438,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
             return userDao.findCubeFromBookmarksById(userNew, cubeId);
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -451,7 +448,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      *
      * @param userNew user.
      * @param id      id of cube.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -468,11 +465,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
                         getDaoFactory().createUserDao(connectionManager);
                 userDao.removeCubeFromBookmarks(userNew, id);
                 connectionManager.commit();
-            } catch (PersistentException eNew) {
+            } catch (PersistenceException eNew) {
                 connectionManager.rollback();
                 throw new ServiceException(eNew);
             }
-        } catch (PersistentException eNew) {
+        } catch (PersistenceException eNew) {
             throw new ServiceException(eNew);
         }
     }
@@ -481,7 +478,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
      * Find count of users.
      *
      * @return count of users.
-     * @throws ServiceException if {@link PersistentException} has occurred
+     * @throws ServiceException if {@link PersistenceException} has occurred
      *                          when working with database.
      */
     @Override
@@ -491,7 +488,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao accountDao =
                     getDaoFactory().createUserDao(connectionManager);
             return accountDao.findElementCount();
-        } catch (PersistentException e) {
+        } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
     }

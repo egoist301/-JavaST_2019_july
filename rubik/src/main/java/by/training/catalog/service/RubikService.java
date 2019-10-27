@@ -155,6 +155,8 @@ public interface RubikService {
      */
     int findElementCount() throws ServiceException;
 
+    int findCountBySize(String size) throws ServiceException;
+
     /**
      * Find count of rubik's by model.
      *

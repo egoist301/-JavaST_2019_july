@@ -33,8 +33,8 @@ public class FindCubeByModelCommand extends FindCubeCommand {
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }
-            getForms(requestNew);
-            getManufacturers(requestNew);
+            specifyForms(requestNew);
+            specifyManufacturers(requestNew);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);

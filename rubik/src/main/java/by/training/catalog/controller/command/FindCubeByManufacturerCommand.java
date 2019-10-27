@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
@@ -35,8 +34,8 @@ public class FindCubeByManufacturerCommand extends FindCubeCommand {
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }
-            getForms(requestNew);
-            getManufacturers(requestNew);
+            specifyForms(requestNew);
+            specifyManufacturers(requestNew);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);

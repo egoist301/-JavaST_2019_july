@@ -1,7 +1,7 @@
 package by.training.catalog.dao.impl;
 
 import by.training.catalog.bean.RawData;
-import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.service.RandomStringGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -61,25 +61,6 @@ public final class ImageManager {
         } catch (IOException e) {
             LOGGER.error("Cannot write data. {}", e.getMessage());
             return null;
-        }
-    }
-
-    /**
-     * Delete file.
-     *
-     * @param relativePath relative path.
-     * @throws PersistentException persistent exception.
-     */
-    public static void delete(final String relativePath) throws
-            PersistentException {
-        try {
-            Path path = Paths.get(
-                    String.format("%s%s", RawData.getRootPath(), relativePath));
-            if (Files.deleteIfExists(path)) {
-                LOGGER.debug("File '{}' is deleted.", relativePath);
-            }
-        } catch (IOException e) {
-            throw new PersistentException("Cannot delete file");
         }
     }
 }

@@ -1,7 +1,7 @@
 package by.training.catalog.dao.impl;
 
 import by.training.catalog.dao.AbstractConnectionManager;
-import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.dao.pool.ConnectionPool;
 import by.training.catalog.dao.pool.ConnectionPoolException;
 
@@ -20,14 +20,14 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Creates ConnectionManager that takes connection from the connection pool.
      *
-     * @throws PersistentException if ConnectionPoolException is thrown.
+     * @throws PersistenceException if ConnectionPoolException is thrown.
      */
-    ConnectionManager() throws PersistentException {
+    ConnectionManager() throws PersistenceException {
         try {
             connection = ConnectionPool.getInstance().getConnection();
             enableAutoCommit();
         } catch (ConnectionPoolException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "unable to get connection from the pool", e);
         }
     }
@@ -35,16 +35,16 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Disables auto commit.
      *
-     * @throws PersistentException if SQLException is thrown.
+     * @throws PersistenceException if SQLException is thrown.
      */
     @Override
-    public void disableAutoCommit() throws PersistentException {
+    public void disableAutoCommit() throws PersistenceException {
         try {
             if (connection.getAutoCommit()) {
                 connection.setAutoCommit(false);
             }
         } catch (SQLException e) {
-            throw new PersistentException("could not set auto commit to false",
+            throw new PersistenceException("could not set auto commit to false",
                     e);
         }
     }
@@ -52,16 +52,16 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Enables auto commit.
      *
-     * @throws PersistentException If SQLException is thrown.
+     * @throws PersistenceException If SQLException is thrown.
      */
     @Override
-    public void enableAutoCommit() throws PersistentException {
+    public void enableAutoCommit() throws PersistenceException {
         try {
             if (!connection.getAutoCommit()) {
                 connection.setAutoCommit(true);
             }
         } catch (SQLException e) {
-            throw new PersistentException("could not set auto commit to true",
+            throw new PersistenceException("could not set auto commit to true",
                     e);
         }
     }
@@ -69,42 +69,42 @@ public class ConnectionManager implements AbstractConnectionManager {
     /**
      * Delegates commit call to the connection.
      *
-     * @throws PersistentException If SQLException is thrown.
+     * @throws PersistenceException If SQLException is thrown.
      */
     @Override
-    public void commit() throws PersistentException {
+    public void commit() throws PersistenceException {
         try {
             connection.commit();
         } catch (SQLException e) {
-            throw new PersistentException("could not commit", e);
+            throw new PersistenceException("could not commit", e);
         }
     }
 
     /**
      * Delegates rollback call to the connection.
      *
-     * @throws PersistentException If SQLException is thrown.
+     * @throws PersistenceException If SQLException is thrown.
      */
     @Override
-    public void rollback() throws PersistentException {
+    public void rollback() throws PersistenceException {
         try {
             connection.rollback();
         } catch (SQLException e) {
-            throw new PersistentException("could not rollback", e);
+            throw new PersistenceException("could not rollback", e);
         }
     }
 
     /**
      * Delegates close call to the connection.
      *
-     * @throws PersistentException If SQLException is thrown.
+     * @throws PersistenceException If SQLException is thrown.
      */
     @Override
-    public void close() throws PersistentException {
+    public void close() throws PersistenceException {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "unable to return connection to the pool", e);
         }
     }

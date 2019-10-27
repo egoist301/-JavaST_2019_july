@@ -8,14 +8,23 @@ import java.util.List;
 /**
  * Store image dao interface.
  */
-public interface StoreImageDao extends Dao<StoreImage> {
+public interface StoreImageDao {
     /**
      * Find images by cube.
      *
      * @param cubeNew cube.
      * @return list of paths to image.
-     * @throws PersistentException if SQL exception is throw.
+     * @throws PersistenceException if SQL exception is throw.
      */
     List<String> findImagesByRubik(RubiksCube cubeNew)
-            throws PersistentException;
+            throws PersistenceException;
+
+    /**
+     * Create store image.
+     *
+     * @param entityNew object.
+     * @return id of store image.
+     * @throws PersistenceException if SQL exception is throw.
+     */
+    int create(StoreImage entityNew) throws PersistenceException;
 }

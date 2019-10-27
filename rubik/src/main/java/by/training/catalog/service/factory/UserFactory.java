@@ -1,13 +1,13 @@
-package by.training.catalog.service.parser;
+package by.training.catalog.service.factory;
 
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.User;
 import by.training.catalog.validator.UserValidator;
 
 /**
- * User parser.
+ * User factory.
  */
-public class UserParser {
+public class UserFactory {
 
     /**
      * Get valid user.
@@ -18,9 +18,9 @@ public class UserParser {
      * @param passwordNew password.
      * @return user.
      */
-    public User getUser(final String usernameNew, final String emailNew,
-                        final String phoneNew,
-                        final String passwordNew) {
+    public User createUser(final String usernameNew, final String emailNew,
+                           final String phoneNew,
+                           final String passwordNew) {
 
         User user;
         if (UserValidator

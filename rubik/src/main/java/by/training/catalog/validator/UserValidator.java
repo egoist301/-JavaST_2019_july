@@ -40,6 +40,46 @@ public final class UserValidator {
     }
 
     /**
+     * Check invalidate username.
+     *
+     * @param username username.
+     * @return invalid or valid.
+     */
+    public static boolean invalidateUsername(final String username) {
+        return username == null || !username.matches(USER_USERNAME_REGEX);
+    }
+
+    /**
+     * Check invalidate password.
+     *
+     * @param password password.
+     * @return invalid or valid.
+     */
+    public static boolean invalidatePassword(final String password) {
+        return password == null || !password.matches(USER_PASSWORD_REGEX);
+    }
+
+    /**
+     * Check invalidate email.
+     *
+     * @param email email.
+     * @return invalid or valid.
+     */
+    public static boolean invalidateEmail(final String email) {
+        return email == null || !email.matches(USER_EMAIL_REGEX);
+    }
+
+    /**
+     * Check invalidate phone.
+     *
+     * @param phone phone.
+     * @return invalid or valid.
+     */
+    public static boolean invalidatePhone(final String phone) {
+        return phone == null || !phone.matches(USER_MOBILE_REGEX);
+    }
+
+    /**
      * Check valid parameters or not.
      *
      * @param username username.
@@ -51,19 +91,19 @@ public final class UserValidator {
     public static boolean isValid(final String username, final String password,
                                   final String email, final String phone) {
         boolean valid = true;
-        if (username == null || !username.matches(USER_USERNAME_REGEX)) {
+        if (invalidateUsername(username)) {
             LOGGER.warn("incorrect login: {}", username);
             valid = false;
         }
-        if (password == null || !password.matches(USER_PASSWORD_REGEX)) {
+        if (invalidatePassword(password)) {
             LOGGER.warn("incorrect password: {}", password);
             valid = false;
         }
-        if (email == null || !email.matches(USER_EMAIL_REGEX)) {
+        if (invalidateEmail(email)) {
             LOGGER.warn("incorrect email: {}", email);
             valid = false;
         }
-        if (phone == null || !phone.matches(USER_MOBILE_REGEX)) {
+        if (invalidatePhone(phone)) {
             LOGGER.warn("incorrect phone: {}", phone);
             valid = false;
         }

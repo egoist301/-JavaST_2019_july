@@ -4,6 +4,9 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -141,7 +144,7 @@ public final class ConnectionPool {
      *
      * @return a connection
      */
-    public ProxyConnection getConnection() {
+    public Connection getConnection() {
         try {
             locker.lock();
             if (!pool.isEmpty()) {

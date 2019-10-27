@@ -3,9 +3,10 @@ package by.training.catalog.dao.impl;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.StoreImage;
 import by.training.catalog.dao.AbstractConnectionManager;
-import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.dao.StoreImageDao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,7 +18,7 @@ import static java.sql.Statement.RETURN_GENERATED_KEYS;
 /**
  * Store image dao implementation.
  */
-public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
+public class StoreImageDaoImpl implements
         StoreImageDao {
     /**
      * Insert store image. SQL query.
@@ -25,42 +26,22 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
     private static final String INSERT_STORE_IMAGE = "INSERT INTO "
             + "`store_image`(`cube_id`, `image_path`) VALUES (?, ?)";
     /**
-     * Find store image by id. SQL query.
-     */
-    private static final String FIND_STORE_IMAGE_BY_ID =
-            "SELECT `id`, `cube_id`, `image_path` FROM `store_image` WHERE "
-                    + "`id` = ?";
-    /**
-     * Update store image by id. SQL query.
-     */
-    private static final String UPDATE_STORE_IMAGE_BY_ID = "UPDATE "
-            + "`store_image` SET `cube_id` = ?, `image_path` = ? WHERE `id` ="
-            + " ?";
-    /**
-     * Find store image count. SQL query.
-     */
-    private static final String FIND_STORE_IMAGE_COUNT =
-            "SELECT COUNT(`id`) FROM `store_image`";
-    /**
-     * Find all store images limit. SQL query.
-     */
-    private static final String FIND_ALL_STORE_IMAGES_LIMIT =
-            "SELECT `id`, `cube_id`, `image_path` FROM `store_image` ORDER BY"
-                    + " `id` LIMIT ? OFFSET ?";
-    /**
      * Find all images by rubik. SQL query.
      */
     private static final String FIND_ALL_IMAGES_BY_RUBIK = "SELECT "
             + "`image_path` FROM `store_image` WHERE `cube_id` = ?";
+    /**
+     * Connection.
+     */
+    private Connection connection;
 
     /**
      * Default constructor.
      *
      * @param managerNew connection manager.
      */
-    StoreImageDaoImpl(
-            final AbstractConnectionManager managerNew) {
-        super(managerNew);
+    StoreImageDaoImpl(final AbstractConnectionManager managerNew) {
+        connection = managerNew.getConnection();
     }
 
     /**
@@ -68,13 +49,13 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
      *
      * @param cubeNew cube.
      * @return list of paths.
-     * @throws PersistentException dao exception.
+     * @throws PersistenceException dao exception.
      */
     @Override
     public List<String> findImagesByRubik(final RubiksCube cubeNew)
-            throws PersistentException {
+            throws PersistenceException {
         List<String> list = new LinkedList<>();
-        try (PreparedStatement statement = getConnection()
+        try (PreparedStatement statement = connection
                 .prepareStatement(FIND_ALL_IMAGES_BY_RUBIK)) {
             statement.setLong(1, cubeNew.getId());
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -83,96 +64,10 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "SQLException while finding all images", e);
         }
         return list;
-    }
-
-    /**
-     * Find all store images in range.
-     *
-     * @param offset offset.
-     * @param limit  limit.
-     * @return list of store images.
-     * @throws PersistentException dao exception.
-     */
-    @Override
-    public List<StoreImage> findAll(final int offset, final int limit)
-            throws PersistentException {
-        List<StoreImage> list = new LinkedList<>();
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(FIND_ALL_STORE_IMAGES_LIMIT)) {
-            statement.setInt(1, limit);
-            statement.setInt(2, offset);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                while (resultSet.next()) {
-                    list.add(createStoreImage(resultSet));
-                }
-            }
-        } catch (SQLException e) {
-            throw new PersistentException(
-                    "SQLException while finding all store images", e);
-        }
-        return list;
-    }
-
-    /**
-     * Find store image by id.
-     *
-     * @param id id of object.
-     * @return store image.
-     * @throws PersistentException dao exception.
-     */
-    @Override
-    public StoreImage findEntityById(final long id) throws PersistentException {
-        StoreImage storeImage = null;
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(FIND_STORE_IMAGE_BY_ID)) {
-            statement.setLong(1, id);
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    storeImage = createStoreImage(resultSet);
-                }
-            }
-        } catch (SQLException e) {
-            throw new PersistentException("SQLException while finding by id",
-                    e);
-        }
-        return storeImage;
-    }
-
-    /**
-     * Store image.
-     *
-     * @param resultSetNew result set.
-     * @return store image.
-     * @throws SQLException sql exception.
-     */
-    private StoreImage createStoreImage(final ResultSet resultSetNew)
-            throws SQLException {
-        long id = resultSetNew.getLong(1);
-        long cubeId = resultSetNew.getLong(2);
-        String img = resultSetNew.getString(3);
-        return new StoreImage(id, new RubiksCube(cubeId), img);
-    }
-
-    /**
-     * Update store image.
-     *
-     * @param entityNew object.
-     * @throws PersistentException dao exception.
-     */
-    @Override
-    public void update(final StoreImage entityNew) throws PersistentException {
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(UPDATE_STORE_IMAGE_BY_ID)) {
-            statement.setLong(1, entityNew.getRubiksCube().getId());
-            statement.setString(2, entityNew.getImgPath());
-            statement.setLong(3, entityNew.getId());
-        } catch (SQLException e) {
-            throw new PersistentException("SQLException while updating", e);
-        }
     }
 
     /**
@@ -180,14 +75,14 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
      *
      * @param entityNew object.
      * @return id of store image.
-     * @throws PersistentException dao exception.
+     * @throws PersistenceException dao exception.
      */
     @Override
-    public int create(final StoreImage entityNew) throws PersistentException {
+    public int create(final StoreImage entityNew) throws PersistenceException {
         if (entityNew == null) {
             return 0;
         }
-        try (PreparedStatement statement = getConnection()
+        try (PreparedStatement statement = connection
                 .prepareStatement(INSERT_STORE_IMAGE, RETURN_GENERATED_KEYS)) {
             statement.setLong(1, entityNew.getRubiksCube().getId());
             statement.setString(2, entityNew.getImgPath());
@@ -198,31 +93,8 @@ public class StoreImageDaoImpl extends AbstractDao<StoreImage> implements
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "SQLException while inserting store image", e);
-        }
-        return 0;
-    }
-
-    /**
-     * Find count of store images.
-     *
-     * @return count of store images.
-     * @throws PersistentException dao exception.
-     */
-    @Override
-    public int findElementCount() throws PersistentException {
-        try (PreparedStatement statement = getConnection()
-                .prepareStatement(FIND_STORE_IMAGE_COUNT)) {
-            try (ResultSet resultSet = statement.executeQuery()) {
-                if (resultSet.next()) {
-                    return resultSet.getInt(1);
-                }
-            }
-        } catch (SQLException e) {
-            throw new PersistentException(
-                    "SQLException while finding count",
-                    e);
         }
         return 0;
     }

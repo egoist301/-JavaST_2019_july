@@ -27,16 +27,12 @@ public class FindCubeBySizeCommand extends FindCubeCommand {
             int offset = Pagination.calcOffset(page, LIMIT);
             String size = requestNew.getParameter("size");
             rubiksCubes = rubikService.findRubiksBySize(size, offset, LIMIT);
-            if (rubiksCubes.isEmpty()) {
-                records = 1;
-            } else {
-                records = rubiksCubes.size();
-            }
+            records = rubikService.findCountBySize(size);
             for (RubiksCube cube : rubiksCubes) {
                 imageService.findImagesByRubik(cube);
             }
-            getForms(requestNew);
-            getManufacturers(requestNew);
+            specifyForms(requestNew);
+            specifyManufacturers(requestNew);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);

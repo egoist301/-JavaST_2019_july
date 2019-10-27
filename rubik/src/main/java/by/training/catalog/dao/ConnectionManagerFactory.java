@@ -8,8 +8,8 @@ public interface ConnectionManagerFactory {
      * Create connection manager.
      *
      * @return connection manager.
-     * @throws PersistentException dao exception.
+     * @throws PersistenceException dao exception.
      */
     AbstractConnectionManager createConnectionManager()
-            throws PersistentException;
+            throws PersistenceException;
 }

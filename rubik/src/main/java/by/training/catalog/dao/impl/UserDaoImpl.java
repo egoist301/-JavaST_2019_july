@@ -4,7 +4,7 @@ import by.training.catalog.bean.Role;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
 import by.training.catalog.dao.AbstractConnectionManager;
-import by.training.catalog.dao.PersistentException;
+import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.dao.UserDao;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -122,7 +122,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public int findCountOfRubiks(final User userNew)
-            throws PersistentException {
+            throws PersistenceException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(FIND_COUNT_RUBIKS)) {
             statement.setLong(1, userNew.getId());
@@ -132,7 +132,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException eNew) {
-            throw new PersistentException(eNew);
+            throw new PersistenceException(eNew);
         }
         return 0;
     }
@@ -142,11 +142,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      *
      * @param email email.
      * @return user.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public User findUserByEmail(final String email)
-            throws PersistentException {
+            throws PersistenceException {
         User user = null;
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_USER_BY_EMAIL)) {
@@ -157,7 +157,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "SQLException while finding by email", e);
         }
         return user;
@@ -167,10 +167,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * Find count of users.
      *
      * @return count of users.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
-    public int findElementCount() throws PersistentException {
+    public int findElementCount() throws PersistenceException {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_USER_COUNT)) {
             try (ResultSet resultSet = statement.executeQuery()) {
@@ -179,7 +179,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "SQLException while finding count users", e);
         }
         return 0;
@@ -190,11 +190,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      *
      * @param username username.
      * @return user.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public User findUserByUsername(final String username)
-            throws PersistentException {
+            throws PersistenceException {
         User user = null;
         try (PreparedStatement statement =
                      getConnection().prepareStatement(
@@ -206,7 +206,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "SQLException while finding by phone", e);
         }
         return user;
@@ -219,12 +219,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * @param limit  limit.
      * @param offset offset.
      * @return list of users.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public List<User> findUsersByRole(final Role role, final int limit,
                                       final int offset)
-            throws PersistentException {
+            throws PersistenceException {
         List<User> users = new LinkedList<>();
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement(FIND_USERS_BY_ROLE)) {
@@ -239,7 +239,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             }
             return users;
         } catch (SQLException newE) {
-            throw new PersistentException(newE.getMessage(), newE);
+            throw new PersistenceException(newE.getMessage(), newE);
         }
     }
 
@@ -250,13 +250,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * @param limit   limit.
      * @param offset  offset.
      * @return list of liked cubes.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public List<RubiksCube> findLikedCubesByUser(final User userNew,
                                                  final int limit,
                                                  final int offset)
-            throws PersistentException {
+            throws PersistenceException {
         List<RubiksCube> rubiksCubes = new LinkedList<>();
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement(FIND_ALL_RUBIKS_PAGE)) {
@@ -276,7 +276,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             LOGGER.debug(rubiksCubes);
             return rubiksCubes;
         } catch (SQLException newE) {
-            throw new PersistentException(newE.getMessage(), newE);
+            throw new PersistenceException(newE.getMessage(), newE);
         }
     }
 
@@ -286,11 +286,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * @param offset offset.
      * @param limit  limit.
      * @return list of users.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public List<User> findAll(final int offset, final int limit)
-            throws PersistentException {
+            throws PersistenceException {
         List<User> users = new LinkedList<>();
         try (PreparedStatement preparedStatement = getConnection()
                 .prepareStatement(FIND_ALL_USERS_PAGE)) {
@@ -303,7 +303,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             }
             return users;
         } catch (SQLException newE) {
-            throw new PersistentException(newE.getMessage(), newE);
+            throw new PersistenceException(newE.getMessage(), newE);
         }
     }
 
@@ -312,10 +312,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      *
      * @param id id of object.
      * @return user.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
-    public User findEntityById(final long id) throws PersistentException {
+    public User findEntityById(final long id) throws PersistenceException {
         User user = null;
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(FIND_USER_BY_ID)) {
@@ -326,7 +326,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException("SQLException while finding by id",
+            throw new PersistenceException("SQLException while finding by id",
                     e);
         }
         return user;
@@ -336,17 +336,17 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * Update user.
      *
      * @param entityNew object.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
-    public void update(final User entityNew) throws PersistentException {
+    public void update(final User entityNew) throws PersistenceException {
         try (PreparedStatement statement = getConnection()
                 .prepareStatement(UPDATE_USER_BY_ID)) {
             statement.setString(1, entityNew.getPassword());
             statement.setLong(2, entityNew.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new PersistentException("SQLException while updating", e);
+            throw new PersistenceException("SQLException while updating", e);
         }
     }
 
@@ -355,10 +355,10 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      *
      * @param user object.
      * @return id of user.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
-    public int create(final User user) throws PersistentException {
+    public int create(final User user) throws PersistenceException {
         if (user == null) {
             return 0;
         }
@@ -378,7 +378,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException e) {
-            throw new PersistentException(
+            throw new PersistenceException(
                     "SQLException while inserting user", e);
         }
         return 0;
@@ -391,13 +391,13 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * @param limit    limit.
      * @param offset   offset.
      * @return list of users.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public List<User> findUsersByUsername(final String username,
                                           final int limit,
                                           final int offset)
-            throws PersistentException {
+            throws PersistenceException {
         List<User> users = new ArrayList<>();
         try (PreparedStatement statement =
                      getConnection()
@@ -412,7 +412,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException eNew) {
-            throw new PersistentException(eNew);
+            throw new PersistenceException(eNew);
         }
         return users;
     }
@@ -422,11 +422,11 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      *
      * @param userNew user.
      * @param cubeId  cube id.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public void addCubeToBookmarks(final User userNew, final long cubeId)
-            throws PersistentException {
+            throws PersistenceException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(ADD_RUBIK,
                              RETURN_GENERATED_KEYS)) {
@@ -434,7 +434,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
             statement.setLong(2, userNew.getId());
             statement.executeUpdate();
         } catch (SQLException eNew) {
-            throw new PersistentException(eNew);
+            throw new PersistenceException(eNew);
         }
     }
 
@@ -442,16 +442,16 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * Update state of user. Ban.
      *
      * @param userNew user.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
-    public void updateState(final User userNew) throws PersistentException {
+    public void updateState(final User userNew) throws PersistenceException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(UPDATE_STATE)) {
             statement.setLong(1, userNew.getId());
             statement.executeUpdate();
         } catch (SQLException eNew) {
-            throw new PersistentException(eNew);
+            throw new PersistenceException(eNew);
         }
     }
 
@@ -460,19 +460,19 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      *
      * @param userNew user.
      * @param cubeId  cube id.
-     * @throws PersistentException sql exception.
+     * @throws PersistenceException sql exception.
      */
     @Override
     public void removeCubeFromBookmarks(final User userNew,
                                         final long cubeId)
-            throws PersistentException {
+            throws PersistenceException {
         try (PreparedStatement statement =
                      getConnection().prepareStatement(DELETE_RUBIK)) {
             statement.setLong(1, cubeId);
             statement.setLong(2, userNew.getId());
             statement.executeUpdate();
         } catch (SQLException eNew) {
-            throw new PersistentException(eNew);
+            throw new PersistenceException(eNew);
         }
     }
 
@@ -482,12 +482,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
      * @param userNew user.
      * @param cubeId  cube id.
      * @return cube.
-     * @throws PersistentException dao exception.
+     * @throws PersistenceException dao exception.
      */
     @Override
     public RubiksCube findCubeFromBookmarksById(final User userNew,
                                                 final long cubeId)
-            throws PersistentException {
+            throws PersistenceException {
         if (userNew == null) {
             return null;
         }
@@ -503,7 +503,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
                 }
             }
         } catch (SQLException eNew) {
-            throw new PersistentException(eNew);
+            throw new PersistenceException(eNew);
         }
         return cube;
     }

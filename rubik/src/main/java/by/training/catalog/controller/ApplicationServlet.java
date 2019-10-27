@@ -22,6 +22,11 @@ import java.util.ResourceBundle;
 @MultipartConfig
 public class ApplicationServlet extends HttpServlet {
     /**
+     * Database.
+     */
+    private static final String DATABASE = "database";
+    private static final String COMMAND = "command";
+    /**
      * Logger.
      */
     private static final Logger LOGGER = LogManager.getLogger();
@@ -31,7 +36,7 @@ public class ApplicationServlet extends HttpServlet {
      */
     @Override
     public void init() {
-        ResourceBundle bundle = ResourceBundle.getBundle("database");
+        ResourceBundle bundle = ResourceBundle.getBundle(DATABASE);
         String path = getServletContext().getRealPath("/");
         ServiceInitializer.init(bundle, path);
     }
@@ -45,7 +50,7 @@ public class ApplicationServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest req,
                          final HttpServletResponse resp) {
-        Command command = (Command) req.getAttribute("command");
+        Command command = (Command) req.getAttribute(COMMAND);
         try {
             Command.Forward forward = command.execute(req, resp);
             if (checkError(forward, resp)) {
@@ -70,7 +75,7 @@ public class ApplicationServlet extends HttpServlet {
     @Override
     protected void doPost(final HttpServletRequest req,
                           final HttpServletResponse resp) {
-        Command command = (Command) req.getAttribute("command");
+        Command command = (Command) req.getAttribute(COMMAND);
         try {
             Command.Forward forward = command.execute(req, resp);
             if (checkError(forward, resp)) {
@@ -94,14 +99,13 @@ public class ApplicationServlet extends HttpServlet {
             try {
                 int error = (Integer) forward.getAttributes().get("error");
                 response.sendError(error);
-                return false;
             } catch (IOException e) {
                 LOGGER.error("Cannot redirect user.");
-                return false;
             }
         } else {
             return true;
         }
+        return false;
     }
 
     /**
