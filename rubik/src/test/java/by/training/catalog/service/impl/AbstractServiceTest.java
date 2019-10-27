@@ -6,7 +6,6 @@ import com.wix.mysql.Sources;
 import com.wix.mysql.SqlScriptSource;
 import com.wix.mysql.config.MysqldConfig;
 import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
@@ -21,7 +20,6 @@ import static com.wix.mysql.ScriptResolver.classPathScript;
 import static com.wix.mysql.config.Charset.UTF8;
 import static com.wix.mysql.config.MysqldConfig.aMysqldConfig;
 import static com.wix.mysql.distribution.Version.v5_7_latest;
-import static com.wix.mysql.distribution.Version.v8_0_11;
 
 public abstract class AbstractServiceTest {
     protected static final String DATABASE = "rubik_test";
@@ -31,7 +29,6 @@ public abstract class AbstractServiceTest {
     private static final SqlScriptSource[] SQL_SCRIPT_SOURCES
             = {classPathScript("sql/create_tables.sql"),
             classPathScript("sql/init_data.sql")};
-    private static Connection connection;
     protected static EmbeddedMysql database;
 
     @BeforeSuite
@@ -45,12 +42,6 @@ public abstract class AbstractServiceTest {
         database = anEmbeddedMysql(config)
                 .addSchema(DATABASE, SQL_SCRIPT_SOURCES)
                 .start();
-
-        connection = DriverManager.getConnection(
-                "jdbc:mysql://localhost:" + PORT + "/" + DATABASE +
-                        "?serverTimezone=UTC&useSSL=false",
-                USERNAME,
-                PASSWORD);
         ResourceBundle bundle = ResourceBundle.getBundle("database");
         ServiceInitializer.init(bundle, "/");
     }
@@ -63,13 +54,5 @@ public abstract class AbstractServiceTest {
     @AfterSuite
     public void destroy() {
         database.stop();
-    }
-
-    protected List<String> executeScript(String script) {
-        return database.executeScripts(DATABASE, Sources.fromString(script));
-    }
-
-    protected Connection getConnection() {
-        return connection;
     }
 }

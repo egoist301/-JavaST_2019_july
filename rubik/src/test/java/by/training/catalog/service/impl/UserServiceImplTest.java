@@ -110,7 +110,8 @@ public class UserServiceImplTest extends AbstractServiceTest {
     @DataProvider(name = "Incorrect find count of rubik's")
     private Object[][] findCountRubiksIncorrectProvider() {
         return new Object[][]{
-                {6, 0}
+                {6, 0},
+                {-1, 0}
         };
     }
 
@@ -150,14 +151,15 @@ public class UserServiceImplTest extends AbstractServiceTest {
     @DataProvider(name = "Correct update state")
     private Object[][] updateStateCorrectProvider() {
         return new Object[][]{
-                {2}
+                {2},
+                {1}
         };
     }
 
     @DataProvider(name = "Incorrect update state")
     private Object[][] updateStateIncorrectProvider() {
         return new Object[][]{
-                {6},
+                {-1},
                 {7}
         };
     }
@@ -237,7 +239,6 @@ public class UserServiceImplTest extends AbstractServiceTest {
     @DataProvider(name = "Incorrect find users by username")
     private Object[][] findUsersByUsernameIncorrectProvider() {
         return new Object[][]{
-                {null, 4, 0, 0},
                 {"dw", -1, 1, 0},
                 {"daw", 1, -1, 1}
         };
@@ -258,7 +259,6 @@ public class UserServiceImplTest extends AbstractServiceTest {
     @DataProvider(name = "Incorrect find users by role")
     private Object[][] findUsersByRoleIncorrectProvider() {
         return new Object[][]{
-                {null, 1, 0, 0},
                 {Role.USER, -1, 0, 0},
                 {Role.USER, 0, -1, 0}
         };
@@ -479,14 +479,13 @@ public class UserServiceImplTest extends AbstractServiceTest {
         assertTrue(user.isBlocked());
     }
 
-    @Test(dataProvider = "Incorrect update state", expectedExceptions =
-            ServiceException.class, dependsOnMethods = {
+    @Test(dataProvider = "Incorrect update state", dependsOnMethods = {
             "testFindByIdCorrect", "testFindByIdIncorrect"})
     public void testUpdateStateIncorrect(final long id)
             throws ServiceException {
         service.updateState(id);
         User user = service.findById(id);
-        assertFalse(user.isBlocked());
+        assertNull(user);
     }
 
     @Test(dataProvider = "Correct find liked cubes")
