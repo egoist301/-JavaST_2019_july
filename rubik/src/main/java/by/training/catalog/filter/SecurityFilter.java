@@ -3,6 +3,10 @@ package by.training.catalog.filter;
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.User;
 import by.training.catalog.controller.command.Command;
+import by.training.catalog.controller.command.LoginPageCommand;
+import by.training.catalog.controller.command.RegistrationCommand;
+import by.training.catalog.controller.command.RegistrationPageCommand;
+import by.training.catalog.controller.command.SignInCommand;
 import by.training.catalog.controller.command.SignOutCommand;
 
 import javax.servlet.Filter;
@@ -47,10 +51,17 @@ public class SecurityFilter implements Filter {
         Command command = (Command) req.getAttribute("command");
         HttpSession session = req.getSession(true);
         Set<Role> commandRoles = command.getRoles();
+        User user = (User) session.getAttribute("user");
         if (commandRoles.isEmpty()) {
-            chain.doFilter(req, resp);
+            if (user != null && (command instanceof LoginPageCommand
+                    || command instanceof SignInCommand
+                    || command instanceof RegistrationCommand
+                    || command instanceof RegistrationPageCommand)) {
+                resp.sendRedirect("index.html");
+            } else {
+                chain.doFilter(req, resp);
+            }
         } else {
-            User user = (User) session.getAttribute("user");
             boolean canExecute =
                     user != null && commandRoles.contains(user.getRole());
             if (canExecute) {
