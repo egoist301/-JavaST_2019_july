@@ -14,6 +14,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * URL action filter.
@@ -104,6 +105,15 @@ public class URLActionFilter implements Filter {
             if (request.getQueryString() != null) {
                 String redirect = action.substring(1) + ".html?"
                         + request.getQueryString();
+                String query = redirect;
+                if (redirect.contains("&page")) {
+                    String[] querys = redirect.split("&page=\\d");
+                    query = querys[0];
+                } else if (redirect.contains("page")) {
+                    String[] querys = redirect.split("page=\\d");
+                    query = querys[0];
+                }
+                request.setAttribute("query", query);
                 LOGGER.debug("QUERY!!!!!!!!  {}", request.getParameterMap());
                 LOGGER.debug("REDIRECT!!!!!!  {}", redirect);
                 request.setAttribute("from", redirect);
