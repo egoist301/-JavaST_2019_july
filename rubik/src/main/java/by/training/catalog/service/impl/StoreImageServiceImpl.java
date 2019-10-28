@@ -12,7 +12,7 @@ public class StoreImageServiceImpl extends AbstractService implements
         StoreImageService {
 
     @Override
-    public void findImagesByRubik(final RubiksCube cubeNew)
+    public void assignRubikImagesPaths(final RubiksCube cubeNew)
             throws ServiceException {
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {

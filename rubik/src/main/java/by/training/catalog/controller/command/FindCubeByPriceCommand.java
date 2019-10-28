@@ -33,7 +33,7 @@ public class FindCubeByPriceCommand extends FindCubeCommand {
                     .findRubiksByRangePrice(minPrice, maxPrice, offset, LIMIT);
             records = rubikService.findCountByPrice(minPrice, maxPrice);
             for (RubiksCube cube : rubiksCubes) {
-                imageService.findImagesByRubik(cube);
+                imageService.assignRubikImagesPaths(cube);
             }
             specifyForms(requestNew);
             specifyManufacturers(requestNew);

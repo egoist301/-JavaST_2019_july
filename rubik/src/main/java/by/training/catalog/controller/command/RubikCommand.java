@@ -30,7 +30,7 @@ public class RubikCommand extends Command {
             if (cube != null) {
                 StoreImageService storeImageService =
                         getFactory().createStoreImageService();
-                storeImageService.findImagesByRubik(cube);
+                storeImageService.assignRubikImagesPaths(cube);
                 requestNew.setAttribute("cube", cube);
                 forward = new Forward("WEB-INF/jsp/rubik.jsp");
                 return forward;

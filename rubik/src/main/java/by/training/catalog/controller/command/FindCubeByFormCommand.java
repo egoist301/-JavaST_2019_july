@@ -31,7 +31,7 @@ public class FindCubeByFormCommand extends FindCubeCommand {
             rubiksCubes = rubikService.findRubiksByForm(form, offset, LIMIT);
             records = rubikService.findCountByForm(form);
             for (RubiksCube cube : rubiksCubes) {
-                imageService.findImagesByRubik(cube);
+                imageService.assignRubikImagesPaths(cube);
             }
             specifyForms(requestNew);
             specifyManufacturers(requestNew);

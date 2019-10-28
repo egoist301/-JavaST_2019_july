@@ -31,7 +31,7 @@ public class BookmarksPageCommand extends UserCommand {
             records = service.findCountRubiks(user.getId());
             LOGGER.debug("Cube's on page {}", user.getCubes());
             for (RubiksCube cube : user.getCubes()) {
-                imageService.findImagesByRubik(cube);
+                imageService.assignRubikImagesPaths(cube);
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);

@@ -5,7 +5,6 @@ import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
 import com.wix.mysql.SqlScriptSource;
 import org.testng.annotations.BeforeTest;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import static com.wix.mysql.ScriptResolver.classPathScript;
@@ -26,14 +25,14 @@ public class StoreImageServiceImplTest extends AbstractServiceTest {
     @Test
     public void testFindImagesByRubikCorrect() throws ServiceException {
         RubiksCube cube = new RubiksCube(1);
-        storeImageService.findImagesByRubik(cube);
+        storeImageService.assignRubikImagesPaths(cube);
         assertNotNull(cube.getPaths());
     }
 
     @Test
     public void testFindImagesByRubikIncorrect() throws ServiceException {
         RubiksCube cubeNew = new RubiksCube(0);
-        storeImageService.findImagesByRubik(cubeNew);
+        storeImageService.assignRubikImagesPaths(cubeNew);
         assertEquals(cubeNew.getPaths().size(), 0);
     }
 }

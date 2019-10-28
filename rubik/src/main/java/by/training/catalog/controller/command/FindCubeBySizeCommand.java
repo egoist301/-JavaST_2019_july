@@ -29,7 +29,7 @@ public class FindCubeBySizeCommand extends FindCubeCommand {
             rubiksCubes = rubikService.findRubiksBySize(size, offset, LIMIT);
             records = rubikService.findCountBySize(size);
             for (RubiksCube cube : rubiksCubes) {
-                imageService.findImagesByRubik(cube);
+                imageService.assignRubikImagesPaths(cube);
             }
             specifyForms(requestNew);
             specifyManufacturers(requestNew);

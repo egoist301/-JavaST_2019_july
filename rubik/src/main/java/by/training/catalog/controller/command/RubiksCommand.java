@@ -48,7 +48,7 @@ public class RubiksCommand extends Command {
                 records = rubikService.findElementCount();
             }
             for (RubiksCube cube : rubiksCubes) {
-                imageService.findImagesByRubik(cube);
+                imageService.assignRubikImagesPaths(cube);
             }
             requestNew.setAttribute("forms", forms);
             requestNew.setAttribute("manufacturer", manufacturers);
