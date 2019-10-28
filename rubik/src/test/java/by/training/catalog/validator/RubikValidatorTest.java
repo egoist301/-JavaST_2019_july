@@ -64,6 +64,7 @@ public class RubikValidatorTest {
     @DataProvider(name = "Incorrect price")
     private Object[][] priceIncorrectProvider() {
         return new Object[][]{
+                {""},
                 {"0"},
                 {"2001"},
                 {null}
