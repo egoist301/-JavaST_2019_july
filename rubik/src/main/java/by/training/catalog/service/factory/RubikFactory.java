@@ -16,7 +16,7 @@ public class RubikFactory {
      * @param parameters parameters for cube.
      * @return cube.
      */
-    public RubiksCube createCube(List<String> parameters) {
+    public RubiksCube createCube(final List<String> parameters) {
         if (RubikValidator.isValid(parameters)) {
             RubiksCube rubiksCube = new RubiksCube(1);
             int i = 0;

@@ -8,11 +8,10 @@ import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.dao.RubikDao;
 import by.training.catalog.dao.UserDao;
 import by.training.catalog.service.AbstractService;
+import by.training.catalog.service.PasswordEncoder;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
 import by.training.catalog.service.factory.UserFactory;
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -28,10 +27,9 @@ public class UserServiceImpl extends AbstractService implements UserService {
      */
     private static final Logger LOGGER = LogManager.getLogger();
     /**
-     * Argon2. Algorithm encoding.
+     * Password encoder.
      */
-    private final Argon2 argon2 =
-            Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);
+    private final PasswordEncoder passwordEncoder = new ArgonEncoder();
 
     /**
      * Default constructor.
@@ -59,7 +57,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
                         && userDao.findEntityById(entityNew.getId()) != null
                         && entityNew.getPassword() != null) {
                     entityNew.setPassword(
-                            argonTwoHashAlgorithm(entityNew.getPassword()));
+                            passwordEncoder
+                                    .encodePassword(entityNew.getPassword()));
                     userDao.update(entityNew);
                     entityNew.setPassword(null);
                     connectionManager.commit();
@@ -75,6 +74,13 @@ public class UserServiceImpl extends AbstractService implements UserService {
         }
     }
 
+    /**
+     * Find count of rubik's in bookmarks.
+     *
+     * @param id id of user.
+     * @return count of rubik's.
+     * @throws ServiceException service exception.
+     */
     @Override
     public int findCountRubiks(final long id) throws ServiceException {
         try (AbstractConnectionManager connectionManager =
@@ -120,7 +126,8 @@ public class UserServiceImpl extends AbstractService implements UserService {
                             parser.createUser(username, email, phone, password);
                     if (entityNew != null) {
                         entityNew.setPassword(
-                                argonTwoHashAlgorithm(entityNew.getPassword()));
+                                passwordEncoder.encodePassword(
+                                        entityNew.getPassword()));
                         entityNew.setId(userDao.create(entityNew));
                         entityNew.setPassword(null);
                         connectionManager.commit();
@@ -229,7 +236,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
             UserDao userDao =
                     getDaoFactory().createUserDao(connectionManager);
             User user = userDao.findUserByUsername(username);
-            if (user != null && password != null && argon2
+            if (user != null && password != null && passwordEncoder
                     .verify(user.getPassword(),
                             password)) {
                 user.setPassword(null);
@@ -491,17 +498,5 @@ public class UserServiceImpl extends AbstractService implements UserService {
         } catch (PersistenceException e) {
             throw new ServiceException(e);
         }
-    }
-
-    /**
-     * Encoding.
-     *
-     * @param newPassword password.
-     * @return hash.
-     */
-    private String argonTwoHashAlgorithm(final String newPassword) {
-        final int iNew = 4;
-        final int iNew1 = 256;
-        return argon2.hash(2, iNew1 * iNew1, iNew, newPassword);
     }
 }
