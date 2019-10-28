@@ -33,15 +33,16 @@
             <div class="form-group">
                 <label for="examplePrice"><fmt:message
                         key="cube.price"/></label>
-                <input type="number" class="form-control" id="examplePrice"
-                       min="1" max="2000" value="${cube.price}"
-                       required name="price">
+                <input type="text" class="form-control" id="examplePrice"
+                       value="${cube.price}" required name="price"
+                       pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$" maxlength="7">
             </div>
             <div class="form-group">
                 <label for="exampleWeight"><fmt:message
                         key="cube.weight"/></label>
                 <input type="number" class="form-control" id="exampleWeight"
-                       min="1" max="2000" value="${cube.weight}"
+                       pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$"
+                       value="${cube.weight}" maxlength="7"
                        required name="weight">
             </div>
             <div class="form-group">

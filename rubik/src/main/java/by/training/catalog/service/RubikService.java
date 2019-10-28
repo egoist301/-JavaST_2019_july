@@ -131,6 +131,7 @@ public interface RubikService {
     /**
      * Edit cube.
      *
+     * @param id         cube id.
      * @param parameters parameters of cube.
      * @throws ServiceException service exception.
      */
@@ -142,6 +143,7 @@ public interface RubikService {
      *
      * @param parameters parameters of cube.
      * @param rawDataNew raw data.
+     * @return true or false.
      * @throws ServiceException service exception.
      */
     boolean create(List<String> parameters, List<RawData> rawDataNew)

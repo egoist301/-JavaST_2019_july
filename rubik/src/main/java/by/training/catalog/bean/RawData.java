@@ -33,9 +33,8 @@ public class RawData {
 
     @Override
     public String toString() {
-        return "RawData{" +
-                "stream=" + stream +
-                ", contentType='" + contentType + '\'' +
-                '}';
+        return "RawData{"
+                + "stream=" + stream
+                + ", contentType='" + contentType + "'}";
     }
 }

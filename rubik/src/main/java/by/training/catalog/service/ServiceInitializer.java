@@ -19,6 +19,7 @@ public final class ServiceInitializer {
      * Connect to database.
      *
      * @param bundle resource bundle with parameter for database.
+     * @param path path for root catalog.
      */
     public static void init(final ResourceBundle bundle, final String path) {
         ConnectionPool.getInstance().init(bundle);

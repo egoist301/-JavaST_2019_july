@@ -35,18 +35,20 @@
             <div class="form-group">
                 <label for="examplePrice"><fmt:message
                         key="cube.price"/></label>
-                <input type="number" class="form-control" id="examplePrice"
-                       min="1" max="2000" placeholder="<fmt:message
+                <input type="text" class="form-control" id="examplePrice"
+                       placeholder="<fmt:message
                                key="createcube.placeholder.price"/>"
-                       required name="price">
+                       pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$"
+                       required name="price" maxlength="7">
             </div>
             <div class="form-group">
                 <label for="exampleWeight"><fmt:message
                         key="cube.weight"/></label>
-                <input type="number" class="form-control" id="exampleWeight"
-                       min="1" max="3000" placeholder="<fmt:message
+                <input type="text" class="form-control" id="exampleWeight"
+                       placeholder="<fmt:message
                                key="createcube.placeholder.weight"/>"
-                       required name="weight">
+                       pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$"
+                       required name="weight" maxlength="7">
             </div>
             <div class="form-group">
                 <label for="exampleInfo"><fmt:message
@@ -103,7 +105,7 @@
                         id="exampleForm">
                     <c:forEach items="${requestScope.get('forms')}" var="form">
                         <option value="${form}">
-                                <c:out value="${form}"/>
+                            <c:out value="${form}"/>
                         </option>
                     </c:forEach>
                 </select>

@@ -18,7 +18,7 @@ public final class RubikValidator {
      */
     private static final double MAX_WEIGHT = 3000;
     /**
-     * Min weight
+     * Min weight.
      */
     private static final double MIN_WEIGHT = 1;
     /**
@@ -46,7 +46,7 @@ public final class RubikValidator {
      */
     private static final int MIN_INFO_LENGTH = 1;
     /**
-     * Regex for size
+     * Regex for size.
      */
     private static final String REGEX_SIZE = "([0-9]{1,2}x[0-9]{1,2})|"
             + "([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})";
@@ -64,7 +64,7 @@ public final class RubikValidator {
      * @return invalid or valid.
      */
     public static boolean invalidatePrice(final String price) {
-        return price == null
+        return price == null || price.isEmpty()
                 || Double.parseDouble(price) > MAX_PRICE
                 || Double.parseDouble(price) < MIN_PRICE;
     }
@@ -76,7 +76,7 @@ public final class RubikValidator {
      * @return invalid or valid.
      */
     public static boolean invalidateWeight(final String weight) {
-        return weight == null
+        return weight == null || weight.isEmpty()
                 || Double.parseDouble(weight) > MAX_WEIGHT
                 || Double.parseDouble(weight) < MIN_WEIGHT;
     }

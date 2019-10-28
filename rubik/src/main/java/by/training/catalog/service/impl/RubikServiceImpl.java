@@ -10,7 +10,6 @@ import by.training.catalog.dao.StoreImageDao;
 import by.training.catalog.service.AbstractService;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
-import by.training.catalog.service.StoreImageService;
 import by.training.catalog.service.factory.RubikFactory;
 
 import java.util.ArrayList;
@@ -244,7 +243,8 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
 
     @Override
     public boolean create(final List<String> parameters,
-                       final List<RawData> rawDataNew) throws ServiceException {
+                          final List<RawData> rawDataNew)
+            throws ServiceException {
         boolean flag;
         try (AbstractConnectionManager connectionManager =
                      getConnectionManagerFactory().createConnectionManager()) {
@@ -274,7 +274,8 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
 
     private void addImagesForCube(final RubiksCube cubeNew,
                                   final List<RawData> rawData,
-                                  final AbstractConnectionManager connectionManager)
+                                  final AbstractConnectionManager
+                                          connectionManager)
             throws PersistenceException {
         List<String> paths = new ArrayList<>();
         ImageService service = new ImageService();

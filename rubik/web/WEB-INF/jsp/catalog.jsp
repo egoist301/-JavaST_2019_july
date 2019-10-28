@@ -70,15 +70,16 @@
                 <div class="col-md-4">
                     <form action="findprice.html" method="get">
                         <fmt:message key="search.price"/>
-                        <input class="form-control" type="number"
-                               name="minprice" value="1"
+                        <input class="form-control" type="search"
+                               name="minprice" value="1.00" maxlength="7"
                                placeholder="<fmt:message
                        key="search.price.min"/>" required aria-label="Search"
-                               min="1" max="2000">
-                        <input class="form-control" required type="text"
+                               pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$">
+                        <input class="form-control" required type="search"
                                name="maxprice" placeholder="<fmt:message
-                       key="search.price.max"/>" aria-label="Search" min="1"
-                               max="2000" value="2000">
+                       key="search.price.max"/>" aria-label="Search"
+                               pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$"
+                               value="2000.00" maxlength="7">
                         <button type="submit"
                                 class="btn-primary btn"><fmt:message
                                 key="search"/>
@@ -88,7 +89,7 @@
                 <div class="col-md-4">
                     <form action="findsize.html" method="get">
                         <fmt:message key="search.size"/>
-                        <input class="form-control" type="text"
+                        <input class="form-control" type="search"
                                pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
                                name="size" placeholder="<fmt:message
                        key="search.size"/>" maxlength="8" aria-label="Search">
@@ -97,7 +98,7 @@
                 <div class="col-md-4">
                     <form action="findmodel.html" method="get">
                         <fmt:message key="search.model"/>
-                        <input class="form-control" type="text"
+                        <input class="form-control" type="search"
                                name="model" placeholder="<fmt:message
                        key="search.model"/>" aria-label="Search" maxlength="30">
                     </form>
@@ -209,7 +210,7 @@
         </c:choose>
     </div>
     <ctgg:pagination page="${page}" lastPage="${lastPage}"
-                     pageURL="catalog.html"/>
+                     pageURL="${query}"/>
 </div>
 <hr class="my-5">
 <ctgg:footer/>

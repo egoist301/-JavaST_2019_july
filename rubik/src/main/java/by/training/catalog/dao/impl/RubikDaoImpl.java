@@ -97,8 +97,8 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      */
     private static final String FIND_ALL_RUBIKS_BY_SIZE = FIND_RUBIK_BY
             + " WHERE `size` LIKE ? LIMIT ? OFFSET ?";
-    private static final String COUNT_RUBIK_BY_SIZE = COUNT_RUBIK_BY +
-            " WHERE size LIKE ?";
+    private static final String COUNT_RUBIK_BY_SIZE = COUNT_RUBIK_BY
+            + " WHERE size LIKE ?";
     /**
      * Find all rubik's by price. SQL query.
      */
