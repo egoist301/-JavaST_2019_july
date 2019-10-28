@@ -9,6 +9,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class AddRubikCommand extends AdminCommand {
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew)
             throws IOException {
+        HttpSession session = requestNew.getSession(false);
         List<String> parameters = new ArrayList<>();
         parameters.add(requestNew.getParameter("model"));
         parameters.add(requestNew.getParameter("price"));
@@ -47,7 +49,8 @@ public class AddRubikCommand extends AdminCommand {
             if (rubikService.create(parameters, rawData)) {
                 return new Forward("catalog.html");
             } else {
-                return new Forward("registration.html");
+                session.setAttribute("error", "rubik.incorrect");
+                return new Forward("addcube.html");
             }
 
         } catch (ServletException | ServiceException eNew) {

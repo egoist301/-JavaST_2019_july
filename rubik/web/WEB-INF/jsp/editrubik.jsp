@@ -22,13 +22,21 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="cube"/>
         </h2>
+        <c:if test="${not empty error}">
+            <div class="text-center text-warning">
+                <label class="text">
+                    <p><fmt:message key="attention"/></p>
+                    <fmt:message key="${error}"/>
+                </label>
+            </div>
+        </c:if>
         <form action="updateinfo.html?id=${id}" method="post"
               enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
                         key="cube.model"/></label>
                 <input type="text" class="form-control" id="exampleModel"
-                       disabled required name="model" value="${cube.model}">
+                       required name="model" value="${cube.model}">
             </div>
             <div class="form-group">
                 <label for="examplePrice"><fmt:message
@@ -40,7 +48,7 @@
             <div class="form-group">
                 <label for="exampleWeight"><fmt:message
                         key="cube.weight"/></label>
-                <input type="number" class="form-control" id="exampleWeight"
+                <input type="text" class="form-control" id="exampleWeight"
                        pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$"
                        value="${cube.weight}" maxlength="7"
                        required name="weight">
@@ -113,6 +121,7 @@
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="update"/>
             </button>
+            ${pageContext.session.removeAttribute("error")}
         </form>
     </div>
 </div>

@@ -5,6 +5,7 @@ import by.training.catalog.service.ServiceException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ public class EditCubeCommand extends AdminCommand {
                            final HttpServletResponse responseNew) {
         long id = Long.parseLong(requestNew.getParameter("id"));
         List<String> parameters = new ArrayList<>();
+        HttpSession session = requestNew.getSession(false);
         parameters.add(requestNew.getParameter("model"));
         parameters.add(requestNew.getParameter("price"));
         parameters.add(requestNew.getParameter("weight"));
@@ -28,7 +30,7 @@ public class EditCubeCommand extends AdminCommand {
             RubikService service = getFactory().createRubikService();
             service.update(id, parameters);
         } catch (ServiceException eNew) {
-            return sendError(SERVER_ERROR);
+            session.setAttribute("error", "rubik.incorrect");
         }
         return new Forward("editcube.html?id=" + id);
     }

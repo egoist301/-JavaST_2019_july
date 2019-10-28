@@ -23,6 +23,14 @@
     <div>
         <h2 style="text-align: center">${requestScope.get('cube').model}</h2>
     </div>
+    <c:if test="${not empty error}">
+        <div class="text-center text-warning">
+            <label class="text">
+                <p><fmt:message key="attention"/></p>
+                <fmt:message key="${error}"/>
+            </label>
+        </div>
+    </c:if>
     <div class="card mb-3 div-bg table-responsive" style="max-width: 1150px;">
         <table class="table table-hover table-bordered">
             <div class="row after-header">
@@ -104,7 +112,9 @@
                 <form action="likecube.html?id=${cube.id}" method="post">
                     <button type="submit" class="btn
                     btn-primary"><fmt:message key="cube.like"/></button>
+
                 </form>
+                ${pageContext.session.removeAttribute("error")}
                 <c:if test="${sessionScope.get('user').role =='ADMIN' &&
                 !sessionScope.get('user').blocked}">
                     <form action="editcube.html" method="get">

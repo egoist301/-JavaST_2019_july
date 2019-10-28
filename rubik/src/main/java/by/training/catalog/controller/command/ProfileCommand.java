@@ -33,6 +33,7 @@ public class ProfileCommand extends UserCommand {
                 forward = new Forward(profile, true);
                 LOGGER.debug("password is change");
             } else {
+                session.setAttribute("error", "profile.incorrect");
                 forward = new Forward(profile);
                 LOGGER.debug("incorrect old password");
             }

@@ -24,6 +24,14 @@
 <div class="grid-posts">
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="profile"/></h2>
+        <c:if test="${not empty error}">
+            <div class="text-center text-warning">
+                <label class="text">
+                    <p><fmt:message key="attention"/></p>
+                    <fmt:message key="${error}"/>
+                </label>
+            </div>
+        </c:if>
         <form action="edit.html" method="post">
             <div class="form-group">
                 <label for="exampleName"><fmt:message
@@ -97,6 +105,7 @@
             <button type="reset" class="btn btn-primary"><fmt:message
                     key="profile.clear"/>
             </button>
+            ${pageContext.session.removeAttribute("error")}
         </form>
     </div>
 </div>

@@ -5,6 +5,7 @@ import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import com.wix.mysql.SqlScriptSource;
+import org.junit.Ignore;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -189,34 +190,6 @@ public class RubikServiceImplTest extends AbstractServiceTest {
         return new Object[][]{
                 {-1, 1, 1},
                 {1, -1, 1}
-        };
-    }
-
-    @DataProvider(name = "Correct update")
-    private Object[][] updateCorrect() {
-        return new Object[][]{
-                {}
-        };
-    }
-
-    @DataProvider(name = "Incorrect update")
-    private Object[][] updateIncorrect() {
-        return new Object[][]{
-                {}
-        };
-    }
-
-    @DataProvider(name = "Correct create")
-    private Object[][] createCorrect() {
-        return new Object[][]{
-                {}
-        };
-    }
-
-    @DataProvider(name = "Incorrect create")
-    private Object[][] createIncorrect() {
-        return new Object[][]{
-                {}
         };
     }
 
@@ -419,28 +392,6 @@ public class RubikServiceImplTest extends AbstractServiceTest {
             throws ServiceException {
         int actual = service.findAll(offset, limit).size();
         assertEquals(actual, expected);
-    }
-
-    @Test(dataProvider = "Correct update", dependsOnGroups = {"find by"})
-    public void testUpdateCorrect(final long id, final List<String> params)
-            throws ServiceException {
-        service.update(id, params);
-    }
-
-    @Test(dataProvider = "Incorrect update", dependsOnGroups = {"find by"})
-    public void testUpdateIncorrect(final long id, final List<String> params) {
-    }
-
-    @Test(dataProvider = "Correct create", dependsOnGroups = {"find by"})
-    public void testCreateCorrect(final List<String> parameters,
-                                  final List<RawData> rawDataNew)
-            throws ServiceException {
-    }
-
-    @Test(dataProvider = "Incorrect create", dependsOnGroups = {"find by"})
-    public void testCreateIncorrect(final List<String> parameters,
-                                    final List<RawData> rawDataNew)
-            throws ServiceException {
     }
 
     @Test(dataProvider = "Correct find count rubik's by model",

@@ -134,7 +134,6 @@ public class UserValidatorTest {
     public void testInvalidatePhone(final String phone) {
         boolean result = UserValidator.invalidatePhone(phone);
         assertTrue(result);
-
     }
 
     @Test(groups = "validate user parameter")

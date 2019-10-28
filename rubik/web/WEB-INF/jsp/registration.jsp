@@ -9,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="ctgg" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${cookie.get('locale').value}"/>
 <fmt:setBundle basename="property/localization"/>
 <html lang="en">
@@ -22,6 +23,14 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="registration"/>
         </h2>
+        <c:if test="${not empty error}">
+            <div class="text-center text-warning">
+                <label class="text">
+                    <p><fmt:message key="attention"/></p>
+                    <fmt:message key="${error}"/>
+                </label>
+            </div>
+        </c:if>
         <form action="registr.html" method="post">
             <div class="form-group">
                 <label for="exampleName"><fmt:message
@@ -62,6 +71,7 @@
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>
             </button>
+            ${pageContext.session.removeAttribute("error")}
         </form>
     </div>
 </div>

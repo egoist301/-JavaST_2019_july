@@ -22,6 +22,14 @@
     <div class="container div-bg">
         <h2 class="text-center h2-pad-top"><fmt:message key="cube"/>
         </h2>
+        <c:if test="${not empty error}">
+            <div class="text-center text-warning">
+                <label class="text">
+                    <p><fmt:message key="attention"/></p>
+                    <fmt:message key="${error}"/>
+                </label>
+            </div>
+        </c:if>
         <form action="createcube.html" method="post"
               enctype="multipart/form-data">
             <div class="form-group">
@@ -117,6 +125,7 @@
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>
             </button>
+            ${pageContext.session.removeAttribute("error")}
         </form>
     </div>
 </div>

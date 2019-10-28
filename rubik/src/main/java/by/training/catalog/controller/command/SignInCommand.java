@@ -22,12 +22,13 @@ public class SignInCommand extends Command {
         try {
             User user =
                     userService.authorize(login, password);
+            HttpSession session = requestNew.getSession(true);
             if (user != null) {
-                HttpSession session = requestNew.getSession(true);
                 forward = new Forward("index.html");
                 session.setAttribute("user", user);
                 LOGGER.debug("sign in");
             } else {
+                session.setAttribute("error", "login.incorrect");
                 forward = new Forward("login.html");
                 LOGGER.debug("don't sign in");
             }

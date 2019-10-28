@@ -7,6 +7,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 public class RegistrationCommand extends Command {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -19,6 +20,7 @@ public class RegistrationCommand extends Command {
         String phone = requestNew.getParameter("phone");
         String password = requestNew.getParameter("password");
         UserService service = getFactory().createUserService();
+        HttpSession session = requestNew.getSession(false);
         Forward forward;
         try {
             if (service.create(username, email, phone, password)) {
@@ -31,6 +33,7 @@ public class RegistrationCommand extends Command {
             }
         } catch (ServiceException eNew) {
             LOGGER.warn(eNew);
+            session.setAttribute("error", "registration.incorrect");
             forward = new Forward("registration.html");
         }
         return forward;

@@ -27,15 +27,18 @@ public class RubikCommand extends Command {
         RubikService rubikService = getFactory().createRubikService();
         try {
             RubiksCube cube = rubikService.findById(id);
-            StoreImageService storeImageService =
-                    getFactory().createStoreImageService();
-            storeImageService.findImagesByRubik(cube);
-            requestNew.setAttribute("cube", cube);
-            forward = new Forward("WEB-INF/jsp/rubik.jsp");
-            return forward;
+            if (cube != null) {
+                StoreImageService storeImageService =
+                        getFactory().createStoreImageService();
+                storeImageService.findImagesByRubik(cube);
+                requestNew.setAttribute("cube", cube);
+                forward = new Forward("WEB-INF/jsp/rubik.jsp");
+                return forward;
+            }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);
         }
+        return sendError(NOT_FOUND);
     }
 }

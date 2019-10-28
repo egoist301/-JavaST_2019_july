@@ -33,6 +33,7 @@ public class LikeCubeCommand extends UserCommand {
                 forward = new Forward("rubik.html?id=" + id);
                 return forward;
             } else {
+                session.setAttribute("error", "bookmarks.incorrect");
                 forward = new Forward("rubik.html?id=" + id);
                 return forward;
             }

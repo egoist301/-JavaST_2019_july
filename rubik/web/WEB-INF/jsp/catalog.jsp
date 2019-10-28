@@ -181,7 +181,7 @@
                                     <td>
                                         <c:if test="${!cube.blocked}">
                                             <form action="blockedcube.html?id=${cube.id}"
-                                                  method="post">
+                                                  method="get">
                                                 <button type="submit"
                                                         class="btn btn-danger">
                                                     <fmt:message
