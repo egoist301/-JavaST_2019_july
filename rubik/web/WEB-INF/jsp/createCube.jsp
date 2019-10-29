@@ -120,7 +120,7 @@
             </div>
             <div class="form-group">
                 <input formenctype="multipart/form-data" type="file" multiple
-                       name="img" class="custom-file">
+                       name="img" class="custom-file" required>
             </div>
             <button type="submit" class="btn btn-primary" id="submit">
                 <fmt:message key="registration"/>
