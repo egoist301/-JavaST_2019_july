@@ -8,11 +8,10 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.MissingResourceException;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
@@ -35,13 +34,12 @@ public final class ConnectionPool {
     /**
      * Contains connections, which are available for use.
      */
-    private BlockingQueue<ProxyConnection> pool
-            = new LinkedBlockingQueue<>();
+    private ConcurrentLinkedQueue<ProxyConnection> pool
+            = new ConcurrentLinkedQueue<>();
     /**
      * Contains connections, which are used and aren't available to take.
      */
-    private List<ProxyConnection> used
-            = new LinkedList<>();
+    private Set<ProxyConnection> used = ConcurrentHashMap.newKeySet();
     /**
      * Locker.
      */
@@ -150,6 +148,10 @@ public final class ConnectionPool {
             if (!pool.isEmpty()) {
                 ProxyConnection connection;
                 connection = pool.poll();
+                if (connection.isClosed()) {
+                    used.remove(connection);
+                   return createConnection();
+                }
                 used.add(connection);
                 LOGGER.debug("Got a connection from pool. "
                                 + IDLE_AND_USED,
