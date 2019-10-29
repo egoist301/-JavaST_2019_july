@@ -77,4 +77,4 @@
     - Блокировка пользователя.
 
 ### Схема базы данных.
-
+   ![Database scheme](https://github.com/egoist301/-JavaST_2019_july/blob/master/rubik/web/img/database.PNG)
