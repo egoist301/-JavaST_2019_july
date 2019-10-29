@@ -2,12 +2,7 @@ package by.training.catalog.filter;
 
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.User;
-import by.training.catalog.controller.command.Command;
-import by.training.catalog.controller.command.LoginPageCommand;
-import by.training.catalog.controller.command.RegistrationCommand;
-import by.training.catalog.controller.command.RegistrationPageCommand;
-import by.training.catalog.controller.command.SignInCommand;
-import by.training.catalog.controller.command.SignOutCommand;
+import by.training.catalog.controller.command.*;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;

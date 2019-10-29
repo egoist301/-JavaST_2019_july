@@ -8,7 +8,8 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 import static com.wix.mysql.ScriptResolver.classPathScript;
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 public class StoreImageServiceImplTest extends AbstractServiceTest {
     private StoreImageService storeImageService;

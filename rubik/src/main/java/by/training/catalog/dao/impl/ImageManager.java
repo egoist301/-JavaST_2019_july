@@ -1,7 +1,6 @@
 package by.training.catalog.dao.impl;
 
 import by.training.catalog.bean.RawData;
-import by.training.catalog.dao.PersistenceException;
 import by.training.catalog.service.RandomStringGenerator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,7 +8,6 @@ import org.apache.logging.log4j.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 /**

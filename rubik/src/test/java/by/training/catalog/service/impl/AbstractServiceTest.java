@@ -2,17 +2,13 @@ package by.training.catalog.service.impl;
 
 import by.training.catalog.service.ServiceInitializer;
 import com.wix.mysql.EmbeddedMysql;
-import com.wix.mysql.Sources;
 import com.wix.mysql.SqlScriptSource;
 import com.wix.mysql.config.MysqldConfig;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import static com.wix.mysql.EmbeddedMysql.anEmbeddedMysql;

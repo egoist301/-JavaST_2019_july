@@ -1,8 +1,8 @@
 package by.training.catalog.dao;
 
+import by.training.catalog.bean.Role;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
-import by.training.catalog.bean.Role;
 
 import java.util.List;
 

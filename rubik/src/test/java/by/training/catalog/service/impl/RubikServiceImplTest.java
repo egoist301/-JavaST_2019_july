@@ -1,16 +1,12 @@
 package by.training.catalog.service.impl;
 
-import by.training.catalog.bean.RawData;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import com.wix.mysql.SqlScriptSource;
-import org.junit.Ignore;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-import java.util.List;
 
 import static com.wix.mysql.ScriptResolver.classPathScript;
 import static org.testng.Assert.*;
