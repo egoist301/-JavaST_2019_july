@@ -116,6 +116,7 @@ public class URLActionFilter implements Filter {
                 request.setAttribute("query", query);
                 LOGGER.debug("QUERY!!!!!!!!  {}", request.getParameterMap());
                 LOGGER.debug("REDIRECT!!!!!!  {}", redirect);
+                redirect = redirect.replace("&", "%26");
                 request.setAttribute("from", redirect);
             } else {
                 request.setAttribute("from", action.substring(1) + ".html");
