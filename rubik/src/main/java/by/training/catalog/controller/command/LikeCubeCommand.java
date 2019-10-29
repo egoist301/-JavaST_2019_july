@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class LikeCubeCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -21,25 +23,25 @@ public class LikeCubeCommand extends UserCommand {
         Forward forward;
         long id;
         try {
-            id = Long.parseLong(requestNew.getParameter("id"));
+            id = Long.parseLong(requestNew.getParameter(ID));
         } catch (NumberFormatException eNew) {
             return sendError(NOT_FOUND);
         }
         try {
             HttpSession session = requestNew.getSession(false);
-            User user = (User) session.getAttribute("user");
+            User user = (User) session.getAttribute(ATTRIBUTE_USER);
             if (service.addCubeToBookmarks(user, id)) {
                 LOGGER.debug("added cube");
-                forward = new Forward("rubik.html?id=" + id);
+                forward = new Forward(RUBIK + id);
                 return forward;
             } else {
-                session.setAttribute("error", "bookmarks.incorrect");
-                forward = new Forward("rubik.html?id=" + id);
+                session.setAttribute(ERROR, BOOKMARKS_MESSAGE);
+                forward = new Forward(RUBIK + id);
                 return forward;
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
-            return sendError(500);
+            return sendError(SERVER_ERROR);
         }
     }
 }

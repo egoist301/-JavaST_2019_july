@@ -26,7 +26,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <form action="findform.html" method="get">
+                    <form action="findForm.html" method="get">
                         <label for="exampleForm"><fmt:message
                                 key="search.form"/></label>
                         <select class="custom-select mb-1" name="form"
@@ -46,16 +46,16 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form action="findmanufacturer.html" method="get">
+                    <form action="findManufacturer.html" method="get">
                         <label for="exampleManufacturer"><fmt:message
                                 key="search.manufacturer"/></label>
-                        <select class="custom-select mb-1" name="manufacturer"
+                        <select class="custom-select mb-1" name="manufacturers"
                                 id="exampleManufacturer" required>
                             <option value="" disabled selected>
                                 <fmt:message key="search.manufacturer.option"/>
                             </option>
                             <c:forEach
-                                    items="${requestScope.get('manufacturer')}"
+                                    items="${requestScope.get('manufacturers')}"
                                     var="manufacturer">
                                 <option value="${manufacturer}">
                                     <c:out value="${manufacturer}"/></option>
@@ -68,15 +68,15 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form action="findprice.html" method="get">
+                    <form action="findPrice.html" method="get">
                         <fmt:message key="search.price"/>
                         <input class="form-control" type="search"
-                               name="minprice" value="1.00" maxlength="7"
+                               name="minPrice" value="1.00" maxlength="7"
                                placeholder="<fmt:message
                        key="search.price.min"/>" required aria-label="Search"
                                pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$">
                         <input class="form-control" required type="search"
-                               name="maxprice" placeholder="<fmt:message
+                               name="maxPrice" placeholder="<fmt:message
                        key="search.price.max"/>" aria-label="Search"
                                pattern="^[1-9]{1}[\d]{0,3}\.[\d]{1,2}$"
                                value="2000.00" maxlength="7">
@@ -87,7 +87,7 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form action="findsize.html" method="get">
+                    <form action="findSize.html" method="get">
                         <fmt:message key="search.size"/>
                         <input class="form-control" type="search"
                                pattern="([0-9]{1,2}x[0-9]{1,2})|([0-9]{1,2}x[0-9]{1,2}x[0-9]{1,2})"
@@ -96,7 +96,7 @@
                     </form>
                 </div>
                 <div class="col-md-4">
-                    <form action="findmodel.html" method="get">
+                    <form action="findModel.html" method="get">
                         <fmt:message key="search.model"/>
                         <input class="form-control" type="search"
                                name="model" placeholder="<fmt:message
@@ -180,7 +180,8 @@
                                     <td><c:out value="${cube.blocked}"/></td>
                                     <td>
                                         <c:if test="${!cube.blocked}">
-                                            <form action="blockedcube.html?id=${cube.id}"
+                                            <form
+                                                    action="blockedCube.html?id=${cube.id}"
                                                   method="get">
                                                 <button type="submit"
                                                         class="btn btn-danger">
@@ -201,7 +202,7 @@
         <c:choose>
             <c:when test="${sessionScope.get('user')!=null}">
                 <c:if test="${sessionScope.get('user').role == 'ADMIN'}">
-                    <form action="addcube.html" method="get">
+                    <form action="addCube.html" method="get">
                         <button type="submit" class="btn-primary btn">
                             <fmt:message key="cube.add"/></button>
                     </form>

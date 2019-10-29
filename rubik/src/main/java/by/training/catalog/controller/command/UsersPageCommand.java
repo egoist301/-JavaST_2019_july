@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class UsersPageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int LIMIT = 10;
@@ -34,10 +36,10 @@ public class UsersPageCommand extends AdminCommand {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);
         }
-        requestNew.setAttribute("users", users);
-        requestNew.setAttribute("page", page);
-        requestNew.setAttribute("lastPage",
+        requestNew.setAttribute(USERS, users);
+        requestNew.setAttribute(PAGE, page);
+        requestNew.setAttribute(LAST_PAGE,
                 records % LIMIT == 0 ? records / LIMIT : records / LIMIT + 1);
-        return new Forward("WEB-INF/jsp/users.jsp");
+        return new Forward(USERS_JSP);
     }
 }

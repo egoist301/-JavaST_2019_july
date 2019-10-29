@@ -25,7 +25,7 @@
                 </label>
             </div>
         </c:if>
-        <form action="signin.html" method="post">
+        <form action="signIn.html" method="post">
             <div class="form-group">
                 <label for="exampleName"><fmt:message
                         key="login.username"/></label>
@@ -33,7 +33,7 @@
                        id="exampleName" aria-describedby="nameHelp"
                        placeholder=
                                "<fmt:message key="login.placeholder.username"/>"
-                       required minlength="4" maxlength="16" name="login">
+                       required minlength="4" maxlength="16" name="username">
             </div>
             <div class="form-group">
                 <label

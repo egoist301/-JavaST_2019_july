@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.ATTRIBUTE_FORM;
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
 public class FindCubeByFormCommand extends FindCubeCommand {
@@ -27,7 +28,7 @@ public class FindCubeByFormCommand extends FindCubeCommand {
         List<RubiksCube> rubiksCubes;
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String form = requestNew.getParameter("form");
+            String form = requestNew.getParameter(ATTRIBUTE_FORM);
             rubiksCubes = rubikService.findRubiksByForm(form, offset, LIMIT);
             records = rubikService.findCountByForm(form);
             for (RubiksCube cube : rubiksCubes) {

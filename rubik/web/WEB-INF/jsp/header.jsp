@@ -120,7 +120,7 @@
                                                 key="header.bookmarks"/></a>
                                     </c:if>
                                     <a class="dropdown-item"
-                                       href="signout.html"><fmt:message
+                                       href="signOut.html"><fmt:message
                                             key="header.logout"/></a>
                                 </c:when>
                                 <c:otherwise>

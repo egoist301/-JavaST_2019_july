@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class EditCubePageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -19,7 +21,7 @@ public class EditCubePageCommand extends AdminCommand {
         Forward forward;
         long id;
         try {
-            id = Long.parseLong(requestNew.getParameter("id"));
+            id = Long.parseLong(requestNew.getParameter(ID));
         } catch (NumberFormatException eNew) {
             LOGGER.error(eNew);
             return sendError(NOT_FOUND);
@@ -30,12 +32,12 @@ public class EditCubePageCommand extends AdminCommand {
             RubiksCube cube = service.findById(id);
             List<String> manufacturers = service.readAllManufacturer();
             List<String> colors = service.readAllPlasticColor();
-            requestNew.setAttribute("forms", forms);
-            requestNew.setAttribute("manufacturers", manufacturers);
-            requestNew.setAttribute("colors", colors);
-            requestNew.setAttribute("cube", cube);
-            requestNew.setAttribute("id", id);
-            forward = new Forward("WEB-INF/jsp/editrubik.jsp");
+            requestNew.setAttribute(FORMS, forms);
+            requestNew.setAttribute(MANUFACTURERS, manufacturers);
+            requestNew.setAttribute(COLORS, colors);
+            requestNew.setAttribute(CUBE, cube);
+            requestNew.setAttribute(ID, id);
+            forward = new Forward(EDIT_RUBIK);
             return forward;
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);

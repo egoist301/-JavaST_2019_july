@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class CreateCubePageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
@@ -19,13 +21,13 @@ public class CreateCubePageCommand extends AdminCommand {
             List<String> forms = service.readAllForm();
             List<String> manufacturers = service.readAllManufacturer();
             List<String> colors = service.readAllPlasticColor();
-            requestNew.setAttribute("forms", forms);
-            requestNew.setAttribute("manufacturers", manufacturers);
-            requestNew.setAttribute("colors", colors);
+            requestNew.setAttribute(FORMS, forms);
+            requestNew.setAttribute(MANUFACTURERS, manufacturers);
+            requestNew.setAttribute(COLORS, colors);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);
         }
-        return new Forward("WEB-INF/jsp/createcube.jsp");
+        return new Forward(CREATE_CUBE);
     }
 }

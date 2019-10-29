@@ -9,29 +9,23 @@ import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class EditCubeCommand extends AdminCommand {
+
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
-        long id = Long.parseLong(requestNew.getParameter("id"));
+        long id = Long.parseLong(requestNew.getParameter(ID));
         List<String> parameters = new ArrayList<>();
         HttpSession session = requestNew.getSession(false);
-        parameters.add(requestNew.getParameter("model"));
-        parameters.add(requestNew.getParameter("price"));
-        parameters.add(requestNew.getParameter("weight"));
-        parameters.add(requestNew.getParameter("info"));
-        parameters.add(requestNew.getParameter("size"));
-        parameters.add(requestNew.getParameter("manufacturer"));
-        parameters.add(requestNew.getParameter("form"));
-        parameters.add(requestNew.getParameter("plasticColor"));
-        parameters.add(requestNew.getParameter("primaryPlastic"));
+        AddRubikCommand.fillWithParameters(requestNew, parameters);
         try {
-
             RubikService service = getFactory().createRubikService();
             service.update(id, parameters);
         } catch (ServiceException eNew) {
-            session.setAttribute("error", "rubik.incorrect");
+            session.setAttribute(ERROR, RUBIK_MESSAGE);
         }
-        return new Forward("editcube.html?id=" + id);
+        return new Forward(EDIT_CUBE + id);
     }
 }

@@ -5,6 +5,8 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static by.training.catalog.constant.ApplicationConstants.PAGE;
+
 public final class Pagination {
     private static final Logger LOGGER = LogManager.getLogger();
 
@@ -13,9 +15,9 @@ public final class Pagination {
 
     static int calcPage(final HttpServletRequest requestNew) {
         int page = 1;
-        if (requestNew.getParameter("page") != null) {
+        if (requestNew.getParameter(PAGE) != null) {
             try {
-                page = Integer.parseInt(requestNew.getParameter("page"));
+                page = Integer.parseInt(requestNew.getParameter(PAGE));
             } catch (NumberFormatException e) {
                 LOGGER.warn(e);
             }

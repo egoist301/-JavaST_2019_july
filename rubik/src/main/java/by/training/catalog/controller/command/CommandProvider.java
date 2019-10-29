@@ -13,34 +13,34 @@ public final class CommandProvider {
         commandMap = new HashMap<>();
         commandMap.put("/", new MainCommand());
         commandMap.put("/login", new LoginPageCommand());
-        commandMap.put("/signin", new SignInCommand());
+        commandMap.put("/signIn", new SignInCommand());
         commandMap.put("/index", new MainCommand());
-        commandMap.put("/signout", new SignOutCommand());
+        commandMap.put("/signOut", new SignOutCommand());
         commandMap.put("/lang", new ChangeLocaleCommand());
         commandMap.put("/contact", new ContactPageCommand());
         commandMap.put("/profile", new ProfilePageCommand());
         commandMap.put("/registration", new RegistrationPageCommand());
-        commandMap.put("/registr", new RegistrationCommand());
+        commandMap.put("/register", new RegistrationCommand());
         commandMap.put("/edit", new ProfileCommand());
         commandMap.put("/users", new UsersPageCommand());
-        commandMap.put("/addcube", new CreateCubePageCommand());
+        commandMap.put("/addCube", new CreateCubePageCommand());
         commandMap.put("/catalog", new RubiksCommand());
         commandMap.put("/blocked", new BlockedUserCommand());
         commandMap.put("/rubik", new RubikCommand());
-        commandMap.put("/likecube", new LikeCubeCommand());
-        commandMap.put("/findform", new FindCubeByFormCommand());
-        commandMap.put("/blockedcube", new BlockedCubeCommand());
+        commandMap.put("/likeCube", new LikeCubeCommand());
+        commandMap.put("/findForm", new FindCubeByFormCommand());
+        commandMap.put("/blockedCube", new BlockedCubeCommand());
         commandMap.put("/bookmarks", new BookmarksPageCommand());
-        commandMap.put("/editcube", new EditCubePageCommand());
-        commandMap.put("/findsize", new FindCubeBySizeCommand());
-        commandMap.put("/findmodel", new FindCubeByModelCommand());
-        commandMap.put("/removecube", new RemoveCubeFromBookmarksCommand());
-        commandMap.put("/findusername", new FindUserByUsernameCommand());
-        commandMap.put("/createcube", new AddRubikCommand());
+        commandMap.put("/editCube", new EditCubePageCommand());
+        commandMap.put("/findSize", new FindCubeBySizeCommand());
+        commandMap.put("/findModel", new FindCubeByModelCommand());
+        commandMap.put("/removeCube", new RemoveCubeFromBookmarksCommand());
+        commandMap.put("/findUsername", new FindUserByUsernameCommand());
+        commandMap.put("/createCube", new AddRubikCommand());
         commandMap
-                .put("/findmanufacturer", new FindCubeByManufacturerCommand());
-        commandMap.put("/findprice", new FindCubeByPriceCommand());
-        commandMap.put("/updateinfo", new EditCubeCommand());
+                .put("/findManufacturer", new FindCubeByManufacturerCommand());
+        commandMap.put("/findPrice", new FindCubeByPriceCommand());
+        commandMap.put("/updateInfo", new EditCubeCommand());
     }
 
     public static Command getCommand(final String actionNew) {

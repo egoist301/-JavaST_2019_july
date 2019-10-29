@@ -11,10 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class FindCubeBySizeCommand extends FindCubeCommand {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
-
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
@@ -25,7 +26,7 @@ public class FindCubeBySizeCommand extends FindCubeCommand {
         List<RubiksCube> rubiksCubes;
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String size = requestNew.getParameter("size");
+            String size = requestNew.getParameter(PARAMETER_SIZE);
             rubiksCubes = rubikService.findRubiksBySize(size, offset, LIMIT);
             records = rubikService.findCountBySize(size);
             for (RubiksCube cube : rubiksCubes) {
@@ -43,11 +44,11 @@ public class FindCubeBySizeCommand extends FindCubeCommand {
     static Forward getForward(final HttpServletRequest requestNew,
                               final int pageNew, final int recordsNew,
                               final List<RubiksCube> rubiksCubesNew) {
-        requestNew.setAttribute("rubiks", rubiksCubesNew);
-        requestNew.setAttribute("page", pageNew);
-        requestNew.setAttribute("lastPage",
+        requestNew.setAttribute(RUBIKS, rubiksCubesNew);
+        requestNew.setAttribute(PAGE, pageNew);
+        requestNew.setAttribute(LAST_PAGE,
                 recordsNew % LIMIT == 0 ? recordsNew / LIMIT : recordsNew
                         / LIMIT + 1);
-        return new Forward("WEB-INF/jsp/catalog.jsp");
+        return new Forward(CATALOG_JSP);
     }
 }

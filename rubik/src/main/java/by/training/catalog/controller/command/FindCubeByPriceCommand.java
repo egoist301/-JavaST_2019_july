@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.ATTRIBUTE_MAX_PRICE;
+import static by.training.catalog.constant.ApplicationConstants.ATTRIBUTE_MIN_PRICE;
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
 public class FindCubeByPriceCommand extends FindCubeCommand {
@@ -27,8 +29,8 @@ public class FindCubeByPriceCommand extends FindCubeCommand {
         List<RubiksCube> rubiksCubes;
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String minPrice = requestNew.getParameter("minprice");
-            String maxPrice = requestNew.getParameter("maxprice");
+            String minPrice = requestNew.getParameter(ATTRIBUTE_MIN_PRICE);
+            String maxPrice = requestNew.getParameter(ATTRIBUTE_MAX_PRICE);
             rubiksCubes = rubikService
                     .findRubiksByRangePrice(minPrice, maxPrice, offset, LIMIT);
             records = rubikService.findCountByPrice(minPrice, maxPrice);

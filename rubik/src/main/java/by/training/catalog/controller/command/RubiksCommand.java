@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
 public class RubiksCommand extends Command {
@@ -25,7 +26,7 @@ public class RubiksCommand extends Command {
                            final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         HttpSession session = requestNew.getSession(false);
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(ATTRIBUTE_USER);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
         int records;
@@ -50,8 +51,8 @@ public class RubiksCommand extends Command {
             for (RubiksCube cube : rubiksCubes) {
                 imageService.assignRubikImagesPaths(cube);
             }
-            requestNew.setAttribute("forms", forms);
-            requestNew.setAttribute("manufacturer", manufacturers);
+            requestNew.setAttribute(FORMS, forms);
+            requestNew.setAttribute(MANUFACTURERS, manufacturers);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.ATTRIBUTE_MANUFACTURER;
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
 public class FindCubeByManufacturerCommand extends FindCubeCommand {
@@ -27,7 +28,8 @@ public class FindCubeByManufacturerCommand extends FindCubeCommand {
         List<RubiksCube> rubiksCubes;
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String manufacturer = requestNew.getParameter("manufacturer");
+            String manufacturer =
+                    requestNew.getParameter(ATTRIBUTE_MANUFACTURER);
             rubiksCubes = rubikService
                     .findRubiksByManufacturer(manufacturer, offset, LIMIT);
             records = rubikService.findCountByManufacturer(manufacturer);

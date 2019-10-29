@@ -8,14 +8,18 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import static by.training.catalog.constant.ApplicationConstants.ID;
+import static by.training.catalog.constant.ApplicationConstants.USERS_HTML;
+
 public class BlockedUserCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
+
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
         long id;
         try {
-            id = Long.parseLong(requestNew.getParameter("id"));
+            id = Long.parseLong(requestNew.getParameter(ID));
             LOGGER.debug("Id = {}", id);
         } catch (NumberFormatException eNew) {
             LOGGER.error(eNew);
@@ -28,6 +32,6 @@ public class BlockedUserCommand extends AdminCommand {
         } catch (ServiceException eNew) {
             return sendError(SERVER_ERROR);
         }
-        return new Forward("users.html", true);
+        return new Forward(USERS_HTML, true);
     }
 }

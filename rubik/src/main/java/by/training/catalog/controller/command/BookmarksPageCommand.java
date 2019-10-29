@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class BookmarksPageCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int LIMIT = 10;
@@ -21,7 +23,7 @@ public class BookmarksPageCommand extends UserCommand {
                            final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         HttpSession session = requestNew.getSession(false);
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(ATTRIBUTE_USER);
         UserService service = getFactory().createUserService();
         StoreImageService imageService = getFactory().createStoreImageService();
         int records;
@@ -38,9 +40,9 @@ public class BookmarksPageCommand extends UserCommand {
             return sendError(SERVER_ERROR);
         }
         LOGGER.debug("Paths {}", user.getCubes());
-        requestNew.setAttribute("page", page);
-        requestNew.setAttribute("lastPage",
+        requestNew.setAttribute(PAGE, page);
+        requestNew.setAttribute(LAST_PAGE,
                 records % LIMIT == 0 ? records / LIMIT : records / LIMIT + 1);
-        return new Forward("WEB-INF/jsp/bookmarks.jsp");
+        return new Forward(BOOKMARKS_JSP);
     }
 }

@@ -10,14 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class FindUserByUsernameCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final int LIMIT = 10;
 
     @Override
+
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
-        String username = requestNew.getParameter("username");
+        String username = requestNew.getParameter(ATTRIBUTE_USERNAME);
         int page = Pagination.calcPage(requestNew);
         UserService userService = getFactory().createUserService();
         int records;
@@ -39,10 +42,10 @@ public class FindUserByUsernameCommand extends AdminCommand {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);
         }
-        requestNew.setAttribute("users", users);
-        requestNew.setAttribute("page", page);
-        requestNew.setAttribute("lastPage",
+        requestNew.setAttribute(USERS, users);
+        requestNew.setAttribute(PAGE, page);
+        requestNew.setAttribute(LAST_PAGE,
                 records % LIMIT == 0 ? records / LIMIT : records / LIMIT + 1);
-        return new Forward("WEB-INF/jsp/users.jsp");
+        return new Forward(USERS_JSP);
     }
 }

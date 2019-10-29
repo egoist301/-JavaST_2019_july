@@ -31,7 +31,7 @@
                 </label>
             </div>
         </c:if>
-        <form action="registr.html" method="post">
+        <form action="register.html" method="post">
             <div class="form-group">
                 <label for="exampleName"><fmt:message
                         key="registration.username"/></label>

@@ -10,18 +10,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class ProfileCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
     public Forward execute(final HttpServletRequest requestNew,
                            final HttpServletResponse responseNew) {
-        final String profile = "profile.html";
         UserService userService = getFactory().createUserService();
-        String oldPassword = requestNew.getParameter("passwordOld");
-        String newPassword = requestNew.getParameter("password");
+        String oldPassword = requestNew.getParameter(ATTRIBUTE_PASSWORD_OLD);
+        String newPassword = requestNew.getParameter(ATTRIBUTE_PASSWORD);
         HttpSession session = requestNew.getSession(false);
-        User user = (User) session.getAttribute("user");
+        User user = (User) session.getAttribute(ATTRIBUTE_USER);
         LOGGER.debug(user);
         Forward forward;
         try {
@@ -30,11 +31,11 @@ public class ProfileCommand extends UserCommand {
                 user.setPassword(newPassword);
                 LOGGER.debug(user);
                 userService.update(user);
-                forward = new Forward(profile, true);
+                forward = new Forward(PROFILE, true);
                 LOGGER.debug("password is change");
             } else {
-                session.setAttribute("error", "profile.incorrect");
-                forward = new Forward(profile);
+                session.setAttribute(ERROR, PROFILE_MESSAGE);
+                forward = new Forward(PROFILE);
                 LOGGER.debug("incorrect old password");
             }
         } catch (ServiceException eNew) {

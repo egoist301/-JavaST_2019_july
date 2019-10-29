@@ -30,7 +30,7 @@
                 </label>
             </div>
         </c:if>
-        <form action="updateinfo.html?id=${id}" method="post"
+        <form action="updateInfo.html?id=${id}" method="post"
               enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
@@ -57,7 +57,7 @@
                 <label for="exampleInfo"><fmt:message
                         key="cube.info"/></label>
                 <textarea id="exampleInfo" type="text"
-                          class="md-textaria form-control validate form-control-sm"
+                          class="md-textarea form-control validate form-control-sm"
                           rows="3" maxlength="2000" minlength="1" required
                           name="info"><c:out value="${cube
                           .info}"/></textarea>

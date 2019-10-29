@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.Map;
 
+import static by.training.catalog.constant.ApplicationConstants.*;
+
 public class ChangeLocaleCommand extends Command {
     private static final Logger LOGGER = LogManager.getLogger();
     private static Map<String, String> lang = new HashMap<>();
@@ -21,15 +23,15 @@ public class ChangeLocaleCommand extends Command {
     @Override
     public Forward execute(final HttpServletRequest request,
                            final HttpServletResponse response) {
-        String langParam = request.getParameter("id");
+        String langParam = request.getParameter(ID);
         String locale = lang.get(langParam);
         if (locale == null) {
-            return new Forward("index.html", true);
+            return new Forward(INDEX, true);
         } else {
-            Cookie cookie = new Cookie("locale", locale);
+            Cookie cookie = new Cookie(LOCALE, locale);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
-            String page = request.getParameter("from");
+            String page = request.getParameter(FROM);
             LOGGER.debug("From!!!!!!!1!!!  {}", request.getParameterMap());
             return new Forward(page, true);
         }

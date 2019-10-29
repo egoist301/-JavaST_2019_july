@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
+import static by.training.catalog.constant.ApplicationConstants.ATTRIBUTE_MODEL;
 import static by.training.catalog.controller.command.FindCubeBySizeCommand.getForward;
 
 public class FindCubeByModelCommand extends FindCubeCommand {
@@ -27,7 +28,7 @@ public class FindCubeByModelCommand extends FindCubeCommand {
         List<RubiksCube> rubiksCubes;
         try {
             int offset = Pagination.calcOffset(page, LIMIT);
-            String model = requestNew.getParameter("model");
+            String model = requestNew.getParameter(ATTRIBUTE_MODEL);
             rubiksCubes = rubikService.findRubiksByModel(model, offset, LIMIT);
             records = rubikService.findCountByModel(model);
             for (RubiksCube cube : rubiksCubes) {

@@ -3,7 +3,8 @@ package by.training.catalog.controller.command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
+
+import static by.training.catalog.constant.ApplicationConstants.INDEX;
 
 public class SignOutCommand extends UserCommand {
 
@@ -14,6 +15,6 @@ public class SignOutCommand extends UserCommand {
         if (session != null) {
             session.invalidate();
         }
-        return new Forward("index.html", true);
+        return new Forward(INDEX, true);
     }
 }

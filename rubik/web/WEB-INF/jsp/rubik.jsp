@@ -109,7 +109,7 @@
         <c:choose>
             <c:when test="${sessionScope.get('user')!=null &&
             !sessionScope.get('user').blocked}">
-                <form action="likecube.html?id=${cube.id}" method="post">
+                <form action="likeCube.html?id=${cube.id}" method="post">
                     <button type="submit" class="btn
                     btn-primary"><fmt:message key="cube.like"/></button>
 
@@ -117,7 +117,7 @@
                 ${pageContext.session.removeAttribute("error")}
                 <c:if test="${sessionScope.get('user').role =='ADMIN' &&
                 !sessionScope.get('user').blocked}">
-                    <form action="editcube.html" method="get">
+                    <form action="editCube.html" method="get">
                         <input type="hidden" value="${cube.id}" name="id">
                         <button type="submit"
                                 class="btn-primary btn"><fmt:message

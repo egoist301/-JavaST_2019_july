@@ -63,7 +63,7 @@
                         </td>
                         <td>
                             <form
-                                    action="removecube.html?id=${cube.id}"
+                                    action="removeCube.html?id=${cube.id}"
                                     method="post">
                                 <button type="submit"
                                         class="btn btn-danger">
