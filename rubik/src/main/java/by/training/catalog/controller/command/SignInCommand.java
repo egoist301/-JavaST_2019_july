@@ -15,29 +15,29 @@ import static by.training.catalog.constant.ApplicationConstants.*;
 public class SignInCommand extends Command {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                    final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         String login = requestNew.getParameter(ATTRIBUTE_USERNAME);
         String password = requestNew.getParameter(ATTRIBUTE_PASSWORD);
         UserService userService = getFactory().createUserService();
-        Forward forward;
+        CommandResult commandResult;
         try {
             User user =
                     userService.authorize(login, password);
             HttpSession session = requestNew.getSession(true);
             if (user != null) {
-                forward = new Forward(INDEX);
+                commandResult = new CommandResult(INDEX);
                 session.setAttribute(ATTRIBUTE_USER, user);
                 LOGGER.debug("sign in");
             } else {
                 session.setAttribute(ERROR, LOGIN_MESSAGE);
-                forward = new Forward(LOGIN);
+                commandResult = new CommandResult(LOGIN);
                 LOGGER.debug("don't sign in");
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);
         }
-        return forward;
+        return commandResult;
     }
 }

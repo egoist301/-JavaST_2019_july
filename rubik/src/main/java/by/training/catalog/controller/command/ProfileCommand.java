@@ -16,32 +16,32 @@ public class ProfileCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         UserService userService = getFactory().createUserService();
         String oldPassword = requestNew.getParameter(ATTRIBUTE_PASSWORD_OLD);
         String newPassword = requestNew.getParameter(ATTRIBUTE_PASSWORD);
         HttpSession session = requestNew.getSession(false);
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
         LOGGER.debug(user);
-        Forward forward;
+        CommandResult commandResult;
         try {
             if (userService.authorize(user.getUsername(),
                     oldPassword) != null) {
                 user.setPassword(newPassword);
                 LOGGER.debug(user);
                 userService.update(user);
-                forward = new Forward(PROFILE, true);
+                commandResult = new CommandResult(PROFILE, true);
                 LOGGER.debug("password is change");
             } else {
                 session.setAttribute(ERROR, PROFILE_MESSAGE);
-                forward = new Forward(PROFILE);
+                commandResult = new CommandResult(PROFILE);
                 LOGGER.debug("incorrect old password");
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);
         }
-        return forward;
+        return commandResult;
     }
 }

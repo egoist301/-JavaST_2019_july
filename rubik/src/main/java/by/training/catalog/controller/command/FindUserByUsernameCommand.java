@@ -18,8 +18,8 @@ public class FindUserByUsernameCommand extends AdminCommand {
 
     @Override
 
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         String username = requestNew.getParameter(ATTRIBUTE_USERNAME);
         int page = Pagination.calcPage(requestNew);
         UserService userService = getFactory().createUserService();
@@ -46,6 +46,6 @@ public class FindUserByUsernameCommand extends AdminCommand {
         requestNew.setAttribute(PAGE, page);
         requestNew.setAttribute(LAST_PAGE,
                 records % LIMIT == 0 ? records / LIMIT : records / LIMIT + 1);
-        return new Forward(USERS_JSP);
+        return new CommandResult(USERS_JSP);
     }
 }

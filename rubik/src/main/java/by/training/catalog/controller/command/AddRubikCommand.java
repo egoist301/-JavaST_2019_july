@@ -21,8 +21,8 @@ public class AddRubikCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew)
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew)
             throws IOException {
         HttpSession session = requestNew.getSession(false);
         List<String> parameters = new ArrayList<>();
@@ -41,10 +41,10 @@ public class AddRubikCommand extends AdminCommand {
             }
             RubikService rubikService = getFactory().createRubikService();
             if (rubikService.create(parameters, rawData)) {
-                return new Forward(CATALOG);
+                return new CommandResult(CATALOG);
             } else {
                 session.setAttribute(ERROR, RUBIK_MESSAGE);
-                return new Forward(ADD_CUBE);
+                return new CommandResult(ADD_CUBE);
             }
 
         } catch (ServletException | ServiceException eNew) {

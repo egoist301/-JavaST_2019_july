@@ -22,8 +22,8 @@ public class RubiksCommand extends Command {
     private static final int LIMIT = 10;
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         HttpSession session = requestNew.getSession(false);
         User user = (User) session.getAttribute(ATTRIBUTE_USER);

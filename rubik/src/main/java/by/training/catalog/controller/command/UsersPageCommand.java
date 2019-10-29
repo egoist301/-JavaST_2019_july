@@ -17,8 +17,8 @@ public class UsersPageCommand extends AdminCommand {
     private static final int LIMIT = 10;
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         UserService userService = getFactory().createUserService();
         int records;
@@ -40,6 +40,6 @@ public class UsersPageCommand extends AdminCommand {
         requestNew.setAttribute(PAGE, page);
         requestNew.setAttribute(LAST_PAGE,
                 records % LIMIT == 0 ? records / LIMIT : records / LIMIT + 1);
-        return new Forward(USERS_JSP);
+        return new CommandResult(USERS_JSP);
     }
 }

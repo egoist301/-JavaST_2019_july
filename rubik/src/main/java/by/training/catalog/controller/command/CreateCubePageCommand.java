@@ -14,8 +14,8 @@ import static by.training.catalog.constant.ApplicationConstants.*;
 public class CreateCubePageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         RubikService service = getFactory().createRubikService();
         try {
             List<String> forms = service.readAllForm();
@@ -28,6 +28,6 @@ public class CreateCubePageCommand extends AdminCommand {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);
         }
-        return new Forward(CREATE_CUBE);
+        return new CommandResult(CREATE_CUBE);
     }
 }

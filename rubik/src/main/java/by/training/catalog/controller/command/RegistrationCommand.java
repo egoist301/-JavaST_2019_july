@@ -15,29 +15,29 @@ public class RegistrationCommand extends Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         String username = requestNew.getParameter(ATTRIBUTE_USERNAME);
         String email = requestNew.getParameter(ATTRIBUTE_EMAIL);
         String phone = requestNew.getParameter(ATTRIBUTE_PHONE);
         String password = requestNew.getParameter(ATTRIBUTE_PASSWORD);
         UserService service = getFactory().createUserService();
         HttpSession session = requestNew.getSession(false);
-        Forward forward;
+        CommandResult commandResult;
         try {
             if (service.create(username, email, phone, password)) {
                 LOGGER.debug("account is create");
-                forward = new Forward(INDEX);
+                commandResult = new CommandResult(INDEX);
             } else {
                 LOGGER.debug("account don't create");
                 requestNew.setAttribute(ERROR, REGISTRATION_MESSAGE);
-                forward = new Forward(REGISTRATION);
+                commandResult = new CommandResult(REGISTRATION);
             }
         } catch (ServiceException eNew) {
             LOGGER.warn(eNew);
             session.setAttribute(ERROR, REGISTRATION_MESSAGE);
-            forward = new Forward(REGISTRATION);
+            commandResult = new CommandResult(REGISTRATION);
         }
-        return forward;
+        return commandResult;
     }
 }

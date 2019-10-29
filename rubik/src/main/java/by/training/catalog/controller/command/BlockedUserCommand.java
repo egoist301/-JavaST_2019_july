@@ -15,8 +15,8 @@ public class BlockedUserCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         long id;
         try {
             id = Long.parseLong(requestNew.getParameter(ID));
@@ -32,6 +32,6 @@ public class BlockedUserCommand extends AdminCommand {
         } catch (ServiceException eNew) {
             return sendError(SERVER_ERROR);
         }
-        return new Forward(USERS_HTML, true);
+        return new CommandResult(USERS_HTML, true);
     }
 }

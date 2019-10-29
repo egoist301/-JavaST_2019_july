@@ -16,9 +16,9 @@ public class EditCubePageCommand extends AdminCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
-        Forward forward;
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
+        CommandResult commandResult;
         long id;
         try {
             id = Long.parseLong(requestNew.getParameter(ID));
@@ -37,8 +37,8 @@ public class EditCubePageCommand extends AdminCommand {
             requestNew.setAttribute(COLORS, colors);
             requestNew.setAttribute(CUBE, cube);
             requestNew.setAttribute(ID, id);
-            forward = new Forward(EDIT_RUBIK);
-            return forward;
+            commandResult = new CommandResult(EDIT_RUBIK);
+            return commandResult;
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);

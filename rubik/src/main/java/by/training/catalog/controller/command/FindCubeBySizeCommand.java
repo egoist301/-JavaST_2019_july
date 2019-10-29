@@ -17,8 +17,8 @@ public class FindCubeBySizeCommand extends FindCubeCommand {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         RubikService rubikService = getFactory().createRubikService();
         StoreImageService imageService = getFactory().createStoreImageService();
@@ -41,14 +41,14 @@ public class FindCubeBySizeCommand extends FindCubeCommand {
         return getForward(requestNew, page, records, rubiksCubes);
     }
 
-    static Forward getForward(final HttpServletRequest requestNew,
-                              final int pageNew, final int recordsNew,
-                              final List<RubiksCube> rubiksCubesNew) {
+    static CommandResult getForward(final HttpServletRequest requestNew,
+                                    final int pageNew, final int recordsNew,
+                                    final List<RubiksCube> rubiksCubesNew) {
         requestNew.setAttribute(RUBIKS, rubiksCubesNew);
         requestNew.setAttribute(PAGE, pageNew);
         requestNew.setAttribute(LAST_PAGE,
                 recordsNew % LIMIT == 0 ? recordsNew / LIMIT : recordsNew
                         / LIMIT + 1);
-        return new Forward(CATALOG_JSP);
+        return new CommandResult(CATALOG_JSP);
     }
 }

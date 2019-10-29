@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 import static by.training.catalog.constant.ApplicationConstants.*;
 
@@ -17,10 +16,10 @@ public class LikeCubeCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         UserService service = getFactory().createUserService();
-        Forward forward;
+        CommandResult commandResult;
         long id;
         try {
             id = Long.parseLong(requestNew.getParameter(ID));
@@ -32,12 +31,12 @@ public class LikeCubeCommand extends UserCommand {
             User user = (User) session.getAttribute(ATTRIBUTE_USER);
             if (service.addCubeToBookmarks(user, id)) {
                 LOGGER.debug("added cube");
-                forward = new Forward(RUBIK + id);
-                return forward;
+                commandResult = new CommandResult(RUBIK + id);
+                return commandResult;
             } else {
                 session.setAttribute(ERROR, BOOKMARKS_MESSAGE);
-                forward = new Forward(RUBIK + id);
-                return forward;
+                commandResult = new CommandResult(RUBIK + id);
+                return commandResult;
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);

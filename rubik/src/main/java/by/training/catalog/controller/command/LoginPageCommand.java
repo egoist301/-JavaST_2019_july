@@ -7,9 +7,9 @@ import static by.training.catalog.constant.ApplicationConstants.LOGIN_JSP;
 
 public class LoginPageCommand extends Command {
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
-        return new Forward(LOGIN_JSP);
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
+        return new CommandResult(LOGIN_JSP);
 
     }
 }

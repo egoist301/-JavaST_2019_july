@@ -25,18 +25,18 @@ public abstract class Command {
         return factory;
     }
 
-    protected Forward sendError(final int error) {
-        Forward forward = new Forward();
-        forward.setError(true);
-        forward.getAttributes().put("error", error);
-        return forward;
+    protected CommandResult sendError(final int error) {
+        CommandResult commandResult = new CommandResult();
+        commandResult.setError(true);
+        commandResult.getAttributes().put("error", error);
+        return commandResult;
     }
 
-    public abstract Forward execute(HttpServletRequest requestNew,
-                                    HttpServletResponse responseNew)
+    public abstract CommandResult execute(HttpServletRequest requestNew,
+                                          HttpServletResponse responseNew)
             throws IOException;
 
-    public static class Forward {
+    public static class CommandResult {
         private String url;
         private Map<String, Object> attributes;
         private boolean redirect;
@@ -50,15 +50,15 @@ public abstract class Command {
             error = errorNew;
         }
 
-        public Forward() {
+        public CommandResult() {
         }
 
-        public Forward(final String urlNew) {
+        public CommandResult(final String urlNew) {
             url = urlNew;
             attributes = new HashMap<>();
         }
 
-        public Forward(final String urlNew, final boolean redirectNew) {
+        public CommandResult(final String urlNew, final boolean redirectNew) {
             url = urlNew;
             attributes = new HashMap<>();
             redirect = redirectNew;

@@ -52,12 +52,12 @@ public class ApplicationServlet extends HttpServlet {
                          final HttpServletResponse resp) {
         Command command = (Command) req.getAttribute(COMMAND);
         try {
-            Command.Forward forward = command.execute(req, resp);
-            if (checkError(forward, resp)) {
-                if (forward.isRedirect()) {
-                    resp.sendRedirect(forward.getUrl());
+            Command.CommandResult commandResult = command.execute(req, resp);
+            if (checkError(commandResult, resp)) {
+                if (commandResult.isRedirect()) {
+                    resp.sendRedirect(commandResult.getUrl());
                 } else {
-                    req.getRequestDispatcher(forward.getUrl())
+                    req.getRequestDispatcher(commandResult.getUrl())
                             .forward(req, resp);
                 }
             }
@@ -77,9 +77,9 @@ public class ApplicationServlet extends HttpServlet {
                           final HttpServletResponse resp) {
         Command command = (Command) req.getAttribute(COMMAND);
         try {
-            Command.Forward forward = command.execute(req, resp);
-            if (checkError(forward, resp)) {
-                resp.sendRedirect(forward.getUrl());
+            Command.CommandResult commandResult = command.execute(req, resp);
+            if (checkError(commandResult, resp)) {
+                resp.sendRedirect(commandResult.getUrl());
             }
         } catch (IOException e) {
             LOGGER.error("Cannot redirect user. {}", e.getMessage());
@@ -89,15 +89,15 @@ public class ApplicationServlet extends HttpServlet {
     /**
      * Check forward. Contains error or not.
      *
-     * @param forward  forward.
+     * @param commandResultNew  forward.
      * @param response response.
      * @return true or false.
      */
-    private boolean checkError(final Command.Forward forward,
+    private boolean checkError(final Command.CommandResult commandResultNew,
                                final HttpServletResponse response) {
-        if (forward.isError()) {
+        if (commandResultNew.isError()) {
             try {
-                int error = (Integer) forward.getAttributes().get("error");
+                int error = (Integer) commandResultNew.getAttributes().get("error");
                 response.sendError(error);
             } catch (IOException e) {
                 LOGGER.error("Cannot redirect user.");

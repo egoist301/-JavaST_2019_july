@@ -19,8 +19,8 @@ public class BookmarksPageCommand extends UserCommand {
     private static final int LIMIT = 10;
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         int page = Pagination.calcPage(requestNew);
         HttpSession session = requestNew.getSession(false);
         User user = (User) session.getAttribute(ATTRIBUTE_USER);
@@ -43,6 +43,6 @@ public class BookmarksPageCommand extends UserCommand {
         requestNew.setAttribute(PAGE, page);
         requestNew.setAttribute(LAST_PAGE,
                 records % LIMIT == 0 ? records / LIMIT : records / LIMIT + 1);
-        return new Forward(BOOKMARKS_JSP);
+        return new CommandResult(BOOKMARKS_JSP);
     }
 }

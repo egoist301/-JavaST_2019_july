@@ -16,8 +16,8 @@ public class RemoveCubeFromBookmarksCommand extends UserCommand {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         long id;
         try {
             id = Long.parseLong(requestNew.getParameter(ID));
@@ -30,7 +30,7 @@ public class RemoveCubeFromBookmarksCommand extends UserCommand {
         UserService service = getFactory().createUserService();
         try {
             service.removeFromBookmarks(user, id);
-            return new Forward(BOOKMARKS);
+            return new CommandResult(BOOKMARKS);
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
             return sendError(SERVER_ERROR);

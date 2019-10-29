@@ -14,8 +14,8 @@ import static by.training.catalog.constant.ApplicationConstants.*;
 public class EditCubeCommand extends AdminCommand {
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         long id = Long.parseLong(requestNew.getParameter(ID));
         List<String> parameters = new ArrayList<>();
         HttpSession session = requestNew.getSession(false);
@@ -26,6 +26,6 @@ public class EditCubeCommand extends AdminCommand {
         } catch (ServiceException eNew) {
             session.setAttribute(ERROR, RUBIK_MESSAGE);
         }
-        return new Forward(EDIT_CUBE + id);
+        return new CommandResult(EDIT_CUBE + id);
     }
 }

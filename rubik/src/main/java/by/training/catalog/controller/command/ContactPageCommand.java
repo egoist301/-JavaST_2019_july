@@ -7,8 +7,8 @@ import static by.training.catalog.constant.ApplicationConstants.CONTACT;
 
 public class ContactPageCommand extends Command {
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
-        return new Forward(CONTACT);
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
+        return new CommandResult(CONTACT);
     }
 }

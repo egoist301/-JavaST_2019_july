@@ -21,19 +21,19 @@ public class ChangeLocaleCommand extends Command {
     }
 
     @Override
-    public Forward execute(final HttpServletRequest request,
-                           final HttpServletResponse response) {
+    public CommandResult execute(final HttpServletRequest request,
+                                 final HttpServletResponse response) {
         String langParam = request.getParameter(ID);
         String locale = lang.get(langParam);
         if (locale == null) {
-            return new Forward(INDEX, true);
+            return new CommandResult(INDEX, true);
         } else {
             Cookie cookie = new Cookie(LOCALE, locale);
             cookie.setHttpOnly(true);
             response.addCookie(cookie);
             String page = request.getParameter(FROM);
             LOGGER.debug("From!!!!!!!1!!!  {}", request.getParameterMap());
-            return new Forward(page, true);
+            return new CommandResult(page, true);
         }
     }
 }

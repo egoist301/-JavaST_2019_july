@@ -9,12 +9,12 @@ import static by.training.catalog.constant.ApplicationConstants.INDEX;
 public class SignOutCommand extends UserCommand {
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         HttpSession session = requestNew.getSession(false);
         if (session != null) {
             session.invalidate();
         }
-        return new Forward(INDEX, true);
+        return new CommandResult(INDEX, true);
     }
 }

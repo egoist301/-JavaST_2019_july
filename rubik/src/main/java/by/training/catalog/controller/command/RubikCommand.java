@@ -16,10 +16,10 @@ public class RubikCommand extends Command {
     private static final Logger LOGGER = LogManager.getLogger();
 
     @Override
-    public Forward execute(final HttpServletRequest requestNew,
-                           final HttpServletResponse responseNew) {
+    public CommandResult execute(final HttpServletRequest requestNew,
+                                 final HttpServletResponse responseNew) {
         long id;
-        Forward forward;
+        CommandResult commandResult;
         try {
             id = Long.parseLong(requestNew.getParameter(ID));
         } catch (NumberFormatException eNew) {
@@ -34,8 +34,8 @@ public class RubikCommand extends Command {
                         getFactory().createStoreImageService();
                 storeImageService.assignRubikImagesPaths(cube);
                 requestNew.setAttribute(CUBE, cube);
-                forward = new Forward(RUBIK_JSP);
-                return forward;
+                commandResult = new CommandResult(RUBIK_JSP);
+                return commandResult;
             }
         } catch (ServiceException eNew) {
             LOGGER.error(eNew);
