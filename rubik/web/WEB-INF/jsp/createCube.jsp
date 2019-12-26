@@ -30,7 +30,7 @@
                 </label>
             </div>
         </c:if>
-        <form action="createcube.html" method="post"
+        <form action="createCube.html" method="post"
               enctype="multipart/form-data">
             <div class="form-group">
                 <label for="exampleModel"><fmt:message
@@ -123,7 +123,7 @@
                        name="img" class="custom-file" required>
             </div>
             <button type="submit" class="btn btn-primary" id="submit">
-                <fmt:message key="registration"/>
+                <fmt:message key="cube.add"/>
             </button>
             ${pageContext.session.removeAttribute("error")}
         </form>

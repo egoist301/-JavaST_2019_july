@@ -1,5 +1,6 @@
 package by.training.catalog.validator;
 
+import by.training.catalog.bean.User;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -7,6 +8,39 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 public class UserValidatorTest {
+
+    @DataProvider(name = "Incorrect phone with exception")
+    private Object[][] phoneWithException() {
+        return new Object[][]{
+                {1},
+                {new User(1)}
+        };
+    }
+
+    @DataProvider(name = "Incorrect username with exception")
+    private Object[][] usernameWithException() {
+        return new Object[][]{
+                {1},
+                {new User(1)}
+        };
+    }
+
+    @DataProvider(name = "Incorrect password with exception")
+    private Object[][] passwordWithException() {
+        return new Object[][]{
+                {1},
+                {new User(1)}
+        };
+    }
+
+    @DataProvider(name = "Incorrect email with exception")
+    private Object[][] emailWithException() {
+        return new Object[][]{
+                {1},
+                {new User(1)}
+        };
+    }
+
     @DataProvider(name = "is valid parameters")
     private Object[][] isValid() {
         return new Object[][]{
@@ -97,6 +131,13 @@ public class UserValidatorTest {
         assertTrue(result);
     }
 
+    @Test(groups = "validate user parameter", expectedExceptions =
+            IllegalArgumentException.class,
+            dataProvider = "Incorrect username with exception")
+    public void testInvalidateUsernameException(final String parameter) {
+        boolean result = UserValidator.invalidateUsername(parameter);
+    }
+
     @Test(groups = "validate user parameter")
     public void testValidateUsername() {
         boolean result = UserValidator.invalidateUsername("dwadwa");
@@ -108,6 +149,13 @@ public class UserValidatorTest {
     public void testInvalidatePassword(final String password) {
         boolean result = UserValidator.invalidatePassword(password);
         assertTrue(result);
+    }
+
+    @Test(groups = "validate user parameter", expectedExceptions =
+            IllegalArgumentException.class,
+            dataProvider = "Incorrect password with exception")
+    public void testInvalidatePasswordException(final String parameter) {
+        boolean result = UserValidator.invalidatePassword(parameter);
     }
 
     @Test(groups = "validate user parameter")
@@ -123,6 +171,13 @@ public class UserValidatorTest {
         assertTrue(result);
     }
 
+    @Test(groups = "validate user parameter", expectedExceptions =
+            IllegalArgumentException.class,
+            dataProvider = "Incorrect email with exception")
+    public void testInvalidateEmailException(final String parameter) {
+        boolean result = UserValidator.invalidateEmail(parameter);
+    }
+
     @Test(groups = "validate user parameter")
     public void testValidateEmail() {
         boolean result = UserValidator.invalidateEmail("dwafw@mail.ru");
@@ -134,6 +189,13 @@ public class UserValidatorTest {
     public void testInvalidatePhone(final String phone) {
         boolean result = UserValidator.invalidatePhone(phone);
         assertTrue(result);
+    }
+
+    @Test(groups = "validate user parameter", expectedExceptions =
+            IllegalArgumentException.class,
+            dataProvider = "Incorrect phone with exception")
+    public void testInvalidatePhoneException(final String parameter) {
+        boolean result = UserValidator.invalidatePhone(parameter);
     }
 
     @Test(groups = "validate user parameter")

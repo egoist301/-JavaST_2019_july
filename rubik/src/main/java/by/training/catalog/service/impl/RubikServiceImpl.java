@@ -221,8 +221,8 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
                 connectionManager.disableAutoCommit();
-                RubikFactory parser = new RubikFactory();
-                RubiksCube cube = parser.createCube(parameters);
+                RubikFactory rubikFactory = new RubikFactory();
+                RubiksCube cube = rubikFactory.createCube(parameters);
                 cube.setId(id);
                 RubikDao rubikDao =
                         getDaoFactory().createRubikDao(connectionManager);
@@ -254,7 +254,7 @@ public class RubikServiceImpl extends AbstractService implements RubikService {
                         getDaoFactory().createRubikDao(connectionManager);
                 RubikFactory parser = new RubikFactory();
                 RubiksCube cube = parser.createCube(parameters);
-                if (cube != null) {
+                if (cube != null && rubikDao.findCubeByModel(parameters.get(0)) == null) {
                     cube.setId(rubikDao.create(cube));
                     addImagesForCube(cube, rawDataNew, connectionManager);
                     connectionManager.commit();

@@ -91,8 +91,7 @@ public class UserServiceImplTest extends AbstractServiceTest {
                 {"null", "dawd@mail.ru", "32-11-14", "zhe"},
                 {"nulldawdwadawdawdwa", "dawd@mail.ru", "32-11-14", "zhenya"},
                 {"null", "dawd@mail.ru", "332-11-14",
-                        "zhenyadwadawdwadwdawdwa"},
-
+                        "zhenyadwadawdwadwdawdwa"}
         };
     }
 

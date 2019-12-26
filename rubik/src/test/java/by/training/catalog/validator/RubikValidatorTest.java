@@ -1,5 +1,6 @@
 package by.training.catalog.validator;
 
+import by.training.catalog.bean.RubiksCube;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -77,6 +78,14 @@ public class RubikValidatorTest {
                 {"0"},
                 {"3001"},
                 {null}
+        };
+    }
+
+    @DataProvider(name = "Incorrect info with exception")
+    private Object[][] infoWithException() {
+        return new Object[][]{
+                {1},
+                {new RubiksCube(1)}
         };
     }
 
@@ -264,6 +273,13 @@ public class RubikValidatorTest {
     public void testInvalidateInfo(final String info) {
         boolean result = RubikValidator.invalidateInfo(info);
         assertTrue(result);
+    }
+
+    @Test(groups = "validate cube parameter", expectedExceptions =
+            IllegalArgumentException.class,
+            dataProvider = "Incorrect info with exception")
+    public void testInvalidateInfoException(final String parameter) {
+        boolean result = RubikValidator.invalidateInfo(parameter);
     }
 
     @Test(groups = "validate cube parameter")

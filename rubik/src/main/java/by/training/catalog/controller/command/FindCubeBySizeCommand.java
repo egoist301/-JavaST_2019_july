@@ -1,6 +1,7 @@
 package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.service.Pagination;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
@@ -11,11 +12,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-import static by.training.catalog.constant.ApplicationConstants.*;
+import static by.training.catalog.constant.ApplicationConstants.CATALOG_JSP;
+import static by.training.catalog.constant.ApplicationConstants.LAST_PAGE;
+import static by.training.catalog.constant.ApplicationConstants.PAGE;
+import static by.training.catalog.constant.ApplicationConstants.PARAMETER_SIZE;
+import static by.training.catalog.constant.ApplicationConstants.RUBIKS;
 
 public class FindCubeBySizeCommand extends FindCubeCommand {
     private static final int LIMIT = 10;
     private static final Logger LOGGER = LogManager.getLogger();
+
     @Override
     public CommandResult execute(final HttpServletRequest requestNew,
                                  final HttpServletResponse responseNew) {

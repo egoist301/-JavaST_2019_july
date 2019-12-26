@@ -172,6 +172,7 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
      */
     private static final String COUNT_RUBIK_BY_UNBLOCKED = COUNT_RUBIK_BY
             + " WHERE blocked = false";
+    private static final String FIND_CUBE_BY_MODEL = FIND_RUBIK_BY + "WHERE model = ?";
 
     /**
      * Constructor.
@@ -244,6 +245,21 @@ public class RubikDaoImpl extends AbstractDao<RubiksCube> implements RubikDao {
     public int findCountByModel(final String model) throws
             PersistenceException {
         return findCountBy(model, COUNT_RUBIK_BY_MODEL);
+    }
+
+    @Override
+    public RubiksCube findCubeByModel(String model) throws PersistenceException {
+        try (PreparedStatement statement = getConnection().prepareStatement(FIND_CUBE_BY_MODEL)) {
+            statement.setString(1, model);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return createRubikFromResultSet(resultSet);
+                }
+            }
+        } catch (SQLException eNew) {
+            throw new PersistenceException();
+        }
+        return null;
     }
 
     @Override

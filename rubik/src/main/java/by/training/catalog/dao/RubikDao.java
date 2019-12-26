@@ -36,6 +36,8 @@ public interface RubikDao extends Dao<RubiksCube> {
      */
     int findCountByModel(String model) throws PersistenceException;
 
+    RubiksCube findCubeByModel(String model) throws PersistenceException;
+
     int findCountBySize(String size) throws PersistenceException;
 
     /**

@@ -1,6 +1,7 @@
 package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.RubiksCube;
+import by.training.catalog.service.Pagination;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;

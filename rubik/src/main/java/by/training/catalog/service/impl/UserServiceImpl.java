@@ -117,8 +117,7 @@ public class UserServiceImpl extends AbstractService implements UserService {
                      getConnectionManagerFactory().createConnectionManager()) {
             try {
                 connectionManager.disableAutoCommit();
-                if (findUserByUsername(username) == null
-                        && findUserByEmail(email) == null) {
+                if (isUniqueUser(username, email)) {
                     UserDao userDao =
                             getDaoFactory().createUserDao(connectionManager);
                     UserFactory parser = new UserFactory();
@@ -147,6 +146,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
             throw new ServiceException(eNew);
         }
         return flag;
+    }
+
+    private boolean isUniqueUser(final String username, final String email) throws ServiceException {
+        return findUserByUsername(username) == null
+                && findUserByEmail(email) == null;
     }
 
     /**

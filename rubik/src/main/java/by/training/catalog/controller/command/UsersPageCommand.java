@@ -1,6 +1,7 @@
 package by.training.catalog.controller.command;
 
 import by.training.catalog.bean.User;
+import by.training.catalog.service.Pagination;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.UserService;
 import org.apache.logging.log4j.LogManager;

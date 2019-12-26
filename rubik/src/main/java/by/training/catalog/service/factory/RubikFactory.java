@@ -6,6 +6,11 @@ import by.training.catalog.validator.RubikValidator;
 import java.util.Date;
 import java.util.List;
 
+
+
+
+
+
 /**
  * Rubik factory.
  */

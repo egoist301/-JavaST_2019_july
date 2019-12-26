@@ -1,5 +1,6 @@
-package by.training.catalog.controller.command;
+package by.training.catalog.service;
 
+import by.training.catalog.validator.PaginationValidator;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -13,7 +14,7 @@ public final class Pagination {
     private Pagination() {
     }
 
-    static int calcPage(final HttpServletRequest requestNew) {
+    public static int calcPage(final HttpServletRequest requestNew) {
         int page = 1;
         if (requestNew.getParameter(PAGE) != null) {
             try {
@@ -24,13 +25,20 @@ public final class Pagination {
         }
         return page;
     }
-    static int calcOffset(final int page, final int limit) {
-        int offset;
-        if (page == 1) {
-            offset = 0;
+
+    public static int calcOffset(final int page, final int limit)
+            throws ServiceException {
+        if (PaginationValidator.isValidPage(page) && PaginationValidator
+                .isValidLimit(limit)) {
+            int offset;
+            if (page == 1) {
+                offset = 0;
+            } else {
+                offset = (page - 1) * limit;
+            }
+            return offset;
         } else {
-            offset = (page - 1) * limit;
+            throw new ServiceException("Incorrect page or limit");
         }
-        return offset;
     }
 }

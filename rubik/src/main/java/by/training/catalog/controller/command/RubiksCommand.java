@@ -3,6 +3,7 @@ package by.training.catalog.controller.command;
 import by.training.catalog.bean.Role;
 import by.training.catalog.bean.RubiksCube;
 import by.training.catalog.bean.User;
+import by.training.catalog.service.Pagination;
 import by.training.catalog.service.RubikService;
 import by.training.catalog.service.ServiceException;
 import by.training.catalog.service.StoreImageService;
@@ -34,12 +35,7 @@ public class RubiksCommand extends Command {
         try {
             List<String> forms = rubikService.readAllForm();
             List<String> manufacturers = rubikService.readAllManufacturer();
-            int offset;
-            if (page == 1) {
-                offset = 0;
-            } else {
-                offset = (page - 1) * LIMIT;
-            }
+            int offset = Pagination.calcOffset(page, LIMIT);
             if (user == null || user.getRole() == Role.USER) {
                     rubiksCubes =
                             rubikService.findRubiksByUnblocked(LIMIT, offset);

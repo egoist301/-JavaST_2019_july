@@ -45,7 +45,7 @@
                 <label
                         for="exampleRole"><fmt:message
                         key="profile.role"/></label>
-                <input type="password" class="form-control form-control-sm"
+                <input type="text" class="form-control form-control-sm"
                        id="exampleRole" name="role"
                        value="${user.role}" required disabled>
             </div>
