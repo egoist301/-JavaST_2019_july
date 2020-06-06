@@ -3,4 +3,5 @@
 */target
 */out
 */production
-*/*.class
+*/**/.class
+*/*/classes
