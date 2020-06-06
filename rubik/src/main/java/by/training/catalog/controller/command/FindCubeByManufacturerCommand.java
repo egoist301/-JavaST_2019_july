@@ -32,7 +32,7 @@ public class FindCubeByManufacturerCommand extends FindCubeCommand {
             String manufacturer =
                     requestNew.getParameter(ATTRIBUTE_MANUFACTURER);
             rubiksCubes = rubikService
-                    .findRubiksByManufacturer(manufacturer, offset, LIMIT);
+                    .findRubiksByManufacturer(manufacturer, LIMIT, offset);
             records = rubikService.findCountByManufacturer(manufacturer);
             for (RubiksCube cube : rubiksCubes) {
                 imageService.assignRubikImagesPaths(cube);

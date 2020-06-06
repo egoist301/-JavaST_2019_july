@@ -1,0 +1,1 @@
+ALTER TABLE rubiks_cube ADD CONSTRAINT UC_model UNIQUE (model);

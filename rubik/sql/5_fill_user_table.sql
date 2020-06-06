@@ -111,9 +111,7 @@ GAN 356 X - пожалуй, самый удачный продукт компа�
 
 INSERT INTO bookmarks(`cube_id`, `user_id`)
 VALUES (1, 1),
-       (1, 2),
        (3, 1),
-       (5, 4),
        (5, 1);
 
 INSERT INTO store_image(`cube_id`, `image_path`)

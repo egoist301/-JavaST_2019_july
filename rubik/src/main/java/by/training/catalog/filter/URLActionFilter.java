@@ -41,6 +41,7 @@ public class URLActionFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) servletRequestNew;
         HttpServletResponse resp = (HttpServletResponse) servletResponseNew;
         String action = getActionFromURI(req);
+        System.out.println(action);
         Command command = CommandProvider.getCommand(action);
         getPageToReturn(req, action);
         if (command == null) {

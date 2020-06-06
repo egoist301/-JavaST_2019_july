@@ -49,7 +49,7 @@
                     <form action="findManufacturer.html" method="get">
                         <label for="exampleManufacturer"><fmt:message
                                 key="search.manufacturer"/></label>
-                        <select class="custom-select mb-1" name="manufacturers"
+                        <select class="custom-select mb-1" name="manufacturer"
                                 id="exampleManufacturer" required>
                             <option value="" disabled selected>
                                 <fmt:message key="search.manufacturer.option"/>
@@ -182,7 +182,7 @@
                                         <c:if test="${!cube.blocked}">
                                             <form
                                                     action="blockedCube.html?id=${cube.id}"
-                                                  method="get">
+                                                  method="post">
                                                 <button type="submit"
                                                         class="btn btn-danger">
                                                     <fmt:message
